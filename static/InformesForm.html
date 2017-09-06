@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Informe de predicación</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="/js/jquery.bootstrap-touchspin.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/jquery-select-step.css">
+    <script type="text/javascript" src="/js/jquery-select-step.js"></script>
+</head>
+
+
+<body>
+    <form class="form-horizontal" action="https://docs.google.com/a/australsp.com/forms/d/e/1FAIpQLSefmC5GmAoAhn83U1CRmLxkU28XnOuKjhgumig5LRxg-1O0Yg/formResponse" target="_self" method="POST" id="mG61Hd"
+          onsubmit="if (document.getElementById('fracciones').checked) document.getElementById('entry.1646002307').value = document.getElementById('horasfraccion').value; else document.getElementById('entry.1646002307').value = document.getElementById('horas').value;">
+        <div class="form-group">
+            <label for="horas" class="col-sm-2 control-label">Horas</label>
+            <div class="col-sm-2">
+                <div id="divhoras" style="display:inline">
+                    <input id="horas" type="text" value="" name="horas">
+                </div>
+
+                <div id="divfraccion" style="display:none">
+                    <select name="horasfraccion" id="horasfraccion" class="select-step">
+                        <option value="0.25">0:15</option>
+                        <option value="0.50">0:30</option>
+                        <option value="0.75">0:45</option>
+                        <option value="1">1:00</option>
+                        <option value="1.25">1:15</option>
+                        <option value="1.50">1:30</option>
+                        <option value="1.75">1:45</option>
+                        <option value="2">2:00</option>
+                        <option value="2.25">2:15</option>
+                        <option value="2.50">2:30</option>
+                        <option value="2.75">2:45</option>
+                        <option value="3">3:00</option>
+                        <option value="3.25">3:15</option>
+                        <option value="3.50">3:30</option>
+                        <option value="3.75">3:45</option>
+                        <option value="4">4:00</option>
+                        <option value="4.25">4:15</option>
+                        <option value="4.50">4:30</option>
+                        <option value="4.75">4:45</option>
+                        <option value="5">5:00</option>
+                    </select>
+                </div>
+            </div>
+            <input type="checkbox" autocomplete="off" id="fracciones" name="fracciones" onchange="if (document.getElementById('fracciones').checked) { document.getElementById('divhoras').style = 'display:none'; document.getElementById('divfraccion').style = 'display:inline'; } else { document.getElementById('divhoras').style = 'display:inline'; document.getElementById('divfraccion').style = 'display:none';}"> Informar en fracciones de 15' (sólo casos especiales)
+            <input type="hidden" name="entry.1646002307" id="entry.1646002307" />
+           
+            <script>
+                jQuery(document).ready(function () {
+                    jQuery(".select-step").selectStep({
+                        incrementLabel: "+",
+                        decrementLabel: "-",
+                        onChange: function (value) {
+                            console.log(value, "value");
+                        }
+                    });
+                });
+            </script>
+            <script>
+                $("input[name='horas']").TouchSpin({
+                    min: "1",
+                    max: "150"
+
+                });
+            </script>
+
+        </div>
+        <div class="form-group">
+            <label for="entry.952771274" class="col-sm-2 control-label"> Presentaciones de videos</label>
+            <div class="col-sm-2">
+
+                <input id="entry.952771274" type="text" value="" name="entry.952771274">
+                <script>
+                    $("input[name='entry.952771274']").TouchSpin({
+                        min: "1",
+                        max: "150"
+
+                    });
+                </script>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="entry.2084940358" class="col-sm-2 control-label">
+                Publicaciones
+            </label>
+            <div class="col-sm-2">
+                <input id="entry.2084940358" type="text" value="" name="entry.2084940358">
+                <script>
+                    $("input[name='entry.2084940358']").TouchSpin({
+                        min: "1",
+                        max: "300"
+
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="entry.881854522" class="col-sm-2 control-label">
+                Revisitas
+            </label>
+            <div class="col-sm-2">
+                <input id="entry.881854522" type="text" value="" name="entry.881854522">
+                <script>
+                    $("input[name='entry.881854522']").TouchSpin({
+                        min: "1",
+                        max: "300"
+
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="entry.1353167468" class="col-sm-2 control-label">
+                Cursos bíblicos
+            </label>
+            <div class="col-sm-2">
+                <input id="entry.1353167468" type="text" value="" name="entry.1353167468">
+                <script>
+                    $("input[name='entry.1353167468']").TouchSpin({
+                        min: "1",
+                        max: "50"
+
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="entry.272898253" class="col-sm-2 control-label">
+                Observaciones
+            </label>
+            <div class="col-sm-5">
+                <textarea class="form-control" rows="1" id="entry.272898253" name="entry.272898253"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label><div class="col-sm-10">
+                <input class="btn btn-success" type="submit" value="Enviar"> <button class="btn btn-default" type="submit">Cancelar</button>
+            </div>
+        </div>
+
+
+        <input type="hidden" aria-label="UUIDAlta" name="entry.1115308950" value="AAA" data-initial-value="AAA" />
+        <input type="hidden" aria-label="UUID" name="entry.1125196402" value="BBB" data-initial-value="BBB" />
+        <!--<input type="date" value="2017-01-01" data-initial-value="2017-01-01" />-->
+        <input type="hidden" name="entry.48655880_year" value="2017">
+        <input type="hidden" name="entry.48655880_month" value="01">
+        <input type="hidden" name="entry.48655880_day" value="01">
+        <!--<input type="text" aria-label="Publicaciones" name="entry.2084940358" value="" />
+        <input type="text" aria-label="Videos" name="entry.952771274" value="" />
+        <input type="text" aria-label="Horas" name="entry.1646002307" value="" />
+        <input type="text" aria-label="Revisitas" name="entry.881854522" value="" />
+        <input type="text" aria-label="Cursos" name="entry.1353167468" value="" />
+        <textarea aria-label="Observaciones" name="entry.272898253"></textarea>-->
+        <!--<input type="hidden" name="fvv" value="1">
+                <input type="hidden" name="draftResponse" value="[[[,1115308950,[&quot;AAA&quot;]
+        ,0]
+        ,[,1125196402,[&quot;BBB&quot;]
+        ,0]
+        ,[,48655880,[&quot;2017-01-01&quot;]
+        ,0]
+        ,[,2084940358,[&quot;&quot;]
+        ,0]
+        ,[,952771274,[&quot;&quot;]
+        ,0]
+        ,[,1646002307,[&quot;&quot;]
+        ,0]
+        ,[,881854522,[&quot;&quot;]
+        ,0]
+        ,[,1353167468,[&quot;&quot;]
+        ,0]
+        ,[,272898253,[&quot;&quot;]
+        ,0]
+        ]
+        ,,&quot;8239295586287306781&quot;]
+        ">
+                <input type="hidden" name="pageHistory" value="0">
+                <input type="hidden" name="fbzx" value="8239295586287306781">-->
+        <!--<input type="submit" />-->
+    </form>
+    <script> $('iform').on('load', function () {
+     alert('iFrame loaded!');
+ });</script>
+    <iframe name="iform" id="iform"></iframe>
+
+
+</body>
+</html>
