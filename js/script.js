@@ -23,8 +23,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     templateUrl: 'predicacion/salidas.html', title: 'Salidas al ministerio del campo'
 })
 .when('/territorios', {
-    //templateUrl: 'predicacion/territorios.html', title: 'Territorios'
-    templateUrl: 'predicacion/campaña.html', title: 'Campaña'
+    templateUrl: 'predicacion/territorios.html', title: 'Territorios'
+    //templateUrl: 'predicacion/campaña.html', title: 'Campaña'
 })
 .when('/campaña', {
     templateUrl: 'predicacion/campaña.html', title: 'Campaña'
