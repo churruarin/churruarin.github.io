@@ -87,12 +87,7 @@
   <a href="#close" class="cartodb-popup-close-button close">x</a>
   <div class="cartodb-popup-content-wrapper">
     <div class="cartodb-popup-content">
-      <h4>territorio</h4>
-      <p>{{territorio}}</p>
-      <h4>Manzana</h4>
-      <p>{{mza}}</p>
-      <h4>d&iacute;as sin predicar</h4>
-      <p>{{ultimoabarcado}}</p>
+      <h4>{{tm}} - {{ultimoabarcado}} días</h4>
       <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO actividad (fecha, tm) VALUES (current_date, '{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee" 
       target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Informar </b></a>
       <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO actividad (fecha, tm) VALUES (current_date, '{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee" 
