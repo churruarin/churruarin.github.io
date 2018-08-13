@@ -45,7 +45,7 @@ var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
 var act = getUrlParameter("act");
-console.log(lat, lon, zoom, "e");
+console.log(lat, lon, zoom, "f");
 
 
 
@@ -123,12 +123,12 @@ function main() {
       if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(posact);
                   };
-                };
+
       function posact(position) {
         lat = position.coords.latitude,
         lon = position.coords.longitude,
-        zoom = 18,
-        map.setView([lat, lon], 18, {animation: true});
+        zoom = 22,
+        map.setView([lat, lon], zoom, {animation: true});
         console.log(lat, lon, zoom);
       };
 
