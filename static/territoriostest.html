@@ -127,11 +127,11 @@ function main() {
       function posact(position) {
         lat = position.coords.latitude,
         lon = position.coords.longitude,
-        zoom = 22,
+        zoom = zoom,
         map.setView([lat, lon], zoom, {animation: true});
         console.log(lat, lon, zoom);
       };
-
+};
     })
     .error(function(err) {
       console.log(err);
