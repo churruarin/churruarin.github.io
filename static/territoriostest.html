@@ -44,7 +44,6 @@
 var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
-var loc = getUrlParameter("loc");
 function main() {
   cartodb
     .createVis(
@@ -101,7 +100,7 @@ function main() {
             });
             } else {
             // Browser doesn't support Geolocation
-            //alert("Geolocation is disabled");
+            alert("Geolocation is disabled");
             }
 
 
