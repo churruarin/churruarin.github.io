@@ -80,8 +80,8 @@
 
               if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
-                  var latact = "-31.743952" //position.coords.latitude,
-                    lonact = "-60.482838" //position.coords.longitude,
+                  var latact = position.coords.latitude,
+                    lonact = position.coords.longitude,
                     query =
                       "SELECT 1 as cartodb_id, 'Mi ubicación' as message, ST_Transform(CDB_LatLng(" +
                       latact +
