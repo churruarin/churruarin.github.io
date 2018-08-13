@@ -44,7 +44,7 @@
 var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
-console.log(lat, lon, zoom, "c");
+console.log(lat, lon, zoom, "d");
 
 
 
@@ -60,6 +60,7 @@ function main() {
     lat = position.coords.latitude,
     lon = position.coords.longitude,
     zoom = 18,
+    map.setView([lat, lon],18,true);
     console.log(lat, lon, zoom);
   };
   console.log(lat, lon, zoom);
