@@ -44,25 +44,12 @@
 var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
-console.log(lat, lon, zoom, "d");
+var act = getUrlParameter("act");
+console.log(lat, lon, zoom, "e");
 
 
 
 function main() {
-
-
-  if (lat = "act") {
-  if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(posact);
-              };
-            };
-  function posact(position) {
-    lat = position.coords.latitude,
-    lon = position.coords.longitude,
-    zoom = 18,
-    map.setView([lat, lon], 18, {animation: true});
-    console.log(lat, lon, zoom);
-  };
   console.log(lat, lon, zoom);
   cartodb
     .createVis(
@@ -132,6 +119,19 @@ function main() {
       // now, perform any operations you need
       // map.setZoom(3);
       // map.panTo([50.5, 30.5]);
+      if (act = "true") {
+      if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(posact);
+                  };
+                };
+      function posact(position) {
+        lat = position.coords.latitude,
+        lon = position.coords.longitude,
+        zoom = 18,
+        map.setView([lat, lon], 18, {animation: true});
+        console.log(lat, lon, zoom);
+      };
+
     })
     .error(function(err) {
       console.log(err);
