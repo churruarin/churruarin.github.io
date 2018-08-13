@@ -29,7 +29,7 @@
        <div id="map">
 
         <script>
-      var getUrlParameter = function getUrlParameter(sParam) {
+var getUrlParameter = function getUrlParameter(sParam) {
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
     sURLVariables = sPageURL.split("&"),
     sParameterName,
@@ -45,9 +45,7 @@ var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
 var act = getUrlParameter("act");
-console.log(lat, lon, zoom, "f");
-
-
+console.log(lat, lon, zoom, "g");
 
 function main() {
   console.log(lat, lon, zoom);
@@ -75,40 +73,52 @@ function main() {
       // setInteraction is disabled by default
       layers[1].setInteraction(true);
 
-      if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var latact = position.coords.latitude,
-                  lonact = position.coords.longitude,
-                  query = "SELECT 1 as cartodb_id, 'Mi ubicación' as message, ST_Transform(CDB_LatLng(" + latact + ", " + lonact + "), 3857) as the_geom_webmercator",
-                  style = "#layer{marker-width: 7; marker-fill: red; marker-line-width: 0.5; marker-line-color: white; text-name: [message]; text-face-name: 'Open Sans Bold'; text-size: 12; text-fill: #FFFFFF; text-halo-fill: fadeout(#000000, 30%); text-halo-radius: 2; text-allow-overlap: true; text-placement: point; text-placement-type: simple; text-dy: 10;}";
-            console.log(latact, lonact, query, style);
-    //          var map = L.map('map', {
-    //                  zoomControl: false,
-    //                  center: [lat, lng],
-    //                  zoom: 9
-    //                  });
-                // add basemap
-    //            L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CARTO</a>'}).addTo(map);
-                // add cartodb layer
-                cartodb.createLayer(map, {
-                  user_name: 'ramirocartodb',
-                  type: 'cartodb',
-                  sublayers: [{
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latact = position.coords.latitude,
+            lonact = position.coords.longitude,
+            query =
+              "SELECT 1 as cartodb_id, 'Mi ubicación' as message, ST_Transform(CDB_LatLng(" +
+              latact +
+              ", " +
+              lonact +
+              "), 3857) as the_geom_webmercator",
+            style =
+              "#layer{marker-width: 7; marker-fill: red; marker-line-width: 0.5; marker-line-color: white; text-name: [message]; text-face-name: 'Open Sans Bold'; text-size: 12; text-fill: #FFFFFF; text-halo-fill: fadeout(#000000, 30%); text-halo-radius: 2; text-allow-overlap: true; text-placement: point; text-placement-type: simple; text-dy: 10;}";
+          console.log(latact, lonact, query, style);
+          //          var map = L.map('map', {
+          //                  zoomControl: false,
+          //                  center: [lat, lng],
+          //                  zoom: 9
+          //                  });
+          // add basemap
+          //            L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CARTO</a>'}).addTo(map);
+          // add cartodb layer
+          cartodb
+            .createLayer(
+              map,
+              {
+                user_name: "ramirocartodb",
+                type: "cartodb",
+                sublayers: [
+                  {
                     sql: query,
-                    cartocss: style,
-                  }]
-                }, {https: true}).addTo(map)
-  //              .done(function(layer){
-  //              var sublayer = layer.getSubLayer(0);
-  //              console.log(sublayer);
-  //            });
-            });
-            } else {
-            // Browser doesn't support Geolocation
-            alert("Geolocation is disabled");
-            }
-
-
+                    cartocss: style
+                  }
+                ]
+              },
+              { https: true }
+            )
+            .addTo(map);
+          //              .done(function(layer){
+          //              var sublayer = layer.getSubLayer(0);
+          //              console.log(sublayer);
+          //            });
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        alert("Geolocation is disabled");
+      }
 
       //var sublayer = layers[1].getSubLayer(2);
       //layers[1].on('featureOver', function(e, latlng, pos, data) {
@@ -119,19 +129,19 @@ function main() {
       // now, perform any operations you need
       // map.setZoom(3);
       // map.panTo([50.5, 30.5]);
-      if (act = "true") {
-      if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(posact);
-                  };
+      if ((act = "true")) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(posact);
+        },
 
-      function posact(position) {
-        lat = position.coords.latitude,
-        lon = position.coords.longitude,
-        zoom = zoom,
-        map.setView([lat, lon], zoom, {animation: true});
-        console.log(lat, lon, zoom);
+        function posact(position) {
+          (lat = position.coords.latitude),
+            (lon = position.coords.longitude),
+            (zoom = zoom),
+            map.setView([lat, lon], zoom, { animation: true }),
+          console.log(lat, lon, zoom);
+        };
       };
-};
     })
     .error(function(err) {
       console.log(err);
