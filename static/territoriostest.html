@@ -44,6 +44,7 @@
 var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
+console.log(lat, lon, zoom);
 if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         if (lat = "act") {
@@ -55,7 +56,7 @@ if(navigator.geolocation) {
           });
 
         };
-
+console.log(lat, lon, zoom);
 function main() {
   cartodb
     .createVis(
@@ -85,7 +86,7 @@ function main() {
             navigator.geolocation.getCurrentPosition(function(position) {
               var latact = position.coords.latitude,
                   lonact = position.coords.longitude,
-                  query = "SELECT 1 as cartodb_id, 'Mi ubicación3' as message, ST_Transform(CDB_LatLng(" + latact + ", " + lonact + "), 3857) as the_geom_webmercator",
+                  query = "SELECT 1 as cartodb_id, 'Mi ubicación4' as message, ST_Transform(CDB_LatLng(" + latact + ", " + lonact + "), 3857) as the_geom_webmercator",
                   style = "#layer{marker-width: 7; marker-fill: red; marker-line-width: 0.5; marker-line-color: white; text-name: [message]; text-face-name: 'Open Sans Bold'; text-size: 12; text-fill: #FFFFFF; text-halo-fill: fadeout(#000000, 30%); text-halo-radius: 2; text-allow-overlap: true; text-placement: point; text-placement-type: simple; text-dy: 10;}";
             console.log(latact, lonact, query, style);
     //          var map = L.map('map', {
