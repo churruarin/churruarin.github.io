@@ -65,8 +65,8 @@
                 zoom: zoom,
                 carto_logo: false,
                 mobile_layout: true,
-                scrollwheel: true
-                //layer_selector: true
+                scrollwheel: true,
+                layer_selector: false
               }
             )
             .done(function(vis, layers) {
@@ -138,7 +138,7 @@
                     (lat = position.coords.latitude),
                       (lon = position.coords.longitude),
                       (zoom = 18),
-                      map.setView([lat, lon], zoom, { animation: true }),
+                      map.setView([lat, lon], zoom, { animation: false }),
                       console.log(lat, lon, zoom);
                   }
                 }
