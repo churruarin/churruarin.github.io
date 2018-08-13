@@ -60,7 +60,7 @@ function main() {
     lat = position.coords.latitude,
     lon = position.coords.longitude,
     zoom = 18,
-    map.setView([lat, lon],18,true);
+    map.setView([lat, lon], 18, {animation: true});
     console.log(lat, lon, zoom);
   };
   console.log(lat, lon, zoom);
