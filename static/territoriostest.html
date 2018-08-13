@@ -132,7 +132,7 @@ function main() {
       if ((act = "true")) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(posact);
-        },
+
 
         function posact(position) {
           (lat = position.coords.latitude),
@@ -140,6 +140,7 @@ function main() {
             (zoom = zoom),
             map.setView([lat, lon], zoom, { animation: true }),
           console.log(lat, lon, zoom);
+};
         };
       };
     })
