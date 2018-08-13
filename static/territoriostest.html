@@ -46,7 +46,7 @@ var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
 if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        if lat = -1 {
+        if (lat = "act") {
           lat = position.coords.latitude,
               lon = position.coords.longitude,
               zoom = 18;
@@ -54,7 +54,7 @@ if(navigator.geolocation) {
           });
 
         };
-        
+
 function main() {
   cartodb
     .createVis(
