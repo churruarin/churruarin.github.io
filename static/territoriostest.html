@@ -44,12 +44,12 @@
 var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
-console.log(lat, lon, zoom, "b");
+console.log(lat, lon, zoom, "c");
 
 
 
 function main() {
-  console.log(lat, lon, zoom);
+
 
   if (lat = "act") {
   if(navigator.geolocation) {
@@ -62,6 +62,7 @@ function main() {
     zoom = 18,
     console.log(lat, lon, zoom);
   };
+  console.log(lat, lon, zoom);
   cartodb
     .createVis(
       "map",
