@@ -84,14 +84,14 @@ function main() {
                 // add basemap
     //            L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CARTO</a>'}).addTo(map);
                 // add cartodb layer
-    //            cartodb.createLayer(map, {
-    //              user_name: 'ramirocartodb',
-    //              type: 'cartodb',
-    //              sublayers: [{
-    //                sql: query,
-    //                cartocss: style,
-  //                }]
-  //              }, {https: true}).addTo(map)
+                cartodb.createLayer(map, {
+                  user_name: 'ramirocartodb',
+                  type: 'cartodb',
+                  sublayers: [{
+                    sql: query,
+                    cartocss: style,
+                  }]
+                }, {https: true}).addTo(map)
   //              .done(function(layer){
   //              var sublayer = layer.getSubLayer(0);
   //              console.log(sublayer);
