@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -25,66 +25,106 @@
     <!--<script src="../js/json3.min.js"></script>-->
 </head>
 <body>
-    
+
        <div id="map">
-       
+
         <script>
-            var getUrlParameter = function getUrlParameter(sParam) {
-                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                    sURLVariables = sPageURL.split('&'),
-                    sParameterName,
-                    i;
+      var getUrlParameter = function getUrlParameter(sParam) {
+  var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+    sURLVariables = sPageURL.split("&"),
+    sParameterName,
+    i;
+  for (i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split("=");
+    if (sParameterName[0] === sParam) {
+      return sParameterName[1] === undefined ? true : sParameterName[1];
+    }
+  }
+};
+var lat = getUrlParameter("lat");
+var lon = getUrlParameter("lon");
+var zoom = getUrlParameter("zoom");
+var loc = getUrlParameter("loc");
+function main() {
+  cartodb
+    .createVis(
+      "map",
+      "https://abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json",
+      {
+        shareable: false,
+        title: false,
+        description: false,
+        search: false,
+        loaderControl: true,
+        center_lat: lat,
+        center_lon: lon,
+        zoom: zoom,
+        carto_logo: false,
+        mobile_layout: true,
+        scrollwheel: true
+        //layer_selector: true
+      }
+    )
+    .done(function(vis, layers) {
+      // layer 0 is the base layer, layer 1 is cartodb layer
+      // setInteraction is disabled by default
+      layers[1].setInteraction(true);
 
-                for (i = 0; i < sURLVariables.length; i++) {
-                    sParameterName = sURLVariables[i].split('=');
+      if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var latact = position.coords.latitude,
+                  lonact = position.coords.longitude,
+                  query = "SELECT 1 as cartodb_id, 'Mi ubicación' as message, ST_Transform(CDB_LatLng(" + latact + ", " + lonact + "), 3857) as the_geom_webmercator",
+                  style = "#layer{marker-width: 7; marker-fill: red; marker-line-width: 0.5; marker-line-color: white; text-name: [message]; text-face-name: 'Open Sans'; text-size: 12; text-fill: #FFFFFF; text-halo-fill: fadeout(#000000, 30%); text-halo-radius: 2; text-allow-overlap: true; text-placement: point; text-placement-type: simple; text-dy: 10;}";
+            console.log(latact, lonact, query, style);
+    //          var map = L.map('map', {
+    //                  zoomControl: false,
+    //                  center: [lat, lng],
+    //                  zoom: 9
+    //                  });
+                // add basemap
+    //            L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CARTO</a>'}).addTo(map);
+                // add cartodb layer
+                cartodb.createLayer(map, {
+                  user_name: 'abelbour',
+                  type: 'cartodb',
+                  sublayers: [{
+                    sql: query,
+                    cartocss: style,
+                  }]
+                }, {https: true}).addTo(map)
+  //              .done(function(layer){
+  //              var sublayer = layer.getSubLayer(0);
+  //              console.log(sublayer);
+  //            });
 
-                    if (sParameterName[0] === sParam) {
-                        return sParameterName[1] === undefined ? true : sParameterName[1];
-                    }
-                }
-            };
-            var lat = getUrlParameter('lat');
-            var lon = getUrlParameter('lon');
-            var zoom = getUrlParameter('zoom');
-            function main() {
-                cartodb.createVis('map', 'https://abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json', {
-                    shareable: false,
-                    title: false,
-                    description: false,
-                    search: false,
-                    loaderControl: true,
-                    center_lat: lat,
-                    center_lon: lon,
-                    zoom: zoom,
-                    carto_logo: false,
-                    mobile_layout: true,
-                    scrollwheel: true,
-                    //layer_selector: true
-                })
-        .done(function (vis, layers) {
-            // layer 0 is the base layer, layer 1 is cartodb layer
-            // setInteraction is disabled by default
-            layers[1].setInteraction(true);
-            var sublayer = layers[1].getSubLayer(2);
-
-
-            //layers[1].on('featureOver', function(e, latlng, pos, data) {
-            //  cartodb.log.log(e, latlng, pos, data);
-            //});
-            // you can get the native map to work with it
-            var map = vis.getNativeMap();
-            // now, perform any operations you need
-            // map.setZoom(3);
-            // map.panTo([50.5, 30.5]);
-        })
-        .error(function (err) {
-            console.log(err);
-        });
+            });
+            } else {
+            // Browser doesn't support Geolocation
+            //alert("Geolocation is disabled");
             }
-            window.onload = main;
+
+
+
+      //var sublayer = layers[1].getSubLayer(2);
+      //layers[1].on('featureOver', function(e, latlng, pos, data) {
+      //  cartodb.log.log(e, latlng, pos, data);
+      //});
+      // you can get the native map to work with it
+      var map = vis.getNativeMap();
+      // now, perform any operations you need
+      // map.setZoom(3);
+      // map.panTo([50.5, 30.5]);
+    })
+    .error(function(err) {
+      console.log(err);
+    });
+}
+window.onload = main;
+
     </script>
     </div>
- 
-    
+
+
 </body>
 </html>
