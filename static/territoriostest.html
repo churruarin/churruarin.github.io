@@ -129,26 +129,26 @@ function main() {
       // now, perform any operations you need
       // map.setZoom(3);
       // map.panTo([50.5, 30.5]);
-      if ((act == "1")) {
+      if (act == "1") {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(posact);
 
-
-        function posact(position) {
-          (lat = position.coords.latitude),
-            (lon = position.coords.longitude),
-            (zoom = zoom),
-            map.setView([lat, lon], zoom, { animation: true }),
-          console.log(lat, lon, zoom);
-};
-        };
-      };
+          function posact(position) {
+            (lat = position.coords.latitude),
+              (lon = position.coords.longitude),
+              (zoom = 18),
+              map.setView([lat, lon], zoom, { animation: true }),
+              console.log(lat, lon, zoom);
+          }
+        }
+      }
     })
     .error(function(err) {
       console.log(err);
     });
 }
 window.onload = main;
+
 
     </script>
     </div>
