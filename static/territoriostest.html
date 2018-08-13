@@ -69,6 +69,41 @@ function main() {
       // setInteraction is disabled by default
       layers[1].setInteraction(true);
 
+      if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var latact = position.coords.latitude,
+                  lonact = position.coords.longitude,
+                  query = "SELECT 1 as cartodb_id, 'You are here' as message, ST_Transform(CDB_LatLng(" + latact + ", " + lonact + "), 3857) as the_geom_webmercator",
+                  style = "#layer{marker-width: 7; marker-fill: red; marker-line-width: 0.5; marker-line-color: white; text-name: [message]; text-face-name: 'Open Sans Bold'; text-size: 12; text-fill: #FFFFFF; text-halo-fill: fadeout(#000000, 30%); text-halo-radius: 2; text-allow-overlap: true; text-placement: point; text-placement-type: simple; text-dy: 10;}";
+            console.log(latact, lonactu, query, style);
+    //          var map = L.map('map', {
+    //                  zoomControl: false,
+    //                  center: [lat, lng],
+    //                  zoom: 9
+    //                  });
+                // add basemap
+    //            L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CARTO</a>'}).addTo(map);
+                // add cartodb layer
+    //            cartodb.createLayer(map, {
+    //              user_name: 'ramirocartodb',
+    //              type: 'cartodb',
+    //              sublayers: [{
+    //                sql: query,
+    //                cartocss: style,
+  //                }]
+  //              }, {https: true}).addTo(map)
+  //              .done(function(layer){
+  //              var sublayer = layer.getSubLayer(0);
+  //              console.log(sublayer);
+  //            });
+            });
+            } else {
+            // Browser doesn't support Geolocation
+            alert("Geolocation is disabled");
+            }
+
+
+
       //var sublayer = layers[1].getSubLayer(2);
       //layers[1].on('featureOver', function(e, latlng, pos, data) {
       //  cartodb.log.log(e, latlng, pos, data);
