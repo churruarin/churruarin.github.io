@@ -44,7 +44,8 @@
 var lat = getUrlParameter("lat");
 var lon = getUrlParameter("lon");
 var zoom = getUrlParameter("zoom");
-console.log(lat, lon, zoom);
+console.log(lat, lon, zoom, "a");
+
 if (lat = "act") {
 if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(posact);
@@ -56,8 +57,9 @@ function posact(position) {
   zoom = 18,
   console.log(lat, lon, zoom);
 };
-console.log(lat, lon, zoom);
+
 function main() {
+  console.log(lat, lon, zoom);
   cartodb
     .createVis(
       "map",
