@@ -47,8 +47,7 @@ var zoom = getUrlParameter("zoom");
 console.log(lat, lon, zoom);
 if (lat = "act") {
 if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(posact),
-
+      navigator.geolocation.getCurrentPosition(posact);
             };
           };
 function posact(position) {
