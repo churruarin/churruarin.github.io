@@ -64,10 +64,10 @@
                 center_lon: lon,
                 zoom: zoom,
                 carto_logo: false,
-                mobile_layout: false,
+                mobile_layout: true,
                 scrollwheel: true,
                 legends: false,
-                infowindow: false,
+                infowindow: true,
                 layer_selector: false,
                 fullscreen: false
               }
@@ -114,7 +114,7 @@
                       },
                       { https: true }
                     )
-                    .addTo(map);
+                    .addTo(map, 2);
                   //              .done(function(layer){
                   //              var sublayer = layer.getSubLayer(0);
                   //              console.log(sublayer);
