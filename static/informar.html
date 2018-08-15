@@ -44,7 +44,8 @@
             var lon = getUrlParameter('lon');
             var zoom = getUrlParameter('zoom');
             function main() {
-                cartodb.createVis('map', 'https://abelbour.carto.com/api/v2/viz/fbd90b23-99e6-41ef-aebc-ea9148f89cb6/viz.json', {
+              //https://abelbour.carto.com/api/v2/viz/fbd90b23-99e6-41ef-aebc-ea9148f89cb6/viz.json
+                cartodb.createVis('map', 'https://abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json', {
                     shareable: false,
                     title: false,
                     description: false,
@@ -57,13 +58,13 @@
                     mobile_layout: true,
                     layer_selector: false,
                 scrollwheel: true,
-                    
+
                 })
         .done(function (vis, layers) {
             // layer 0 is the base layer, layer 1 is cartodb layer
             // setInteraction is disabled by default
             layers[1].setInteraction(true);
-            var sublayer = layers[1].getSubLayer(1);
+            var sublayer = layers[1].getSubLayer(0);
 
             sublayer.infowindow.set('template', $('#infowindow_template').html());
             sublayer.infowindow.set('sanitizeTemplate', false);
@@ -88,13 +89,13 @@
   <div class="cartodb-popup-content-wrapper">
     <div class="cartodb-popup-content">
       <h4>{{tm}} - {{ultimoabarcado}} días</h4>
-      <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO actividad (fecha, tm) VALUES (current_date, '{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee" 
+      <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO actividad (fecha, tm) VALUES (current_date, '{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
       target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Informar </b></a>
-      <a href="https://abelbour.cartodb.com/api/v2/sql?q=delete from actividad where cartodb_id=(select cartodb_id FROM actividad WHERE tm='{{tm}}' ORDER BY fecha DESC LIMIT 1)&api_key=e97f1858a51f808129279849967e3e2cfa3accee" 
+      <a href="https://abelbour.cartodb.com/api/v2/sql?q=delete from actividad where cartodb_id=(select cartodb_id FROM actividad WHERE tm='{{tm}}' ORDER BY fecha DESC LIMIT 1)&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
       target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Revertir </b></a>
-            <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO marcas (tm) VALUES ('{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee" 
+            <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO marcas (tm) VALUES ('{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
       target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Marcar </b></a>
-            <a href="https://abelbour.cartodb.com/api/v2/sql?q=DELETE FROM marcas WHERE tm='{{tm}}'&api_key=e97f1858a51f808129279849967e3e2cfa3accee" 
+            <a href="https://abelbour.cartodb.com/api/v2/sql?q=DELETE FROM marcas WHERE tm='{{tm}}'&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
       target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Desmarcar </b></a>
       <iframe name="frame" hidden></iframe>
     </div>
