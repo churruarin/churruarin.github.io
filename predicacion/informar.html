@@ -4,6 +4,7 @@
         <div class="btn-group">
             <a class="btn btn-default" onclick="document.getElementById('mapif').contentWindow.location.reload()" href="https://abelbour.cartodb.com/api/v2/sql?q=delete from actividad where cartodb_id in (select cartodb_id from actividad order by cartodb_id desc limit 1)&api_key=e97f1858a51f808129279849967e3e2cfa3accee" target="sql" role="button"><i class="material-icons">undo</i></a>
             <button class="btn btn-default"  onclick="document.getElementById('mapif').contentWindow.location.reload()"><i class="material-icons">refresh</i></button>
+            <a class="btn btn-default" onclick="document.getElementById('mapif').contentWindow.location.reload()" href="https://abelbour.cartodb.com/api/v2/sql?q=DELETE FROM marcas&api_key=e97f1858a51f808129279849967e3e2cfa3accee" target="sql" role="button">Borrar marcas</a>
         </div>
     </div>
     <div class="btn-group pull-right" style="z-index:9999">
@@ -35,4 +36,3 @@
    <iframe src="static/informar.html" name="mapif" id="mapif" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; padding-top:50px; overflow:hidden; z-index:1;"></iframe>
 
 </div>
-
