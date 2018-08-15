@@ -155,8 +155,13 @@
                     (lat = position.coords.latitude),
                       (lon = position.coords.longitude),
                       (zoom = 18),
+<<<<<<< HEAD
                       if ((lat >-31.72709 && lat <-31.76156) && (lon >-60.45072 && lon <-60.50291)) {
                       map.setView([lat, lon], zoom, { animation: true }),
+=======
+                      if (lat >-31.72709 && lat <-31.76156) && (lon >-60.45072 && lon <-60.50291) {
+                      map.setView([lat, lon], zoom, { animation: false }),
+>>>>>>> 4ee4f5dd773b01b6f9c6e7b3c1b8e1af5772d2dd
                       console.log(lat, lon, zoom)
                     }
               }
