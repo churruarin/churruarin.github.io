@@ -140,7 +140,7 @@ function main() {
             (lat = position.coords.latitude),
               (lon = position.coords.longitude),
               (zoom = 18),
-              map.setView([lat, lon], zoom, { animation: false }),
+              map.setView([lat, lon], zoom, { animation: true }),
               console.log(lat, lon, zoom);
           }
         }
@@ -164,39 +164,38 @@ function main() {
               (lat < -31.57291 &&
                 lat > -31.59185 &&
                 (lon < -60.05593 && lon > -60.08619)) ||
-              //Brugo
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619)) ||
-              //Gral Paz
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619)) ||
-              //El Palenque
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619)) ||
-              //Cnia. Crespo
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619)) ||
-              //Cnia. Nueva
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619)) ||
-              //Curtiembre
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619)) ||
-              //Paso las Piedras
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619)) ||
-              //Antonio Tomas
-              (lat < -31.57291 &&
-                lat > -31.59185 &&
-                (lon < -60.05593 && lon > -60.08619))
-
+              //Brugo ok
+              (lat < -31.37 &&
+                lat > -31.40 &&
+                (lon < -60.08 && lon > -60.1)) ||
+              //Gral Paz ok
+              (lat < -31.52 &&
+                lat > -31.54 &&
+                (lon < -60.045 && lon > -60.055)) ||
+              //El Palenque ok
+              (lat < -31.64 &&
+                lat > -31.68 &&
+                (lon < -60.15 && lon > -60.18)) ||
+              //Cnia. Crespo ok
+              (lat < -31.68 &&
+                lat > -31.69 &&
+                (lon < -60.22 && lon > -60.24)) ||
+              //Cnia. Nueva ok
+              (lat < -31.70 &&
+                lat > -31.71 &&
+                (lon < -60.26 && lon > -60.27)) ||
+              //Curtiembre ok
+              (lat < -31.45 &&
+                lat > -31.47 &&
+                (lon < -60.16 && lon > -60.18) ||
+              //Paso las Piedras ok
+              (lat < -31.69 &&
+                lat > -31.71 &&
+                (lon < -60.09 && lon > -60.11)) ||
+              //Antonio Tomas ok
+              (lat < -31.41 &&
+                lat > -31.43 &&
+                (lon < -60.03 && lon > -60.05))
             ) {
               map.setView([lat, lon], zoom, { animation: true });
               console.log(lat, lon, zoom);
