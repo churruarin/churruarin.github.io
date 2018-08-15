@@ -145,9 +145,8 @@ function main() {
           }
         }
       } else if (act == "0") {
-              map.setView([lat, lon], zoom, { animation: true });
-              console.log(lat, lon, zoom);
-
+        map.setView([lat, lon], zoom, { animation: true });
+        console.log(lat, lon, zoom);
       } else {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(posact);
@@ -157,8 +156,46 @@ function main() {
               lon = position.coords.longitude,
               zoom = 18;
             if (
-              ((lat < -31.72709 && lat > -31.76156) && (lon < -60.45072 && lon > -60.50291)) || ((lat < -31.57291 && lat > -31.59185) && (lon < -60.05593 && lon > -60.08619))
-
+              //Paraná ok
+              (lat < -31.72709 &&
+                lat > -31.76156 &&
+                (lon < -60.45072 && lon > -60.50291)) ||
+              //Cerrito ok
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //Brugo
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //Gral Paz
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //El Palenque
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //Cnia. Crespo
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //Cnia. Nueva
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //Curtiembre
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //Paso las Piedras
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619)) ||
+              //Antonio Tomas
+              (lat < -31.57291 &&
+                lat > -31.59185 &&
+                (lon < -60.05593 && lon > -60.08619))
 
             ) {
               map.setView([lat, lon], zoom, { animation: true });
