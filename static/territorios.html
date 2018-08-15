@@ -150,15 +150,22 @@
               } else {
                 if (navigator.geolocation) {
                   navigator.geolocation.getCurrentPosition(posact);
-                    //Fix
+                    //Fix (2)
                   function posact(position) {
+                      var lat = position.coords.latitude,lon = position.coords.longitude,zoom = 18;
+                      if ((lat >-31.72709 && lat <-31.76156) && (lon >-60.45072 && lon <-60.50291)) {
+                          map.setView([lat, lon], zoom, { animation: true });
+                          console.log(lat, lon, zoom);
+                      }
+
+                      /*
                     (lat = position.coords.latitude),
                       (lon = position.coords.longitude),
                       (zoom = 18),
                       if ((lat >-31.72709 && lat <-31.76156) && (lon >-60.45072 && lon <-60.50291)) {
                       map.setView([lat, lon], zoom, { animation: true }),
                       console.log(lat, lon, zoom)
-                    }
+                    }*/
                   }
                 }
             }
