@@ -121,6 +121,7 @@
                   //            });
                 });
               } else {
+
                 // Browser doesn't support Geolocation
                 //alert("Geolocation is disabled");
               }
@@ -147,8 +148,19 @@
                   }
                 }
               } else {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(posact);
 
+                  function posact(position) {
+                    (lat = position.coords.latitude),
+                      (lon = position.coords.longitude),
+                      (zoom = 18),
+                      if (lat >-31.72709 && lat <-31.76156) && (lon >-60.45072 && lon <-60.50291) {
+                      map.setView([lat, lon], zoom, { animation: false }),
+                      console.log(lat, lon, zoom)
+                    }
               }
+            }
             })
             .error(function(err) {
               console.log(err);
