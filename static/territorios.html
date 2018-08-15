@@ -64,10 +64,10 @@
                 center_lon: lon,
                 zoom: zoom,
                 carto_logo: false,
-                mobile_layout: false,
+                mobile_layout: true,
                 scrollwheel: true,
                 legends: false,
-                infowindow: false,
+                infowindow: true,
                 layer_selector: false,
                 fullscreen: false
               }
@@ -80,8 +80,8 @@
 
               if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
-                  var latact = "-31.743952" //position.coords.latitude,
-                    lonact = "-60.482838" //position.coords.longitude,
+                  var latact = position.coords.latitude,
+                    lonact = position.coords.longitude,
                     query =
                       "SELECT 1 as cartodb_id, 'Mi ubicación' as message, ST_Transform(CDB_LatLng(" +
                       latact +
@@ -114,13 +114,14 @@
                       },
                       { https: true }
                     )
-                    .addTo(map);
+                    .addTo(map, 2);
                   //              .done(function(layer){
                   //              var sublayer = layer.getSubLayer(0);
                   //              console.log(sublayer);
                   //            });
                 });
               } else {
+
                 // Browser doesn't support Geolocation
                 //alert("Geolocation is disabled");
               }
@@ -147,8 +148,19 @@
                   }
                 }
               } else {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(posact);
 
+                  function posact(position) {
+                    (lat = position.coords.latitude),
+                      (lon = position.coords.longitude),
+                      (zoom = 18),
+                      if ((lat >-31.72709 && lat <-31.76156) && (lon >-60.45072 && lon <-60.50291)) {
+                      map.setView([lat, lon], zoom, { animation: true }),
+                      console.log(lat, lon, zoom)
+                    }
               }
+            }
             })
             .error(function(err) {
               console.log(err);
