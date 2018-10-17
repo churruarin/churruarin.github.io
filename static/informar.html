@@ -64,7 +64,7 @@
             // layer 0 is the base layer, layer 1 is cartodb layer
             // setInteraction is disabled by default
             layers[1].setInteraction(true);
-            var sublayer = layers[1].getSubLayer(0);
+            var sublayer = layers[1].getSubLayer(1);
 
             sublayer.infowindow.set('template', $('#infowindow_template').html());
             sublayer.infowindow.set('sanitizeTemplate', false);
