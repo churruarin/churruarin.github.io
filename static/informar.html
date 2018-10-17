@@ -45,7 +45,7 @@
             var zoom = getUrlParameter('zoom');
             function main() {
               //https://abelbour.carto.com/api/v2/viz/fbd90b23-99e6-41ef-aebc-ea9148f89cb6/viz.json
-                cartodb.createVis('map', 'https://abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json', {
+                cartodb.createVis('map', 'https://abelbour.carto.com/api/v2/viz/2c6330a3-fedf-4db5-b698-2055b56aca58/viz.json', {
                     shareable: false,
                     title: false,
                     description: false,
@@ -64,7 +64,7 @@
             // layer 0 is the base layer, layer 1 is cartodb layer
             // setInteraction is disabled by default
             layers[1].setInteraction(true);
-            var sublayer = layers[1].getSubLayer(1);
+            var sublayer = layers[1].getSubLayer(0);
 
             sublayer.infowindow.set('template', $('#infowindow_template').html());
             sublayer.infowindow.set('sanitizeTemplate', false);
