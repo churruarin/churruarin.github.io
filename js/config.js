@@ -30,8 +30,8 @@
     //switches para activar los menus
     window.__env.mnuPredicacion = true;
     window.__env.mnuSalidas = true;
-    window.__env.mnuTelefonica = true;
-    window.__env.mnuPublica = true;
+    window.__env.mnuTelefonica = false;
+    window.__env.mnuPublica = false;
     window.__env.mnuTerritorios = true;
     window.__env.mnuCampana = false;
     window.__env.mnuGrupos = true;
