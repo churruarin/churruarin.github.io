@@ -16,10 +16,22 @@
     window.__env.salidasUrl2 = '/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false';
     window.__env.salidas2Url1 = '//docs.google.com/spreadsheets/d/';
     window.__env.salidas2Url2 = '/pubhtml?gid=1666895585&single=false&widget=false&headers=false&chrome=false';
+    window.__env.telefonicaIdSheets = '1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA';
+    window.__env.telefonicaUrl1 = '//docs.google.com/spreadsheets/d/';
+    window.__env.telefonicaUrl2 = '/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false';
+    window.__env.telefonica2Url1 = '//docs.google.com/spreadsheets/d/';
+    window.__env.telefonica2Url2 = '/pubhtml?gid=1666895585&single=false&widget=false&headers=false&chrome=false';
+    window.__env.publicaIdSheets = '1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA';
+    window.__env.publicaUrl1 = '//docs.google.com/spreadsheets/d/';
+    window.__env.publicaUrl2 = '/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false';
+    window.__env.publica2Url1 = '//docs.google.com/spreadsheets/d/';
+    window.__env.publicaa2Url2 = '/pubhtml?gid=1666895585&single=false&widget=false&headers=false&chrome=false';
 
     //switches para activar los menus
     window.__env.mnuPredicacion = true;
     window.__env.mnuSalidas = true;
+    window.__env.mnuTelefonica = true;
+    window.__env.mnuPublica = true;
     window.__env.mnuTerritorios = true;
     window.__env.mnuCampana = false;
     window.__env.mnuGrupos = true;
