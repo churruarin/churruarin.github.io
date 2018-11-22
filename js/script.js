@@ -22,6 +22,12 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 .when('/salidas', {
     templateUrl: 'predicacion/salidas.html', title: 'Salidas al ministerio del campo'
 })
+.when('/telefonica', {
+    templateUrl: 'predicacion/telefonica.html', title: 'Programa de predicación telefónica'
+})
+.when('/publica', {
+    templateUrl: 'predicacion/publica.html', title: 'Programa de predicación pública'
+})
 .when('/territorios', {
     templateUrl: 'predicacion/territorios.html', title: 'Territorios'
     //templateUrl: 'predicacion/campaña.html', title: 'Campaña'
@@ -78,6 +84,8 @@ app.controller('cfgController', function ($scope, __env) {
     $scope.mnuPredicacion = __env.mnuPredicacion;
     //$scope.mnuPredicacion = __env.Salidas;
     $scope.mnuSalidas = __env.mnuSalidas;
+    $scope.mnuTelefonica = __env.mnuTelefonica;
+    $scope.mnuPublica = __env.mnuPublica;
     $scope.mnuTerritorios = __env.mnuTerritorios;
     $scope.mnuCampana = __env.mnuCampana;
     $scope.mnuGrupos = __env.mnuGrupos;
@@ -156,6 +164,19 @@ app.controller('programa', ['$scope', '$sce', '__env', function ($scope, $sce, _
 app.controller('salidas', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
     $scope.urlSalidas = $sce.trustAsResourceUrl(__env.salidasUrl1 + __env.salidasIdSheets + __env.salidasUrl2);
     $scope.urlSalidas2 = $sce.trustAsResourceUrl(__env.salidas2Url1 + __env.salidasIdSheets + __env.salidas2Url2);
+
+
+}]);
+app.controller('telefonica', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+    $scope.urlTelefonica = $sce.trustAsResourceUrl(__env.telefonicaUrl1 + __env.telefonicaIdSheets + __env.telefonicaUrl2);
+    $scope.urlTelefonica2 = $sce.trustAsResourceUrl(__env.telefonica2Url1 + __env.telefonicaIdSheets + __env.telefonica2Url2);
+
+
+}]);
+
+app.controller('publica', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+    $scope.urlPublica = $sce.trustAsResourceUrl(__env.publicaUrl1 + __env.publicaIdSheets + __env.publicaUrl2);
+    $scope.urlPublica2 = $sce.trustAsResourceUrl(__env.publica2Url1 + __env.publicaIdSheets + __env.publica2Url2);
 
 
 }]);
