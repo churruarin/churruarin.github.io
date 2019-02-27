@@ -35,8 +35,84 @@
     }
   });
     </script>
+    <script>
+      var CACHE_NAME = 'myapp-cache-v1';
+var urlsToCache = [
+ 'index.html',
+ 'favicon.ico', 
+ 'inicio.html', 
+ 'menu.html'
+];
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      }
+    )
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  var cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});  
+    </script>
+    <script>
+    if('serviceWorker' in navigator) {
+   navigator.serviceWorker.register('./sw.js', { scope: '/' })
+    .then(function(registration) {
+     var serviceWorker;
+     if (registration.installing) {
+       serviceWorker = registration.installing;
+     } else if (registration.waiting) {
+       serviceWorker = registration.waiting;
+     } else if (registration.active) {
+       serviceWorker = registration.active;
+     }
+
+     if (serviceWorker) {
+       console.log("ServiceWorker phase:", serviceWorker.state);
+
+       serviceWorker.addEventListener('statechange', function (e) {
+      console.log("ServiceWorker phase:", e.target.state);
+       });
+     }
+    });
+   navigator.serviceWorker.ready
+    .then(function(registration) {
+     console.log('ServiceWorker registration ready', registration);
+    });
+    }
+
+</script>
+
     <link rel="prefetch" ng-controller="programa" href="{{urlPrograma}}"/><link rel="prefetch" ng-controller="salidas" href="{{urlSalidas}}" />
     <link rel="prefetch" href="reuniones/programa.html">
     <link rel="prefetch" href="predicacion/salidas.html">
 </body>
+ 
 </html>
