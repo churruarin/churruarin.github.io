@@ -7,6 +7,8 @@
     "start_url": "https://churruar.in/",
     "short_name": "Co. Churruarín",
     "theme_color": "transparent",
+    "background_color": "#031F3B",
+    "theme_color": "#031F3B",
     "description": "",
     "orientation": "any",
     "background_color": "transparent",
