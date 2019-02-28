@@ -79,7 +79,7 @@ function update(request) {
   //this is where we call the server to get the newest version of the 
   //file to use the next time we show view
   return caches.open(CACHE).then(function (cache) {
-    return fetch(request).then(function (response) {
+    return fetch(request, {mode: "cors"}).then(function (response) {
       return cache.put(request, response);
     });
   });
@@ -87,5 +87,5 @@ function update(request) {
 
 function fromServer(request){
   //this is the fallback if it is not in the cache to go to the server and get it
-  return fetch(request).then(function(response){ return response});
+  return fetch(request, {mode: "cors"}).then(function(response){ return response});
 }
