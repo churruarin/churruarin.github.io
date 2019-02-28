@@ -40,7 +40,6 @@ var precacheFiles = [
  'app/predicacion/territorios.html', 
  'app/reuniones/emision.html', 
  'app/reuniones/programa.html', 
- 'app/static/index.html', 
  'app/util/util.html',
  'manifest.json'
     ];
