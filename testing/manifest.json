@@ -4,7 +4,7 @@
     "name": "Co. Churruarín TESTING",
     "scope": "/testing/",
     "display": "standalone",
-    "start_url": "https://churruar.in/",
+    "start_url": "https://churruar.in/testing/",
     "short_name": "Churruarín TESTING",
     "background_color": "#031F3B",
     "theme_color": "#031F3B",
