@@ -52,8 +52,7 @@ const networkFirstPaths = [
 ];
 
 const avoidCachingPaths = [
-  /* Add an array of regex of paths that shouldn't be cached */
-  // Example: /\/api\/.*/
+carto
 ];
 
 const reqprograma = new Request('https://docs.google.com/spreadsheets/d/1BzuB98iqVhP6h2hr6RJELaRFOc9O2A5bj74mvQyapSQ/pubhtml', { mode: 'no-cors' });
