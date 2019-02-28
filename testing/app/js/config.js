@@ -40,7 +40,7 @@
     window.__env.mnuPrograma = true;
     window.__env.mnuEmision = true;
     window.__env.emisionAsistencia = true;
-    window.__env.paginaInicio = 'inicio.html';
+    window.__env.paginaInicio = 'app/inicio.html';
     // API url
     window.__env.apiUrl = 'http://dev.your-api.com';
 
