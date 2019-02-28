@@ -17,53 +17,53 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         templateUrl: __env.paginaInicio, title: 'Inicio'
     })
     .when('/predicacion', {
-        templateUrl: 'predicacion/predicacion.html', title: 'Predicación'
+        templateUrl: 'app/predicacion/predicacion.html', title: 'Predicación'
     })
 .when('/salidas', {
-    templateUrl: 'predicacion/salidas.html', title: 'Salidas al ministerio del campo'
+    templateUrl: 'app/predicacion/salidas.html', title: 'Salidas al ministerio del campo'
 })
 .when('/telefonica', {
-    templateUrl: 'predicacion/telefonica.html', title: 'Programa de predicación telefónica'
+    templateUrl: 'app/predicacion/telefonica.html', title: 'Programa de predicación telefónica'
 })
 .when('/publica', {
-    templateUrl: 'predicacion/publica.html', title: 'Programa de predicación pública'
+    templateUrl: 'app/predicacion/publica.html', title: 'Programa de predicación pública'
 })
 .when('/territorios', {
-    templateUrl: 'predicacion/territorios.html', title: 'Territorios'
+    templateUrl: 'app/predicacion/territorios.html', title: 'Territorios'
     //templateUrl: 'predicacion/campaña.html', title: 'Campaña'
 })
 .when('/campaña', {
-    templateUrl: 'predicacion/campaña.html', title: 'Campaña'
+    templateUrl: 'app/predicacion/campaña.html', title: 'Campaña'
 })
 .when('/grupos', {
-    templateUrl: 'predicacion/grupos.html', title: 'Grupos de predicación'
+    templateUrl: 'app/predicacion/grupos.html', title: 'Grupos de predicación'
 })
 .when('/informe', {
-    templateUrl: 'predicacion/informe.html', title: 'Informe de predicación'
+    templateUrl: 'app/predicacion/informe.html', title: 'Informe de predicación'
 })
 .when('/reuniones', {
-    templateUrl: 'reuniones/reuniones.html', title: 'Reuniones'
+    templateUrl: 'app/reuniones/reuniones.html', title: 'Reuniones'
 })
 .when('/vivo', {
-    templateUrl: 'reuniones/emision.html', title: 'Emisión en directo'
+    templateUrl: 'app/reuniones/emision.html', title: 'Emisión en directo'
 })
 .when('/finde', {
-    templateUrl: 'reuniones/finde.html', title: 'Co. Churruarín'
+    templateUrl: 'app/reuniones/finde.html', title: 'Co. Churruarín'
 })
 .when('/semana', {
-    templateUrl: 'reuniones/semana.html', title: 'Co. Churruarín'
+    templateUrl: 'app/reuniones/semana.html', title: 'Co. Churruarín'
 })
 
 .when('/programa', {
-    templateUrl: 'reuniones/programa.html', title: 'Programa de las reuniones semanales'
+    templateUrl: 'app/reuniones/programa.html', title: 'Programa de las reuniones semanales'
 })
 
 .when('/util', {
-    templateUrl: 'util/util.html', title: 'Índice de utilidades'
+    templateUrl: 'app/util/util.html', title: 'Índice de utilidades'
         })
 
 .when('/informar', {
-    templateUrl: 'predicacion/informar.html', title: 'Informar territorios predicados'
+    templateUrl: 'app/predicacion/informar.html', title: 'Informar territorios predicados'
 });
 
 
