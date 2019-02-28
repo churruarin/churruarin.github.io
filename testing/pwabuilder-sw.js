@@ -10,27 +10,18 @@ var precacheFiles = [
  'app/css/bootstrap.min.css', 
  'app/css/cartodb.css', 
  'app/css/jquery-select-step.css', 
- 'app/css/jquery.bootstrap-touchspin.min.css', 
  'app/fonts/PTSans-bold.woff2', 
  'app/fonts/PTSans.woff2', 
- 'app/fonts/glyphicons-halflings-regular.eot', 
- 'app/fonts/glyphicons-halflings-regular.svg', 
- 'app/fonts/glyphicons-halflings-regular.ttf', 
- 'app/fonts/glyphicons-halflings-regular.woff', 
  'app/fonts/glyphicons-halflings-regular.woff2', 
  'app/js/angular-route.min.js', 
  'app/js/angular.min.js', 
  'app/js/bootstrap.js', 
  'app/js/bootstrap.min.js', 
- 'app/js/cartodb.js', 
  'app/js/config.js', 
- 'app/js/jquery-select-step.js', 
- 'app/js/jquery.bootstrap-touchspin.min.js', 
  'app/js/jquery.min.js', 
  'app/js/json3.min.js', 
  'app/js/jsonQ.min.js', 
  'app/js/script.js', 
- 'app/js/viz.json', 
  'app/predicacion/campaña.html', 
  'app/predicacion/grupos.html', 
  'app/predicacion/informar.html', 
@@ -75,7 +66,10 @@ const reqprograma = new Request('https://docs.google.com/spreadsheets/d/1BzuB98i
 fetch(reqprograma).then(response => cache.put(reqprograma, response));
  const reqsalidas = new Request('https://docs.google.com/spreadsheets/d/1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false', { mode: 'no-cors' });
 fetch(reqsalidas).then(response => cache.put(reqsalidas, response));
- 
+  const reqcss1 = new Request('https://docs.google.com/static/spreadsheets2/client/css/471841686-waffle_k_ltr.css', { mode: 'no-cors' });
+fetch(reqcss1).then(response => cache.put(reqcss1, response));
+   const reqcss2 = new Request('https://fonts.googleapis.com/css?kit=g_LZtaoq_teJt-nj1lQIUoSKLf7XBDVIYWf0YGjmOuE', { mode: 'no-cors' });
+fetch(reqcss2).then(response => cache.put(reqcss2, response));
 }
 
 function fromCache(request) {
