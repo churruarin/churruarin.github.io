@@ -35,120 +35,20 @@
     }
   });
     </script>
-    <script>
-      var CACHE_NAME = 'myapp-cache-v1';
-var urlsToCache = [
- 'index.html',
- 'favicon.ico', 
- 'inicio.html', 
- 'menu.html', 
- 'css/PTSans.css', 
- 'css/bootstrap-theme.min.css', 
- 'css/bootstrap.min.css', 
- 'css/cartodb.css', 
- 'css/jquery-select-step.css', 
- 'css/jquery.bootstrap-touchspin.min.css', 
- 'fonts/PTSans-bold.woff2', 
- 'fonts/PTSans.woff2', 
- 'fonts/glyphicons-halflings-regular.eot', 
- 'fonts/glyphicons-halflings-regular.svg', 
- 'fonts/glyphicons-halflings-regular.ttf', 
- 'fonts/glyphicons-halflings-regular.woff', 
- 'fonts/glyphicons-halflings-regular.woff2', 
- 'js/angular-route.min.js', 
- 'js/angular.min.js', 
- 'js/bootstrap.js', 
- 'js/bootstrap.min.js', 
- 'js/cartodb.js', 
- 'js/config.js', 
- 'js/jquery-select-step.js', 
- 'js/jquery.bootstrap-touchspin.min.js', 
- 'js/jquery.min.js', 
- 'js/json3.min.js', 
- 'js/jsonQ.min.js', 
- 'js/script.js', 
- 'js/viz.json', 
- 'predicacion/campaña.html', 
- 'predicacion/grupos.html', 
- 'predicacion/informar.html', 
- 'predicacion/publica.html', 
- 'predicacion/salidas.html', 
- 'predicacion/telefonica.html', 
- 'predicacion/territorios.html', 
- 'reuniones/emision.html', 
- 'reuniones/programa.html', 
- 'static/campana.html', 
- 'static/grupos.html', 
- 'static/index.html', 
- 'static/informar.html', 
- 'static/territorios.html', 
- 'util/util.html'
-];
+//This is the service worker with the Cache-first network
 
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
+//Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
+if (navigator.serviceWorker.controller) {
+  console.log('[PWA Builder] active service worker found, no need to register')
+} else {
 
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
-  );
-});
-
-self.addEventListener('activate', function(event) {
-  var cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});  
-    </script>
-    <script>
-    if('serviceWorker' in navigator) {
-   navigator.serviceWorker.register('./sw.js', { scope: '/' })
-    .then(function(registration) {
-     var serviceWorker;
-     if (registration.installing) {
-       serviceWorker = registration.installing;
-     } else if (registration.waiting) {
-       serviceWorker = registration.waiting;
-     } else if (registration.active) {
-       serviceWorker = registration.active;
-     }
-
-     if (serviceWorker) {
-       console.log("ServiceWorker phase:", serviceWorker.state);
-
-       serviceWorker.addEventListener('statechange', function (e) {
-      console.log("ServiceWorker phase:", e.target.state);
-       });
-     }
-    });
-   navigator.serviceWorker.ready
-    .then(function(registration) {
-     console.log('ServiceWorker registration ready', registration);
-    });
-    }
-
+//Register the ServiceWorker
+  navigator.serviceWorker.register('pwabuilder-sw.js', {
+    scope: './'
+  }).then(function(reg) {
+    console.log('Service worker has been registered for scope:'+ reg.scope);
+  });
+}
 </script>
 
     <link rel="prefetch" ng-controller="programa" href="{{urlPrograma}}"/>
