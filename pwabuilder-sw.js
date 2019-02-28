@@ -41,11 +41,7 @@ var precacheFiles = [
  'predicacion/territorios.html', 
  'reuniones/emision.html', 
  'reuniones/programa.html', 
- 'static/campana.html', 
- 'static/grupos.html', 
  'static/index.html', 
- 'static/informar.html', 
- 'static/territorios.html', 
  'util/util.html',
  'manifest.json'
     ];
