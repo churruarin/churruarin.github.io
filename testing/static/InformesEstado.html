@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="/js/jquery.bootstrap-touchspin.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/jquery-select-step.css">
+    <script type="text/javascript" src="/js/jquery-select-step.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script type='text/javascript'>
+
+
+        function join(lookupTable, mainTable, lookupKey, mainKey, select) {
+            var l = lookupTable.length,
+            m = mainTable.length,
+            lookupIndex = [],
+            output = [];
+            for (var i = 0; i < l; i++) { // loop through l items
+                var row = lookupTable[i];
+                lookupIndex[row[lookupKey]] = row; // create an index for lookup table
+            }
+            for (var j = 0; j < m; j++) { // loop through m items
+                var y = mainTable[j];
+                var x = lookupIndex[y[mainKey]]; // get corresponding row from lookupTable
+                output.push(select(y, x)); // select only the columns you need
+            }
+            return output;
+        };
+
+
+        var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmkU2M9ai5wHrkuzzZbD8-79Xgc--DI0Tg-apESaWbk-TYfzDZPBxNQ1Ev_d1fpNbE_qX9-TCbI1kA/pubhtml';
+
+        function init() {
+            Tabletop.init({
+                key: '1Eh1LCvhj4ABslKyMQT2_mkkBJat47_UeQMMD7H-xP5g',
+                callback: showInfo,
+                simpleSheet: false
+            })
+        }
+
+        function showInfo(data, tabletop) {
+            alert('Successfully processed!')
+            console.log(data);
+            var result = join(Tabletop.sheets("Informes").elements, Tabletop.sheets("Publicadores").elements, "Nombre", "Nombre", function (informe, publicador) {
+                return {
+                    id: publicador.Nombre,
+                    grupo: publicador.Grupo,
+                    
+                };
+            });
+            console.log(result);
+        }
+
+        window.addEventListener('DOMContentLoaded', init)
+    </script>
+
+</head>
+<body>
+    <h1>Informes de febrero 2017</h1>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item">Hermano 1 <span class="label label-success">Informado</span></li>
+        <li class="list-group-item list-group-item">
+            Hermano 2 <span class="label label-danger">Pendiente</span> <a class="btn btn-default" href="#" role="button">Informar</a>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <iframe id="ifinforme" name="ifinforme" src="InformesForm.html" frameborder="0" allowtransparency="true" style="height: 100%; width: 100%;" onload=" if alert('aa')"></iframe>
+
+
+
+
+
+
+
+                </div>
+            </div>
+
+        </li>
+
+    </ul>
+
+
+</body>
+</html>

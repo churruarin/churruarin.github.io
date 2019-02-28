@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Estado de trabajo del territorio</title>
+    <meta name="robots" content="noindex" />
+    <meta name="robots" content="nofollow" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../favicon.ico">
+    <style>
+        html, body, #map
+        {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body role="document">
+    <div id="map">
+        <script src="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js"></script>
+        <script>
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
+            };
+            var lat = getUrlParameter('lat');
+            var lon = getUrlParameter('lon');
+            var zoom = getUrlParameter('zoom');
+            function main() {
+              //https://abelbour.carto.com/api/v2/viz/fbd90b23-99e6-41ef-aebc-ea9148f89cb6/viz.json
+                cartodb.createVis('map', 'https://abelbour.carto.com/api/v2/viz/fbd90b23-99e6-41ef-aebc-ea9148f89cb6/viz.json', {
+                    shareable: false,
+                    title: false,
+                    description: false,
+                    search: false,
+                    tiles_loader: true,
+                    center_lat: lat,
+                    center_lon: lon,
+                    zoom: zoom,
+                    cartodb_logo: false,
+                    mobile_layout: true,
+                    layer_selector: false,
+                scrollwheel: true,
+
+                })
+        .done(function (vis, layers) {
+            // layer 0 is the base layer, layer 1 is cartodb layer
+            // setInteraction is disabled by default
+            layers[1].setInteraction(true);
+            var sublayer = layers[1].getSubLayer(0);
+
+            sublayer.infowindow.set('template', $('#infowindow_template').html());
+            sublayer.infowindow.set('sanitizeTemplate', false);
+            //layers[1].on('featureOver', function(e, latlng, pos, data) {
+            //  cartodb.log.log(e, latlng, pos, data);
+            //});
+            // you can get the native map to work with it
+            var map = vis.getNativeMap();
+            // now, perform any operations you need
+            // map.setZoom(3);
+            // map.panTo([50.5, 30.5]);
+        })
+        .error(function (err) {
+            console.log(err);
+        });
+            }
+            window.onload = main;
+    </script>
+        <script type="infowindow/html" id="infowindow_template">
+    <div class="cartodb-popup dark v2">
+  <a href="#close" class="cartodb-popup-close-button close">x</a>
+  <div class="cartodb-popup-content-wrapper">
+    <div class="cartodb-popup-content">
+      <h4>{{tm}} - {{ultimoabarcado}} días</h4>
+      <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO actividad (fecha, tm) VALUES (current_date, '{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
+      target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Informar </b></a>
+      <a href="https://abelbour.cartodb.com/api/v2/sql?q=delete from actividad where cartodb_id=(select cartodb_id FROM actividad WHERE tm='{{tm}}' ORDER BY fecha DESC LIMIT 1)&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
+      target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Revertir </b></a>
+            <a href="https://abelbour.cartodb.com/api/v2/sql?q=INSERT INTO marcas (tm) VALUES ('{{tm}}')&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
+      target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Marcar </b></a>
+            <a href="https://abelbour.cartodb.com/api/v2/sql?q=DELETE FROM marcas WHERE tm='{{tm}}'&api_key=e97f1858a51f808129279849967e3e2cfa3accee"
+      target="frame" class="btn btn-default btn-block" onclick="this.className='btn btn-success btn-block'"><b> Desmarcar </b></a>
+      <iframe name="frame" hidden></iframe>
+    </div>
+  </div>
+  <div class="cartodb-popup-tip-container"></div>
+</div>
+    </script>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

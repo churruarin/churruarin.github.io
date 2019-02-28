@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!--<script type="text/javascript" src="https://chriszarate.github.io/sheetrock/dist/sheetrock.min.js"></script>-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script src="//cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script> 
+
+   <title>Sheetrock 1.0 Example 1 by chriszarate</title>
+    <!--<script type="text/javascript">
+        //<![CDATA[
+        $(window).load(function () {
+            // Sheetrock.js 1.0 Example 1
+            // https://chriszarate.github.io/sheetrock/
+
+            // The most basic use case of Sheetrock simply fetches the an
+            // entire worksheet and loads it into a <table>.
+
+            // Define spreadsheet URL.
+            var mySpreadsheet = 'https://docs.google.com/spreadsheets/d/1yDaaB_ZIV0UdH-cMrc0-Hqpm5ccf8O0iG4JYc3jYHT4/edit#gid=0';
+            // Load an entire worksheet.
+
+            $('#statistics').sheetrock({
+                url: mySpreadsheet,
+                query: "select B,C,D order by B desc",
+            });
+        });//]]>
+    </script>-->
+</head>
+
+<body>
+    <!--<table id="statistics" class="table table-condensed table-striped"></table>-->
+    <div id="res"></div>
+
+    <script>
+        var url = 'https://docs.google.com/spreadsheets/d/1Bhq_uy1L9LXWLCxrgAI2b03u4YsoN6WaYS6SZz76D_A/pubhtml?gid=0&single=true';
+
+    alasql('SELECT * INTO HTML("#res",{headers:true}) FROM TABLETOP(?)',[url]);
+    </script>
+</body>
+</html>

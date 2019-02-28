@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Estado de trabajo del territorio</title>
+
+    <style>
+        html, body, #map
+        {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <!--<link rel="stylesheet" href="../css/cartodb.css" />
+    <script src="../js/cartodb.js"></script>-->
+    <link rel="stylesheet" href="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <script src="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js"></script>
+    <link href='../css/PTSans.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!--<script src="../js/json3.min.js"></script>-->
+</head>
+<body>
+
+       <div id="map">
+
+        <script>
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+          var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split("&"),
+            sParameterName,
+            i;
+          for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split("=");
+            if (sParameterName[0] === sParam) {
+              return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+          }
+        };
+        var lat = getUrlParameter("lat");
+        var lon = getUrlParameter("lon");
+        var zoom = getUrlParameter("zoom");
+        var act = getUrlParameter("act");
+        console.log(lat, lon, zoom, "h");
+
+        function main() {
+          console.log(lat, lon, zoom);
+          cartodb
+            .createVis(
+              "map",
+              "https://abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json",
+              {
+                shareable: false,
+                title: false,
+                description: false,
+                search: false,
+                loaderControl: true,
+                center_lat: lat,
+                center_lon: lon,
+                zoom: zoom,
+                carto_logo: false,
+                mobile_layout: false,
+                scrollwheel: true,
+                legends: false,
+                infowindow: false,
+                layer_selector: false,
+                fullscreen: false
+              }
+            )
+            .done(function(vis, layers) {
+              // layer 0 is the base layer, layer 1 is cartodb layer
+              // setInteraction is disabled by default
+              layers[1].setInteraction(true);
+
+
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                  var latact = position.coords.latitude,
+                    lonact = position.coords.longitude,
+                    query =
+                      "SELECT 1 as cartodb_id, 'Mi ubicación' as message, ST_Transform(CDB_LatLng(" +
+                      latact +
+                      ", " +
+                      lonact +
+                      "), 3857) as the_geom_webmercator",
+                    style =
+                      "#layer{marker-width: 25; marker-fill: red; marker-line-width: 4; marker-line-color: white; text-name: [message]; text-face-name: 'Open Sans Bold'; text-size: 12; text-fill: #FFFFFF; text-halo-fill: fadeout(#000000, 30%); text-halo-radius: 2; text-allow-overlap: true; text-placement: point; text-placement-type: simple; text-dy: 10;}";
+                  console.log(latact, lonact, query, style);
+                  //          var map = L.map('map', {
+                  //                  zoomControl: false,
+                  //                  center: [lat, lng],
+                  //                  zoom: 9
+                  //                  });
+                  // add basemap
+                  //            L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CARTO</a>'}).addTo(map);
+                  // add cartodb layer
+                  cartodb
+                    .createLayer(
+                      map,
+                      {
+                        user_name: "abelbour",
+                        type: "cartodb",
+                        sublayers: [
+                          {
+                            sql: query,
+                            cartocss: style
+                          }
+                        ]
+                      },
+                      { https: true }
+                    )
+                    .addTo(map, 2);
+                  //              .done(function(layer){
+                  //              var sublayer = layer.getSubLayer(0);
+                  //              console.log(sublayer);
+                  //            });
+                });
+              } else {
+                // Browser doesn't support Geolocation
+                //alert("Geolocation is disabled");
+              }
+
+              //var sublayer = layers[1].getSubLayer(2);
+              //layers[1].on('featureOver', function(e, latlng, pos, data) {
+              //  cartodb.log.log(e, latlng, pos, data);
+              //});
+              // you can get the native map to work with it
+              var map = vis.getNativeMap();
+              // now, perform any operations you need
+              // map.setZoom(3);
+              // map.panTo([50.5, 30.5]);
+              if (act == "1") {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(posact);
+
+                  function posact(position) {
+                    (lat = position.coords.latitude),
+                      (lon = position.coords.longitude),
+                      (zoom = 18),
+                      map.setView([lat, lon], zoom, { animation: false }),
+                      console.log(lat, lon, zoom);
+                  }
+                }
+              } else {
+
+              }
+            })
+            .error(function(err) {
+              console.log(err);
+            });
+        }
+        window.onload = main;
+
+
+    </script>
+    </div>
+
+
+</body>
+</html>

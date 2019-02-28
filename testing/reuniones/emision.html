@@ -1,0 +1,90 @@
+﻿
+<div ng-controller="transmision">
+   
+  
+    <div class="btn-group pull-right" style="z-index:9999">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalPautas" title="Apagar las luces"><span class="glyphicon glyphicon-lamp" /></button>
+           
+
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true" />
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li class="dropdown-header"><strong>SOLUCIÓN DE PROBLEMAS</strong></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header"><strong><em>Selección automática</em></strong></li>
+                    <li>
+                        <a href="{{urlvideoflash}}">Reproductor Flash</a>
+                    </li>
+                    <li>
+                        <a href="{{urlvideostream}}">Vista alternativa 1</a>
+                    </li>
+                    <li>
+                        <a href="{{urlvideoDM}}">Vista alternativa 2</a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header"><strong><em>Forzado entre semana</em></strong></li>
+                    <li>
+                        <a href="{{urlvideoflashsemana}}">Reproductor Flash</a>
+                    </li>
+                    <li>
+                        <a href="{{urlvideostreamsemana}}">Vista alternativa</a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header"><strong><em>Forzado fin de semana</em></strong></li>
+                    <li>
+                        <a href="{{urlvideoflashfinde}}">Reproductor Flash</a>
+                    </li>
+                    <li>
+                        <a href="{{urlvideostreamfinde}}">Vista alternativa</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <h1>Emisión en directo de las reuniones</h1>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Pautas para ver la emisión en vivo de las reuniones</h3>
+        </div>
+        <div class="panel-body">
+            Por favor, tenga en cuenta lo siguiente:
+            <ul>
+                <li><strong>Solicite la contraseña al hermano encargado</strong> de la emisión. Por favor, <strong>no la pida a otros hermanos.</strong></li>
+                <li><strong>No divulgue la contraseña que le fue provista.</strong> Si un hermano se la solicita, diríjalo al hermano encargado de la emisión.</li>
+                <li><strong>Informe cuántos están viendo el programa</strong> desde su conexión para contarlos en la asistencia, enviando un <strong>mensaje de texto al hermano encargado</strong> de la emisión.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    
+    <div class="embed-responsive embed-responsive-16by9" style="z-index:5000"> 
+        <iframe class="embed-responsive-item" frameborder="0" width="100%" height="100%"
+                ng-src="{{urlvideo}}"
+                allowfullscreen></iframe>
+    </div>
+    <div class="modal fade" id="modalPautas"  tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" data-target="#modalPautas" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPautas">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  
+
+    <div style="height:300px;"></div>
+</div>
