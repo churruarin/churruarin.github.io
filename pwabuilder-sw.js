@@ -77,6 +77,8 @@ function precache() {
   return caches.open(CACHE).then(function (cache) {
     return cache.addAll(precacheFiles);
   });
+const reqprograma = new Request('https://docs.google.com/spreadsheets/d/1BzuB98iqVhP6h2hr6RJELaRFOc9O2A5bj74mvQyapSQ/pubhtml', { mode: 'no-cors' });
+fetch(reqprograma).then(response => cache.put(reqprograma, response));
 }
 
 function fromCache(request) {
