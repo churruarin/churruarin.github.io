@@ -1,13 +1,12 @@
-﻿<!doctype html>
+<!doctype html>
 <html ng-app="single-page-app">
 <head ng-controller="AppCtrl">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#031F3B"/>
+
     <link rel="prefetch" href="menu.html">
     <link rel="prefetch" href="inicio.html">
-    <link rel="manifest" href="/manifest.json">
 
     <title ng-bind="pageTitle">Co. Churruarín</title>
 </head>
@@ -36,30 +35,8 @@
     }
   });
     </script>
-    <script>
-//This is the service worker with the Cache-first network
-
-//Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
-if ("serviceWorker" in navigator) {
-  if (navigator.serviceWorker.controller) {
-    console.log("[PWA Builder] active service worker found, no need to register");
-  } else {
-    // Register the service worker
-    navigator.serviceWorker
-      .register("pwabuilder-sw.js", {
-        scope: "./"
-      })
-      .then(function (reg) {
-        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
-      });
-  }
-}
-</script>
-<script src="js/manup.min.js"></script>
-    <link rel="prefetch" ng-controller="programa" href="{{urlPrograma}}"/>
-    <link rel="prefetch" ng-controller="salidas" href="{{urlSalidas}}" />
+    <link rel="prefetch" ng-controller="programa" href="{{urlPrograma}}"/><link rel="prefetch" ng-controller="salidas" href="{{urlSalidas}}" />
     <link rel="prefetch" href="reuniones/programa.html">
     <link rel="prefetch" href="predicacion/salidas.html">
 </body>
-
 </html>
