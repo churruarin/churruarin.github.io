@@ -29,7 +29,11 @@ var precacheFiles = [
  'app/reuniones/emision.html', 
  'app/reuniones/programa.html', 
  'app/util/util.html',
- 'manifest.json'
+ 'manifest.json',
+ 'https://docs.google.com/spreadsheets/d/1BzuB98iqVhP6h2hr6RJELaRFOc9O2A5bj74mvQyapSQ/pubhtml',
+ 'https://docs.google.com/spreadsheets/d/1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false',
+ 'https://docs.google.com/static/spreadsheets2/client/css/471841686-waffle_k_ltr.css',
+ 'https://fonts.googleapis.com/css?kit=g_LZtaoq_teJt-nj1lQIUoSKLf7XBDVIYWf0YGjmOuE'
     ];
 
 //Install stage sets up the cache-array to configure pre-cache content
