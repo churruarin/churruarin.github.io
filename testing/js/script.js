@@ -6,9 +6,7 @@ if (window) {
 }
 
 var app = angular.module('single-page-app', ['ngRoute']);
-appModule.config(['$locationProvider', function($locationProvider) {
-  $locationProvider.hashPrefix('');
-}]);
+
 
 // Register environment in AngularJS as constant
 app.constant('__env', __env);
