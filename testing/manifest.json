@@ -1,115 +1,114 @@
 {
     "dir": "ltr",
     "lang": "es",
-    "name": "Co. Churruarín",
-    "scope": "/",
+    "name": "Co. Churruarín TESTING",
+    "scope": "/testing/",
     "display": "standalone",
     "start_url": "https://churruar.in/",
-    "short_name": "Churruarín",
+    "short_name": "Churruarín TESTING",
     "background_color": "#031F3B",
     "theme_color": "#031F3B",
     "description": "",
     "orientation": "any",
-    "background_color": "transparent",
     "related_applications": [],
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "/images/favicon.ico",
+            "src": "app/images/favicon.ico",
             "sizes": "16x16"
         },
         {
-            "src": "/images/ec00d69f-e890-b7c3-db3a-636fee7c5892.webPlatform.png",
+            "src": "app/images/ec00d69f-e890-b7c3-db3a-636fee7c5892.webPlatform.png",
             "sizes": "44x44",
             "type": "image/png"
         },
         {
-            "src": "/images/b5b52dcc-ab61-4469-62b1-226279568cc2.webPlatform.png",
+            "src": "app/images/b5b52dcc-ab61-4469-62b1-226279568cc2.webPlatform.png",
             "sizes": "48x48",
             "type": "image/png"
         },
         {
-            "src": "/images/7c053951-7521-38c3-549c-f2eedad5f041.webPlatform.png",
+            "src": "app/images/7c053951-7521-38c3-549c-f2eedad5f041.webPlatform.png",
             "sizes": "1240x600",
             "type": "image/png"
         },
         {
-            "src": "/images/f3387143-45dc-155c-9406-ef1649008546.webPlatform.png",
+            "src": "app/images/f3387143-45dc-155c-9406-ef1649008546.webPlatform.png",
             "sizes": "300x300",
             "type": "image/png"
         },
         {
-            "src": "/images/ca6093bf-a1fb-2f1a-e463-17362fa0bf4d.webPlatform.png",
+            "src": "app/images/ca6093bf-a1fb-2f1a-e463-17362fa0bf4d.webPlatform.png",
             "sizes": "150x150",
             "type": "image/png"
         },
         {
-            "src": "/images/ec6b4ca9-cc3c-e391-3cff-1fe2dc2da85d.webPlatform.png",
+            "src": "app/images/ec6b4ca9-cc3c-e391-3cff-1fe2dc2da85d.webPlatform.png",
             "sizes": "88x88",
             "type": "image/png"
         },
         {
-            "src": "/images/22d393db-2a92-d8e1-030f-4c712fce9c8a.webPlatform.png",
+            "src": "app/images/22d393db-2a92-d8e1-030f-4c712fce9c8a.webPlatform.png",
             "sizes": "24x24",
             "type": "image/png"
         },
         {
-            "src": "/images/f15a89a1-31c4-d5a6-eda5-bdc0ce250950.webPlatform.png",
+            "src": "app/images/f15a89a1-31c4-d5a6-eda5-bdc0ce250950.webPlatform.png",
             "sizes": "50x50",
             "type": "image/png"
         },
         {
-            "src": "/images/0853f22d-5ba4-dd7a-630b-47eda60d5e9f.webPlatform.png",
+            "src": "app/images/0853f22d-5ba4-dd7a-630b-47eda60d5e9f.webPlatform.png",
             "sizes": "620x300",
             "type": "image/png"
         },
         {
-            "src": "/images/0fe37ff5-f063-c349-4888-4410a4a78424.webPlatform.png",
+            "src": "app/images/0fe37ff5-f063-c349-4888-4410a4a78424.webPlatform.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/images/1d3fb2b2-0b6f-f97a-aeb9-cbb37086eab7.webPlatform.png",
+            "src": "app/images/1d3fb2b2-0b6f-f97a-aeb9-cbb37086eab7.webPlatform.png",
             "sizes": "144x144",
             "type": "image/png"
         },
         {
-            "src": "/images/2d21f3c0-419a-296f-83d8-4af99c6ca73a.webPlatform.png",
+            "src": "app/images/2d21f3c0-419a-296f-83d8-4af99c6ca73a.webPlatform.png",
             "sizes": "96x96",
             "type": "image/png"
         },
         {
-            "src": "/images/2ed605da-5e99-b419-0b7f-0cbd454220a8.webPlatform.png",
+            "src": "app/images/2ed605da-5e99-b419-0b7f-0cbd454220a8.webPlatform.png",
             "sizes": "72x72",
             "type": "image/png"
         },
         {
-            "src": "/images/906a2b2e-8c7e-1759-7809-6f1c0d4cf7e0.webPlatform.png",
+            "src": "app/images/906a2b2e-8c7e-1759-7809-6f1c0d4cf7e0.webPlatform.png",
             "sizes": "36x36",
             "type": "image/png"
         },
         {
-            "src": "/images/79c9ee8f-2e82-9559-ca5c-178cd894d9c4.webPlatform.png",
+            "src": "app/images/79c9ee8f-2e82-9559-ca5c-178cd894d9c4.webPlatform.png",
             "sizes": "1024x1024",
             "type": "image/png"
         },
         {
-            "src": "/images/c2c098ce-0891-2d68-99dc-37ac473543f3.webPlatform.png",
+            "src": "app/images/c2c098ce-0891-2d68-99dc-37ac473543f3.webPlatform.png",
             "sizes": "180x180",
             "type": "image/png"
         },
         {
-            "src": "/images/129a5c7a-c64d-add7-9294-b185b7efdba3.webPlatform.png",
+            "src": "app/images/129a5c7a-c64d-add7-9294-b185b7efdba3.webPlatform.png",
             "sizes": "152x152",
             "type": "image/png"
         },
         {
-            "src": "/images/8ae507ec-075d-893a-2d5a-9513d834beec.webPlatform.png",
+            "src": "app/images/8ae507ec-075d-893a-2d5a-9513d834beec.webPlatform.png",
             "sizes": "120x120",
             "type": "image/png"
         },
         {
-            "src": "/images/ed8f40df-a4db-18fd-277d-0408c6040b42.webPlatform.png",
+            "src": "app/images/ed8f40df-a4db-18fd-277d-0408c6040b42.webPlatform.png",
             "sizes": "76x76",
             "type": "image/png"
         }
