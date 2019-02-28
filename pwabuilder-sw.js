@@ -23,7 +23,6 @@ var precacheFiles = [
  'js/angular.min.js', 
  'js/bootstrap.js', 
  'js/bootstrap.min.js', 
- 'js/cartodb.js', 
  'js/config.js', 
  'js/jquery-select-step.js', 
  'js/jquery.bootstrap-touchspin.min.js', 
