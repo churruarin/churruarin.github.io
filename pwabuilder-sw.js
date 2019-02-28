@@ -79,6 +79,9 @@ function precache() {
   });
 const reqprograma = new Request('https://docs.google.com/spreadsheets/d/1BzuB98iqVhP6h2hr6RJELaRFOc9O2A5bj74mvQyapSQ/pubhtml', { mode: 'no-cors' });
 fetch(reqprograma).then(response => cache.put(reqprograma, response));
+ const reqsalidas = new Request('https://docs.google.com/spreadsheets/d/1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false', { mode: 'no-cors' });
+fetch(reqsalidas).then(response => cache.put(reqsalidas, response));
+ 
 }
 
 function fromCache(request) {
