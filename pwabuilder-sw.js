@@ -46,7 +46,8 @@ var precacheFiles = [
  'static/index.html', 
  'static/informar.html', 
  'static/territorios.html', 
- 'util/util.html'
+ 'util/util.html',
+ 'manifest.json'
     ];
 
 //Install stage sets up the cache-array to configure pre-cache content
