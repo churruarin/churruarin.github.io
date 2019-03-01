@@ -29,12 +29,18 @@ var precacheFiles = [
  'app/reuniones/emision.html', 
  'app/reuniones/programa.html', 
  'app/util/util.html',
- 'manifest.json',
+ 'manifest.json'
+    ];
+
+var precacheFilesCors = [
  '//docs.google.com/spreadsheets/d/1BzuB98iqVhP6h2hr6RJELaRFOc9O2A5bj74mvQyapSQ/pubhtml',
  '//docs.google.com/spreadsheets/d/1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false',
  '//docs.google.com/static/spreadsheets2/client/css/471841686-waffle_k_ltr.css',
  '//fonts.googleapis.com/css?kit=g_LZtaoq_teJt-nj1lQIUoSKLf7XBDVIYWf0YGjmOuE',
  '//ssl.gstatic.com/docs/spreadsheets/publishheader.png'
+    ];
+
+var precacheFilesNoCors = [
     ];
 
 //Install stage sets up the cache-array to configure pre-cache content
@@ -61,6 +67,26 @@ self.addEventListener('fetch', function(evt) {
 
 
 function precache() {
+ caches.open(CACHE_NAME)
+      .then(function(cache) {
+        console.log('Opened cache');
+        // Magic is here. Look the  mode: 'no-cors' part.
+        cache.addAll(precacheFilesCors.map(function(precacheFilesCors) {
+           return new Request(precacheFilesCors, { mode: 'cors' });
+        })).then(function() {
+          console.log('All resources have been fetched and cached.');
+        });
+      });
+  caches.open(CACHE_NAME)
+      .then(function(cache) {
+        console.log('Opened cache');
+        // Magic is here. Look the  mode: 'no-cors' part.
+        cache.addAll(precacheFilesNoCors.map(function(precacheFilesNoCors) {
+           return new Request(precacheFilesNoCors, { mode: 'no-cors' });
+        })).then(function() {
+          console.log('All resources have been fetched and cached.');
+        });
+      });
   return caches.open(CACHE).then(function (cache) {
     return cache.addAll(precacheFiles);
   });
