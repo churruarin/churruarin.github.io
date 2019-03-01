@@ -19,6 +19,7 @@ var precacheFiles = [
  'app/predicacion/salidas.html', 
  'app/predicacion/telefonica.html', 
  'app/predicacion/territorios.html', 
+ 'app/predicacion/territorios_offline.html',
  'app/reuniones/emision.html', 
  'app/reuniones/programa.html', 
  'app/util/util.html',
