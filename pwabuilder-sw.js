@@ -6,18 +6,11 @@ var precacheFiles = [
  'app/inicio.html', 
  'app/menu.html', 
  'app/css/PTSans.css', 
- 'app/css/bootstrap-theme.min.css', 
  'app/css/bootstrap.min.css', 
  'app/fonts/PTSans-bold.woff2', 
  'app/fonts/PTSans.woff2', 
  'app/fonts/glyphicons-halflings-regular.woff2', 
- 'app/js/angular-route.min.js', 
- 'app/js/angular.min.js', 
- 'app/js/bootstrap.min.js', 
  'app/js/config.js', 
- 'app/js/jquery.min.js', 
- 'app/js/json3.min.js', 
- 'app/js/jsonQ.min.js', 
  'app/js/script.js', 
  'app/predicacion/campaña.html', 
  'app/predicacion/grupos.html', 
@@ -29,7 +22,7 @@ var precacheFiles = [
  'app/reuniones/emision.html', 
  'app/reuniones/programa.html', 
  'app/util/util.html',
- 'manifest.json',
+ 'manifest.json'
     ];
 
 var precacheFilesCors = [
@@ -39,7 +32,15 @@ var precacheFilesCors = [
  '//ssl.gstatic.com/docs/spreadsheets/publishheader.png',
  '//ssl.gstatic.com/docs/spreadsheets/waffle_sprite53.png',
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css',
- '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js'
+ '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js',
+ '//ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js',
+ '//ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-route.min.js',
+ '//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
+ '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
+ '//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js',
+ '//cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js',
+ '//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
+ 'https://fonts.googleapis.com/icon?family=Material+Icons'
     ];
 
 var precacheFilesNoCors = [
