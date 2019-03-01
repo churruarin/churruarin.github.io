@@ -38,7 +38,11 @@ var precacheFilesCors = [
  '//fonts.googleapis.com/css?kit=g_LZtaoq_teJt-nj1lQIUoSKLf7XBDVIYWf0YGjmOuE',
  '//ssl.gstatic.com/docs/spreadsheets/publishheader.png',
  '//ssl.gstatic.com/docs/spreadsheets/waffle_sprite53.png',
- 'static/territorios.html'
+ 'static/territorios.html',
+ '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css',
+ '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js',
+ '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
+ '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'
     ];
 
 var precacheFilesNoCors = [
