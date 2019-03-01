@@ -40,7 +40,9 @@ var precacheFilesCors = [
  '//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js',
  '//cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js',
  '//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
- 'https://fonts.googleapis.com/icon?family=Material+Icons'
+ 'https://fonts.googleapis.com/icon?family=Material+Icons',
+ 'https://cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.502903,-31.763288,-60.477172,-31.727341/1200/2000.jpg',
+ 'https://cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg'
     ];
 
 var precacheFilesNoCors = [
