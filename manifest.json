@@ -1,17 +1,15 @@
 {
     "dir": "ltr",
     "lang": "es",
-    "name": "Co. Churruarín TESTING",
+    "name": "Co. Churruarín",
     "scope": "/testing/",
     "display": "standalone",
-    "start_url": "https://churruar.in/testing/",
-    "short_name": "Churruarín TESTING",
+    "start_url": "https://churruar.in/",
+    "short_name": "Churruarín",
     "background_color": "#031F3B",
     "theme_color": "#031F3B",
     "description": "",
     "orientation": "any",
-    "related_applications": [],
-    "prefer_related_applications": false,
     "icons": [
         {
             "src": "app/img/favicon.ico",
