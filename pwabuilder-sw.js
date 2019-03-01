@@ -26,8 +26,8 @@ var precacheFiles = [
  'manifest.json',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.502903,-31.763288,-60.477172,-31.727341/1200/2000.jpg?loc=parana1',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg?loc=parana2',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.08291959762573,-31.58966745708685,-60.0586724281311,-31.573307117448653/1200/950.jpg?loc=cerrito'
-
+ '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.08291959762573,-31.58966745708685,-60.0586724281311,-31.573307117448653/1200/950.jpg?loc=cerrito',
+ '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/7cb7e85f4704d6c7da59610fd67311c7:1542137119044/-60.50501346588134,-31.76480766594335,-60.450639724731445,-31.7266340593787/1300/1100.jpg?loc=grupos'
     ];
 
 var precacheFilesCors = [
