@@ -29,7 +29,8 @@ var precacheFiles = [
  'app/reuniones/emision.html', 
  'app/reuniones/programa.html', 
  'app/util/util.html',
- 'manifest.json'
+ 'manifest.json',
+ '//abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json'
     ];
 
 var precacheFilesCors = [
@@ -42,12 +43,11 @@ var precacheFilesCors = [
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css',
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js',
  '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
- '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'
+ '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js''
     ];
 
 var precacheFilesNoCors = [
-  '//docs.google.com/static/spreadsheets2/client/css/471841686-waffle_k_ltr.css',
- '//abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json'
+  '//docs.google.com/static/spreadsheets2/client/css/471841686-waffle_k_ltr.css'
     ];
 
 //Install stage sets up the cache-array to configure pre-cache content
