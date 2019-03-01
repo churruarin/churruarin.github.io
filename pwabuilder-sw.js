@@ -27,13 +27,7 @@ var precacheFiles = [
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.502903,-31.763288,-60.477172,-31.727341/1200/2000.jpg?loc=parana1',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg?loc=parana2',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.08291959762573,-31.58966745708685,-60.0586724281311,-31.573307117448653/1200/950.jpg?loc=cerrito',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.177719593048096,-31.66079693494416,-60.16196966171265,-31.650915511764627/734/541.jpg?loc=elpalenque',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.23655652999878,-31.685906728110815,-60.22728681564331,-31.67953404901898/432/349.jpg?loc=cniacrespo',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.26775598526001,-31.70847235374641,-60.259108543396,-31.702101224268024/403/349.jpg?loc=cnianueva',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.09843349456787,-31.703141811132653,-60.09051561355591,-31.694159519001865/369/492.jpg?loc=pasodelaspiedras',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.05682706832885,-31.536993361047614,-60.04590511322021,-31.52804989027124/509/489.jpg?loc=gralpaz',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.179092884063714,-31.469539577984072,-60.15958786010742,-31.45346936695425/909/878.jpg?ptocurtiembre',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.052406787872314,-31.429523665458003,-60.03925323486328,-31.41687098193217/613/691.jpg?loc=antoniotomas',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.099828243255615,-31.39320899750185,-60.08515119552613,-31.37657610805126/690/910.jpg?loc=pueblobrugo',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/7cb7e85f4704d6c7da59610fd67311c7:1542137119044/-60.50501346588134,-31.76480766594335,-60.450639724731445,-31.7266340593787/1300/1100.jpg?loc=grupos'
     ];
