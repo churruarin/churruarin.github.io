@@ -37,7 +37,8 @@ var precacheFilesCors = [
  '//docs.google.com/spreadsheets/d/1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false',
  '//fonts.googleapis.com/css?kit=g_LZtaoq_teJt-nj1lQIUoSKLf7XBDVIYWf0YGjmOuE',
  '//ssl.gstatic.com/docs/spreadsheets/publishheader.png',
- '//ssl.gstatic.com/docs/spreadsheets/waffle_sprite53.png'
+ '//ssl.gstatic.com/docs/spreadsheets/waffle_sprite53.png',
+ 'static/territorios.html'
     ];
 
 var precacheFilesNoCors = [
