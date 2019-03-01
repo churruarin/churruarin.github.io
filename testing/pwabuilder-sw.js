@@ -42,12 +42,12 @@ var precacheFilesCors = [
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css',
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js',
  '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
- '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
- '//abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json'
+ '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'
     ];
 
 var precacheFilesNoCors = [
-  '//docs.google.com/static/spreadsheets2/client/css/471841686-waffle_k_ltr.css'
+  '//docs.google.com/static/spreadsheets2/client/css/471841686-waffle_k_ltr.css',
+ '//abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json'
     ];
 
 //Install stage sets up the cache-array to configure pre-cache content
