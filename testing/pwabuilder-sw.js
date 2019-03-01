@@ -43,7 +43,7 @@ var precacheFilesCors = [
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css',
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js',
  '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
- '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js''
+ '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'
     ];
 
 var precacheFilesNoCors = [
