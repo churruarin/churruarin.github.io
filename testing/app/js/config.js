@@ -38,7 +38,7 @@
     window.__env.mnuInforme = false;
     window.__env.mnuReuniones = true;
     window.__env.mnuPrograma = true;
-    window.__env.mnuEmision = true;
+    window.__env.mnuEmision = false;
     window.__env.emisionAsistencia = true;
     window.__env.paginaInicio = 'app/inicio.html';
     // API url
