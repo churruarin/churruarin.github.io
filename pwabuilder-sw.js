@@ -24,7 +24,8 @@ var precacheFiles = [
  'app/util/util.html',
  'manifest.json',
  '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.502903,-31.763288,-60.477172,-31.727341/1200/2000.jpg',
- '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg'
+ '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg',
+ 'https://cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.08291959762573,-31.58966745708685,-60.0586724281311,-31.573307117448653/1200/950.jpg?loc=cerrito'
 
     ];
 
