@@ -2,7 +2,7 @@
     "dir": "ltr",
     "lang": "es",
     "name": "Co. Churruarín",
-    "scope": "/testing/",
+    "scope": "/",
     "display": "standalone",
     "start_url": "https://churruar.in/",
     "short_name": "Churruarín",
