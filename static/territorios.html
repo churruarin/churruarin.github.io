@@ -13,6 +13,18 @@
             padding: 0;
             margin: 0;
         }
+        .map-image-container
+{
+  width:100%;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex; 
+}
+.map-image-container img
+{
+  width:100%;
+  height:auto;
+}
     </style>
     <!--<link rel="stylesheet" href="../css/cartodb.css" />
     <script src="../js/cartodb.js"></script>-->
@@ -21,11 +33,7 @@
     <script src="../app/js/bootstrap.min.js"></script>
     <script src="../app/jquery.min.js"></script>
     <!--<script src="../js/json3.min.js"></script>-->
-</head>
-<body>
-
-       <div id="map">
-
+    
         <script>
 var getUrlParameter = function getUrlParameter(sParam) {
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -39,17 +47,48 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
   }
 };
-var loc = getUrlParameter("lat");
+var loc = getUrlParameter("loc");
 
 console.log(loc);
 
 function main() {
- 
+ switch(loc) {
+  case 'parana':
+    mapimg1.src = '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.502903,-31.763288,-60.477172,-31.727341/1200/2000.jpg?parana1';
+    mapimg1.src = '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg?parana2';
+    mapimg2.style.display='inline';
+         break;
+  case 'cerrito':
+    mapimg1.src = '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.08291959762573,-31.58966745708685,-60.0586724281311,-31.573307117448653/1200/950.jpg?loc=cerrito';
+    mapimg2.style.display='none';
+    break;
+  default:
+    mapimg1.src = '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.502903,-31.763288,-60.477172,-31.727341/1200/2000.jpg?parana1';
+    mapimg1.src = '//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg?parana2';
+    mapimg2.style.display='inline';
+}
 }
 window.onload = main;
 
     </script>
-    </div>
+</head>
+<body>
+<div class="map-image-container">
+
+  <div class="column" id="mapcol1">
+    <img id="mapimg1" src="//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.502903,-31.763288,-60.477172,-31.727341/1200/2000.jpg?parana1">
+  </div>
+  <div class="column" id="mapcol2">
+    
+<img id="mapimg2" src="//cartocdn-gusc.global.ssl.fastly.net/abelbour/api/v1/map/static/bbox/92e7ecdffa05ca22406477b1df7aee0f:1551406728475/-60.477172,-31.763288,-60.451487,-31.727341/1200/2000.jpg?parana2">
+
+  </div>
+  
+ 
+</div>
+    
+
+    
 
 
 </body>
