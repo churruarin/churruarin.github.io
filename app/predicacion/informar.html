@@ -1,0 +1,38 @@
+﻿
+<div ng-controller="territorios">
+    <div class="btn-group pull-right" style="z-index:9999">
+        <div class="btn-group">
+            <a class="btn btn-default" onclick="document.getElementById('mapif').contentWindow.location.reload()" href="https://abelbour.cartodb.com/api/v2/sql?q=delete from actividad where cartodb_id in (select cartodb_id from actividad order by cartodb_id desc limit 1)&api_key=e97f1858a51f808129279849967e3e2cfa3accee" target="sql" role="button"><i class="material-icons">undo</i></a>
+            <button class="btn btn-default"  onclick="document.getElementById('mapif').contentWindow.location.reload()"><i class="material-icons">refresh</i></button>
+            <a class="btn btn-default" onclick="document.getElementById('mapif').contentWindow.location.reload()" href="https://abelbour.cartodb.com/api/v2/sql?q=DELETE FROM marcas&api_key=e97f1858a51f808129279849967e3e2cfa3accee" target="sql" role="button">Borrar marcas</a>
+        </div>
+    </div>
+    <div class="btn-group pull-right" style="z-index:9999">
+        <div class="btn-group">
+            <a class="btn btn-default" href="static/informar.html?lat=-31.743952&lon=-60.482838&zoom=15" target="mapif" role="button">Paraná</a>
+            <a class="btn btn-default" href="static/informar.html?lat=-31.580300&lon=-60.075827&zoom=16" target="mapif" role="button">Cerrito</a>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Otros <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="static/informar.html?lat=-31.728514&lon=-60.302678&zoom=16" target="mapif">La Picada</a></li>
+                <li><a href="static/informar.html?lat=-31.705472&lon=-60.263508&zoom=18" target="mapif">Cnia. Nueva (Sur)</a></li>
+                <li><a href="static/informar.html?lat=-31.682772&lon=-60.231258&zoom=18" target="mapif">Cnia. Crespo</a></li>
+                <li><a href="static/informar.html?lat=-31.654504&lon=-60.167885&zoom=17" target="mapif">El Palenque</a></li>
+                <li><a href="static/informar.html?lat=-31.698280&lon=-60.095688&zoom=18" target="mapif">Paso de las Piedras</a></li>
+                <li><a href="static/informar.html?lat=-31.461474&lon=-60.168224&zoom=17" target="mapif">Pto. Curtiembre</a></li>
+                <li><a href="static/informar.html?lat=-31.531960&lon=-60.049784&zoom=18" target="mapif">Gral. Paz</a></li>
+                <li><a href="static/informar.html?lat=-31.424322&lon=-60.047835&zoom=17" target="mapif">Antonio Tomás</a></li>
+                <li><a href="static/informar.html?lat=-31.386144&lon=-60.092247&zoom=17" target="mapif">Pueblo Brugo</a></li>
+            </ul>
+        </div>
+    </div>
+    <h1>Mapa de territorios</h1>
+    <p>Por favor, espere mientras se carga el mapa.</p>
+    <iframe name="sql" hidden ></iframe>
+    <!--<div class="container"  style="position:fixed; z-index:9; color: black;-webkit-text-stroke: 2px; -webkit-text-stroke-color: white;"><h2>Mapa de territorios</h2></div>-->
+   <iframe src="static/informar.html" name="mapif" id="mapif" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; padding-top:50px; overflow:hidden; z-index:1;"></iframe>
+
+</div>
