@@ -30,7 +30,6 @@ var precacheFiles = [
  'app/reuniones/programa.html', 
  'app/util/util.html',
  'manifest.json',
- '//abelbour.carto.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json'
     ];
 
 var precacheFilesCors = [
@@ -39,11 +38,8 @@ var precacheFilesCors = [
  '//fonts.googleapis.com/css?kit=g_LZtaoq_teJt-nj1lQIUoSKLf7XBDVIYWf0YGjmOuE',
  '//ssl.gstatic.com/docs/spreadsheets/publishheader.png',
  '//ssl.gstatic.com/docs/spreadsheets/waffle_sprite53.png',
- 'static/territorios.html',
  '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css',
- '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js',
- '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
- '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'
+ '//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15.9/cartodb.js'
     ];
 
 var precacheFilesNoCors = [
