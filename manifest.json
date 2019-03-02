@@ -8,8 +8,7 @@
     "short_name": "Churruarín",
     "background_color": "#031F3B",
     "theme_color": "#031F3B",
-    "description": "",
-    "orientation": "any",
+    "description": "Tablero de anuncios de la Co. Churruarín",
     "icons": [
         {
             "src": "app/img/favicon.ico",
