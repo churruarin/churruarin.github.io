@@ -32,8 +32,8 @@
     window.__env.mnuSalidas = true;
     window.__env.mnuTelefonica = false;
     window.__env.mnuPublica = false;
-    window.__env.mnuTerritorios = true;
-    window.__env.mnuCampana = false;
+    window.__env.mnuTerritorios = false;
+    window.__env.mnuCampana = true;
     window.__env.mnuGrupos = true;
     window.__env.mnuInforme = false;
     window.__env.mnuReuniones = true;
