@@ -1,11 +1,7 @@
 
 <div ng-controller="transmision">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-  
-    <div class="btn-group pull-right" style="z-index:9999">
-        <div class="btn-group">
-            <button type="button" class="btn btn-default" data-toggle="modal"  title="Apagar las luces"><span class="glyphicon glyphicon-lamp" /></button>
-        </div>
+
     <h1>Emisión en directo de las reuniones</h1>
 
    <form>
@@ -43,17 +39,18 @@
   </label>
 </div>
       </div>
-  <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" id="exampleInputFile">
-    <p class="help-block">Example block-level help text here.</p>
-  </div>
+
   <div class="checkbox">
     <label>
-      <input type="checkbox"> Check me out
+      <input type="checkbox" checked> Recordar estas opciones
     </label>
+      <div class="form-group">
+    <label for="nombre">Clave</label>
+          <span id="helpBlock" class="help-block">Ingrese la clave para ver la reunión de hoy</span>
+    <input type="text" class="form-control" id="nombre" placeholder="1234">
   </div>
-  <button type="submit" class="btn btn-default">Submit</button>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
    
    
