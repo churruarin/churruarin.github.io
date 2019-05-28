@@ -1,6 +1,6 @@
-﻿
+
 <div ng-controller="transmision">
-   
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
   
     <div class="btn-group pull-right" style="z-index:9999">
         <div class="btn-group">
@@ -46,6 +46,52 @@
         </div>
     <h1>Emisión en directo de las reuniones</h1>
 
+   <form>
+  <div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input type="text" class="form-control" id="nombre" placeholder="publicador o familia">
+  </div>
+<div class="btn-group colors" data-toggle="buttons">
+  <label class="btn btn-primary active">
+    <input type="radio" name="options" value="1" autocomplete="off" checked> 1
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" value="2" autocomplete="off"> 2
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" value="3" autocomplete="off"> 3
+  </label>
+     <label class="btn btn-primary">
+    <input type="radio" name="options" value="4" autocomplete="off"> 4
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" value="5" autocomplete="off"> 5
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" value="6" autocomplete="off"> 6
+  </label>
+     <label class="btn btn-primary">
+    <input type="radio" name="options" value="5" autocomplete="off"> 7
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" value="6" autocomplete="off"> 8
+  </label>
+</div>
+      
+  <div class="form-group">
+    <label for="exampleInputFile">File input</label>
+    <input type="file" id="exampleInputFile">
+    <p class="help-block">Example block-level help text here.</p>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Check me out
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+   
+   
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Pautas para ver la emisión en vivo de las reuniones</h3>
