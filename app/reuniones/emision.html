@@ -4,45 +4,7 @@
   
     <div class="btn-group pull-right" style="z-index:9999">
         <div class="btn-group">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalPautas" title="Apagar las luces"><span class="glyphicon glyphicon-lamp" /></button>
-           
-
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true" />
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li class="dropdown-header"><strong>SOLUCIÓN DE PROBLEMAS</strong></li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header"><strong><em>Selección automática</em></strong></li>
-                    <li>
-                        <a href="{{urlvideoflash}}">Reproductor Flash</a>
-                    </li>
-                    <li>
-                        <a href="{{urlvideostream}}">Vista alternativa 1</a>
-                    </li>
-                    <li>
-                        <a href="{{urlvideoDM}}">Vista alternativa 2</a>
-                    </li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header"><strong><em>Forzado entre semana</em></strong></li>
-                    <li>
-                        <a href="{{urlvideoflashsemana}}">Reproductor Flash</a>
-                    </li>
-                    <li>
-                        <a href="{{urlvideostreamsemana}}">Vista alternativa</a>
-                    </li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header"><strong><em>Forzado fin de semana</em></strong></li>
-                    <li>
-                        <a href="{{urlvideoflashfinde}}">Reproductor Flash</a>
-                    </li>
-                    <li>
-                        <a href="{{urlvideostreamfinde}}">Vista alternativa</a>
-                    </li>
-                </ul>
-            </div>
+            <button type="button" class="btn btn-default" data-toggle="modal"  title="Apagar las luces"><span class="glyphicon glyphicon-lamp" /></button>
         </div>
     <h1>Emisión en directo de las reuniones</h1>
 
@@ -51,33 +13,36 @@
     <label for="nombre">Nombre</label>
     <input type="text" class="form-control" id="nombre" placeholder="publicador o familia">
   </div>
-<div class="btn-group colors" data-toggle="buttons">
-  <label class="btn btn-primary active">
+      <div class="form-group">
+          <label for="exampleInputFile">Asistencia</label>
+         <span id="helpBlock" class="help-block">Ingrese cuántos están viendo la emisión desde esta conexión</span>
+<div class="btn-group colors" data-toggle="buttons" id="asistencia">
+  <label class="btn btn-default active">
     <input type="radio" name="options" value="1" autocomplete="off" checked> 1
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-default">
     <input type="radio" name="options" value="2" autocomplete="off"> 2
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-default">
     <input type="radio" name="options" value="3" autocomplete="off"> 3
   </label>
-     <label class="btn btn-primary">
+     <label class="btn btn-default">
     <input type="radio" name="options" value="4" autocomplete="off"> 4
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-default">
     <input type="radio" name="options" value="5" autocomplete="off"> 5
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-default">
     <input type="radio" name="options" value="6" autocomplete="off"> 6
   </label>
-     <label class="btn btn-primary">
+     <label class="btn btn-default">
     <input type="radio" name="options" value="5" autocomplete="off"> 7
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-default">
     <input type="radio" name="options" value="6" autocomplete="off"> 8
   </label>
 </div>
-      
+      </div>
   <div class="form-group">
     <label for="exampleInputFile">File input</label>
     <input type="file" id="exampleInputFile">
