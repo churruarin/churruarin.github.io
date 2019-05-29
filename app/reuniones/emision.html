@@ -24,12 +24,12 @@
         };
         function url() {
             var url = decrypt(enc, document.getElementById('txclave').value);
-            var urlCompleta = "https://youtube.com/embed/"+url;
+            var urlCompleta = "https://youtube.com/embed/"+url+?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
             
             if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
             {
                 //Es una url de youtube
-                document.getElementById('url').innerHTML = urlCompleta;
+                document.getElementById('videoIframe').src = urlCompleta;
             }
             else
             {
