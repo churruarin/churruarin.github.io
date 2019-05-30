@@ -114,7 +114,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
            
         })
         .fail(function(){
-            hash == null
+            hash = null
                 //    callback(false)
           //Hubo un error en la solicitud
           //alert("Error al generar el hash")
