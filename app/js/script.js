@@ -102,6 +102,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
          $scope.accordionEmision = false;
         var congregacion = __env.congregacion;
         var hash;
+        $scope.getHash;
         $scope.transmision = {}
         //cargar hash al inicio
          $scope.getHash=function() {    
