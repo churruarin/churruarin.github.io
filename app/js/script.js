@@ -124,9 +124,11 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
           
         };
        if (!hash) {
-         $scope.transmision.sinEmision.collapse('show')
+         $scope.sinEmision = true;
+         $scope.accordionEmision = false;
         } else {
-        $scope.transmision.sinEmision.collapse('hide')
+         $scope.sinEmision = false;
+         $scope.accordionEmision = true;
           };
         $scope.getUrl=function() {
            
