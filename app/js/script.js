@@ -99,7 +99,7 @@ app.controller('cfgController', function ($scope, __env) {
 
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
     
-        var congregacion = 'Gazzano';//__env.congregacion
+        var congregacion = __env.congregacion;
         var hash;
         $scope.transmision = {}
         //cargar hash al inicio
@@ -124,9 +124,9 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
           
         };
        if (!hash) {
-            //si no hay ninguna reunion para la congregacion mostrar panel sinEmision
+         $scope.transmision.sinEmision.collapse('show')
         } else {
-        //mostrar acordion
+        $scope.transmision.sinEmision.collapse('hide')
           };
         $scope.getUrl=function() {
            
