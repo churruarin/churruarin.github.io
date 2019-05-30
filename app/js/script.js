@@ -103,38 +103,45 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         var hash;
         $scope.transmision = {}
     
-        function getHash() {         
+        function getHash(callback) {    
+            
             $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
             //Devuelve el hash de sheets
            hash = jsonata('$.values.({"congregacion": $[0],"enc": $[1]})[congregacion="'+congregacion+'"].enc').evaluate(jsonurl);
-                   
+                   callback(hash)
            // document.getElementById('hash').innerHTML = result;
            
         })
         .fail(function(){
+                callback(false)
           //Hubo un error en la solicitud
           //alert("Error al generar el hash")
          document.getElementById('sinEmision').class = "alert alert-warning";
          document.getElementById('accordionEmision').class = "panel-group hidden";
         })
+            
         };
         $scope.getUrl=function() {
-            alert($scope.transmision.clave);
-            var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
-            var urlCompleta = "https://youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
+            getHash(function(hash){
+              
+                var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
+                var urlCompleta = "https://youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
+
+                if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
+                {
+                    //Es una url de youtube
+                    document.getElementById('videoIframe').src = urlCompleta;
+                  $('#collapseThree').collapse({show: true});
+                }
+                else
+                {
+                   //No es una url de youtube
+                    alert('Datos incorrectos');
+                }
             
-            if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
-            {
-                //Es una url de youtube
-                document.getElementById('videoIframe').src = urlCompleta;
-              $('#collapseThree').collapse({show: true});
-            }
-            else
-            {
-               //No es una url de youtube
-                alert('Datos incorrectos');
-            }
+            });
+          
             
         };
     
