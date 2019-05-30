@@ -98,8 +98,44 @@ app.controller('cfgController', function ($scope, __env) {
 
 
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
-  
+          var congregacion = 'Churruarín';
+        var hash;
+        function getHash() {         
+            $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
+        .done(function(jsonurl){
+            //Devuelve el hash de sheets
+           hash = jsonata('$.values.({"congregacion": $[0],"enc": $[1]})[congregacion="'+congregacion+'"].enc').evaluate(jsonurl);
+                   
+           // document.getElementById('hash').innerHTML = result;
+           
+        })
+        .fail(function(){
+          //Hubo un error en la solicitud
+          //alert("Error al generar el hash")
+         document.getElementById('sinEmision').class = "alert alert-warning";
+         document.getElementById('accordionEmision').class = "panel-group hidden";
+        })
+        };
+        function getUrl() {
+            var url = decrypt(hash, document.getElementById('clave').value);
+            var urlCompleta = "https://youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
+            
+            if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
+            {
+                //Es una url de youtube
+                document.getElementById('videoIframe').src = urlCompleta;
+              $('#collapseThree').collapse({show: true});
+            }
+            else
+            {
+               //No es una url de youtube
+                alert('Datos incorrectos');
+            }
+            
+        };
     
+    
+    // DAILYMOTION no va mas
     /*  var videosemana = __env.videoIdSemana //"x4a2fbi";
     var videofinde = __env.videoIdFinde //"x4jw7bs";
     var hoy = new Date();
