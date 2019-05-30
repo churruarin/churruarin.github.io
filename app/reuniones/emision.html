@@ -3,9 +3,9 @@
 
     <h1>Emisión en directo de las reuniones</h1>
 
-  <div class="alert alert-warning hidden" role="alert" id="sinEmision"><strong>No hay emisiones programadas para hoy.</strong></div>
+  <div class="alert alert-warning" role="alert" ngshow="sinEmision"><strong>No hay emisiones programadas para hoy.</strong></div>
       
-      <div class="panel-group" id="accordionEmision" role="tablist" aria-multiselectable="true">
+      <div class="panel-group" ngshow="accordionEmision" role="tablist" aria-multiselectable="true" > 
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
