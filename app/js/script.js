@@ -123,12 +123,11 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         })
           
         };
-       
-        if (hash == null) {
-        //si no hay ninguna reunion para la congregacion mostrar panel sinEmision
-    } else {
+       if (!hash) {
+            //si no hay ninguna reunion para la congregacion mostrar panel sinEmision
+        } else {
         //mostrar acordion
-    };
+          };
         $scope.getUrl=function() {
            
            
