@@ -3,7 +3,8 @@
     <script>
         var congregacion = 'Churruarín';
         var hash;
-        function getHash() {         $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
+        function getHash() {         
+            $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
             //Devuelve el hash de sheets
            hash = jsonata('$.values.({"congregacion": $[0],"enc": $[1]})[congregacion="'+congregacion+'"].enc').evaluate(jsonurl);
