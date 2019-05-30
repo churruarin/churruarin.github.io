@@ -98,7 +98,9 @@ app.controller('cfgController', function ($scope, __env) {
 
 
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
-    var videosemana = __env.videoIdSemana //"x4a2fbi";
+  
+    
+    /*  var videosemana = __env.videoIdSemana //"x4a2fbi";
     var videofinde = __env.videoIdFinde //"x4jw7bs";
     var hoy = new Date();
     var videohoy
@@ -130,6 +132,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
     //$scope.closeAlert = function (index) {
     //    $scope.show = false;
     //};
+    */
 }]);
 
 app.controller('transmisionfull', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
