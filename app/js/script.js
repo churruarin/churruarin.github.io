@@ -103,43 +103,44 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         var hash;
         $scope.transmision = {}
         //cargar hash al inicio
-        function getHash(callback) {    
+         $scope.getHash=function {    
             //recupera json con reuniones del dia
             $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
             //Devuelve solo el hash de la congregación
            hash = jsonata('$.values.({"congregacion": $[0],"enc": $[1]})[congregacion="'+congregacion+'"].enc').evaluate(jsonurl);
-                   callback(hash)
+                 
         
            
         })
         .fail(function(){
-                callback(false)
+            hash == null
+                //    callback(false)
           //Hubo un error en la solicitud
           //alert("Error al generar el hash")
          //document.getElementById('sinEmision').class = "alert alert-warning";
          //document.getElementById('accordionEmision').class = "panel-group hidden";
         })
-            //si no hay ninguna reunion para la congregacion mostrar panel sinEmision
+          
         };
+       
+        if (hash == null) {
+        //si no hay ninguna reunion para la congregacion mostrar panel sinEmision
+    } else {
+        //mostrar acordion
+    };
         $scope.getUrl=function() {
-            getHash(function(hash){
-                if(!hash)
-                {
-                    //alerta en panel
-                    alert('Error al obtener el enlace');
-                    return false;
-                }
-                
+           
+           
                 var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
                 var urlCompleta = "https://youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
 
                 if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
                 {
                     //Es una url de youtube
-                    alert("URL de youtube:"+urlCompleta);
-                    document.getElementById('videoIframe').src = urlCompleta;
-                  $('#collapseThree').collapse({show: true});
+                    //alert("URL de youtube:"+urlCompleta);
+                    $scope.transmision.videoIframe.src = urlCompleta;
+                 // $('#collapseThree').collapse({show: true});
                 }
                 else
                 {
@@ -147,7 +148,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                     alert('Datos incorrectos');
                 }
             
-            });
+           
           
             
         };
