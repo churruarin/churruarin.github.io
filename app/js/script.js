@@ -98,8 +98,7 @@ app.controller('cfgController', function ($scope, __env) {
 
 
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
-             $scope.sinEmision = true;
-         $scope.accordionEmision = false;
+
         var congregacion = __env.congregacion;
         var hash;
         getHash();
@@ -112,11 +111,18 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
             //Devuelve solo el hash de la congregación
            hash = jsonata('$.values.({"congregacion": $[0],"enc": $[1]})[congregacion="'+congregacion+'"].enc').evaluate(jsonurl);
                  
-        
+               if (!hash) {
+         $scope.sinEmision = true;
+         $scope.accordionEmision = false;
+        } else {
+         $scope.sinEmision = false;
+         $scope.accordionEmision = true;
+          };
            
         })
         .fail(function(){
-            hash = null
+         $scope.sinEmision = true;
+         $scope.accordionEmision = false;
                 //    callback(false)
           //Hubo un error en la solicitud
           //alert("Error al generar el hash")
@@ -125,13 +131,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         })
           
         };
-       if (!hash) {
-         $scope.sinEmision = true;
-         $scope.accordionEmision = false;
-        } else {
-         $scope.sinEmision = false;
-         $scope.accordionEmision = true;
-          };
+
         $scope.getUrl=function() {
            
            
