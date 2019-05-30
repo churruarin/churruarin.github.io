@@ -100,6 +100,8 @@ app.controller('cfgController', function ($scope, __env) {
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
           var congregacion = 'Churruarín';
         var hash;
+        $scope.transmision = {}
+    
         function getHash() {         
             $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
@@ -116,8 +118,9 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
          document.getElementById('accordionEmision').class = "panel-group hidden";
         })
         };
-        function getUrl() {
-            var url = decrypt(hash, document.getElementById('clave').value);
+        $scope.getUrl=function() {
+            alert($scope.transmision.clave);
+            var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
             var urlCompleta = "https://youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
             
             if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
