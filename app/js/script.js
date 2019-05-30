@@ -102,10 +102,10 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
          $scope.accordionEmision = false;
         var congregacion = __env.congregacion;
         var hash;
-        $scope.getHash;
+        getHash;
         $scope.transmision = {}
         //cargar hash al inicio
-         $scope.getHash=function() {    
+         function getHash() {    
             //recupera json con reuniones del dia
             $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
