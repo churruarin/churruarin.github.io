@@ -124,7 +124,12 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         };
         $scope.getUrl=function() {
             getHash(function(hash){
-              
+                if(!hash)
+                {
+                    alert('Error al obtener el enlace');
+                    return false;
+                }
+                
                 var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
                 var urlCompleta = "https://youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
 
