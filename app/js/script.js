@@ -99,33 +99,34 @@ app.controller('cfgController', function ($scope, __env) {
 
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
     
-        var congregacion = 'Gazzano';//'Churruarín';
+        var congregacion = 'Gazzano';//__env.congregacion
         var hash;
         $scope.transmision = {}
-    
+        //cargar hash al inicio
         function getHash(callback) {    
-            
+            //recupera json con reuniones del dia
             $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
-            //Devuelve el hash de sheets
+            //Devuelve solo el hash de la congregación
            hash = jsonata('$.values.({"congregacion": $[0],"enc": $[1]})[congregacion="'+congregacion+'"].enc').evaluate(jsonurl);
                    callback(hash)
-           // document.getElementById('hash').innerHTML = result;
+        
            
         })
         .fail(function(){
                 callback(false)
           //Hubo un error en la solicitud
           //alert("Error al generar el hash")
-         document.getElementById('sinEmision').class = "alert alert-warning";
-         document.getElementById('accordionEmision').class = "panel-group hidden";
+         //document.getElementById('sinEmision').class = "alert alert-warning";
+         //document.getElementById('accordionEmision').class = "panel-group hidden";
         })
-            
+            //si no hay ninguna reunion para la congregacion mostrar panel sinEmision
         };
         $scope.getUrl=function() {
             getHash(function(hash){
                 if(!hash)
                 {
+                    //alerta en panel
                     alert('Error al obtener el enlace');
                     return false;
                 }
