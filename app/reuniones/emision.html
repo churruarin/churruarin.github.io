@@ -1,6 +1,7 @@
 
 <div ng-controller="transmision">
     <script>
+        /*
         var congregacion = 'Churruarín';
         var hash;
         function getHash() {         
@@ -35,7 +36,7 @@
                 alert('Datos incorrectos');
             }
             
-        };
+        };*/
     </script>
     <h1>Emisión en directo de las reuniones</h1>
 
@@ -136,7 +137,7 @@
           <div class="form-group">        
            <label for="iniciar" class="col-sm-2 control-label"></label>
           <div class="col-sm-4">
-  <button class="btn btn-primary" data-toggle="collapse" data-parent="#accordion"  aria-expanded="false" aria-controls="collapseThree" id="iniciar" onclick="getUrl()">Ver la emisión</button>
+  <button class="btn btn-primary" data-toggle="collapse" data-parent="#accordion"  aria-expanded="false" aria-controls="collapseThree" id="iniciar" data-ng-click="getUrl" >Ver la emisión</button>
           </div>
           </div>
         </form>
