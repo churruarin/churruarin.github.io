@@ -99,7 +99,7 @@ app.controller('cfgController', function ($scope, __env) {
 
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
     
-        var congregacion = 'Churruarín';
+        var congregacion = 'Gazzano';//'Churruarín';
         var hash;
         $scope.transmision = {}
     
