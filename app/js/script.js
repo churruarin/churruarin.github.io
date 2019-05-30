@@ -136,6 +136,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                 if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
                 {
                     //Es una url de youtube
+                    alert("URL de youtube:"+urlCompleta);
                     document.getElementById('videoIframe').src = urlCompleta;
                   $('#collapseThree').collapse({show: true});
                 }
