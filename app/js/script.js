@@ -193,10 +193,10 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                 $scope.PostDataResponse = data;
             })
             .error(function (data, status, header, config) {
-                $scope.ResponseDetails = "Data: " + data +
+               console.log("Data: " + data +
                     "<hr />status: " + status +
                     "<hr />headers: " + header +
-                    "<hr />config: " + config;
+                    "<hr />config: " + config);
             });
         };
     
