@@ -22,7 +22,7 @@
                 <li><strong>Informe cuántos están viendo el programa</strong> desde su conexión para contarlos en la asistencia.</li> 
             </ul>
 
-         <button type="button" class="btn btn-primary"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">De acuerdo, respetaré estas pautas.</button>
+         <button type="button" class="btn btn-primary" aria-expanded="false" data-ng-click="okEula()">De acuerdo, respetaré estas pautas.</button>
 <button type="button" class="btn btn-default">Cancelar</button>
       </div>
     </div>
@@ -34,7 +34,7 @@
    
       </h4>
     </div>
-    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"  ng-show="pnlEula" aria-labelledby="headingTwo">
       <div class="panel-body"> 
         
         <form class="form-horizontal">
