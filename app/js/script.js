@@ -187,15 +187,6 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
             }
            // $http.get(url, data)
 
-            /*
-            $http({
-                method:'POST',
-                url: 'https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse',
-                headers : {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                },
-                data:data
-                })*/
             $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
 
                 .then(function (data, status, headers, config) {
