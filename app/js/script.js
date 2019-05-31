@@ -5,7 +5,7 @@ if (window) {
     Object.assign(__env, window.__env);
 }
 
-var app = angular.module('single-page-app', ['ngRoute']);
+var app = angular.module('single-page-app', ['ngRoute', 'ui.bootstrap']);
 
 
 // Register environment in AngularJS as constant
@@ -178,14 +178,13 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                 'entry.1056716961': $scope.asistencia.espectadores,
                 'entry.1223281277': __env.congregacion
             });
-            var url = 'https://cors-anywhere.herokuapp.com/https://docs.google.com/forms/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse'
-        
+       
             var config = {
                 headers : {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                 }
             }
-           // $http.get(url, data)
+
 
             $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
 
@@ -196,17 +195,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                     alert('Error al enviar los datos');
                     console.log(data,status,header,config);
                 })
-            /*
-            $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
-            .success(function (data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function (data, status, header, config) {
-               console.log("Data: " + data +
-                    "<hr />status: " + status +
-                    "<hr />headers: " + header +
-                    "<hr />config: " + config);
-            });*/
+
         };
     
     // DAILYMOTION no va mas
