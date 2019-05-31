@@ -161,6 +161,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         $scope.pnlAsistencia = 'panel-collapse collapse';
         $scope.pnlVideo = 'panel-collapse collapse in'; 
         $scope.$apply();
+                    postAsistencia();
                 }
                 else
                 {
@@ -172,7 +173,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
     function postAsistencia () {
             $http({
           method  : 'POST',
-          url     : 'http://example.com/clone.php',
+          url     : 'https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse',
           data    : $scope.asistencia,
           headers : { 'Content-Type': 'application/x-www-form-urlencoded' } 
          })  
