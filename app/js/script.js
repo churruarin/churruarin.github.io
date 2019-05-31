@@ -178,23 +178,20 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                 'entry.1056716961': $scope.asistencia.espectadores,
                 'entry.1223281277': __env.congregacion
             });
-       
-            var config = {
-                headers : {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                }
-            }
 
 
-            $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
+            $http({
+                method: 'POST',
+                url: 'https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse',
+                data: data,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (data, status, headers, config) {
+                console.log("Éxito al enviar los datos",data);
+            }).error(function (data, status, headers, config) {
+                alert('Error al enviar los datos');
+                console.log(data,status,headers,config);
+            });
 
-                .then(function (data, status, headers, config) {
-                    console.log("Éxito al enviar los datos",data);
-                },function (data, status, header, config) {
-
-                    alert('Error al enviar los datos');
-                    console.log(data,status,header,config);
-                })
 
         };
     
