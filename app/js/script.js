@@ -173,13 +173,13 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         function postAsistencia () {
            // use $.param jQuery function to serialize data from JSON 
             var data = $.param({
-                entry.106585637: $scope.asistencia.nombre,
-                entry.1056716961: $scope.asistencia.espectadores,
-                entry.1223281277: __env.congregacion,
-                fvv: "1",
-                draftResponse: "[null,null,&quot;-8112877041524363823&quot;]",
-                pageHistory: "0",
-                fbzx: "-8112877041524363823",
+                'entry.106585637': $scope.asistencia.nombre,
+                'entry.1056716961': $scope.asistencia.espectadores,
+                'entry.1223281277': __env.congregacion,
+                'fvv': "1",
+                'draftResponse': "[null,null,&quot;-8112877041524363823&quot;]",
+                'pageHistory': "0",
+                'fbzx': "-8112877041524363823",
             });
         
             var config = {
