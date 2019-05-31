@@ -191,7 +191,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                     console.log($scope.asistencia);
                 console.log("Éxito al enviar los datos",data);
                 },function (data, status, header, config) {
-                    console.log($scope.asistencia.espectadores);
+                    console.log($scope.asistencia);
                     console.log('Error al enviar los datos');
                     console.log(data,status,header,config);
                 })
