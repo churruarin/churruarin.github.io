@@ -153,7 +153,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                 {
                     //Es una url de youtube
                     //alert("URL de youtube:"+urlCompleta);
-                    $scope.iframeVideo = urlCompleta;
+                    $scope.iframeVideo = $sce.trustAsResourceUrl('urlCompleta');
                  // $('#collapseThree').collapse({show: true});
         $scope.pnlEula = 'panel-collapse collapse';
         $scope.pnlAsistencia = 'panel-collapse collapse';
