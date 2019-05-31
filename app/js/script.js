@@ -178,7 +178,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                 'entry.1056716961': $scope.asistencia.espectadores,
                 'entry.1223281277': __env.congregacion
             });
-            var url = 'https://docs.google.com/forms/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse'
+            var url = 'https://cors-anywhere.herokuapp.com/https://docs.google.com/forms/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse'
         
             var config = {
                 headers : {
