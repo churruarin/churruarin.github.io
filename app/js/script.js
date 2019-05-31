@@ -103,7 +103,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         var hash;
         $scope.transmision = {}
         //cargar hash al inicio
-          $scope.getHash = function() {    
+         function getHash() {    
             //recupera json con reuniones del dia
             $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
@@ -131,6 +131,8 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
           
         };
 
+    getHash();
+    
         $scope.getUrl=function() {
            
            
