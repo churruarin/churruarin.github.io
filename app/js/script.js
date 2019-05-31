@@ -105,6 +105,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         var congregacion = __env.congregacion;
         var hash;
         $scope.transmision = {}
+        $scope.asistencia = {}
         //cargar hash al inicio
          function getHash() {    
             //recupera json con reuniones del dia
@@ -166,12 +167,17 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                    //No es una url de youtube
                     alert('Datos incorrectos');
                 }
-            
-           
-          
-            
-        };
+            };
     
+    function postAsistencia () {
+            $http({
+          method  : 'POST',
+          url     : 'http://example.com/clone.php',
+          data    : $scope.asistencia,
+          headers : { 'Content-Type': 'application/x-www-form-urlencoded' } 
+         })  
+    
+    };
     
     // DAILYMOTION no va mas
     /*  var videosemana = __env.videoIdSemana //"x4a2fbi";
