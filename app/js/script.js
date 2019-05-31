@@ -176,19 +176,18 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
             var data = $.param({
                 'entry.106585637': $scope.asistencia.nombre,
                 'entry.1056716961': $scope.asistencia.espectadores,
-                'entry.1223281277': __env.congregacion,
-                'fvv': "1",
-                'draftResponse': "[null,null,&quot;-8112877041524363823&quot;]",
-                'pageHistory': "0",
-                'fbzx': "-8112877041524363823",
+                'entry.1223281277': __env.congregacion
             });
+            var url = 'https://docs.google.com/forms/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse'
         
             var config = {
                 headers : {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                 }
             }
-
+            $http.get(url, data)
+            
+/*
             $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
             .success(function (data, status, headers, config) {
                 console.log(data);
@@ -198,7 +197,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                     "<hr />status: " + status +
                     "<hr />headers: " + header +
                     "<hr />config: " + config);
-            });
+            });*/
         };
     
     // DAILYMOTION no va mas
