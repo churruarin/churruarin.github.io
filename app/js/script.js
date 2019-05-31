@@ -104,8 +104,8 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         $scope.pnlVideo = 'panel-collapse collapse';
         var congregacion = __env.congregacion;
         var hash;
-        $scope.transmision = {}
-        $scope.asistencia = {}
+        $scope.asistencia = {};
+    $scope.transmision = {};
         //cargar hash al inicio
          function getHash() {    
             //recupera json con reuniones del dia
