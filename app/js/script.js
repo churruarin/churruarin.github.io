@@ -170,15 +170,35 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                 }
             };
     
-    function postAsistencia () {
-            $http({
-          method  : 'POST',
-          url     : 'https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse',
-          data    : $scope.asistencia,
-          headers : { 'Content-Type': 'application/x-www-form-urlencoded' } 
-         })  
-    
-    };
+        function postAsistencia () {
+           // use $.param jQuery function to serialize data from JSON 
+            var data = $.param({
+                entry.106585637: $scope.asistencia.nombre,
+                entry.1056716961: $scope.asistencia.espectadores,
+                entry.1223281277: __env.congregacion,
+                fvv: "1",
+                draftResponse: "[null,null,&quot;-8112877041524363823&quot;]",
+                pageHistory: "0",
+                fbzx: "-8112877041524363823",
+            });
+        
+            var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+
+            $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
+            .success(function (data, status, headers, config) {
+                $scope.PostDataResponse = data;
+            })
+            .error(function (data, status, header, config) {
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+            });
+        };
     
     // DAILYMOTION no va mas
     /*  var videosemana = __env.videoIdSemana //"x4a2fbi";
