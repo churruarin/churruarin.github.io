@@ -42,7 +42,7 @@
           <div class="form-group">
     <label for="nombre" class="col-sm-2 control-label">Nombre</label>
             <div class="col-sm-4">
-    <input type="text" class="form-control" id="publicador" placeholder="Publicador o familia" >
+    <input type="text" class="form-control" id="publicador" placeholder="Publicador o familia" ng-model="asistencia.nombre">
             </div>
   </div>
           
@@ -79,10 +79,7 @@
           <span id="helpBlock" class="help-block">Indique cuántos están viendo la emisión desde esta conexión</span>
         </div>
       </div>
-            <input type="hidden" name="fvv" value="1" ng-model="asistencia.fvv">
-            <input type="hidden" name="draftResponse" ng-model="asistencia.draftResponse" value="[null,null,&quot;-8112877041524363823&quot;]">
-            <input type="hidden" name="pageHistory" value="0" ng-model="asistencia.pageHistory">
-            <input type="hidden" name="fbzx" value="-8112877041524363823" ng-model="asistencia.fbzx">
+
           <div class="form-group">        
  
   
