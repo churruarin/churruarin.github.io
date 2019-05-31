@@ -109,7 +109,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         .done(function(jsonurl){
             //Devuelve solo el hash de la congregación
            hash = jsonata('$.values.({"congregacion": $[0],"enc": $[1]})[congregacion="'+congregacion+'"].enc').evaluate(jsonurl);
-                 
+              alert(hash);   
                if (!hash) {
          $scope.sinEmision = true;
          $scope.accordionEmision = false;
