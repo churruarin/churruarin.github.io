@@ -154,9 +154,9 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                     //alert("URL de youtube:"+urlCompleta);
                     $scope.iframeVideo = urlCompleta;
                  // $('#collapseThree').collapse({show: true});
-        $scope.pnlEula = 'panel-collapse collapse in';
+        $scope.pnlEula = 'panel-collapse collapse';
         $scope.pnlAsistencia = 'panel-collapse collapse';
-        $scope.pnlVideo = 'panel-collapse collapse'; 
+        $scope.pnlVideo = 'panel-collapse collapse in'; 
         $scope.$apply();
                 }
                 else
