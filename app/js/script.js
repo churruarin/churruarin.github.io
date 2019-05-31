@@ -105,7 +105,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
         var congregacion = __env.congregacion;
         var hash;
         $scope.asistencia = {};
-    $scope.asistencia.espectadores = 0
+    $scope.asistencia.espectadores = 0;
     $scope.transmision = {};
         //cargar hash al inicio
          function getHash() {    
