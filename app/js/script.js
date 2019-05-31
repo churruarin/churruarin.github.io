@@ -105,7 +105,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
         var congregacion = __env.congregacion;
         var hash;
         $scope.asistencia = {};
-    $scope.asistencia.espectadores = 0;
+    $scope.espectadores = 0;
     $scope.transmision = {};
         //cargar hash al inicio
          function getHash() {    
@@ -175,7 +175,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
            // use $.param jQuery function to serialize data from JSON 
             var data = $.param({
                 'entry.106585637': $scope.asistencia.nombre,
-                'entry.1056716961': $scope.asistencia.espectadores,
+                'entry.1056716961': $scope.espectadores,
                 'entry.1223281277': __env.congregacion
             });
 
