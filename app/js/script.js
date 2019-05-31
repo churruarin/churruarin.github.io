@@ -190,7 +190,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
 
             $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
             .success(function (data, status, headers, config) {
-                $scope.PostDataResponse = data;
+                console.log(data);
             })
             .error(function (data, status, header, config) {
                console.log("Data: " + data +
