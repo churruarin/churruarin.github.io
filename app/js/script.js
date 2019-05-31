@@ -98,6 +98,7 @@ app.controller('cfgController', function ($scope, __env) {
 
 
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+    $scope.iframeVideo = '//youtube.com/embed/_zcPjt-I3dg?autoplay=0&modestbranding=1&showinfo=0&rel=0&theme=light&color=white'
         $scope.pnlEula = 'panel-collapse collapse in';
         $scope.pnlAsistencia = 'panel-collapse collapse';
         $scope.pnlVideo = 'panel-collapse collapse';
@@ -146,7 +147,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
            
            
                 var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
-                var urlCompleta = "https://youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
+                var urlCompleta = "//youtube.com/embed/"+url+"?autoplay=1&modestbranding=1&showinfo=0&rel=0&theme=light&color=white";
 
                 if(urlCompleta.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/))
                 {
