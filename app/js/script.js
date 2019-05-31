@@ -116,6 +116,7 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         } else {
          $scope.sinEmision = false;
          $scope.accordionEmision = true;
+            $scope.pnlEula = true;
           };
            $scope.$apply();
         })
@@ -133,7 +134,11 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
         };
 
     getHash();
-    
+    $scope.okEula=function() {
+        $scope.pnlEula = false;
+        $scope.pnlAsistencia = true;
+         $scope.$apply();
+    }
         $scope.getUrl=function() {
            
            
