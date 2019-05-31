@@ -97,7 +97,7 @@ app.controller('cfgController', function ($scope, __env) {
 });
 
 
-app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $http, $sce, __env) {
    // $scope.iframeVideo = '//youtube.com/embed/_zcPjt-I3dg?autoplay=0&modestbranding=1&showinfo=0&rel=0&theme=light&color=white'
         $scope.pnlEula = 'panel-collapse collapse in';
         $scope.pnlAsistencia = 'panel-collapse collapse';
