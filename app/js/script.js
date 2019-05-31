@@ -141,8 +141,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     $scope.okEula=function() {
         $scope.pnlEula = 'panel-collapse collapse';
         $scope.pnlAsistencia = 'panel-collapse collapse in';
-        
-         $scope.$apply();
+
     }
         $scope.getUrl=function() {
            
@@ -161,7 +160,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
         $scope.pnlEula = 'panel-collapse collapse';
         $scope.pnlAsistencia = 'panel-collapse collapse';
         $scope.pnlVideo = 'panel-collapse collapse in'; 
-        $scope.$apply();
+
                     
                 }
                 else
