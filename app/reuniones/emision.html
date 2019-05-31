@@ -52,28 +52,28 @@
         <div class="col-sm-4">
 <div class="btn-group" data-toggle="buttons" id="asistencia">
   <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="1" autocomplete="off" ng-model="asistencia.espectadores"> 1
+    <input type="radio" ng-value="1" ng-model="asistencia.espectadores"> 1
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="2" autocomplete="off" ng-model="asistencia.espectadores"> 2
+    <input type="radio" ng-value="2" ng-model="asistencia.espectadores"> 2
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="3" autocomplete="off" ng-model="asistencia.espectadores"> 3
+    <input type="radio" ng-value="3" ng-model="asistencia.espectadores"> 3
   </label>
      <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="4" autocomplete="off" ng-model="asistencia.espectadores"> 4
+    <input type="radio" ng-value="4" ng-model="asistencia.espectadores"> 4
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="5" autocomplete="off" ng-model="asistencia.espectadores"> 5
+    <input type="radio" ng-value="5" ng-model="asistencia.espectadores"> 5
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="6" autocomplete="off" ng-model="asistencia.espectadores"> 6
+    <input type="radio" ng-value="6" ng-model="asistencia.espectadores"> 6
   </label>
      <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="5" autocomplete="off" ng-model="asistencia.espectadores"> 7
+    <input type="radio" ng-value="5" ng-model="asistencia.espectadores"> 7
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="asistencia" value="6" autocomplete="off" ng-model="asistencia.espectadores"> 8
+    <input type="radio" ng-value="6" ng-model="asistencia.espectadores"> 8
   </label>
 </div>
           <span id="helpBlock" class="help-block">Indique cuántos están viendo la emisión desde esta conexión</span>
@@ -94,7 +94,7 @@
     <label for="clave" class="col-sm-2 control-label">Clave</label>
             <div class="col-sm-10">
          
-    <input type="number" class="form-control" id="clave" data-ng-model="transmision.clave" placeholder="1234" min="1000" max="9999">
+    <input type="number" class="form-control" id="clave" data-ng-model="transmision.clave" placeholder="1234" min="1000" max="9999" autocomplete="off">
               <span id="helpBlock" class="help-block">Ingrese la clave para ver la reunión de hoy</span>
             </div>
   </div>
