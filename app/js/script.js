@@ -117,11 +117,12 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
          $scope.sinEmision = false;
          $scope.accordionEmision = true;
           };
-           
+           $scope.$apply();
         })
         .fail(function(){
          $scope.sinEmision = true;
          $scope.accordionEmision = false;
+                $scope.$apply();
                 //    callback(false)
           //Hubo un error en la solicitud
           //alert("Error al generar el hash")
