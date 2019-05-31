@@ -188,7 +188,8 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
             $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
 
                 .then(function (data, status, headers, config) {
-                    console.log("Éxito al enviar los datos",data);
+                    console.log($scope.asistencia.espectadores);
+                console.log("Éxito al enviar los datos",data);
                 },function (data, status, header, config) {
 
                     alert('Error al enviar los datos');
