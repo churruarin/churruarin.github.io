@@ -100,7 +100,7 @@
           <div class="form-group">        
            <label for="iniciar" class="col-sm-2 control-label"></label>
           <div class="col-sm-4">
-  <button class="btn btn-primary" data-toggle="collapse" data-parent="#accordion"  aria-expanded="false" aria-controls="collapseThree" id="iniciar" data-ng-click="getUrl()" >Ver la emisión</button>
+  <button class="btn btn-primary" id="iniciar" data-ng-click="getUrl()" >Ver la emisión</button>
           </div>
           </div>
         </form>
@@ -115,7 +115,7 @@
      
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse"  ng-show="pnlVideo" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseThree" ng-class="pnlVideo" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
              <div class="embed-responsive embed-responsive-16by9" style="z-index:5000"> 
       <iframe src="" class="embed-responsive-item" frameborder="0" width="100%" height="100%" allowfullscreen id="videoIframe"></iframe>
