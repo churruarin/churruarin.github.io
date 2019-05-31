@@ -100,6 +100,7 @@ app.controller('cfgController', function ($scope, __env) {
 app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
         $scope.pnlEula = 'panel-collapse collapse in';
         $scope.pnlAsistencia = 'panel-collapse collapse';
+        $scope.pnlVideo = 'panel-collapse collapse';
         var congregacion = __env.congregacion;
         var hash;
         $scope.transmision = {}
@@ -151,8 +152,12 @@ app.controller('transmision', ['$scope', '$sce', '__env', function ($scope, $sce
                 {
                     //Es una url de youtube
                     //alert("URL de youtube:"+urlCompleta);
-                    $scope.transmision.videoIframe.src = urlCompleta;
+                    $scope.iframeVideo = urlCompleta;
                  // $('#collapseThree').collapse({show: true});
+        $scope.pnlEula = 'panel-collapse collapse in';
+        $scope.pnlAsistencia = 'panel-collapse collapse';
+        $scope.pnlVideo = 'panel-collapse collapse'; 
+        $scope.$apply();
                 }
                 else
                 {
