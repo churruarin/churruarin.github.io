@@ -103,7 +103,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
         $scope.pnlAsistencia = 'panel-collapse collapse';
         $scope.pnlVideo = 'panel-collapse collapse';
     var congregacion = __env.congregacion;
-        var congregacion = "Este";
+        //var congregacion = "Este";
         var hash;
         $scope.asistencia = {};
    
