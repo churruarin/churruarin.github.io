@@ -114,7 +114,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
             $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
         .done(function(jsonurl){
             //Devuelve solo el hash de la congregación
-           hash = jsonata('$.values.({"date": $[0],"congregacion": $[1],"enc": $[2]})[congregacion="'+congregacion+'"][date=$now('[Y0001]-[M01]-[D01]','-0300')].enc[0]').evaluate(jsonurl);
+           hash = jsonata('$.values.({"date": $[0],"congregacion": $[1],"enc": $[2]})[congregacion="'+congregacion+'"][date=$now("[Y0001]-[M01]-[D01]","-0300")].enc[0]').evaluate(jsonurl);
               console.log(hash+jsonurl);
                if (!hash) {
          $scope.sinEmision = true;
