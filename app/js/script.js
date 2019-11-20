@@ -58,6 +58,10 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     templateUrl: 'app/reuniones/programa.html', title: 'Programa de las reuniones semanales'
 })
 
+.when('/mantenimiento', {
+    templateUrl: 'app/salon/mantenimiento.html', title: 'Calendario anual de mantenimiento'
+})    
+    
 .when('/util', {
     templateUrl: 'app/util/util.html', title: 'Índice de utilidades'
         })
@@ -262,6 +266,12 @@ app.controller('transmisionfull', ['$scope', '$sce', '__env', function ($scope, 
 app.controller('programa', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
     $scope.urlPrograma = $sce.trustAsResourceUrl(__env.programaUrl1 + __env.programaIdSheets + __env.programaUrl2);
     $scope.urlProgramaDescargaPdf = $sce.trustAsResourceUrl(__env.programaUrl1 + __env.programaIdSheets + __env.programaUrlDescargaPdf);
+
+}]);
+
+app.controller('mantenimiento', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+    $scope.urlMantenimiento = $sce.trustAsResourceUrl(__env.mantenimientoUrl1 + __env.mantenimientoIdSheets + __env.mantenimientoUrl2);
+    $scope.urlMantenimientoDescargaPdf = $sce.trustAsResourceUrl(__env.mantenimientoUrl1 + __env.mantenimientoIdSheets + __env.mantenimientoUrlDescargaPdf);
 
 }]);
 
