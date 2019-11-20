@@ -29,7 +29,7 @@
     window.__env.publicaa2Url2 = '/pubhtml?gid=1666895585&single=false&widget=false&headers=false&chrome=false';
     window.__env.mantenimientoIdSheets = '1rMxXJKHyj7FDe73FwGpZrEaSsPHWgcuG1OlKviB4Qx0';
     window.__env.mantenimientoUrl1 = '//docs.google.com/spreadsheets/d/';
-    window.__env.mantenimientoUrl2 = '/pubhtml'; //?widget=true&headers=false&chrome=false';
+    window.__env.mantenimientoUrl2 = '/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false'; //?widget=true&headers=false&chrome=false';
     window.__env.mantenimientoUrlDescargaPdf = '/export?format=pdf';
 
     //switches para activar los menus
