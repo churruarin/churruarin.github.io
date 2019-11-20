@@ -97,6 +97,8 @@ app.controller('cfgController', function ($scope, __env) {
     $scope.mnuReuniones = __env.mnuReuniones;
     $scope.mnuPrograma = __env.mnuPrograma;
     $scope.mnuEmision = __env.mnuEmision;
+    $scope.mnuSalon = __env.mnuSalon;
+    $scope.mnuMantenimiento = __env.mnuMantenimiento;
     $scope.pageTitle = __env.nombreCongregacion;
 });
 
