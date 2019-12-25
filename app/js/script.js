@@ -124,14 +124,14 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources: [
-                    {src: $sce.trustAsResourceUrl("//download-a.akamaihd.net/files/content_assets/51/502017855_S_cnt_1_r720P.mp4"), type: "video/mp4"}
+                    {src: $sce.trustAsResourceUrl("//download-a.akamaihd.net/files/media_publication/62/whkh_S_r720P.mp4"), type: "video/mp4"}
                   
                 ],
                 theme: {
                     url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
                 },
                 plugins: {
-                    poster: "//assetsnffrgf-a.akamaihd.net/assets/m/502017855/univ/art/502017855_univ_wsr_lg.jpg"
+                    poster: "//assetsnffrgf-a.akamaihd.net/assets/m/502014315/univ/art/502014315_univ_wsr_lg.jpg"
                 }
             };
     //cargar hash al inicio
