@@ -124,13 +124,13 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources: [
-                    {src: "//s3.amazonaws.com/_bc_dml/example-content/sintel_dash/sintel_vod.mpd"}
+                    {src: "//download-a.akamaihd.net/files/content_assets/51/502017855_S_cnt_1_r720P.mp4"}
                 ],
                 theme: {
                     url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
                 },
                 plugins: {
-                    poster: "//www.videogular.com/assets/images/videogular.png"
+                    poster: "//assetsnffrgf-a.akamaihd.net/assets/m/502017855/univ/art/502017855_univ_wsr_lg.jpg"
                 }
             };
     //cargar hash al inicio
