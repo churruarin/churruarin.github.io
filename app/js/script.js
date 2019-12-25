@@ -161,22 +161,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                     //alert("URL de youtube:"+urlCompleta);
                     //alert(urlCompleta);
                     postAsistencia();
-                    $scope.iframeVideo = $sce.trustAsResourceUrl(urlCompleta);}
-               
-            <script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
-
-<div id="playerElement" style="width:1280px; height:720px; padding:0;"></div>
-
-<script type="text/javascript">
-WowzaPlayer.create("playerElement",{
-"license":"PLAY1-eBebJ-RkdZy-N66R4-kKJan-UdUwW",
-"title":"",
-"description":"",
-"sourceURL":"http%3A%2F%2Fabelbour.flashmediacast.com%3A1935%2Fabelbour%2Flivestream%2Fplaylist.m3u8",
-"autoPlay":false,
-"volume":"75",
-"mute":false,
-"loop":false,"audioOnly":false,"uiShowQuickRewind":true,"uiQuickRewindSeconds":"30"});</script>
+                    $scope.iframeVideo = $sce.trustAsResourceUrl(urlCompleta);
             
             
             // $('#collapseThree').collapse({show: true});
