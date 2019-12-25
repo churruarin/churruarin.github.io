@@ -122,7 +122,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
    
     $scope.transmision = {};
     
-    $scope.videogularcontainer.config = {
+    this.config = {
                 sources: [
                     {src: "https://s3.amazonaws.com/_bc_dml/example-content/sintel_dash/sintel_vod.mpd"}
                 ],
