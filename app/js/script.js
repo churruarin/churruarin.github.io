@@ -124,7 +124,8 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources: [
-                    {src: "//download-a.akamaihd.net/files/content_assets/51/502017855_S_cnt_1_r720P.mp4"}
+                    {src: $sce.trustAsResourceUrl("//download-a.akamaihd.net/files/content_assets/51/502017855_S_cnt_1_r720P.mp4"), type: "video/mp4"}
+                  
                 ],
                 theme: {
                     url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
