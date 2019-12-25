@@ -121,6 +121,18 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
         $scope.asistencia = {};
    
     $scope.transmision = {};
+    
+    $scope.videogularcontainer.config = {
+                sources: [
+                    {src: "https://s3.amazonaws.com/_bc_dml/example-content/sintel_dash/sintel_vod.mpd"}
+                ],
+                theme: {
+                    url: "https://unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
+                },
+                plugins: {
+                    poster: "http://www.videogular.com/assets/images/videogular.png"
+                }
+            };
     //cargar hash al inicio
          function getHash() {    
             //recupera json con reuniones del dia
