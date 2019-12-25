@@ -112,6 +112,15 @@ app.controller('cfgController', function ($scope, __env) {
 
 
 app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($scope, $sce, __env, $http) {
+        $scope.pnlEula = 'panel-collapse collapse in';
+        $scope.pnlAsistencia = 'panel-collapse collapse';
+        $scope.pnlVideo = 'panel-collapse collapse';
+    var congregacion = __env.congregacion;
+        //var congregacion = "Este";
+        var hash;
+        $scope.asistencia = {};
+   
+    $scope.transmision = {};
     //cargar hash al inicio
          function getHash() {    
             //recupera json con reuniones del dia
@@ -162,7 +171,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                     //alert("URL de youtube:"+urlCompleta);
                     //alert(urlCompleta);
                     postAsistencia();
-                    $scope.iframeVideo = $sce.trustAsResourceUrl(urlCompleta);
+                   
             
             
             // $('#collapseThree').collapse({show: true});
