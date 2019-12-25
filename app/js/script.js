@@ -5,7 +5,15 @@ if (window) {
     Object.assign(__env, window.__env);
 }
 
-var app = angular.module('single-page-app', ['ngRoute', 'ui.bootstrap']);
+var app = angular.module('single-page-app', ['ngRoute', 
+            'ui.bootstrap',
+            'ngSanitize',
+            'com.2fdevs.videogular',
+            'com.2fdevs.videogular.plugins.controls',
+            'com.2fdevs.videogular.plugins.overlayplay',
+            'com.2fdevs.videogular.plugins.poster',
+            'com.2fdevs.videogular.plugins.dash'
+        ]);
 
 
 // Register environment in AngularJS as constant
@@ -104,7 +112,117 @@ app.controller('cfgController', function ($scope, __env) {
 
 
 app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($scope, $sce, __env, $http) {
-   // $scope.iframeVideo = '//youtube.com/embed/_zcPjt-I3dg?autoplay=0&modestbranding=1&showinfo=0&rel=0&theme=light&color=white'
+    //cargar hash al inicio
+         function getHash() {    
+            //recupera json con reuniones del dia
+            $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
+        .done(function(jsonurl){
+            //Devuelve solo el hash de la congregación
+           hash = jsonata('$.values.({"date": $[0],"congregacion": $[1],"enc": $[2]})[congregacion="'+congregacion+'"][date=$now("[Y0001]-[M01]-[D01]","-0300")].enc[0]').evaluate(jsonurl);
+              console.log(hash+jsonurl);
+               if (!hash) {
+         $scope.sinEmision = true;
+         $scope.accordionEmision = false;
+        } else {
+         $scope.sinEmision = false;
+         $scope.accordionEmision = true;
+            $scope.pnlEula = "panel-collapse collapse in";
+          };
+           $scope.$apply();
+        })
+        .fail(function(){
+         $scope.sinEmision = true;
+         $scope.accordionEmision = false;
+                $scope.$apply();
+                //    callback(false)
+          //Hubo un error en la solicitud
+          //alert("Error al generar el hash")
+         //document.getElementById('sinEmision').class = "alert alert-warning";
+         //document.getElementById('accordionEmision').class = "panel-group hidden";
+        })
+          
+        };
+
+    getHash();
+    $scope.okEula=function() {
+        $scope.pnlEula = 'panel-collapse collapse';
+        $scope.pnlAsistencia = 'panel-collapse collapse in';
+
+    }
+        $scope.getUrl=function() {
+           
+           
+                var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
+                var urlCompleta = "url";
+
+                if(urlCompleta.match(/^(?:[^%]|%[0-9A-Fa-f]{2})+$/)
+                {
+                    //Es una url de youtube
+                    //alert("URL de youtube:"+urlCompleta);
+                    //alert(urlCompleta);
+                    postAsistencia();
+                    $scope.iframeVideo = $sce.trustAsResourceUrl(urlCompleta);
+               
+            <script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
+
+<div id="playerElement" style="width:1280px; height:720px; padding:0;"></div>
+
+<script type="text/javascript">
+WowzaPlayer.create("playerElement",{
+"license":"PLAY1-eBebJ-RkdZy-N66R4-kKJan-UdUwW",
+"title":"",
+"description":"",
+"sourceURL":"http%3A%2F%2Fabelbour.flashmediacast.com%3A1935%2Fabelbour%2Flivestream%2Fplaylist.m3u8",
+"autoPlay":false,
+"volume":"75",
+"mute":false,
+"loop":false,"audioOnly":false,"uiShowQuickRewind":true,"uiQuickRewindSeconds":"30"});</script>
+            
+            
+            // $('#collapseThree').collapse({show: true});
+        $scope.pnlEula = 'panel-collapse collapse';
+        $scope.pnlAsistencia = 'panel-collapse collapse';
+        $scope.pnlVideo = 'panel-collapse collapse in'; 
+
+                    
+                }
+                else
+                {
+                   //No es una url de youtube
+                    alert('Datos incorrectos');
+                }
+            };
+    
+        function postAsistencia () {
+           // use $.param jQuery function to serialize data from JSON 
+            var data = $.param({
+                'entry.106585637': $scope.asistencia.nombre,
+                'entry.1056716961': $scope.asistencia.espectadores,
+                'entry.1223281277': __env.congregacion
+            });
+
+            var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+
+
+            $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
+
+                .then(function (data, status, headers, config) {
+                    console.log($scope.asistencia);
+                console.log("Éxito al enviar los datos",data);
+                },function (data, status, header, config) {
+                    console.log($scope.asistencia);
+                    console.log('Error al enviar los datos');
+                    console.log(data,status,header,config);
+                })
+
+        };
+    
+    
+    /*   // $scope.iframeVideo = '//youtube.com/embed/_zcPjt-I3dg?autoplay=0&modestbranding=1&showinfo=0&rel=0&theme=light&color=white'
         $scope.pnlEula = 'panel-collapse collapse in';
         $scope.pnlAsistencia = 'panel-collapse collapse';
         $scope.pnlVideo = 'panel-collapse collapse';
