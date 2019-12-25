@@ -155,6 +155,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                 var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
                 var urlCompleta = "url";
 
+            
                 if(urlCompleta.match(/^(?:[^%]|%[0-9A-Fa-f]{2})+$/)
                 {
                     //Es una url de youtube
