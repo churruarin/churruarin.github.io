@@ -124,7 +124,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources: [
-                    {src: $sce.trustAsResourceUrl("//download-a.akamaihd.net/files/media_publication/62/whkh_S_r720P.mp4"), type: "video/mp4"}
+                    {src: $sce.trustAsResourceUrl("//abelbour.flashmediacast.com:1935/abelbour/livestream/playlist.m3u8"), type: "video/mp4"}
                   
                 ],
                 theme: {
