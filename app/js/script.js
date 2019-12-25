@@ -114,7 +114,7 @@ app.controller('cfgController', function ($scope, __env) {
 app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($scope, $sce, __env, $http) {
         $scope.pnlEula = 'panel-collapse collapse in';
         $scope.pnlAsistencia = 'panel-collapse collapse';
-        $scope.pnlVideo = 'panel-collapse collapse';
+        $scope.pnlVideo = 'panel-collapse collapse in';
     var congregacion = __env.congregacion;
         //var congregacion = "Este";
         var hash;
