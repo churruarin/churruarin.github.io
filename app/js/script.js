@@ -124,7 +124,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources: [
-                    {src: $sce.trustAsResourceUrl("http://abelbour.flashmediacast.com:1935/abelbour/livestream/playlist.m3u8"), type: "video/mp4"}
+                    {src: $sce.trustAsResourceUrl("http://abelbour.flashmediacast.com:1935/abelbour/livestream/playlist.m3u8"), type: "application/x-mpegURL"}
                   
                 ],
                 theme: {
