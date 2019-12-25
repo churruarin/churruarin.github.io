@@ -161,7 +161,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
                     //alert("URL de youtube:"+urlCompleta);
                     //alert(urlCompleta);
                     postAsistencia();
-                    $scope.iframeVideo = $sce.trustAsResourceUrl(urlCompleta);
+                    $scope.iframeVideo = $sce.trustAsResourceUrl(urlCompleta);}
                
             <script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
 
