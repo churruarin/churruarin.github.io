@@ -144,7 +144,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
               console.log(hash+jsonurl);
                if (!hash) {
          $scope.sinEmision = true;
-         $scope.accordionEmision = false;
+         $scope.accordionEmision = true;
         } else {
          $scope.sinEmision = false;
          $scope.accordionEmision = true;
