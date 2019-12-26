@@ -123,8 +123,10 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     $scope.transmision = {};
     
     this.config = {
-                sources: [
-                    {src: $sce.trustAsResourceUrl("http://abelbour.flashmediacast.com:1935/abelbour/livestream/playlist.m3u8"), type: "application/x-mpegURL"}
+                sources:[
+              {src: $sce.trustAsResourceUrl("http://abelbour.flashmediacast.com:1935/abelbour/livestream/manifest.mpd"), type: "application/dash+xml"},
+
+                {src: $sce.trustAsResourceUrl("http://abelbour.flashmediacast.com:1935/abelbour/livestream/playlist.m3u8"), type: "application/x-mpegURL"}
                   
                 ],
                 theme: {
