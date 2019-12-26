@@ -124,7 +124,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources:[
-              {src: $sce.trustAsResourceUrl("https://s3.amazonaws.com/_bc_dml/example-content/sintel_dash/sintel_vod.mpd"), type: "application/dash+xml"}                 
+              {src: "https://github.com/churruarin/static/raw/master/dash/manifest.mpd"}                 
                 ],
                 theme: {
                     url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
