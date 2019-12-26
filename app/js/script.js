@@ -124,7 +124,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources:[
-              {src: "https://github.com/churruarin/static/raw/master/dash/manifest.mpd"}                 
+              {src: "//static.churruar.in/dash/manifest.mpd"}                 
                 ],
                 theme: {
                     url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
