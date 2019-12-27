@@ -20,7 +20,7 @@ var app = angular.module('single-page-app', ['ngRoute',
 app.constant('__env', __env);
 
 
-app.config(['$httpProvider', '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+app.config(['$httpProvider', '$routeProvider', '$locationProvider', function ($httpProvider, $routeProvider, $locationProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
