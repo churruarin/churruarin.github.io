@@ -124,7 +124,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     
     this.config = {
                 sources:[
-              {src: $sce.trustAsResourceUrl(""//abelbour.flashmediacast.com/abelbour/livestream/manifest.mpd"), type: "application/dash+xml"},                 
+              {src: $sce.trustAsResourceUrl("//abelbour.flashmediacast.com/abelbour/livestream/manifest.mpd"), type: "application/dash+xml"},                 
                 ],
                 theme: {
                     url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
