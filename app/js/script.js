@@ -1,106 +1,123 @@
-﻿var __env = {};
+var __env = {};
 
 // Import variables if present (from env.js)
 if (window) {
     Object.assign(__env, window.__env);
 }
 
-var app = angular.module('single-page-app', ['ngRoute', 
-            'ui.bootstrap',
-            'ngSanitize',
-            'com.2fdevs.videogular',
-            'com.2fdevs.videogular.plugins.controls',
-            'com.2fdevs.videogular.plugins.overlayplay',
-            'com.2fdevs.videogular.plugins.poster',
-            'com.2fdevs.videogular.plugins.dash'
-        ]);
+var app = angular.module('single-page-app', ['ngRoute',
+    'ui.bootstrap',
+    'ngSanitize',
+    'com.2fdevs.videogular',
+    'com.2fdevs.videogular.plugins.controls',
+    'com.2fdevs.videogular.plugins.overlayplay',
+    'com.2fdevs.videogular.plugins.poster',
+    'com.2fdevs.videogular.plugins.dash'
+]);
 
 
 // Register environment in AngularJS as constant
 app.constant('__env', __env);
 
 
-app.config(['$httpProvider', '$routeProvider', '$locationProvider', function ($httpProvider, $routeProvider, $locationProvider) {
+app.config(['$httpProvider', '$routeProvider', '$locationProvider', function($httpProvider, $routeProvider, $locationProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
     $routeProvider
-    .when('/', {
-        templateUrl: __env.paginaInicio, title: 'Inicio'
-    })
-    .when('/predicacion', {
-        templateUrl: 'app/predicacion/predicacion.html', title: 'Predicación'
-    })
-.when('/salidas', {
-    templateUrl: 'app/predicacion/salidas.html', title: 'Salidas al ministerio del campo'
-})
-.when('/telefonica', {
-    templateUrl: 'app/predicacion/telefonica.html', title: 'Programa de predicación telefónica'
-})
-.when('/publica', {
-    templateUrl: 'app/predicacion/publica.html', title: 'Programa de predicación pública'
-})
-.when('/territorios', {
-    templateUrl: 'app/predicacion/territorios.html', title: 'Territorios'
-    //templateUrl: 'predicacion/campaña.html', title: 'Campaña'
-})
-.when('/campaña', {
-    templateUrl: 'app/predicacion/campaña.html', title: 'Campaña'
-})
-.when('/grupos', {
-    templateUrl: 'app/predicacion/grupos.html', title: 'Grupos de predicación'
-})
-.when('/informe', {
-    templateUrl: 'app/predicacion/informe.html', title: 'Informe de predicación'
-})
-.when('/reuniones', {
-    templateUrl: 'app/reuniones/reuniones.html', title: 'Reuniones'
-})
-.when('/vivo', {
-    templateUrl: 'app/reuniones/emision.html', title: 'Emisión en directo'
-})
-.when('/finde', {
-    templateUrl: 'app/reuniones/finde.html', title: 'Co. Churruarín'
-})
-.when('/semana', {
-    templateUrl: 'app/reuniones/semana.html', title: 'Co. Churruarín'
-})
-
-.when('/programa', {
-    templateUrl: 'app/reuniones/programa.html', title: 'Programa de las reuniones semanales'
-})
-
-.when('/mantenimiento', {
-    templateUrl: 'app/salon/mantenimiento.html', title: 'Calendario anual de mantenimiento'
-})    
-    
-.when('/util', {
-    templateUrl: 'app/util/util.html', title: 'Índice de utilidades'
+        .when('/', {
+            templateUrl: __env.paginaInicio,
+            title: 'Inicio'
+        })
+        .when('/predicacion', {
+            templateUrl: 'app/predicacion/predicacion.html',
+            title: 'Predicación'
+        })
+        .when('/salidas', {
+            templateUrl: 'app/predicacion/salidas.html',
+            title: 'Salidas al ministerio del campo'
+        })
+        .when('/telefonica', {
+            templateUrl: 'app/predicacion/telefonica.html',
+            title: 'Programa de predicación telefónica'
+        })
+        .when('/publica', {
+            templateUrl: 'app/predicacion/publica.html',
+            title: 'Programa de predicación pública'
+        })
+        .when('/territorios', {
+            templateUrl: 'app/predicacion/territorios.html',
+            title: 'Territorios'
+            //templateUrl: 'predicacion/campaña.html', title: 'Campaña'
+        })
+        .when('/campaña', {
+            templateUrl: 'app/predicacion/campaña.html',
+            title: 'Campaña'
+        })
+        .when('/grupos', {
+            templateUrl: 'app/predicacion/grupos.html',
+            title: 'Grupos de predicación'
+        })
+        .when('/informe', {
+            templateUrl: 'app/predicacion/informe.html',
+            title: 'Informe de predicación'
+        })
+        .when('/reuniones', {
+            templateUrl: 'app/reuniones/reuniones.html',
+            title: 'Reuniones'
+        })
+        .when('/vivo', {
+            templateUrl: 'app/reuniones/emision.html',
+            title: 'Emisión en directo'
+        })
+        .when('/finde', {
+            templateUrl: 'app/reuniones/finde.html',
+            title: 'Co. Churruarín'
+        })
+        .when('/semana', {
+            templateUrl: 'app/reuniones/semana.html',
+            title: 'Co. Churruarín'
         })
 
-.when('/informar', {
-    templateUrl: 'app/predicacion/informar.html', title: 'Informar territorios predicados'
-});
+        .when('/programa', {
+            templateUrl: 'app/reuniones/programa.html',
+            title: 'Programa de las reuniones semanales'
+        })
+
+        .when('/mantenimiento', {
+            templateUrl: 'app/salon/mantenimiento.html',
+            title: 'Calendario anual de mantenimiento'
+        })
+
+        .when('/util', {
+            templateUrl: 'app/util/util.html',
+            title: 'Índice de utilidades'
+        })
+
+        .when('/informar', {
+            templateUrl: 'app/predicacion/informar.html',
+            title: 'Informar territorios predicados'
+        });
 
 
 
 }]);
 
-    app.all('/*', function (request, response, next) {
-        response.header("Access-Control-Allow-Origin", "*");
-        response.header("Access-Control-Allow-Headers", "X-Requested-With");
-        response.header("Access-Control-Allow-Methods", "GET, POST", "PUT", "DELETE");
-        next();
-    });
+app.all('/*', function(request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+    response.header("Access-Control-Allow-Methods", "GET, POST", "PUT", "DELETE");
+    next();
+});
 
-app.controller('AppCtrl', ['$scope', '__env', function ($scope, __env) {
-    $scope.$on('$routeChangeSuccess', function (event, data) {
+app.controller('AppCtrl', ['$scope', '__env', function($scope, __env) {
+    $scope.$on('$routeChangeSuccess', function(event, data) {
         $scope.pageTitle = data.title + ' - ' + __env.nombreCongregacion;
     });
 }]);
 
 
-app.controller('cfgController', function ($scope, __env) {
+app.controller('cfgController', function($scope, __env) {
 
     $scope.congregacion = __env.nombreCongregacion; //"Co. Churruarín";
     $scope.urlfinde = "Hello world";
@@ -122,124 +139,121 @@ app.controller('cfgController', function ($scope, __env) {
 });
 
 
-app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($scope, $sce, __env, $http) {
-        $scope.pnlEula = 'panel-collapse collapse in';
-        $scope.pnlAsistencia = 'panel-collapse collapse';
-        $scope.pnlVideo = 'panel-collapse collapse in';
+app.controller('transmision', ['$scope', '$sce', '__env', '$http', function($scope, $sce, __env, $http) {
+    $scope.pnlEula = 'panel-collapse collapse in';
+    $scope.pnlAsistencia = 'panel-collapse collapse';
+    $scope.pnlVideo = 'panel-collapse collapse in';
     var congregacion = __env.congregacion;
-        //var congregacion = "Este";
-        var hash;
-        $scope.asistencia = {};
-   
+    //var congregacion = "Este";
+    var hash;
+    $scope.asistencia = {};
+
     $scope.transmision = {};
-    
+
     this.config = {
-                sources:[
-              {src: "//abelbour.flashmediacast.com/abelbour/livestream/manifest.mpd"},                 
-                ],
-                theme: {
-                    url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
-                },
-                plugins: {
-                    poster: "//assetsnffrgf-a.akamaihd.net/assets/m/502014315/univ/art/502014315_univ_wsr_lg.jpg"
-                }
-            };
+        sources: [{
+            src: "//abelbour.flashmediacast.com/abelbour/livestream/manifest.mpd"
+        }, ],
+        theme: {
+            url: "//unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css"
+        },
+        plugins: {
+            poster: "//assetsnffrgf-a.akamaihd.net/assets/m/502014315/univ/art/502014315_univ_wsr_lg.jpg"
+        }
+    };
     //cargar hash al inicio
-         function getHash() {    
-            //recupera json con reuniones del dia
-            $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
-        .done(function(jsonurl){
-            //Devuelve solo el hash de la congregación
-           hash = jsonata('$.values.({"date": $[0],"congregacion": $[1],"enc": $[2]})[congregacion="'+congregacion+'"][date=$now("[Y0001]-[M01]-[D01]","-0300")].enc[0]').evaluate(jsonurl);
-              console.log(hash+jsonurl);
-               if (!hash) {
-         $scope.sinEmision = true;
-         $scope.accordionEmision = true;
-        } else {
-         $scope.sinEmision = false;
-         $scope.accordionEmision = true;
-            $scope.pnlEula = "panel-collapse collapse in";
-          };
-           $scope.$apply();
-        })
-        .fail(function(){
-         $scope.sinEmision = true;
-         $scope.accordionEmision = false;
+    function getHash() {
+        //recupera json con reuniones del dia
+        $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1DvqXaY0vYHuqVwGqNubevsXKWeboHfYIp8rOqyGLFO8/values/todayEvents?key=AIzaSyCHu7lPjGMgsv6X_U6FgL6atwHQ5Mhk_nY')
+            .done(function(jsonurl) {
+                //Devuelve solo el hash de la congregación
+                hash = jsonata('$.values.({"date": $[0],"congregacion": $[1],"enc": $[2]})[congregacion="' + congregacion + '"][date=$now("[Y0001]-[M01]-[D01]","-0300")].enc[0]').evaluate(jsonurl);
+                console.log(hash + jsonurl);
+                if (!hash) {
+                    $scope.sinEmision = true;
+                    $scope.accordionEmision = true;
+                } else {
+                    $scope.sinEmision = false;
+                    $scope.accordionEmision = true;
+                    $scope.pnlEula = "panel-collapse collapse in";
+                };
+                $scope.$apply();
+            })
+            .fail(function() {
+                $scope.sinEmision = true;
+                $scope.accordionEmision = false;
                 $scope.$apply();
                 //    callback(false)
-          //Hubo un error en la solicitud
-          //alert("Error al generar el hash")
-         //document.getElementById('sinEmision').class = "alert alert-warning";
-         //document.getElementById('accordionEmision').class = "panel-group hidden";
-        })
-          
-        };
+                //Hubo un error en la solicitud
+                //alert("Error al generar el hash")
+                //document.getElementById('sinEmision').class = "alert alert-warning";
+                //document.getElementById('accordionEmision').class = "panel-group hidden";
+            })
+
+    };
 
     getHash();
-    $scope.okEula=function() {
+    $scope.okEula = function() {
         $scope.pnlEula = 'panel-collapse collapse';
         $scope.pnlAsistencia = 'panel-collapse collapse in';
 
     }
-        $scope.getUrl=function() {
-           
-           
-                var url = decrypt(hash, $scope.transmision.clave);//decrypt(hash, document.getElementById('clave').value);
-                var urlCompleta = "url";
+    $scope.getUrl = function() {
 
-            
-                if(urlCompleta.match(/^(?:[^%]|%[0-9A-Fa-f]{2})+$/))
-                {
-                    //Es una url de youtube
-                    //alert("URL de youtube:"+urlCompleta);
-                    //alert(urlCompleta);
-                    postAsistencia();
-                   
-            
-            
+
+        var url = decrypt(hash, $scope.transmision.clave); //decrypt(hash, document.getElementById('clave').value);
+        var urlCompleta = "url";
+
+
+        if (urlCompleta.match(/^(?:[^%]|%[0-9A-Fa-f]{2})+$/)) {
+            //Es una url de youtube
+            //alert("URL de youtube:"+urlCompleta);
+            //alert(urlCompleta);
+            postAsistencia();
+
+
+
             // $('#collapseThree').collapse({show: true});
-        $scope.pnlEula = 'panel-collapse collapse';
-        $scope.pnlAsistencia = 'panel-collapse collapse';
-        $scope.pnlVideo = 'panel-collapse collapse in'; 
+            $scope.pnlEula = 'panel-collapse collapse';
+            $scope.pnlAsistencia = 'panel-collapse collapse';
+            $scope.pnlVideo = 'panel-collapse collapse in';
 
-                    
-                }
-                else
-                {
-                   //No es una url de youtube
-                    alert('Datos incorrectos');
-                }
-            };
-    
-        function postAsistencia () {
-           // use $.param jQuery function to serialize data from JSON 
-            var data = $.param({
-                'entry.106585637': $scope.asistencia.nombre,
-                'entry.1056716961': $scope.asistencia.espectadores,
-                'entry.1223281277': __env.congregacion
-            });
 
-            var config = {
-                headers : {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                }
+        } else {
+            //No es una url de youtube
+            alert('Datos incorrectos');
+        }
+    };
+
+    function postAsistencia() {
+        // use $.param jQuery function to serialize data from JSON 
+        var data = $.param({
+            'entry.106585637': $scope.asistencia.nombre,
+            'entry.1056716961': $scope.asistencia.espectadores,
+            'entry.1223281277': __env.congregacion
+        });
+
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
+        }
 
 
-            $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
+        $http.post('https://docs.google.com/forms/u/1/d/e/1FAIpQLSfqyPMNsylEjws1VkTpxbb7dc_jYlPsyCUkgqALWjI4l85RdQ/formResponse', data, config)
 
-                .then(function (data, status, headers, config) {
-                    console.log($scope.asistencia);
-                console.log("Éxito al enviar los datos",data);
-                },function (data, status, header, config) {
-                    console.log($scope.asistencia);
-                    console.log('Error al enviar los datos');
-                    console.log(data,status,header,config);
-                })
+            .then(function(data, status, headers, config) {
+                console.log($scope.asistencia);
+                console.log("Éxito al enviar los datos", data);
+            }, function(data, status, header, config) {
+                console.log($scope.asistencia);
+                console.log('Error al enviar los datos');
+                console.log(data, status, header, config);
+            })
 
-        };
-    
-    
+    };
+
+
     /*   // $scope.iframeVideo = '//youtube.com/embed/_zcPjt-I3dg?autoplay=0&modestbranding=1&showinfo=0&rel=0&theme=light&color=white'
         $scope.pnlEula = 'panel-collapse collapse in';
         $scope.pnlAsistencia = 'panel-collapse collapse';
@@ -378,7 +392,7 @@ app.controller('transmision', ['$scope', '$sce', '__env',  '$http', function ($s
     */
 }]);
 
-app.controller('transmisionfull', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+app.controller('transmisionfull', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     var videosemana = __env.videoIdSemana //"x4a2fbi";
     var videofinde = __env.videoIdFinde //"x4jw7bs";
     var hoy = new Date();
@@ -401,113 +415,112 @@ app.controller('transmisionfull', ['$scope', '$sce', '__env', function ($scope, 
 
 }]);
 
-app.controller('programa', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+app.controller('programa', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlPrograma = $sce.trustAsResourceUrl(__env.programaUrl1 + __env.programaIdSheets + __env.programaUrl2);
     $scope.urlProgramaDescargaPdf = $sce.trustAsResourceUrl(__env.programaUrl1 + __env.programaIdSheets + __env.programaUrlDescargaPdf);
 
 }]);
 
-app.controller('mantenimiento', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+app.controller('mantenimiento', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlMantenimiento = $sce.trustAsResourceUrl(__env.mantenimientoUrl1 + __env.mantenimientoIdSheets + __env.mantenimientoUrl2);
     $scope.urlMantenimientoDescargaPdf = $sce.trustAsResourceUrl(__env.mantenimientoUrl1 + __env.mantenimientoIdSheets + __env.mantenimientoUrlDescargaPdf);
 
 }]);
 
-app.controller('salidas', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+app.controller('salidas', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlSalidas = $sce.trustAsResourceUrl(__env.salidasUrl1 + __env.salidasIdSheets + __env.salidasUrl2);
     $scope.urlSalidas2 = $sce.trustAsResourceUrl(__env.salidas2Url1 + __env.salidasIdSheets + __env.salidas2Url2);
 
 
 }]);
-app.controller('telefonica', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+app.controller('telefonica', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlTelefonica = $sce.trustAsResourceUrl(__env.telefonicaUrl1 + __env.telefonicaIdSheets + __env.telefonicaUrl2);
     $scope.urlTelefonica2 = $sce.trustAsResourceUrl(__env.telefonica2Url1 + __env.telefonicaIdSheets + __env.telefonica2Url2);
 
 
 }]);
 
-app.controller('publica', ['$scope', '$sce', '__env', function ($scope, $sce, __env) {
+app.controller('publica', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlPublica = $sce.trustAsResourceUrl(__env.publicaUrl1 + __env.publicaIdSheets + __env.publicaUrl2);
     $scope.urlPublica2 = $sce.trustAsResourceUrl(__env.publica2Url1 + __env.publicaIdSheets + __env.publica2Url2);
 
 
 }]);
 
-app.controller('territorios', ['$scope', '__env', function ($scope, __env) {
+app.controller('territorios', ['$scope', '__env', function($scope, __env) {
 
 
-//    cartodb.createVis('$scope', 'https://abelbour.cartodb.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json', {
-//        shareable: true,
-//        title: false,
-//        description: false,
-//        search: false,
-//        tiles_loader: true,
-//        center_lat: -31.749299255325756,
-//        center_lon: -60.479693412780755,
-//        zoom: 15,
-//        cartodb_logo: false,
-//        mobile_layout: true,
-//        layer_selector: true
-//    })
-//.done(function (vis, layers) {
-//    // layer 0 is the base layer, layer 1 is cartodb layer
-//    // setInteraction is disabled by default
-//    layers[1].setInteraction(true);
-//    var sublayer = layers[1].getSubLayer(2);
+    //    cartodb.createVis('$scope', 'https://abelbour.cartodb.com/api/v2/viz/b9ead05c-da2c-11e4-b0ec-0e853d047bba/viz.json', {
+    //        shareable: true,
+    //        title: false,
+    //        description: false,
+    //        search: false,
+    //        tiles_loader: true,
+    //        center_lat: -31.749299255325756,
+    //        center_lon: -60.479693412780755,
+    //        zoom: 15,
+    //        cartodb_logo: false,
+    //        mobile_layout: true,
+    //        layer_selector: true
+    //    })
+    //.done(function (vis, layers) {
+    //    // layer 0 is the base layer, layer 1 is cartodb layer
+    //    // setInteraction is disabled by default
+    //    layers[1].setInteraction(true);
+    //    var sublayer = layers[1].getSubLayer(2);
 
 
-//    //layers[1].on('featureOver', function(e, latlng, pos, data) {
-//    //  cartodb.log.log(e, latlng, pos, data);
-//    //});
-//    // you can get the native map to work with it
-//    var map = vis.getNativeMap();
-//    // now, perform any operations you need
-//    // map.setZoom(3);
-//    // map.panTo([50.5, 30.5]);
-//})
-//.error(function (err) {
-//    console.log(err);
-//});
-
-
-}]);
-
-app.controller('grupos', ['$scope', '__env', function ($scope, __env) {
-
-
-//    cartodb.createVis('$scope', 'https://abelbour.carto.com/api/v2/viz/508e2eb2-a2bf-11e6-9874-0ecd1babdde5/viz.json', {
-//        shareable: true,
-//        title: false,
-//        description: false,
-//        search: false,
-//        tiles_loader: true,
-//        center_lat: -31.749299255325756,
-//        center_lon: -60.479693412780755,
-//        zoom: 15,
-//        cartodb_logo: false,
-//        mobile_layout: true,
-//        layer_selector: true
-//    })
-//.done(function (vis, layers) {
-//    // layer 0 is the base layer, layer 1 is cartodb layer
-//    // setInteraction is disabled by default
-//    layers[1].setInteraction(true);
-//    var sublayer = layers[1].getSubLayer(2);
-
-
-//    //layers[1].on('featureOver', function(e, latlng, pos, data) {
-//    //  cartodb.log.log(e, latlng, pos, data);
-//    //});
-//    // you can get the native map to work with it
-//    var map = vis.getNativeMap();
-//    // now, perform any operations you need
-//    // map.setZoom(3);
-//    // map.panTo([50.5, 30.5]);
-//})
-//.error(function (err) {
-//    console.log(err);
-//});
+    //    //layers[1].on('featureOver', function(e, latlng, pos, data) {
+    //    //  cartodb.log.log(e, latlng, pos, data);
+    //    //});
+    //    // you can get the native map to work with it
+    //    var map = vis.getNativeMap();
+    //    // now, perform any operations you need
+    //    // map.setZoom(3);
+    //    // map.panTo([50.5, 30.5]);
+    //})
+    //.error(function (err) {
+    //    console.log(err);
+    //});
 
 
 }]);
 
+app.controller('grupos', ['$scope', '__env', function($scope, __env) {
+
+
+    //    cartodb.createVis('$scope', 'https://abelbour.carto.com/api/v2/viz/508e2eb2-a2bf-11e6-9874-0ecd1babdde5/viz.json', {
+    //        shareable: true,
+    //        title: false,
+    //        description: false,
+    //        search: false,
+    //        tiles_loader: true,
+    //        center_lat: -31.749299255325756,
+    //        center_lon: -60.479693412780755,
+    //        zoom: 15,
+    //        cartodb_logo: false,
+    //        mobile_layout: true,
+    //        layer_selector: true
+    //    })
+    //.done(function (vis, layers) {
+    //    // layer 0 is the base layer, layer 1 is cartodb layer
+    //    // setInteraction is disabled by default
+    //    layers[1].setInteraction(true);
+    //    var sublayer = layers[1].getSubLayer(2);
+
+
+    //    //layers[1].on('featureOver', function(e, latlng, pos, data) {
+    //    //  cartodb.log.log(e, latlng, pos, data);
+    //    //});
+    //    // you can get the native map to work with it
+    //    var map = vis.getNativeMap();
+    //    // now, perform any operations you need
+    //    // map.setZoom(3);
+    //    // map.panTo([50.5, 30.5]);
+    //})
+    //.error(function (err) {
+    //    console.log(err);
+    //});
+
+
+}]);
