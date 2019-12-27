@@ -19,17 +19,11 @@ var app = angular.module('single-page-app', ['ngRoute',
 // Register environment in AngularJS as constant
 app.constant('__env', __env);
 
-app.config(['$httpProvider', function($httpProvider) {
 
-        $httpProvider.defaults.useXDomain = true;
+app.config(['$httpProvider', '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-    }
-
-]);
-
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
     .when('/', {
         templateUrl: __env.paginaInicio, title: 'Inicio'
