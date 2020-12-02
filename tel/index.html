@@ -24,8 +24,8 @@
             .done(function(jsonurl) {
                 var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
                console.log(data);
-            //$table.bootstrapTable({data: data})
-            $table.bootstrapTable('load', data)
+            $('#table').bootstrapTable({data: data});
+            $('#table').bootstrapTable('load', data);
             });
             
 
