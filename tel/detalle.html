@@ -32,13 +32,14 @@
     }
 };
     var telefono = getUrlParameter('telefono');
+    var registrotel;
     console.log(telefono);
          $(function() {
         $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
             .done(function(jsonurl) {
           var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-                var tel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
-               console.log(tel);
+                registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
+               console.log(registrotel);
             });
             
 
@@ -47,5 +48,16 @@
   
   </head>
   <body>
+    <h2>Registro de predicación telefónica</h2>
+<dl class="dl-horizontal">
+  <dt>Teléfono</dt><dd>...</dd>
+  <dt>Dirección</dt><dd>...</dd>
+  <dt>Último llamado</dt><dd>...</dd>
+  <dt>Respuesta</dt><dd>...</dd>
+  <dt>Observaciones</dt><dd>...</dd>
+</dl>
+    <a class="btn btn-default" href="#" role="button">Enviar y reservar</a>
+<a class="btn btn-default" href="#" role="button">Reservar</a>
+    <a class="btn btn-default" href="#" role="button">Informar</a>
   </body>
   </html>
