@@ -32,6 +32,7 @@
     }
 };
     var telefono = getUrlParameter('telefono');
+    console.log(telefono);
          $(function() {
         $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
             .done(function(jsonurl) {
