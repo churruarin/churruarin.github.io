@@ -24,7 +24,7 @@ var jsonsource = 'https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1N
    
 $.getJSON(jsonsource, function(json) {
       $('#table').bootstrapTable({
-        data: mydata
+        data: json
     });
 });
     
