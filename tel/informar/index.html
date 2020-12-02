@@ -14,166 +14,34 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <link href="/app/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" crossorigin="anonymous"></script>
+<script src="https://wzrd.in/standalone/formdata-polyfill"></script>
+<script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
+<script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
 
 <script>
-// This script requires jQuery and jquery-form plugin
-// You can use these ones from Cloudflare CDN:
-//
-$('#bootstrapForm').submit(function (event) {
-    event.preventDefault()
-    var extraData = {}
-    {
-        /* Parsing input date id=1453795920 */
-        var dateField = $("#1453795920_date").val()
-        var timeField = $("#1453795920_time").val()
-        let d = new Date(dateField)
-        if (!isNaN(d.getTime())) {
-            extraData["entry.1453795920_year"] = d.getFullYear()
-            extraData["entry.1453795920_month"] = d.getMonth() + 1
-            extraData["entry.1453795920_day"] = d.getUTCDate()
-        }
-        if (timeField && timeField.split(':').length >= 2) {
-            let values = timeField.split(':')
-            extraData["entry.1453795920_hour"] = values[0]
-            extraData["entry.1453795920_minute"] = values[1]
-        }
-    }
-    $('#bootstrapForm').ajaxSubmit({
-        data: extraData,
-        dataType: 'jsonp',  // This won't really work. It's just to use a GET instead of a POST to allow cookies from different domain.
-        error: function () {
-            // Submit of form should be successful but JSONP callback will fail because Google Forms
-            // does not support it, so this is handled as a failure.
-            alert('Form Submitted. Thanks.')
-            // You can also redirect the user to a custom thank-you page:
-            // window.location = 'http://www.mydomain.com/thankyoupage.html'
-        }
-    })
-})
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
 </script>
 </head>
 <body role="document">
-<form action="https://docs.google.com/forms/d/e/1FAIpQLScmP7GZJ6-G0W40FbomRiVMdsfRBKyr0P977mjF3Dfkulwknw/formResponse"
-      target="_self"
-      id="bootstrapForm"
-      method="POST">
-    <fieldset>
-        <h2>Telefónico Churruarín<br><small>Por favor, completá los datos requeridos. Si necesitás ayuda, contactate con el superintendente de tu grupo.</small></h2>
-    </fieldset>
-
-
-    <!-- Field type: "short" id: "1544164336" -->
-    <fieldset>
-        <legend for="1544164336">Número</legend>
-        <div class="form-group">
-            <input id="716181420" type="text" name="entry.716181420" class="form-control" required>
-        </div>
-    </fieldset>
-
-
-    <!-- Field type: "date" id: "152364219" -->
-    <fieldset>
-        <legend for="152364219">Fecha</legend>
-        <div class="form-group">
-            <input type="date" id="1453795920_date" placeholder="12/1/2020" class="form-control" required>
-        </div>
-    </fieldset>
-
-
-    <!-- Field type: "choices" id: "1122157020" -->
-    <fieldset>
-        <legend for="1122157020">Turno</legend>
-        <div class="form-group">
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.355361387" value="Mañana" required>
-                    Mañana
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.355361387" value="Tarde" required>
-                    Tarde
-                </label>
-            </div>
-        </div>
-    </fieldset>
-
-
-    <!-- Field type: "choices" id: "1275609864" -->
-    <fieldset>
-        <legend for="1275609864">Respuesta</legend>
-        <div class="form-group">
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.1257842722" value="Atendió" required>
-                    Atendió
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.1257842722" value="No atiende" required>
-                    No atiende
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.1257842722" value="No existente" required>
-                    No existente
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.1257842722" value="No volver a llamar" required>
-                    No volver a llamar
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.1257842722" value="Mensaje en contestador" required>
-                    Mensaje en contestador
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="entry.1257842722" value="Revisita" required>
-                    Revisita
-                </label>
-            </div>
-        </div>
-    </fieldset>
-
-
-    <!-- Field type: "paragraph" id: "1065068909" -->
-    <fieldset>
-        <legend for="1065068909">Observaciones (opcional)</legend>
-        <div class="form-group">
-            <textarea id="1521616871" name="entry.1521616871" class="form-control" ></textarea>
-        </div>
-    </fieldset>
-
-
-    <!-- Field type: "short" id: "142742098" -->
-    <fieldset>
-        <legend for="142742098">Publicador</legend>
-        <div class="form-group">
-            <input id="153887948" type="text" name="entry.153887948" class="form-control" required>
-        </div>
-    </fieldset>
-
-    <input type="hidden" name="fvv" value="1">
-    <input type="hidden" name="fbzx" value="4208183666829748439">
-    <!--
-        CAVEAT: In multipages (multisection) forms, *pageHistory* field tells to google what sections we've currently completed.
-        This usually starts as "0" for the first page, then "0,1" in the second page... up to "0,1,2..N" in n-th page.
-        Keep this in mind if you plan to change this code to recreate any sort of multipage-feature in your exported form.
-        We're setting this to the total number of pages in this form because we're sending all fields from all the section together.
-    -->
-    <input type="hidden" name="pageHistory" value="0">
-
-    <input class="btn btn-primary" type="submit" value="Submit">
+<form name="submit-to-google-sheet">
+  <input name="Telefono" type="text" required>
+  <input name="Direccion" type="text" required>
+  <input name="Localidad" type="text" required>
+  <input name="Estado" type="text" required>
+  <input name="Publicador" type="text" required>
+  <input name="Fecha" type="text" required>
+    <input name="Turno" type="text" required>
+  <input name="Observaciones" type="text" required>
+  <input name="Responsable" type="text" required>
+  <button type="submit">Send</button>
 </form>
 </body>
 </html>
