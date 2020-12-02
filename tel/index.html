@@ -31,10 +31,11 @@
 
     });
   function LinkFormatter(value, row, index) {
-  return "<a data-toggle='modal' data-target='#modal' data-load-url='detalle.html?telefono="+value+"'>"+value+"</a>";
+  return "<a class='ls-modal' href='detalle.html?telefono="+value+"'>"+value+"</a>";
 };
-$('#modal').on('show.bs.modal', function (e) {
-    $(this).find('.modal-content').load(e.relatedTarget.href);
+$('.ls-modal').on('click', function(e){
+  e.preventDefault();
+  $('#modal').modal('show').find('.modal-body').load($(this).attr('href'));
 });
     </script>
 </head>
