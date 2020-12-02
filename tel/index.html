@@ -19,19 +19,11 @@
 <script>
      var $table = $('#telefonico');
 
-var mydata = (function () {
-    var json = null;
-    $.ajax({
-        'async': false,
-        'global': false,
-        'url': 'https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc',
-        'dataType': "json",
-        'success': function (data) {
-            json = data;
-        }
-    });
-    return json;
-})(); 
+var mydata;
+   
+$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc', function(json) {
+  mydata = json;
+});
     
     //var mydata = 'https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc'
 
