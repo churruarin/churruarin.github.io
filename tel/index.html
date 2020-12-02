@@ -13,23 +13,23 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>    
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
     <link href="/app/css/bootstrap.min.css" rel="stylesheet">
 <script>
-//     var $table = $('#telefonico');
+     var $table = $('#telefonico')
+     var data
+     $(function()  {
+        //recupera json con reuniones del dia
+        $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
+            .done(function(jsonurl) {
+                //Devuelve solo el hash de la congregación
+                data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+               $table.bootstrapTable({data: data})
+            })
+            
 
-//var mydata;
-//var jsonsource = 'https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc';
-   
-//$.getJSON(jsonsource, function(json) {
-//      $('#telefonico').bootstrapTable({
-//        data: json
-//    });
-//});
-    
-    //var mydata = 'https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc'
-
+    };
     </script>
 </head>
 <body role="document">
