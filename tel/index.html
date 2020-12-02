@@ -23,7 +23,7 @@ var mydata;
 var jsonsource = 'https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc';
    
 $.getJSON(jsonsource, function(json) {
-      $('#table').bootstrapTable({
+      $('#telefonico').bootstrapTable({
         data: json
     });
 });
