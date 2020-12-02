@@ -35,7 +35,7 @@
 };
 $('.ls-modal').on('click', function(e){
   e.preventDefault();
-  $('#modal').modal('show').find('.modal-content').load($(this).attr('href'));
+  $('#modal').modal('show').find('.modal-body').load($(this).attr('href'));
 });
     </script>
 </head>
@@ -59,7 +59,21 @@ $('.ls-modal').on('click', function(e){
   <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog" role="document">
      <div class="modal-content">
+       
+             <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Registro de predicación telefónica</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+    <a class="btn btn-default" href="#" role="button">Enviar y reservar</a>
+<a class="btn btn-default" href="#" role="button">Reservar</a>
+    <a class="btn btn-default" href="#" role="button">Informar</a>
+      </div>
+       
   </div>
+  
     </div>
 </div>
 </body>
