@@ -33,7 +33,7 @@
   function LinkFormatter(value, row, index) {
   return "<a data-toggle='modal' data-target='#modal' data-load-url='detalle.html?telefono="+value+"'>"+value+"</a>";
 };
-$('#modale').on('show.bs.modal', function (e) {
+$('#modal').on('show.bs.modal', function (e) {
     $(this).find('.modal-content').load(e.relatedTarget.href);
 });
     </script>
