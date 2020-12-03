@@ -106,7 +106,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
     <dt>Teléfono</dt> 
     
       <dd id="pTelefono">...</dd>
-      <input id="Telefono" name="Telefono" type="hidden" class="form-control">
+      <input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required">
    
 
 
@@ -139,7 +139,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
     <dt>Fecha</dt> 
      <dd>
       <div class="input-group date">
-  <input id="Fecha" name="Fecha" type="text" class="form-control" placeholder="Fecha en el que se hizo el llamado."><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+  <input id="Fecha" name="Fecha" type="text" class="form-control" placeholder="Fecha en el que se hizo el llamado." required="required"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 </div>
   </dd>
 
@@ -154,7 +154,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
   </dd>
     <dt>Publicador</dt> 
     <dd>
-      <select id="Publicador" name="Publicador" class="select form-control">
+      <select id="Publicador" name="Publicador" class="select form-control" required="required">
         <option></option>
       </select>
  </dd>
@@ -180,15 +180,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
 </form>
     </div>
  <div class="modal fade" id="cargando" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <div class="modal-body">
-        <h3 class="text-center">Cargando...</h3>
-      </div>
-
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+<p>Cargando...</p>
 </div><!-- /.modal -->   
     
     
