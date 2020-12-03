@@ -34,8 +34,18 @@
   return "<a rel='modal' href='detalle.html?telefono="+value+"'>"+value+"</a>";
 };
 $('a[rel=modal]').on('click', function(e){
-  e.preventDefault();
-  $('#modal').modal('show').find('.modal-body').load($(this).attr('href'));
+    e.preventDefault();
+    var modal = $('#modal').modal();
+    modal
+        .find('.modal-body')
+        .load($(this).attr('href'), function (responseText, textStatus) {
+            if ( textStatus === 'success' || 
+                 textStatus === 'notmodified') 
+            {
+                modal.show();
+            }
+    });
+
 });
     </script>
 </head>
