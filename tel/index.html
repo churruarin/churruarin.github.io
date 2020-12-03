@@ -31,9 +31,9 @@
 
     });
   function LinkFormatter(value, row, index) {
-  return "<a class='ls-modal' href='detalle.html?telefono="+value+"'>"+value+"</a>";
+  return "<a rel='modal' href='detalle.html?telefono="+value+"'>"+value+"</a>";
 };
-$('.ls-modal').on('click', function(e){
+$('a[rel=modal]').on('click', function(e){
   e.preventDefault();
   $('#modal').modal('show').find('.modal-body').load($(this).attr('href'));
 });
