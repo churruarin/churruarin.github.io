@@ -21,6 +21,17 @@
      
   $('a[rel=modal]').on('click', function(e){
     e.preventDefault();
+    var modal = $('#modal').modal();
+    console.log('hey')
+    modal
+        .find('.modal-body')
+        .load($(this).attr('href'), function (responseText, textStatus) {
+            if ( textStatus === 'success' || 
+                 textStatus === 'notmodified') 
+            {
+                modal.show();
+            }
+    });
 
 });
       var $table = $('#table'); 
