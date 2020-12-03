@@ -47,24 +47,87 @@
   </script>
   
   </head>
-  <body>
-<form name="submit-to-google-sheet">
+  <body >
+<form class="form-horizontal">
   <div class="form-group">
-  <label>Teléfono</label>
-    <p class="form-control-static">123456</p>
-  <input name="Telefono" type="hidden" required>
+    <label for="telefono" class="control-label col-xs-4">Teléfono</label> 
+    <div class="col-xs-8">
+      <input id="telefono" name="telefono" type="text" class="form-control">
+    </div>
   </div>
+  <div class="form-group">
+    <label for="direccion" class="control-label col-xs-4">Dirección</label> 
+    <div class="col-xs-8">
+      <input id="direccion" name="direccion" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="localidad" class="control-label col-xs-4">Localidad</label> 
+    <div class="col-xs-8">
+      <input id="localidad" name="localidad" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="respuesta" class="control-label col-xs-4">Estado</label> 
+    <div class="col-xs-8">
+      <select id="respuesta" name="respuesta" class="select form-control" required="required">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="fecha" class="control-label col-xs-4">Fecha</label> 
+    <div class="col-xs-8">
+      <input id="fecha" name="fecha" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="select" class="control-label col-xs-4">Turno</label> 
+    <div class="col-xs-8">
+      <select id="select" name="select" class="select form-control" required="required">
+        <option value="Mañana">Mañana</option>
+        <option value="Tarde">Tarde</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="publicador" class="control-label col-xs-4">Publicador</label> 
+    <div class="col-xs-8">
+      <input id="publicador" name="publicador" type="text" class="form-control" aria-describedby="publicadorHelpBlock"> 
+      <span id="publicadorHelpBlock" class="help-block">Sólo para revisitas</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="responsable" class="control-label col-xs-4">Responsable</label> 
+    <div class="col-xs-8">
+      <select id="responsable" name="responsable" class="select form-control" required="required">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="observaciones" class="control-label col-xs-4">Observaciones</label> 
+    <div class="col-xs-8">
+      <textarea id="observaciones" name="observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock"></textarea> 
+      <span id="observacionesHelpBlock" class="help-block">Opcional. Escribí sólo lo necesario.</span>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="col-xs-offset-4 col-xs-8">
+      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+    
+<form name="submit-to-google-sheet">
+
+  <input name="Telefono" type="hidden" required>
   <input name="Direccion" type="text" required>
   <input name="Localidad" type="text" required>
-    <div class="form-group">
-    <label for="respuesta">Respuesta</label>
-  <select class="form-control">
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
-</select>
   <input name="Estado" type="text" required>
   <input name="Publicador" type="text" required>
   <input name="Fecha" type="text" required>
