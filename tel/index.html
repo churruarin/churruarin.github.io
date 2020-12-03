@@ -38,7 +38,7 @@
 		});
 	});*/
 	var $table = $('#table');
-	$(function() {
+	function loadJson() {
 		$('#cargando').modal('show');
         
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
@@ -50,7 +50,8 @@
 			$('#table').bootstrapTable('load', data);
 			$('#cargando').modal('hide');
 		});
-	});
+	};
+      loadJson();
 var win;
 	function LinkFormatter(value, row, index) {
 		return "<a href='javascript:win = window.open(&apos;detalle.html?telefono=" + value + "&apos;);'>" + value + "</a>";
@@ -59,6 +60,7 @@ var win;
   // Only accept messages from http://example.com.
   if (event.origin === 'https://churruar.in') {
     win.close()
+    loadJson();
   }
 });
       
