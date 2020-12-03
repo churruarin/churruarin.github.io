@@ -90,7 +90,14 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
 });
         
                   $("#Estado").change(function(){
-            console.log('ok');
+                          console.log('ok');
+                    if $("#Estado").text == 'Revisita' {
+                      $("#Publicador").attr("required", "true");
+                       $("#Publicador").attr("disabled", "false");
+                    } else {
+                        $("#Publicador").attr("required", "false");
+                       $("#Publicador").attr("disabled", "true");
+                    };
 });
         
         
