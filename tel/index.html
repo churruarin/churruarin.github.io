@@ -31,7 +31,7 @@
 		console.log('hey')
 		modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
 			if(textStatus === 'success' || textStatus === 'notmodified') {
-				$('#modal iframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
+				$('#miframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
 				modal.show();
 			}
 		});
@@ -80,7 +80,7 @@
 				
 					
 				<div class="modal-body">
-              <iframe class="embed-responsive-item" src="..."></iframe>
+              <iframe class="embed-responsive-item" id="miframe"></iframe>
               </div>
 			</div>
 		</div>
