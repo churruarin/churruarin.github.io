@@ -25,6 +25,7 @@
 		console.log('hey')
 		modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
 			if(textStatus === 'success' || textStatus === 'notmodified') {
+				$('#modal iframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
 				modal.show();
 			}
 		});
@@ -70,6 +71,8 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">Registro de predicación telefónica</h4> </div>
+				
+					<iframe src=""></iframe>
 				<div class="modal-body"> </div>
 			</div>
 		</div>
