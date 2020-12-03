@@ -1,7 +1,20 @@
 <form name="submit-to-google-sheet">
-  <input name="Telefono" type="text" required>
+  <div class="form-group">
+  <label>Teléfono</label>
+    <p class="form-control-static">123456</p>
+  <input name="Telefono" type="hidden" required>
+  </div>
   <input name="Direccion" type="text" required>
   <input name="Localidad" type="text" required>
+    <div class="form-group">
+    <label for="respuesta">Respuesta</label>
+  <select class="form-control">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
   <input name="Estado" type="text" required>
   <input name="Publicador" type="text" required>
   <input name="Fecha" type="text" required>
