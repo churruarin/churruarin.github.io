@@ -21,6 +21,7 @@
      
   $('a[rel=modal]').on('click', function(e){
     e.preventDefault();
+    e.stopImmediatePropagation();
     var modal = $('#modal').modal();
     console.log('hey')
     modal
