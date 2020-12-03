@@ -1,107 +1,90 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Informe de predicación telefónica</title>
-    <meta name="robots" content="noindex" />
-    <meta name="robots" content="nofollow" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/favicon.ico">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>    
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
-    <link href="/app/css/bootstrap.min.css" rel="stylesheet">
-<script>
+	<title>Informe de predicación telefónica</title>
+	<meta name="robots" content="noindex" />
+	<meta name="robots" content="nofollow" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="/favicon.ico">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+	<link href="/app/css/bootstrap.min.css" rel="stylesheet">
+	<script>
+	$(document).on('click', 'a[rel=modal]', function(e) {
+		e.stopImmediatePropagation();
+		e.preventDefault();
+		var modal = $('#modal').modal();
+		console.log('hey')
+		modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
+			if(textStatus === 'success' || textStatus === 'notmodified') {
+				modal.show();
+			}
+		});
+	});
+	var $table = $('#table');
+	$(function() {
+		$('#cargando').modal('show');
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+			console.log(data);
+			$('#table').bootstrapTable({
+				data: data
+			});
+			$('#table').bootstrapTable('load', data);
+			$('#cargando').modal('hide');
+		});
+	});
 
-     
-  $(document).on('click','a[rel=modal]', function(e){
-    e.stopImmediatePropagation();
-    e.preventDefault();
-    
-    var modal = $('#modal').modal();
-    console.log('hey')
-    modal
-        .find('.modal-body')
-        .load($(this).attr('href'), function (responseText, textStatus) {
-            if ( textStatus === 'success' || 
-                 textStatus === 'notmodified') 
-            {
-                modal.show();
-            }
-    });
-
-});
-      var $table = $('#table'); 
-     $(function() {
-       $('#cargando').modal('show');
-        $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
-            .done(function(jsonurl) {
-                var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-               console.log(data);
-            $('#table').bootstrapTable({data: data});
-            $('#table').bootstrapTable('load', data);
-          $('#cargando').modal('hide');
-            });
-            
-
-    });
-  function LinkFormatter(value, row, index) {
-  return "<a rel='modal' href='detalle.html?telefono="+value+"'>"+value+"</a>";
-};
-
-    </script>
+	function LinkFormatter(value, row, index) {
+		return "<a rel='modal' href='detalle.html?telefono=" + value + "'>" + value + "</a>";
+	};
+	</script>
 </head>
+
 <body role="document">
-  <div class="container">
-    <h1>Territorio para predicación telefónica</h1>
-    
-  <div class="table-responsive">
-  <table id="table" data-toggle="table" class="table table-striped">
-     <thead>
-      <tr>
-        <th data-field="Telefono" data-formatter="LinkFormatter">Teléfono</th>
-        <th data-field="Direccion">Dirección</th>
-        <th data-field="Respuesta">Última respuesta</th>
-      </tr>
-    </thead>
-
-  </table>
-    </div>
-</div>
-  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-<div class="modal-dialog" role="document">
-     <div class="modal-content">
-       
-             <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Registro de predicación telefónica</h4>
-      </div>
-      <div class="modal-body">
-      </div>
-
-       
-  </div>
-  
-    </div>
-</div>
-  
-   <div class="modal fade" id="cargando" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <div class="modal-body">
-        <h3 class="text-center">Cargando...</h3>
-      </div>
-
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->   
-  
-  
+	<div class="container">
+		<h1>Territorio para predicación telefónica</h1>
+		<div class="table-responsive">
+			<table id="table" data-toggle="table" class="table table-striped">
+				<thead>
+					<tr>
+						<th data-field="Telefono" data-formatter="LinkFormatter">Teléfono</th>
+						<th data-field="Direccion">Dirección</th>
+						<th data-field="Respuesta">Última respuesta</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Registro de predicación telefónica</h4> </div>
+				<div class="modal-body"> </div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h3 class="text-center">Cargando...</h3> </div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 </body>
+
 </html>
