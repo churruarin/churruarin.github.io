@@ -91,7 +91,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
         
                   $("#Estado").change(function(){
                           console.log('ok');
-                    if $("#Estado").text == 'Revisita' {
+                    if $("#Estado").val() == 'Revisita' {
                       $("#Publicador").attr("required", "true");
                        $("#Publicador").attr("disabled", "false");
                     } else {
