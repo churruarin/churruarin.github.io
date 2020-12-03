@@ -64,11 +64,8 @@
         
          $("#Publicador").change(function(){
            var selpub = $("#Publicador").find(":selected").text()
-           //var selpubtel = jsonata('$.values.({"Nombre":$[0],"Tel":$[2]})').evaluate(pubs);
-           
-console.log(pubs.filter(function(item){
-    return item.Nombre == selpub;         
-}));
+           var selpubtel = jsonata('$[Nombre="Acosta, Hebe"].Tel').evaluate(pubs);
+           console.log(selpub + selpubtel);
 
 });
         
