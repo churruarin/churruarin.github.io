@@ -56,11 +56,12 @@
 			$('#cargando').modal('hide');
 		});
 	});
-      
+      $(document).ready(function() {
           $("#cancelar").click(function(){
             console.log('ok');
     window.opener.postMessage('close', '//churruar.in')
 });
+        });
 	</script>
 </head>
 
