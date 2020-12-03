@@ -42,12 +42,12 @@
           var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
                 registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
                console.log(registrotel);
-          $("Telefono").val(registrotel[Telefono]);
-          $("pTelefono").text(registrotel[Telefono]);
-          $("Direccion").val(registrotel[Direccion]);
-          $("pDireccion").text(registrotel[Direccion]);
-          $("Localidad").val(registrotel[Localidad]);
-          $("pLocalidad").text(registrotel[Localidad]);
+          $("#Telefono").val(registrotel[Telefono]);
+          $("#pTelefono").text(registrotel[Telefono]);
+          $("#Direccion").val(registrotel[Direccion]);
+          $("#pDireccion").text(registrotel[Direccion]);
+          $("#Localidad").val(registrotel[Localidad]);
+          $("#pLocalidad").text(registrotel[Localidad]);
             });
             
 
