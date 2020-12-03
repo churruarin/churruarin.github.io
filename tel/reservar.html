@@ -55,9 +55,12 @@
 			$("#Publicador").append(listitems);
 		});
 	});
+      $(document).ready(function() {
           $("#cancelar").click(function(){
-    window.close();
+            console.log('ok');
+    window.opener.postMessage('close', 'https://churruar.in')
 });
+        });
 	</script>
 </head>
 
