@@ -30,6 +30,7 @@
 	};
 	var telefono = getUrlParameter('telefono');
 	var registrotel;
+      var pubs;
 	console.log(telefono);
 	$(function() {
 		$('#cargando').modal('show');
@@ -47,9 +48,9 @@
 			$('#cargando').modal('hide');
 		});
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
-			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+			pubs = jsonata('$.values.({"Nombre":$[0],"Tel":$[2]})').evaluate(jsonurl);
 			var listitems = '';
-			$.each(data, function(key, value) {
+			$.each(pubs, function(key, value) {
 				listitems += '<option>' + value['Nombre'] + '</option>';
 			});
 			$("#Publicador").append(listitems);
@@ -60,6 +61,18 @@
             console.log('ok');
     window.opener.postMessage('close', 'https://churruar.in')
 });
+        
+         $("#Publicador").change(function(){
+           var selpub = $("#Publicador").find(":selected").text()
+           //var selpubtel = jsonata('$.values.({"Nombre":$[0],"Tel":$[2]})').evaluate(pubs);
+           
+console.log(pubs.filter(function(item){
+    return item.Nombre == selpub;         
+}));
+
+});
+        
+        
         });
 	</script>
 </head>
