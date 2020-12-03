@@ -19,7 +19,7 @@
 <script>
 
      
-  $('a[rel=modal]').on('click', function(e){
+  $(document).on('click','a[rel=modal]', function(e){
     e.stopImmediatePropagation();
     e.preventDefault();
     
