@@ -47,7 +47,7 @@
           $("#Fecha").text(registrotel['Fecha']);
           $("#Respuesta").text(registrotel['Estado']);
           $("#Observaciones").text(registrotel['Observaciones']);
-     
+          $("#informar").attr("href", "informar.html?telefono=" + registrotel['Telefono'])
             });
             
 
@@ -70,7 +70,11 @@
 </dl>
       </div>
 
-   
+         <div class="modal-footer">
+    <a class="btn btn-default" href="#" role="button">Enviar y reservar</a>
+<a class="btn btn-default" href="#" role="button">Reservar</a>
+    <a class="btn btn-default" id="informar" href="#" role="button">Informar</a>
+      </div>
 
 
   </body>
