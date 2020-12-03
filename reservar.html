@@ -52,7 +52,16 @@
           $('#cargando').modal('hide');
             });
             
-
+$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
+            .done(function(jsonurl) {
+          var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+  var listitems = '';
+  $.each(data,function(key, value) 
+{
+    listitems += '<option>' + value['Nombre'] + '</option>';
+});
+  $("#Publicador").append(listitems);
+  
     });
   </script>
   
@@ -61,7 +70,7 @@
       
  
 
-      <div class="modal-body">
+  
        <dl class="dl-horizontal">
   <dt>Teléfono</dt><dd id="Telefono">...</dd>
   <dt>Dirección</dt><dd id="Direccion">...</dd>  
@@ -70,13 +79,18 @@
   <dt>Respuesta</dt><dd id="Estado">...</dd>
   <dt>Observaciones</dt><dd id="Observaciones">...</dd>
 </dl>
-      </div>
+    
 
-         <div class="modal-footer">
-    <a class="btn btn-default" href="#" role="button">Enviar y reservar</a>
-<a class="btn btn-default" href="#" role="button">Reservar</a>
-    <a class="btn btn-default" id="informar" href="#" role="button">Informar</a>
-      </div>
+<form class="form-horizontal" name="submit-to-google-sheet">
+      <div class="form-group">
+    <label for="Publicador" class="control-label col-xs-4">Publicador</label> 
+    <div class="col-xs-8">
+      <select id="Publicador" name="Publicador" class="select form-control">
+        <option></option>
+      </select>
+    </div>
+  </div>
+    </form>
 
     
  <div class="modal fade" id="cargando" tabindex="-1" role="dialog">
