@@ -38,12 +38,14 @@
 });
       var $table = $('#table'); 
      $(function() {
+       $('#cargando').modal('show');
         $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
             .done(function(jsonurl) {
                 var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
                console.log(data);
             $('#table').bootstrapTable({data: data});
             $('#table').bootstrapTable('load', data);
+          $('#cargando').modal('hide');
             });
             
 
@@ -87,5 +89,19 @@
   
     </div>
 </div>
+  
+   <div class="modal fade" id="cargando" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <p>Cargando...</p>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+  
+  
 </body>
 </html>
