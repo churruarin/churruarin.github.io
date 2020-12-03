@@ -23,7 +23,7 @@
 	console.log("MESSAGE",e);
 		
 	});
-	
+	/*
 	$(document).on('click', 'a[rel=modal]', function(e) {
 		e.stopImmediatePropagation();
 		e.preventDefault();
@@ -39,6 +39,7 @@
 	var $table = $('#table');
 	$(function() {
 		$('#cargando').modal('show');
+        */
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 			console.log(data);
@@ -51,7 +52,7 @@
 	});
 
 	function LinkFormatter(value, row, index) {
-		return "<a rel='modal' href='detalle.html?telefono=" + value + "'>" + value + "</a>";
+		return "<a target='_blank' href='detalle.html?telefono=" + value + "'>" + value + "</a>";
 	};
 	</script>
 </head>
