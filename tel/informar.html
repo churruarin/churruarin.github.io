@@ -50,29 +50,29 @@
   
   </head>
   <body >
-<form class="form-horizontal">
+<form class="form-horizontal" name="submit-to-google-sheet">
   <div class="form-group">
-    <label for="telefono" class="control-label col-xs-4">Teléfono</label> 
+    <label for="Telefono" class="control-label col-xs-4">Teléfono</label> 
     <div class="col-xs-8">
-      <input id="telefono" name="telefono" type="text" class="form-control">
+      <input id="Telefono" name="Telefono" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group">
-    <label for="direccion" class="control-label col-xs-4">Dirección</label> 
+    <label for="Direccion" class="control-label col-xs-4">Dirección</label> 
     <div class="col-xs-8">
-      <input id="direccion" name="direccion" type="text" class="form-control">
+      <input id="Direccion" name="Direccion" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group">
-    <label for="localidad" class="control-label col-xs-4">Localidad</label> 
+    <label for="Localidad" class="control-label col-xs-4">Localidad</label> 
     <div class="col-xs-8">
-      <input id="localidad" name="localidad" type="text" class="form-control">
+      <input id="Localidad" name="Localidad" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group">
-    <label for="estado" class="control-label col-xs-4">Respuesta</label> 
+    <label for="Estado" class="control-label col-xs-4">Respuesta</label> 
     <div class="col-xs-8">
-      <select id="estado" name="estado" class="select form-control" required="required">
+      <select id="Estado" name="Estado" class="select form-control" required="required">
         <option value="rabbit">Rabbit</option>
         <option value="duck">Duck</option>
         <option value="fish">Fish</option>
@@ -80,34 +80,34 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="fecha" class="control-label col-xs-4">Fecha</label> 
+    <label for="Fecha" class="control-label col-xs-4">Fecha</label> 
     <div class="col-xs-8">
       <div class="input-group date">
-  <input id="fecha" name="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+  <input id="Fecha" name="Fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 </div>
      
     </div>
   </div>
   <div class="form-group">
-    <label for="select" class="control-label col-xs-4">Turno</label> 
+    <label for="Turno" class="control-label col-xs-4">Turno</label> 
     <div class="col-xs-8">
-      <select id="select" name="select" class="select form-control" required="required">
+      <select id="Turno" name="Turno" class="select form-control" required="required">
         <option value="Mañana">Mañana</option>
         <option value="Tarde">Tarde</option>
       </select>
     </div>
   </div>
   <div class="form-group">
-    <label for="publicador" class="control-label col-xs-4">Publicador</label> 
+    <label for="Publicador" class="control-label col-xs-4">Publicador</label> 
     <div class="col-xs-8">
-      <input id="publicador" name="publicador" type="text" class="form-control" aria-describedby="publicadorHelpBlock"> 
+      <input id="Publicador" name="Publicador" type="text" class="form-control" aria-describedby="publicadorHelpBlock"> 
       <span id="publicadorHelpBlock" class="help-block">Sólo para revisitas</span>
     </div>
   </div>
   <div class="form-group">
-    <label for="responsable" class="control-label col-xs-4">Responsable</label> 
+    <label for="Responsable" class="control-label col-xs-4">Responsable</label> 
     <div class="col-xs-8">
-      <select id="responsable" name="responsable" class="select form-control" required="required">
+      <select id="Responsable" name="Responsable" class="select form-control" required="required">
         <option value="rabbit">Rabbit</option>
         <option value="duck">Duck</option>
         <option value="fish">Fish</option>
@@ -115,9 +115,9 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="observaciones" class="control-label col-xs-4">Observaciones</label> 
+    <label for="Observaciones" class="control-label col-xs-4">Observaciones</label> 
     <div class="col-xs-8">
-      <textarea id="observaciones" name="observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock"></textarea> 
+      <textarea id="Observaciones" name="Observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock"></textarea> 
       <span id="observacionesHelpBlock" class="help-block">Opcional. Escribí sólo lo necesario.</span>
     </div>
   </div> 
@@ -128,19 +128,7 @@
   </div>
 </form>
     
-<form name="submit-to-google-sheet">
 
-  <input name="Telefono" type="hidden" required>
-  <input name="Direccion" type="text" required>
-  <input name="Localidad" type="text" required>
-  <input name="Estado" type="text" required>
-  <input name="Publicador" type="text" required>
-  <input name="Fecha" type="text" required>
-    <input name="Turno" type="text" required>
-  <input name="Observaciones" type="text" required>
-  <input name="Responsable" type="text" required>
-  <button type="submit">Send</button>
-</form>
 <script src="https://wzrd.in/standalone/formdata-polyfill"></script>
 <script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
 <script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
