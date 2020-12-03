@@ -20,8 +20,9 @@
 
      
   $('a[rel=modal]').on('click', function(e){
-    e.preventDefault();
     e.stopImmediatePropagation();
+    e.preventDefault();
+    
     var modal = $('#modal').modal();
     console.log('hey')
     modal
