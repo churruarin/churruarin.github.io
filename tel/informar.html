@@ -66,6 +66,21 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
 
              
             });
+           
+           $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
+            .done(function(jsonurl) {
+          var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+  var listitems = '';
+  $.each(data,function(key, value) 
+{
+    listitems += '<option>' + value['Nombre'] + '</option>';
+});
+  $("#Publicador").append(listitems);
+
+
+             
+            });
+           
     });
   </script>
   
@@ -127,7 +142,8 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
   <div class="form-group">
     <label for="Publicador" class="control-label col-xs-4">Publicador</label> 
     <div class="col-xs-8">
-      <input id="Publicador" name="Publicador" type="text" class="form-control" aria-describedby="publicadorHelpBlock" placeholder="Nombre del publicador que hizo el llamado. Sólo para revisitas.">
+      <select id="Publicador" name="Publicador" class="select form-control">
+      </select>
     </div>
   </div>
   <div class="form-group">
