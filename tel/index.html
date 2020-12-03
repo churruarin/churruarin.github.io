@@ -50,10 +50,18 @@
 			$('#cargando').modal('hide');
 		});
 	});
-
+var win;
 	function LinkFormatter(value, row, index) {
-		return "<a href='javascript:var win = window.open(&apos;detalle.html?telefono=" + value + "&apos;);'>" + value + "</a>";
+		return "<a href='javascript:win = window.open(&apos;detalle.html?telefono=" + value + "&apos;);'>" + value + "</a>";
 	};
+      window.addEventListener('message', event => {
+  // Only accept messages from http://example.com.
+  if (event.origin === 'http://example.com') {
+    if (data === 'close') win.close()
+  }
+});
+      
+      
 	</script>
 </head>
 
