@@ -42,6 +42,11 @@
           var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
                 registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
                console.log(registrotel);
+          $('input[name=Telefono]').val(registrotel[Telefono]);
+          $('pTelefono').text(registrotel[Telefono]);
+          $('input[name=Direccion]').val(registrotel[Direccion]);
+          $('input[name=Localidad]').val(registrotel[Localidad]);
+          
             });
             
 
@@ -54,21 +59,21 @@
   <div class="form-group">
     <label for="Telefono" class="control-label col-xs-4">Teléfono</label> 
     <div class="col-xs-8">
-      <p class="form-control-static">123456</p>
+      <p id="pTelefono" class="form-control-static">123456</p>
       <input id="Telefono" name="Telefono" type="hidden" class="form-control">
     </div>
   </div>
   <div class="form-group">
     <label for="Direccion" class="control-label col-xs-4">Dirección</label> 
     <div class="col-xs-8">
-      <p class="form-control-static">abc 123</p>
+      <p id="pDireccion" class="form-control-static">abc 123</p>
       <input id="Direccion" name="Direccion" type="hidden" class="form-control">
     </div>
   </div>
   <div class="form-group">
     <label for="Localidad" class="control-label col-xs-4">Localidad</label> 
     <div class="col-xs-8">
-      <p class="form-control-static">abc</p>
+      <p id="pLocalidad" class="form-control-static">abc</p>
       <input id="Localidad" name="Localidad" type="hidden" class="form-control">
     </div>
   </div>
@@ -122,7 +127,7 @@
   <div class="form-group">
     <label for="Observaciones" class="control-label col-xs-4">Observaciones</label> 
     <div class="col-xs-8">
-      <textarea id="Observaciones" name="Observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock" placeholder="Opcional. Escribí sólo si es necesario"></textarea> 
+      <textarea id="Observaciones" name="Observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock" placeholder="Opcional. Escribí solamente si es necesario."></textarea> 
     </div>
   </div> 
   <div class="form-group row">
