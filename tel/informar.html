@@ -85,9 +85,15 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
     
       $(document).ready(function() {
           $("#cancelar").click(function(){
-            console.log('ok');
+            
     window.opener.postMessage('close', 'https://churruar.in')
 });
+        
+                  $("#Estado").onchange(function(){
+            console.log('ok');
+});
+        
+        
         });
   </script>
   
@@ -153,9 +159,9 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
       </select>
 
   </dd>
-    <dt>Publicador</dt> 
+    <dt>Publicador (sólo para revisitas)</dt> 
     <dd>
-      <select id="Publicador" name="Publicador" class="select form-control" required="required">
+      <select id="Publicador" name="Publicador" class="select form-control" disabled="true" required="false">
         <option></option>
       </select>
  </dd>
