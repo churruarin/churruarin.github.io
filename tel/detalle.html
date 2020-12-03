@@ -52,6 +52,7 @@
 			$("#Respuesta").text(registrotel['Estado']);
 			$("#Observaciones").text(registrotel['Observaciones']);
 			$("#informar").attr("href", "informar.html?telefono=" + registrotel['Telefono']);
+           $("#reservar").attr("href", "reservar.html?telefono=" + registrotel['Telefono']);
 			$('#cargando').modal('hide');
 		});
 	});
@@ -82,11 +83,11 @@
 				</div>
 			</div>
 		</dl>
+	 <p class="text-right">
 	
-	
-	 <a class="btn btn-info" href="#" role="button">Reservar</a> 
+	 <a class="btn btn-info"  id="reservar" href="#" role="button">Reservar</a> 
       <a class="btn btn-warning" id="informar" href="#" role="button">Informar llamado</a>
-      <a class="btn btn-default" id="informar" href="#" role="button">Cancelar</a>
+       <a class="btn btn-default" id="cancelar" href="#" role="button">Cancelar</a></p>
       </div>
   
 	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
