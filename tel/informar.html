@@ -53,7 +53,17 @@
              
             });
             
+$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
+            .done(function(jsonurl) {
+          var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+  $.each(data,function(key, value) 
+{
+    $("#Responsable").append('<option>' + value + '</option>');
+});
 
+
+             
+            });
     });
   </script>
   
@@ -122,9 +132,6 @@
     <label for="Responsable" class="control-label col-xs-4">Responsable</label> 
     <div class="col-xs-8">
       <select id="Responsable" name="Responsable" class="select form-control" required="required">
-        <option value="rabbit">Rabbit</option>
-        <option value="duck">Duck</option>
-        <option value="fish">Fish</option>
       </select>
     </div>
   </div>
