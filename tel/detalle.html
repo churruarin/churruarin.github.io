@@ -40,6 +40,14 @@
           var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
                 registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
                console.log(registrotel);
+
+          $("#Telefono").text(registrotel['Telefono']);
+          $("#Direccion").text(registrotel['Direccion']);
+          $("#Localidad").text(registrotel['Localidad']);
+          $("#Fecha").text(registrotel['Fecha']);
+          $("#Respuesta").text(registrotel['Estado']);
+          $("#Observaciones").text(registrotel['Observaciones']);
+            });
             });
             
 
@@ -53,11 +61,12 @@
 
       <div class="modal-body">
        <dl class="dl-horizontal">
-  <dt>Teléfono</dt><dd>...</dd>
-  <dt>Dirección</dt><dd>...</dd>
-  <dt>Último llamado</dt><dd>...</dd>
-  <dt>Respuesta</dt><dd>...</dd>
-  <dt>Observaciones</dt><dd>...</dd>
+  <dt>Teléfono</dt><dd id="Telefono">...</dd>
+  <dt>Dirección</dt><dd id="Direccion">...</dd>  
+  <dt>Localidad</dt><dd id="Localidad">...</dd>
+  <dt>Último llamado</dt><dd id="Fecha">...</dd>
+  <dt>Respuesta</dt><dd id="Estado">...</dd>
+  <dt>Observaciones</dt><dd id="Observaciones">...</dd>
 </dl>
       </div>
 
