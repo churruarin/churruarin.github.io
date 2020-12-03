@@ -31,6 +31,7 @@
 	var telefono = getUrlParameter('telefono');
 	var registrotel;
       var pubs;
+      var linkwa;
 	console.log(telefono);
 	$(function() {
 		$('#cargando').modal('show');
@@ -65,10 +66,11 @@
          $("#Publicador").change(function(){
            var selpub = $("#Publicador").find(":selected").text()
            var selpubtel = jsonata('$[Nombre="Acosta, Hebe"].Tel').evaluate(pubs);
-           console.log(selpub + selpubtel);
-
+           linkwa = "https://wa.me/+54"+ selpubtel + 
+             "?text=_Co. Churruarín_ \n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO* \n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" + registrotel['Telefono'] + "*\nDirección: *" + registrotel['Direccion'] + "*\nFue llamado la última vez en: *"+ registrotel['Fecha'] + "*\nRespuesta a la última llamada: *" + registrotel['Estado'] +"*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
+$("#enviar").attr("href", linkwa)
 });
-        
+         
         
         });
 	</script>
@@ -97,7 +99,7 @@
 					<option></option>
           </select></dd></div>
 	</dl> <p class="text-right">
-	 <a class="btn btn-success" id="enviar"href="#" role="button">Reservar y enviar</a> 
+	 <a class="btn btn-success" id="enviar" href="#" role="button">Reservar y enviar</a> 
       <a class="btn btn-info" id="reservar" href="#" role="button">Reservar</a>
     <a class="btn btn-default" id="cancelar" href="#" role="button">Cancelar</a></p>
 		</form>
