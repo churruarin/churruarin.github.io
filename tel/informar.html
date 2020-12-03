@@ -85,7 +85,8 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
   </script>
   
   </head>
-  <body >
+<body role="document">
+	<div class="container">
 <form name="submit-to-google-sheet"  autocomplete="off">
   		<dl class="dl-horizontal">
 
@@ -167,7 +168,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
           </div>
    </dl>
 </form>
-    
+    </div>
  <div class="modal fade" id="cargando" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -212,5 +213,6 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
       .catch(error => console.error('Error!', error.message))
   })
 </script>
+  
   </body>
     </html>
