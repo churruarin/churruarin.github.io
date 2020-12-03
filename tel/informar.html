@@ -58,7 +58,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
           var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
   $.each(data,function(key, value) 
 {
-    $("#Responsable").append('<option>' + value + '</option>');
+    $("#Responsable").append('<option>' + value['Nombre'] + '</option>');
 });
 
 
