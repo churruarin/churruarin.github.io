@@ -211,10 +211,12 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
           </div>
    </dl>
   <p class="text-right">
-    <button class="btn btn-primary" id="enviar" type="submit">Enviar informe</button>
+    <input id="submit-hidden" type="submit" style="display: none" />
+    </form>
+    <button class="btn btn-primary" id="enviar">Enviar informe</button>
       
     <button type="button" id="cancelar" class="btn btn-default">Cancelar</button></p>
-</form>
+
     </div>
  <div class="modal fade" id="cargando" tabindex="-1" role="dialog">
 <p>Cargando...</p>
