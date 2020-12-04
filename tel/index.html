@@ -75,10 +75,14 @@ filterJson();
           $("#tablecontactos").attr("class", "table-responsive show");
           $("#tablereservas").attr("class", "table-responsive show");
           $("#alert").attr("class", "alert alert-warning hidden");
-                  	$('#table').bootstrapTable({
+            $('#table').bootstrapTable({
 				data: filtro
 			});
 			$('#table').bootstrapTable('load', filtro);
+            $('#tableres').bootstrapTable({
+				data: filtro
+			});
+			$('#tableres').bootstrapTable('load', filtro);
         } else {
           $("#tablecontactos").attr("class", "table-responsive hidden");
           $("#tablereservas").attr("class", "table-responsive hidden");
