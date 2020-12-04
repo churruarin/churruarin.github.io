@@ -12,6 +12,9 @@
 	<meta name="author" content="">
 	<link rel="icon" href="/favicon.ico">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   	<script src="/app/js/formdata-polyfill.js"></script>
+	<script src="/app/js/promise-polyfill.js"></script>
+	<script src="/app/js/whatwg-fetch.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<!-- Bootstrap Date-Picker Plugin -->
@@ -69,6 +72,16 @@
 	});
 	$(document).ready(function() {
 		var form = document.forms['formres'];
+      	var date_input = $('input[name="Fecha"]'); //our date input has the name "date"
+		var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+		var options = {
+			format: "dd/mm/yyyy",
+			todayBtn: "linked",
+			language: "es",
+			daysOfWeekHighlighted: "0,6",
+			todayHighlight: true
+		};
+		date_input.datepicker(options);
 		$("#cancelar").click(function() {
 			window.opener.postMessage('close', 'https://churruar.in')
 		});
@@ -174,23 +187,8 @@
 		<p>Cargando...</p>
 	</div>
 	<!-- /.modal -->
-	<script src="/app/js/formdata-polyfill.js"></script>
-	<script src="/app/js/promise-polyfill.js"></script>
-	<script src="/app/js/whatwg-fetch.js"></script>
-	<script>
-	$(document).ready(function() {
-		var date_input = $('input[name="Fecha"]'); //our date input has the name "date"
-		var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-		var options = {
-			format: "dd/mm/yyyy",
-			todayBtn: "linked",
-			language: "es",
-			daysOfWeekHighlighted: "0,6",
-			todayHighlight: true
-		};
-		date_input.datepicker(options);
-	});
-	</script>
+
+
 </body>
 
 </html>
