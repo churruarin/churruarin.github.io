@@ -66,11 +66,20 @@ filterJson();
   case "reservas":
     filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
 } ;    
-        console.log(filtro);
-        	$('#table').bootstrapTable({
+        if (filtro) {
+          $("#contactos").attr("class", "table-responsive show");
+          $("#alert").attr("class", "alert alert-warning hidden");
+                  	$('#table').bootstrapTable({
 				data: filtro
 			});
 			$('#table').bootstrapTable('load', filtro);
+        } else {
+          $("#contactos").attr("class", "table-responsive hidden");
+          $("#alert").attr("class", "alert alert-warning show");
+        };
+        
+       
+
 			$('#cargando').modal('hide');
         };
 	loadJson();
@@ -126,7 +135,7 @@ filterJson();
 			<li role="presentation" id="interior" ><a href="#">Interior</a></li>
 		</ul>
 		<h1>Territorio para predicación telefónica</h1>
-		<div class="table-responsive">
+		<div class="table-responsive show" id="contactos">
 			<table id="table" data-toggle="table" class="table table-striped">
 				<thead>
 					<tr>
@@ -137,6 +146,8 @@ filterJson();
 				</thead>
 			</table>
 		</div>
+      <div class="alert alert-warning hidden" role="alert" id="alert">No hay contactos disponibles.</div>
+</div>
 	</div>
 	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
 		<p>Cargando...</p>
