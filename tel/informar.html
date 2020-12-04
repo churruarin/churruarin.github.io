@@ -34,7 +34,7 @@
 	var telefono = getUrlParameter('telefono');
 	var registrotel;
 	var form = document.forms['formres'];
-	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
+	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
 	console.log(telefono);
 	$(function() {
 		$('#cargando').modal('show');
@@ -115,11 +115,14 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Datos del contacto</h3> </div>
-					<div class="panel-body"> <dt>Teléfono</dt>
+					<div class="panel-body"> 
+                      	<dt>Teléfono</dt>
 						<dd id="pTelefono">...</dd>
-						<input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required"> <dt>Dirección</dt>
+						<input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required"> 
+                      	<dt>Dirección</dt>
 						<dd id="pDireccion">...</dd>
-						<input id="Direccion" name="Direccion" type="hidden" class="form-control"> <dt>Localidad</dt>
+						<input id="Direccion" name="Direccion" type="hidden" class="form-control"> 
+                        <dt>Localidad</dt>
 						<dd id="pLocalidad">...</dd>
 						<input id="Localidad" name="Localidad" type="hidden" class="form-control"> </div>
 				</div>
@@ -160,7 +163,8 @@
 					</dd>
 				</div>
 			</dl>
-			<input id="submit-hidden" type="submit" style="display: none" /> </form>
+			<input id="submit-hidden" type="submit" style="display: none" /> 
+        </form>
 		<p class="text-right">
 			<button class="btn btn-primary" id="enviar" type="submit">Enviar informe</button>
 			<button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
