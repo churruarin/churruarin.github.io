@@ -94,7 +94,9 @@ $('#cargando').modal('hide');
    if (submitForm()) {
     // window.open(linkwa);
    // window.opener.postMessage('close', 'https://churruar.in');
-   };};
+   };} else {
+   $("#formres").find("#submit-hidden").click();
+   };
 });
     $("#reservar").click(function(){
       if ($('#formres')[0].checkValidity()) {
@@ -141,6 +143,7 @@ $('#cargando').modal('hide');
         <input id="Localidad" name="Localidad" type="hidden">
         <input id="Estado" name="Estado" type="hidden">
         <input id="Fecha" name="Fecha" type="hidden">
+        <input id="submit-hidden" type="submit" style="display: none" />
         
         
       <div class="panel-body">
