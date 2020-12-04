@@ -87,12 +87,23 @@ $('#cargando').modal('hide');
 
 });
   $("#enviar").click(function(){
-    $("#form").submit();
+    submitForm();
        window.open(linkwa);
    // window.opener.postMessage('close', 'https://churruar.in');
 });
+             
         
         });
+      
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
+  const form = document.forms['form']
+
+
+      function submitForm() {
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+      };
 	</script>
 </head>
 
@@ -150,15 +161,7 @@ $('#cargando').modal('hide');
 
   
   
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
-  const form = document.forms['form']
 
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => console.log('Success!', response))
-      .catch(error => console.error('Error!', error.message))
-  })
 </script>
       
 </body>
