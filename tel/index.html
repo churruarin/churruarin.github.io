@@ -64,18 +64,36 @@
 			loadJson();
 		}
 	});
+    $(document).ready(function() {
+        $("#parana").click(function(){
+   			$("#parana").attr("class", "active");
+          	$("#cerrito").attr("class", "");
+		});
+        $("#cerrito").click(function(){
+   			$("#parana").attr("class", "");
+          	$("#cerrito").attr("class", "active");
+		});
+        $("#contactos").click(function(){
+   			$("#contactos").attr("class", "btn btn-default active");
+          	$("#reservas").attr("class", "btn btn-default");
+		});
+        $("#reservas").click(function(){
+   			$("#contactos").attr("class", "btn btn-default");
+          	$("#reservas").attr("class", "btn btn-default active");
+		});
+    });
 	</script>
 </head>
 
 <body role="document">
 	<div class="container">
 		<div class="btn-group pull-right" role="group" aria-label="...">
-			<button type="button" class="btn btn-default active">Contactos</button>
-			<button type="button" class="btn btn-default">Reservas</button>
+			<button type="button" id="contactos" class="btn btn-default active">Contactos</button>
+			<button type="button" id="reservas" class="btn btn-default">Reservas</button>
 		</div>
 		<ul class="nav nav-tabs padding-top-md">
-			<li role="presentation" class="active"><a href="#">Paraná</a></li>
-			<li role="presentation"><a href="#">Interior</a></li>
+			<li role="presentation" id="parana" class="active"><a href="#">Paraná</a></li>
+			<li role="presentation" id="interior" ><a href="#">Interior</a></li>
 		</ul>
 		<h1>Territorio para predicación telefónica</h1>
 		<div class="table-responsive">
