@@ -35,6 +35,7 @@
 };
     var telefono = getUrlParameter('telefono');
     var registrotel;
+    var form = document.forms['formres'];
     console.log(telefono);
          $(function() {
        $('#cargando').modal('show');
@@ -101,16 +102,36 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
                        $("#Publicador").attr("disabled", true);
                     };
 });
-        
+          $("#enviar").click(function(){
+    if ($('#formres')[0].checkValidity()) {
+   if (submitForm()) {
+    // window.open(linkwa);
+   window.opener.postMessage('close', 'https://churruar.in');
+   };} else {
+   $("#formres").find("#submit-hidden").click();
+   };
+});
         
         });
+    
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
+  
+
+
+      function submitForm() {
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      //.then(return true)
+      .catch(error => console.error('Error!', error.message))
+        return true
+      };
+    
   </script>
   
   </head>
 <body role="document">
 	<div class="container">
       <h1>Informe de llamado telefónico</h1>
-<form name="submit-to-google-sheet"  autocomplete="off">
+<form name="formres"  autocomplete="off">
   		<dl class="dl-horizontal">
 
 		
@@ -190,7 +211,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
           </div>
    </dl>
   <p class="text-right">
-        <button name="submit" type="submit" class="btn btn-warning">Enviar informe</button>
+    <button class="btn btn-primary" id="enviar" type="submit">Enviar informe</button>
       
     <button type="button" id="cancelar" class="btn btn-default">Cancelar</button></p>
 </form>
@@ -221,15 +242,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
 
   
   
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
-  const form = document.forms['submit-to-google-sheet']
 
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => console.log('Success!', response))
-      .catch(error => console.error('Error!', error.message))
-  })
 </script>
   
   </body>
