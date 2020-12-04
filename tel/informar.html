@@ -85,6 +85,7 @@ $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83c
     });
     
       $(document).ready(function() {
+        var form = document.forms['formres'];
           $("#cancelar").click(function(){
             
     window.opener.postMessage('close', 'https://churruar.in')
