@@ -45,7 +45,7 @@
 	function loadJson() {
 		$('#cargando').modal('show');
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
-			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
 filterJson();
 		});
 	};
@@ -62,13 +62,18 @@ filterJson();
            switch(tipo) {
   case "contactos":
     filtro =  jsonata('$[Respuesta!="Reservado"]').evaluate(filtro);
+    $("#tablecontactos").attr("class", "table-responsive show");
+    $("#tablereservas").attr("class", "table-responsive hidden");
     break;
   case "reservas":
     filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
+    $("#tablecontactos").attr("class", "table-responsive hidden");
+    $("#tablereservas").attr("class", "table-responsive show");
 } ;    
         if (filtro) {
-          filtro =  jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")")}').evaluate(filtro);
+          filtro =  jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}').evaluate(filtro);
           $("#tablecontactos").attr("class", "table-responsive show");
+          $("#tablereservas").attr("class", "table-responsive show");
           $("#alert").attr("class", "alert alert-warning hidden");
                   	$('#table').bootstrapTable({
 				data: filtro
@@ -76,6 +81,7 @@ filterJson();
 			$('#table').bootstrapTable('load', filtro);
         } else {
           $("#tablecontactos").attr("class", "table-responsive hidden");
+          $("#tablereservas").attr("class", "table-responsive hidden");
           $("#alert").attr("class", "alert alert-warning show");
         };
         
@@ -157,6 +163,17 @@ filterJson();
 						<th data-field="Telefono" data-formatter="LinkFormatter">Teléfono</th>
 						<th data-field="Direccion">Dirección</th>
 						<th data-field="Respuesta">Última respuesta</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+      	<div class="table-responsive hidden" id="tablereservas">
+			<table id="tableres" data-toggle="tableres" class="table table-striped">
+				<thead>
+					<tr>
+						<th data-field="Telefono" data-formatter="LinkFormatter">Teléfono</th>
+						<th data-field="PublicadorFecha">Publicador</th>
+                      	<th data-field="Responsable">Responsable</th>
 					</tr>
 				</thead>
 			</table>
