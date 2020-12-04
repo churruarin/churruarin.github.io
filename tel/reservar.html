@@ -43,6 +43,9 @@
 			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": " ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")")}').evaluate(registrotel);
 			$("#ddTelefono").text(registrotelpretty['Telefono']);
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
+          $("#ddFecha").text(registrotelpretty['Fecha']);
+          $("#ddEstado").text(registrotelpretty['Respuesta']);
+          $("#ddObservaciones").text(registrotel['Observaciones']);
           $("#Telefono").val(registrotel['Telefono']);
           $("#Direccion").val(registrotel['Direccion']);
           $("#Localidad").val(registrotel['Localidad']);
@@ -139,6 +142,15 @@ $('#cargando').modal('hide');
 		<dd id="ddDireccion">...</dd> 
 
                   </div></div>
+      			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Último llamado</h3> </div>
+				<div class="panel-body"> <dt>Fecha</dt>
+					<dd id="ddFecha">...</dd> <dt>Respuesta</dt>
+					<dd id="ddEstado">...</dd> <dt>Observaciones</dt>
+					<dd id="ddObservaciones">...</dd>
+				</div>
+			</div>
       <form name="formres" id="formres" autocomplete="off">
         <input id="Telefono" name="Telefono" type="hidden" required="required">
         <input id="Direccion" name="Direccion" type="hidden">
