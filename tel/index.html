@@ -38,6 +38,8 @@
 			});
 		});*/
 	var $table = $('#table');
+      var tipo = "contactos"
+      var zona = "parana"
 
 	function loadJson() {
 		$('#cargando').modal('show');
@@ -67,21 +69,23 @@
     $(document).ready(function() {
         $("#parana").click(function(){
    			$("#parana").attr("class", "active");
-          	$("#cerrito").attr("class", "");
+          	$("#interior").attr("class", "");
+          zona = "parana";
 		});
-        $(document).on('click', '$("#cerrito")', function(e) {
-			e.stopImmediatePropagation();
-			e.preventDefault();
+         $("#interior").click(function(){
    			$("#parana").attr("class", "");
-          	$("#cerrito").attr("class", "active");
+          	$("#interior").attr("class", "active");
+          zona = "interior";
 		});
         $("#contactos").click(function(){
    			$("#contactos").attr("class", "btn btn-default active");
           	$("#reservas").attr("class", "btn btn-default");
+          tipo = "contactos";
 		});
         $("#reservas").click(function(){
    			$("#contactos").attr("class", "btn btn-default");
           	$("#reservas").attr("class", "btn btn-default active");
+          tipo = "reservas";
 		});
     });
 	</script>
