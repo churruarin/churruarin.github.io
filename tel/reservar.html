@@ -103,8 +103,9 @@ $('#cargando').modal('hide');
 
       function submitForm() {
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(return true)
+      //.then(return true)
       .catch(error => console.error('Error!', error.message))
+        return true
       };
 	</script>
 </head>
