@@ -50,10 +50,27 @@ filterJson();
 		});
 	};
       function filterJson() {
+        $('#cargando').modal('show');
+        var filtro = data;
+        switch(zona) {
+  case "parana":
+    filtro =  jsonata('$[Localidad="Paraná"]').evaluate(filtro);
+    break;
+  case "interior":
+    filtro =  jsonata('$[Localidad!="Paraná"]').evaluate(filtro);
+};
+           switch(tipo) {
+  case "contactos":
+    filtro =  jsonata('$[Respuesta!="Reservado"]').evaluate(filtro);
+    break;
+  case "reservas":
+    filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
+}     
+        
         	$('#table').bootstrapTable({
-				data: data
+				data: filtro
 			});
-			$('#table').bootstrapTable('load', data);
+			$('#table').bootstrapTable('load', filtro);
 			$('#cargando').modal('hide');
         };
 	loadJson();
