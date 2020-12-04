@@ -67,6 +67,7 @@ filterJson();
     filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
 } ;    
         if (filtro) {
+          filtro =  jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")")}').evaluate(filtro);
           $("#tablecontactos").attr("class", "table-responsive show");
           $("#alert").attr("class", "alert alert-warning hidden");
                   	$('#table').bootstrapTable({
