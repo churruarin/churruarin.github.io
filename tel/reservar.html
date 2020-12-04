@@ -36,7 +36,7 @@
 	$(function() {
 		$('#cargando').modal('show');
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
-			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Respuesta":$[3], "Publicador":$[4], "Fecha":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 			registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
 			console.log(registrotel);
 			$("#Telefono").text(registrotel['Telefono']);
@@ -108,6 +108,38 @@ $("#enviar").attr("href", linkwa)
 <p>Cargando...</p>
 	</div>
 	<!-- /.modal -->
+      
+      <script src="/app/js/formdata-polyfill.js"></script>
+<script src="/app/js/promise-polyfill.js"></script>
+<script src="/app/js/whatwg-fetch.js"></script>
+
+<script>
+      $(document).ready(function(){
+      var date_input=$('input[name="Fecha"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+    format: "dd/mm/yyyy",
+    todayBtn: "linked",
+    language: "es",
+    daysOfWeekHighlighted: "0,6",
+    todayHighlight: true
+      };
+      date_input.datepicker(options);
+    });
+
+  
+  
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+      
 </body>
 
 </html>
