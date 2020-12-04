@@ -33,6 +33,7 @@
       var registrotelpretty;
       var pubs;
       var linkwa;
+      var form = document.forms['formres'];
 	console.log(telefono);
 	$(function() {
 		$('#cargando').modal('show');
@@ -73,6 +74,8 @@ $('#cargando').modal('hide');
 	});
       
       $(document).ready(function() {
+        
+        form = document.forms['formres']
           $("#cancelar").click(function(){
             
     window.opener.postMessage('close', 'https://churruar.in')
@@ -88,7 +91,7 @@ $('#cargando').modal('hide');
 });
   $("#enviar").click(function(){
    if (submitForm()) {
-       window.open(linkwa);
+     //  window.open(linkwa);
    // window.opener.postMessage('close', 'https://churruar.in');
    } else
     {};
@@ -98,7 +101,7 @@ $('#cargando').modal('hide');
         });
       
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
-  const form = document.forms['form']
+  
 
 
       function submitForm() {
@@ -126,7 +129,7 @@ $('#cargando').modal('hide');
 		<dd id="ddDireccion">...</dd> 
 
                   </div></div>
-      <form name="form" id="form" autocomplete="off">
+      <form name="formres" id="formres" autocomplete="off">
         <input id="Telefono" name="Telefono" type="hidden" required="required">
         <input id="Direccion" name="Direccion" type="hidden">
         <input id="Localidad" name="Localidad" type="hidden">
