@@ -18,29 +18,29 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
 	<link href="/app/css/bootstrap.min.css" rel="stylesheet">
 	<script>
-      /*
-	$(window).on('message',function(e){
-	alert('Mensaje del iframe');
-	console.log("MESSAGE",e);
-		
-	});
-	
-	$(document).on('click', 'a[rel=modal]', function(e) {
-		e.stopImmediatePropagation();
-		e.preventDefault();
-		var modal = $('#modal').modal();
-		console.log('hey')
-		modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
-			if(textStatus === 'success' || textStatus === 'notmodified') {
-				$('#miframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
-				modal.show();
-			}
+	/*
+		$(window).on('message',function(e){
+		alert('Mensaje del iframe');
+		console.log("MESSAGE",e);
+			
 		});
-	});*/
+		
+		$(document).on('click', 'a[rel=modal]', function(e) {
+			e.stopImmediatePropagation();
+			e.preventDefault();
+			var modal = $('#modal').modal();
+			console.log('hey')
+			modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
+				if(textStatus === 'success' || textStatus === 'notmodified') {
+					$('#miframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
+					modal.show();
+				}
+			});
+		});*/
 	var $table = $('#table');
+
 	function loadJson() {
 		$('#cargando').modal('show');
-        
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 			console.log(data);
@@ -51,40 +51,32 @@
 			$('#cargando').modal('hide');
 		});
 	};
-      loadJson();
-var win;
+	loadJson();
+	var win;
+
 	function LinkFormatter(value, row, index) {
 		return "<a href='javascript:win = window.open(&apos;detalle.html?telefono=" + value + "&apos;);'>" + value + "</a>";
 	};
-      window.addEventListener('message', event => {
-  // Only accept messages from http://example.com.
-  if (event.origin === 'https://churruar.in') {
-    win.close()
-    loadJson();
-  }
-});
-      
-      
+	window.addEventListener('message', event => {
+		// Only accept messages from http://example.com.
+		if(event.origin === 'https://churruar.in') {
+			win.close()
+			loadJson();
+		}
+	});
 	</script>
 </head>
 
 <body role="document">
-
 	<div class="container">
-      
-       <div class="btn-group pull-right" role="group" aria-label="...">
-  <button type="button" class="btn btn-default active">Contactos</button>
-  <button type="button" class="btn btn-default">Reservas</button>
-
-</div>     
-      
-      <ul class="nav nav-tabs padding-top-md">
-  <li role="presentation" class="active"><a href="#">Paraná</a></li>
-  <li role="presentation"><a href="#">Interior</a></li>
-</ul>
-
-      
-
+		<div class="btn-group pull-right" role="group" aria-label="...">
+			<button type="button" class="btn btn-default active">Contactos</button>
+			<button type="button" class="btn btn-default">Reservas</button>
+		</div>
+		<ul class="nav nav-tabs padding-top-md">
+			<li role="presentation" class="active"><a href="#">Paraná</a></li>
+			<li role="presentation"><a href="#">Interior</a></li>
+		</ul>
 		<h1>Territorio para predicación telefónica</h1>
 		<div class="table-responsive">
 			<table id="table" data-toggle="table" class="table table-striped">
@@ -98,9 +90,8 @@ var win;
 			</table>
 		</div>
 	</div>
-
 	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
-      <p>Cargando...</p>
+		<p>Cargando...</p>
 	</div>
 	<!-- /.modal -->
 </body>
