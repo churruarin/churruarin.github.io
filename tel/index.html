@@ -66,7 +66,7 @@ filterJson();
   case "reservas":
     filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
 } ;    
-        
+        console.log(filtro);
         	$('#table').bootstrapTable({
 				data: filtro
 			});
