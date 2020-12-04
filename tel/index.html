@@ -117,15 +117,15 @@ filterJson();
            filterJson();
 		});
         $("#contactos").click(function(){
-   			$("#contactos").attr("class", "btn btn-default active");
-          	$("#reservas").attr("class", "btn btn-default");
+   			$("#contactos").attr("class", "btn btn-info active");
+          	$("#reservas").attr("class", "btn btn-warning");
             $("#titulo").text("Contactos para predicación telefónica");
           tipo = "contactos";
           filterJson();
 		});
         $("#reservas").click(function(){
-   			$("#contactos").attr("class", "btn btn-default");
-          	$("#reservas").attr("class", "btn btn-default active");
+   			$("#contactos").attr("class", "btn btn-info");
+          	$("#reservas").attr("class", "btn btn-warning active");
             $("#titulo").text("Contactos reservados para predicación telefónica");
           tipo = "reservas";
           filterJson();
