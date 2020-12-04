@@ -30,10 +30,10 @@
 	};
 	var telefono = getUrlParameter('telefono');
 	var registrotel;
-      var registrotelpretty;
-      var pubs;
-      var linkwa;
-      var form = document.forms['formres'];
+	var registrotelpretty;
+	var pubs;
+	var linkwa;
+	var form = document.forms['formres'];
 	console.log(telefono);
 	$(function() {
 		$('#cargando').modal('show');
@@ -43,16 +43,16 @@
 			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": Fecha &$string(Turno = "" ? "" : " por la "& Turno)}').evaluate(registrotel);
 			$("#ddTelefono").text(registrotelpretty['Telefono']);
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
-          $("#ddFecha").text(registrotelpretty['Fecha']);
-          $("#ddEstado").text(registrotelpretty['Respuesta']);
-          $("#ddObservaciones").text(registrotel['Observaciones']);
-          $("#Telefono").val(registrotel['Telefono']);
-          $("#Direccion").val(registrotel['Direccion']);
-          $("#Localidad").val(registrotel['Localidad']);
-          $("#Estado").val("Reservado");
-          var d = new Date();
-          $("#Fecha").val(d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear());
-          console.log(registrotel);
+			$("#ddFecha").text(registrotelpretty['Fecha']);
+			$("#ddEstado").text(registrotelpretty['Respuesta']);
+			$("#ddObservaciones").text(registrotel['Observaciones']);
+			$("#Telefono").val(registrotel['Telefono']);
+			$("#Direccion").val(registrotel['Direccion']);
+			$("#Localidad").val(registrotel['Localidad']);
+			$("#Estado").val("Reservado");
+			var d = new Date();
+			$("#Fecha").val(d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear());
+			console.log(registrotel);
 			console.log(registrotelpretty);
 		});
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
@@ -63,86 +63,80 @@
 			});
 			$("#Publicador").append(listitems);
 		});
-      $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
-            .done(function(jsonurl) {
-          var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
-  var listitems = '';
-  $.each(data,function(key, value) 
-{
-    listitems += '<option>' + value['Nombre'] + '</option>';
-});
-  $("#Responsable").append(listitems);
-});
-$('#cargando').modal('hide');
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+			var listitems = '';
+			$.each(data, function(key, value) {
+				listitems += '<option>' + value['Nombre'] + '</option>';
+			});
+			$("#Responsable").append(listitems);
+		});
+		$('#cargando').modal('hide');
 	});
-      
-      $(document).ready(function() {
-        
-        form = document.forms['formres']
-          $("#cancelar").click(function(){
-            
-    window.opener.postMessage('close', 'https://churruar.in')
-});
-        
-         $("#Publicador").change(function(){
-           var selpub = $("#Publicador").find(":selected").text()
-           var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
-           if (selpubtel) {linkwa = "https://wa.me/+54" + selpubtel} else {linkwa = "https://wa.me/"};
-          // 
-           linkwa = linkwa + "?text=" + encodeURIComponent("_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO* \n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" + registrotelpretty['Telefono'] + "*\nDirección: *" + registrotelpretty['Direccion'] + "*\nFue llamado la última vez: *"+ registrotelpretty['Fecha'] + "*\nRespuesta a la última llamada: *" + registrotelpretty['Estado'] +"*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.")
+	$(document).ready(function() {
+		form = document.forms['formres'];
+		$("#cancelar").click(function() {
+			window.opener.postMessage('close', 'https://churruar.in')
+		});
+		$("#Publicador").change(function() {
+			var selpub = $("#Publicador").find(":selected").text()
+			var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
+			if(selpubtel) {
+				linkwa = "https://wa.me/+54" + selpubtel
+			} else {
+				linkwa = "https://wa.me/"
+			};
+			// 
+			linkwa = linkwa + "?text=" + encodeURIComponent("_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO* \n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" + registrotelpretty['Telefono'] + "*\nDirección: *" + registrotelpretty['Direccion'] + "*\nFue llamado la última vez: *" + registrotelpretty['Fecha'] + "*\nRespuesta a la última llamada: *" + registrotelpretty['Estado'] + "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.")
+		});
+		$("#enviar").click(function() {
+			if($('#formres')[0].checkValidity()) {
+				if(submitForm()) {
+					window.open(linkwa);
+					window.opener.postMessage('close', 'https://churruar.in');
+				};
+			} else {
+				$("#formres").find("#submit-hidden").click();
+			};
+		});
+		$("#reservar").click(function() {
+			if($('#formres')[0].checkValidity()) {
+				if(submitForm()) {
+					//window.open(linkwa);
+					window.opener.postMessage('close', 'https://churruar.in');
+				};
+			} else {
+				$("#formres").find("#submit-hidden").click();
+			};
+		});
+	});
+	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
 
-});
-  $("#enviar").click(function(){
-    if ($('#formres')[0].checkValidity()) {
-   if (submitForm()) {
-     window.open(linkwa);
-   window.opener.postMessage('close', 'https://churruar.in');
-   };} else {
-   $("#formres").find("#submit-hidden").click();
-   };
-});
-    $("#reservar").click(function(){
-    if ($('#formres')[0].checkValidity()) {
-   if (submitForm()) {
-     //window.open(linkwa);
-   window.opener.postMessage('close', 'https://churruar.in');
-   };} else {
-   $("#formres").find("#submit-hidden").click();
-   };
-});           
-        
-        });
-      
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
-  
-
-
-      function submitForm() {
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      //.then(return true)
-      .catch(error => console.error('Error!', error.message))
-        return true
-      };
+	function submitForm() {
+		fetch(scriptURL, {
+				method: 'POST',
+				body: new FormData(form)
+			})
+			//.then(return true)
+			.catch(error => console.error('Error!', error.message))
+		return true
+	};
 	</script>
 </head>
 
-	<body role="document">
-      
-      
+<body role="document">
 	<div class="container">
-      <h1>Reserva de contacto para predicación telefónica</h1>
- 
-	<dl class="dl-horizontal"> 
-      			<div class="panel panel-default">
+		<h1>Reserva de contacto para predicación telefónica</h1>
+		<dl class="dl-horizontal">
+			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Datos del contacto</h3> </div>
-				<div class="panel-body">
-      <dt>Teléfono</dt>
-		<dd id="ddTelefono">...</dd> <dt>Dirección</dt>
-		<dd id="ddDireccion">...</dd> 
-
-                  </div></div>
-      			<div class="panel panel-default">
+				<div class="panel-body"> <dt>Teléfono</dt>
+					<dd id="ddTelefono">...</dd> <dt>Dirección</dt>
+					<dd id="ddDireccion">...</dd>
+				</div>
+			</div>
+			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Último llamado</h3> </div>
 				<div class="panel-body"> <dt>Fecha</dt>
@@ -151,48 +145,39 @@ $('#cargando').modal('hide');
 					<dd id="ddObservaciones">...</dd>
 				</div>
 			</div>
-      <form name="formres" id="formres" autocomplete="off">
-        <input id="Telefono" name="Telefono" type="hidden" required="required">
-        <input id="Direccion" name="Direccion" type="hidden">
-        <input id="Localidad" name="Localidad" type="hidden">
-        <input id="Estado" name="Estado" type="hidden">
-        <input id="Fecha" name="Fecha" type="hidden">
-        <input id="submit-hidden" type="submit" style="display: none" />
-        
-        
-      <div class="panel-body">
-      <dt>Asignar a publicador</dt>
-		<dd>				<select id="Publicador" name="Publicador" class="select form-control" required="required">
-					<option></option>
-          </select></dd>
-            <dt>Responsable</dt>
-		<dd>				<select id="Responsable" name="Responsable" class="select form-control" required="required">
-					<option></option>
-          </select></dd>
-      </div>
-      </form>
-	 <p class="text-right">
-	 <button class="btn btn-success" id="enviar">Reservar y enviar</button>
-      <button class="btn btn-info" id="reservar" type="submit">Reservar</button>
-    <a class="btn btn-default" id="cancelar" href="#" role="button">Cancelar</a></p>
-	
-	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
-<p>Cargando...</p>
-	</div>
-	<!-- /.modal -->
-      
-      <script src="/app/js/formdata-polyfill.js"></script>
-<script src="/app/js/promise-polyfill.js"></script>
-<script src="/app/js/whatwg-fetch.js"></script>
-
-<script>
-
-
-  
-  
-
-</script>
-      
+			<form name="formres" id="formres" autocomplete="off">
+				<input id="Telefono" name="Telefono" type="hidden" required="required">
+				<input id="Direccion" name="Direccion" type="hidden">
+				<input id="Localidad" name="Localidad" type="hidden">
+				<input id="Estado" name="Estado" type="hidden">
+				<input id="Fecha" name="Fecha" type="hidden">
+				<input id="submit-hidden" type="submit" style="display: none" />
+				<div class="panel-body"> <dt>Asignar a publicador</dt>
+					<dd>
+						<select id="Publicador" name="Publicador" class="select form-control" required="required">
+							<option></option>
+						</select>
+					</dd> <dt>Responsable</dt>
+					<dd>
+						<select id="Responsable" name="Responsable" class="select form-control" required="required">
+							<option></option>
+						</select>
+					</dd>
+				</div>
+			</form>
+			<p class="text-right">
+				<button class="btn btn-success" id="enviar">Reservar y enviar</button>
+				<button class="btn btn-info" id="reservar" type="submit">Reservar</button> 
+              <a class="btn btn-default" id="cancelar" href="#" role="button">Cancelar</a></p>
+			<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
+				<p>Cargando...</p>
+			</div>
+			<!-- /.modal -->
+			<script src="/app/js/formdata-polyfill.js"></script>
+			<script src="/app/js/promise-polyfill.js"></script>
+			<script src="/app/js/whatwg-fetch.js"></script>
+			<script>
+			</script>
 </body>
 
 </html>
