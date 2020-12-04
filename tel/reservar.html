@@ -40,7 +40,7 @@
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 			registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
-			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": " ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")")}').evaluate(registrotel);
+			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": Fecha &$string(Turno = "" ? "" : " por la "& Turno)}').evaluate(registrotel);
 			$("#ddTelefono").text(registrotelpretty['Telefono']);
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
           $("#ddFecha").text(registrotelpretty['Fecha']);
