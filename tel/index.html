@@ -112,12 +112,14 @@ filterJson();
         $("#contactos").click(function(){
    			$("#contactos").attr("class", "btn btn-default active");
           	$("#reservas").attr("class", "btn btn-default");
+            $("#titulo").text("Contactos para predicación telefónica");
           tipo = "contactos";
           filterJson();
 		});
         $("#reservas").click(function(){
    			$("#contactos").attr("class", "btn btn-default");
           	$("#reservas").attr("class", "btn btn-default active");
+            $("#titulo").text("Contactos reservados para predicación telefónica");
           tipo = "reservas";
           filterJson();
 		});
@@ -131,11 +133,12 @@ filterJson();
 			<button type="button" id="contactos" class="btn btn-default active">Contactos</button>
 			<button type="button" id="reservas" class="btn btn-default">Reservas</button>
 		</div>
-		<ul class="nav nav-tabs padding-top-md">
+
+		<h1 id="titulo">Contactos para predicación telefónica</h1>
+      	<ul class="nav nav-tabs padding-top-md">
 			<li role="presentation" id="parana" class="active"><a href="#">Paraná</a></li>
 			<li role="presentation" id="interior" ><a href="#">Interior</a></li>
 		</ul>
-		<h1>Territorio para predicación telefónica</h1>
       <div class="alert alert-info alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   No olvides <strong>reservar</strong> el contacto <strong>antes</strong> de pasárselo a un hermano.
