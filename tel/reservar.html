@@ -87,9 +87,11 @@ $('#cargando').modal('hide');
 
 });
   $("#enviar").click(function(){
-    submitForm();
+   if (submitForm()) {
        window.open(linkwa);
    // window.opener.postMessage('close', 'https://churruar.in');
+   } else
+    {};
 });
              
         
@@ -101,7 +103,7 @@ $('#cargando').modal('hide');
 
       function submitForm() {
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => console.log('Success!', response))
+      .then(return true)
       .catch(error => console.error('Error!', error.message))
       };
 	</script>
