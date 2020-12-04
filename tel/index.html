@@ -91,21 +91,25 @@ filterJson();
    			$("#parana").attr("class", "active");
           	$("#interior").attr("class", "");
           zona = "parana";
+          filterJson();
 		});
          $("#interior").click(function(){
    			$("#parana").attr("class", "");
           	$("#interior").attr("class", "active");
           zona = "interior";
+           filterJson();
 		});
         $("#contactos").click(function(){
    			$("#contactos").attr("class", "btn btn-default active");
           	$("#reservas").attr("class", "btn btn-default");
           tipo = "contactos";
+          filterJson();
 		});
         $("#reservas").click(function(){
    			$("#contactos").attr("class", "btn btn-default");
           	$("#reservas").attr("class", "btn btn-default active");
           tipo = "reservas";
+          filterJson();
 		});
     });
 	</script>
