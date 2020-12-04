@@ -69,7 +69,9 @@
    			$("#parana").attr("class", "active");
           	$("#cerrito").attr("class", "");
 		});
-        $("#cerrito").click(function(){
+        $(document).on('click', '$("#cerrito")', function(e) {
+			e.stopImmediatePropagation();
+			e.preventDefault();
    			$("#parana").attr("class", "");
           	$("#cerrito").attr("class", "active");
 		});
