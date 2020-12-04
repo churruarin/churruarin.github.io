@@ -67,14 +67,14 @@ filterJson();
     filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
 } ;    
         if (filtro) {
-          $("#contactos").attr("class", "table-responsive show");
+          $("#tablecontactos").attr("class", "table-responsive show");
           $("#alert").attr("class", "alert alert-warning hidden");
                   	$('#table').bootstrapTable({
 				data: filtro
 			});
 			$('#table').bootstrapTable('load', filtro);
         } else {
-          $("#contactos").attr("class", "table-responsive hidden");
+          $("#tablecontactos").attr("class", "table-responsive hidden");
           $("#alert").attr("class", "alert alert-warning show");
         };
         
@@ -135,7 +135,7 @@ filterJson();
 			<li role="presentation" id="interior" ><a href="#">Interior</a></li>
 		</ul>
 		<h1>Territorio para predicación telefónica</h1>
-		<div class="table-responsive show" id="contactos">
+		<div class="table-responsive show" id="tablecontactos">
 			<table id="table" data-toggle="table" class="table table-striped">
 				<thead>
 					<tr>
