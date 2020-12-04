@@ -83,6 +83,7 @@
 
 });
   $("#enviar").click(function(){
+    $("#form").submit();
        window.open(linkwa);
     window.opener.postMessage('close', 'https://churruar.in');
 });
@@ -107,6 +108,7 @@
 		<dd id="Direccion">...</dd> 
 
                   </div></div>
+      <form name="form" id="form" autocomplete="off">
       <div class="panel-body">
       <dt>Asignar a publicador</dt>
 		<dd>				<select id="Publicador" name="Publicador" class="select form-control" required="required">
@@ -117,7 +119,8 @@
 					<option></option>
           </select></dd>
       </div>
-	</dl> <p class="text-right">
+      </form>
+	 <p class="text-right">
 	 <button class="btn btn-success" id="enviar" type="submit">Reservar y enviar</button>
       <a class="btn btn-info" id="reservar" href="#" role="button">Reservar</a>
     <a class="btn btn-default" id="cancelar" href="#" role="button">Cancelar</a></p>
@@ -138,7 +141,7 @@
   
   
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
-  const form = document.forms['submit-to-google-sheet']
+  const form = document.forms['form']
 
   form.addEventListener('submit', e => {
     e.preventDefault()
