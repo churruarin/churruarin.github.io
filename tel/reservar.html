@@ -91,12 +91,18 @@ $('#cargando').modal('hide');
 });
   $("#enviar").click(function(){
    if (submitForm()) {
-     //  window.open(linkwa);
-   // window.opener.postMessage('close', 'https://churruar.in');
+     window.open(linkwa);
+    window.opener.postMessage('close', 'https://churruar.in');
    } else
     {};
 });
-             
+    $("#reservar").click(function(){
+   if (submitForm()) {
+    // window.open(linkwa);
+    window.opener.postMessage('close', 'https://churruar.in');
+   } else
+    {};
+});           
         
         });
       
@@ -150,7 +156,7 @@ $('#cargando').modal('hide');
       </form>
 	 <p class="text-right">
 	 <button class="btn btn-success" id="enviar" type="submit">Reservar y enviar</button>
-      <a class="btn btn-info" id="reservar" href="#" role="button">Reservar</a>
+      <button class="btn btn-info" id="reservar" type="submit">Reservar</button>
     <a class="btn btn-default" id="cancelar" href="#" role="button">Cancelar</a></p>
 	
 	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
