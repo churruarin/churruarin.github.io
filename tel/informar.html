@@ -1,254 +1,192 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+
 <head>
-    <title>Territorio para predicación telefónica</title>
-    <meta name="robots" content="noindex" />
-    <meta name="robots" content="nofollow" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/favicon.ico">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<title>Territorio para predicación telefónica</title>
+	<meta name="robots" content="noindex" />
+	<meta name="robots" content="nofollow" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="/favicon.ico">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
+	<!-- Bootstrap Date-Picker Plugin -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+	<link href="/app/css/bootstrap.min.css" rel="stylesheet">
+	<script>
+	var getUrlParameter = function getUrlParameter(sParam) {
+		var sPageURL = window.location.search.substring(1),
+			sURLVariables = sPageURL.split('&'),
+			sParameterName,
+			i;
+		for(i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+			if(sParameterName[0] === sParam) {
+				return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+			}
+		}
+	};
+	var telefono = getUrlParameter('telefono');
+	var registrotel;
+	var form = document.forms['formres'];
+	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
+	console.log(telefono);
+	$(function() {
+		$('#cargando').modal('show');
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+			registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
+			console.log(registrotel);
+			$("#Telefono").val(registrotel['Telefono']);
+			$("#pTelefono").text(registrotel['Telefono']);
+			$("#Direccion").val(registrotel['Direccion']);
+			$("#pDireccion").text(registrotel['Direccion']);
+			$("#Localidad").val(registrotel['Localidad']);
+			$("#pLocalidad").text(registrotel['Localidad']);
+			$('#cargando').modal('hide');
+		});
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+			var listitems = '';
+			$.each(data, function(key, value) {
+				listitems += '<option>' + value['Nombre'] + '</option>';
+			});
+			$("#Responsable").append(listitems);
+		});
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+			var listitems = '';
+			$.each(data, function(key, value) {
+				listitems += '<option>' + value['Nombre'] + '</option>';
+			});
+			$("#Publicador").append(listitems);
+		});
+	});
+	$(document).ready(function() {
+		var form = document.forms['formres'];
+		$("#cancelar").click(function() {
+			window.opener.postMessage('close', 'https://churruar.in')
+		});
+		$("#Estado").change(function() {
+			if($("#Estado").find(":selected").text() == 'Revisita') {
+				console.log("rev");
+				$("#Publicador").attr("required", true);
+				$("#Publicador").attr("disabled", false);
+			} else {
+				console.log("no rev");
+				$("#Publicador").attr("required", false);
+				$("#Publicador").attr("disabled", true);
+			};
+		});
+		$("#enviar").click(function() {
+			if($('#formres')[0].checkValidity()) {
+				if(submitForm()) {
+					// window.open(linkwa);
+					// window.opener.postMessage('close', 'https://churruar.in');
+				};
+			} else {
+				$("#formres").find("#submit-hidden").click();
+			};
+		});
+	});
 
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>    
-<!-- Bootstrap Date-Picker Plugin -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-    <link href="/app/css/bootstrap.min.css" rel="stylesheet">
-  <script>
-    var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+	function submitForm() {
+		fetch(scriptURL, {
+				method: 'POST',
+				body: new FormData(form)
+			})
+			.then(response => console.log('Success!', response))
+			.catch(error => console.error('Error!', error.message))
+		return true
+	};
+	</script>
+</head>
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-        }
-    }
-};
-    var telefono = getUrlParameter('telefono');
-    var registrotel;
-    var form = document.forms['formres'];
-    console.log(telefono);
-         $(function() {
-       $('#cargando').modal('show');
-           $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
-            .done(function(jsonurl) {
-          var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-                registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
-               console.log(registrotel);
-          $("#Telefono").val(registrotel['Telefono']);
-          $("#pTelefono").text(registrotel['Telefono']);
-          $("#Direccion").val(registrotel['Direccion']);
-          $("#pDireccion").text(registrotel['Direccion']);
-          $("#Localidad").val(registrotel['Localidad']);
-          $("#pLocalidad").text(registrotel['Localidad']);
-              $('#cargando').modal('hide');
-             
-            });
-            
-$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
-            .done(function(jsonurl) {
-          var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
-  var listitems = '';
-  $.each(data,function(key, value) 
-{
-    listitems += '<option>' + value['Nombre'] + '</option>';
-});
-  $("#Responsable").append(listitems);
-
-
-             
-            });
-           
-           $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc')
-            .done(function(jsonurl) {
-          var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
-  var listitems = '';
-  $.each(data,function(key, value) 
-{
-    listitems += '<option>' + value['Nombre'] + '</option>';
-});
-  $("#Publicador").append(listitems);
-
-
-             
-            });
-           
-    });
-    
-      $(document).ready(function() {
-        var form = document.forms['formres'];
-          $("#cancelar").click(function(){
-            
-    window.opener.postMessage('close', 'https://churruar.in')
-});
-        
-                  $("#Estado").change(function(){
-                          
-                    if ($("#Estado").find(":selected").text() == 'Revisita') {
-                      console.log("rev");
-                      $("#Publicador").attr("required", true);
-                       $("#Publicador").attr("disabled", false);
-                    } else {
-                      console.log("no rev");
-                        $("#Publicador").attr("required", false);
-                       $("#Publicador").attr("disabled", true);
-                    };
-});
-          $("#enviar").click(function(){
-    if ($('#formres')[0].checkValidity()) {
-   if (submitForm()) {
-    // window.open(linkwa);
-  // window.opener.postMessage('close', 'https://churruar.in');
-   };} else {
-   $("#formres").find("#submit-hidden").click();
-   };
-});
-        
-        });
-    
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
-  
-
-
-      function submitForm() {
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      //.then(return true)
-      .catch(error => console.error('Error!', error.message))
-        return true
-      };
-    
-  </script>
-  
-  </head>
 <body role="document">
 	<div class="container">
-      <h1>Informe de llamado telefónico</h1>
-<form name="formres" id="formres" autocomplete="off">
-  		<dl class="dl-horizontal">
-
-		
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Datos del contacto</h3> </div>
-              <div class="panel-body"> 
-    <dt>Teléfono</dt> 
-    
-      <dd id="pTelefono">...</dd>
-      <input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required">
-   
-
-
-    <dt>Dirección</dt> 
-  
-       <dd id="pDireccion">...</dd>
-      <input id="Direccion" name="Direccion" type="hidden" class="form-control">
-   
- 
-  
-    <dt>Localidad</dt> 
-
-      <dd id="pLocalidad">...</dd>
-      <input id="Localidad" name="Localidad" type="hidden" class="form-control">
+		<h1>Informe de llamado telefónico</h1>
+		<form name="formres" id="formres" autocomplete="off">
+			<dl class="dl-horizontal">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Datos del contacto</h3> </div>
+					<div class="panel-body"> <dt>Teléfono</dt>
+						<dd id="pTelefono">...</dd>
+						<input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required"> <dt>Dirección</dt>
+						<dd id="pDireccion">...</dd>
+						<input id="Direccion" name="Direccion" type="hidden" class="form-control"> <dt>Localidad</dt>
+						<dd id="pLocalidad">...</dd>
+						<input id="Localidad" name="Localidad" type="hidden" class="form-control"> </div>
+				</div>
+				<div class="panel-body"> <dt>Respuesta</dt>
+					<dd>
+						<select id="Estado" name="Estado" class="select form-control" required="required">
+							<option></option>
+							<option>Atendió</option>
+							<option>No atiende</option>
+							<option value="Mensaje en contestador">Se dejó un mensaje en contestador</option>
+							<option value="No existente">No funciona/no existe</option>
+							<option>No volver a llamar</option>
+							<option>Revisita</option>
+						</select>
+					</dd> <dt>Fecha</dt>
+					<dd>
+						<div class="input-group date">
+							<input id="Fecha" name="Fecha" type="text" class="form-control" placeholder="Fecha en el que se hizo el llamado." required="required" data-date-end-date="0d" pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span> </div>
+					</dd> <dt>Turno</dt>
+					<dd>
+						<select id="Turno" name="Turno" class="select form-control" required="required">
+							<option value="Mañana">Mañana</option>
+							<option value="Tarde">Tarde</option>
+						</select>
+					</dd> <dt>Publicador (sólo para revisitas)</dt>
+					<dd>
+						<select id="Publicador" name="Publicador" class="select form-control" disabled="true" required="false">
+							<option></option>
+						</select>
+					</dd> <dt>Observaciones</dt>
+					<dd>
+						<textarea id="Observaciones" name="Observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock" placeholder="Opcional. Escribí solamente si es necesario."></textarea>
+					</dd> <dt>Responsable</dt>
+					<dd>
+						<select id="Responsable" name="Responsable" class="select form-control" required="required">
+							<option></option>
+						</select>
+					</dd>
+				</div>
+			</dl>
+			<input id="submit-hidden" type="submit" style="display: none" /> </form>
+		<p class="text-right">
+			<button class="btn btn-primary" id="enviar" type="submit">Enviar informe</button>
+			<button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
+		</p>
 	</div>
-			</div>
- <div class="panel-body"> 
-    <dt>Respuesta</dt> 
-    <dd>
-      <select id="Estado" name="Estado" class="select form-control" required="required">
-        <option></option>
-        <option>Atendió</option>
-        <option>No atiende</option>
-        <option value="Mensaje en contestador">Se dejó un mensaje en contestador</option>
-        <option value="No existente">No funciona/no existe</option>
-        <option>No volver a llamar</option>
-        <option>Revisita</option>
-      </select>
-  </dd>
-  
-    <dt>Fecha</dt> 
-     <dd>
-      <div class="input-group date">
-  <input id="Fecha" name="Fecha" type="text" class="form-control" placeholder="Fecha en el que se hizo el llamado." required="required" data-date-end-date="0d" pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-</div>
-  </dd>
+	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
+		<p>Cargando...</p>
+	</div>
+	<!-- /.modal -->
+	<script src="/app/js/formdata-polyfill.js"></script>
+	<script src="/app/js/promise-polyfill.js"></script>
+	<script src="/app/js/whatwg-fetch.js"></script>
+	<script>
+	$(document).ready(function() {
+		var date_input = $('input[name="Fecha"]'); //our date input has the name "date"
+		var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+		var options = {
+			format: "dd/mm/yyyy",
+			todayBtn: "linked",
+			language: "es",
+			daysOfWeekHighlighted: "0,6",
+			todayHighlight: true
+		};
+		date_input.datepicker(options);
+	});
+	</script>
+</body>
 
-  
-    <dt>Turno</dt> 
-    <dd>
-      <select id="Turno" name="Turno" class="select form-control" required="required">
-        <option value="Mañana">Mañana</option>
-        <option value="Tarde">Tarde</option>
-      </select>
-
-  </dd>
-    <dt>Publicador (sólo para revisitas)</dt> 
-    <dd>
-      <select id="Publicador" name="Publicador" class="select form-control" disabled="true" required="false">
-        <option></option>
-      </select>
- </dd>
-
-    <dt>Observaciones</dt> 
-    <dd>
-      <textarea id="Observaciones" name="Observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock" placeholder="Opcional. Escribí solamente si es necesario."></textarea> 
- </dd>
-       <dt>Responsable</dt> 
-    <dd>
-      <select id="Responsable" name="Responsable" class="select form-control" required="required">
-        <option></option>
-      </select>
- </dd>
-   
-
-          </div>
-   </dl>
-  
-    <input id="submit-hidden" type="submit" style="display: none" />
-    </form>
-      
-      <p class="text-right">
-    <button class="btn btn-primary" id="enviar" type="submit">Enviar informe</button>
-      
-    <button type="button" id="cancelar" class="btn btn-default">Cancelar</button></p>
-
-    </div>
- <div class="modal fade" id="cargando" tabindex="-1" role="dialog">
-<p>Cargando...</p>
-</div><!-- /.modal -->   
-    
-    
-
-<script src="/app/js/formdata-polyfill.js"></script>
-<script src="/app/js/promise-polyfill.js"></script>
-<script src="/app/js/whatwg-fetch.js"></script>
-
-<script>
-      $(document).ready(function(){
-      var date_input=$('input[name="Fecha"]'); //our date input has the name "date"
-      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-      var options={
-    format: "dd/mm/yyyy",
-    todayBtn: "linked",
-    language: "es",
-    daysOfWeekHighlighted: "0,6",
-    todayHighlight: true
-      };
-      date_input.datepicker(options);
-    });
-
-  
-  
-
-</script>
-  
-  </body>
-    </html>
+</html>
