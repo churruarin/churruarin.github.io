@@ -72,8 +72,7 @@ filterJson();
 } ;    
         if (filtro) {
           filtro =  jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}').evaluate(filtro);
-          $("#tablecontactos").attr("class", "table-responsive show");
-          $("#tablereservas").attr("class", "table-responsive show");
+
           $("#alert").attr("class", "alert alert-warning hidden");
             $('#table').bootstrapTable({
 				data: filtro
