@@ -58,6 +58,14 @@
 			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
 filterJson();
 		});
+      $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+			var listitems = '';
+			$.each(data, function(key, value) {
+				listitems += '<option>' + value['Nombre'] + '</option>';
+			});
+			$("#selResponsable").append(listitems);
+		});
 	};
       function filterJson() {
         $('#cargando').modal('show');
@@ -159,6 +167,7 @@ switch(tipo) {
         responsable = Cookies.get('responsable');
       };
       $("#btnResponsable").click(function(){
+        
       });
       
     });
@@ -214,11 +223,11 @@ switch(tipo) {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Reponsable</h4>
+        <h4 class="modal-title">Responsable</h4>
       </div>
       <div class="modal-body">
         <p>Para continuar, elegí tu nombre entre la siguiente lista de responsables.</p>
-        <select id="Responsable" name="Responsable" class="select form-control" required="required">
+        <select id="selResponsable" name="selResponsable" class="select form-control" required="required">
 				<option></option>
 		</select>
       </div>
