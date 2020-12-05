@@ -61,12 +61,12 @@ filterJson();
 };
 switch(tipo) {
   case "contactos":
-   // filtro =  jsonata('$[Respuesta!="Reservado"]').evaluate(filtro);
+    filtro =  jsonata('$[Respuesta!="Reservado"]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive show");
     $("#tablereservas").attr("class", "table-responsive hidden");
     break;
   case "reservas":
-   // filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
+    filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive hidden");
     $("#tablereservas").attr("class", "table-responsive show");
 };    
@@ -77,12 +77,12 @@ switch(tipo) {
 
           $("#alert").attr("class", "alert alert-warning hidden");
             $('#table').bootstrapTable({
-				data: jsonata('$[Respuesta!="Reservado"]').evaluate(filtro);
+				data: filtro
 			});
 			$('#table').bootstrapTable('load', filtro);
           
             $('#tableres').bootstrapTable({
-				data: filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
+				data: filtro
 			});
 			$('#tableres').bootstrapTable('load', filtro);
         } else {
