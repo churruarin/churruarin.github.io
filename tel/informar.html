@@ -36,7 +36,7 @@
 		}
 	};
 	var telefono = getUrlParameter('telefono');
-    var responsable = getUrlParameter('responsable');
+    var responsable = Cookies.get('responsable');
 	var registrotel;
 	var form = document.forms['formres'];
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
