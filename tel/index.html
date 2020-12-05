@@ -52,6 +52,7 @@
 	var data;
 	var resp = Cookies.get('responsable');
     var zona = Cookies.get('zona');
+      var win;
 
 	function loadJson() {
 		$('#cargando').modal('show');
@@ -135,7 +136,7 @@
 			};
 		});
       	$("#btnAsignar").click(function() {
-var win = window.open('reservar.html?zona=');
+       win = window.open('reservar.html?zona=');
 		});
       	$("#selZona").change(function() {
           
