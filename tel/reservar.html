@@ -15,6 +15,14 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<link href="/app/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+  .blurred span {
+  filter: blur(6px);
+  /* As pointed out by Alexander Erlandsson (@alexerlandsson), for situations that require better cross-browser support, the blur effect is easily reproduced with transpartent text + text-shadow
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0,0,0,0.8); */
+}
+  </style>
 	<script>
 	var getUrlParameter = function getUrlParameter(sParam) {
 		var sPageURL = window.location.search.substring(1),
@@ -41,7 +49,7 @@
 			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 			registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
 			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": Fecha &$string(Turno = "" ? "" : " por la "& Turno)}').evaluate(registrotel);
-			$("#ddTelefono").text(registrotelpretty['Telefono']);
+			$("#ddTelefono").text(registrotelpretty['Telefono'].slice(0,3) + "8888");
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
 			$("#ddFecha").text(registrotelpretty['Fecha']);
 			$("#ddEstado").text(registrotelpretty['Respuesta']);
