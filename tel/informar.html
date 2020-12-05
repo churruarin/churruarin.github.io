@@ -123,7 +123,7 @@
 <body role="document">
 	<div class="container">
 		<h1>Informe de llamado telefónico</h1>
-		<form name="formres" id="formres" autocomplete="off">
+		
 			<dl class="dl-horizontal">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -131,15 +131,17 @@
 					<div class="panel-body"> 
                       	<dt>Teléfono</dt>
 						<dd id="pTelefono">...</dd>
-						<input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required"> 
+						
                       	<dt>Dirección</dt>
 						<dd id="pDireccion">...</dd>
-						<input id="Direccion" name="Direccion" type="hidden" class="form-control"> 
+						
                         <dt>Localidad</dt>
 						<dd id="pLocalidad">...</dd>
-						<input id="Localidad" name="Localidad" type="hidden" class="form-control"> </div>
+						 </div>
 				</div>
-				<div class="panel-body"> <dt>Respuesta</dt>
+              <form name="formres" id="formres" autocomplete="off">
+				<div class="panel-body"> 
+                  <dt>Respuesta</dt>
 					<dd>
 						<select id="Estado" name="Estado" class="select form-control" required="required">
 							<option></option>
@@ -175,9 +177,15 @@
 						</select>
 					</dd>
 				</div>
+           <input id="Localidad" name="Localidad" type="hidden" class="form-control">
+          <input id="Direccion" name="Direccion" type="hidden" class="form-control"> 
+          <input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required"> 
+			<input id="submit-hidden" type="submit" style="display: none" />                
+                
+                </form>
 			</dl>
-			<input id="submit-hidden" type="submit" style="display: none" /> 
-        </form>
+
+        
 		<p class="text-right">
 			<button class="btn btn-primary" id="enviar" type="submit">Enviar informe</button>
 			<button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
