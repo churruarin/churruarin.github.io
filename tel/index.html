@@ -13,6 +13,7 @@
 	<link rel="icon" href="/favicon.ico">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
@@ -194,10 +195,29 @@ switch(tipo) {
 		</div>
       <div class="alert alert-warning hidden" role="alert" id="alert">No hay contactos disponibles.</div>
 </div>
-	</div>
+	
 	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
 		<p>Cargando...</p>
 	</div>
+  
+  <div class="modal fade" id="modResponsable" tabindex="-1" role="dialog" backdrop="static" keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Reponsable</h4>
+      </div>
+      <div class="modal-body">
+        <p>Para continuar, elegí tu nombre entre la siguiente lista de responsables.</p>
+        <select id="Responsable" name="Responsable" class="select form-control" required="required">
+				<option></option>
+		</select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 	<!-- /.modal -->
 </body>
 
