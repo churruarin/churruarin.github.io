@@ -38,6 +38,7 @@
 		}
 	};
 	var telefono = getUrlParameter('telefono');
+      var test = getUrlParameter('test');
     var resp = Cookies.get('responsable');
 	var registrotel;
 	var registrotelpretty;
@@ -97,8 +98,9 @@
 			if($('#formres')[0].checkValidity()) {
               $('#cargando').modal('show');
 				if(submitForm()) {
-					window.open(linkwa);
-					window.opener.postMessage('close', 'https://churruar.in');
+                  
+					//window.open(linkwa);
+					//window.opener.postMessage('close', 'https://churruar.in');
                 } else {
                   alert("Ocurrió un error. Intentá enviarlo de nuevo.");
                 };
@@ -107,6 +109,7 @@
 				$("#formres").find("#submit-hidden").click();
 			};
 		});
+      /*
 		$("#reservar").click(function() {
          
 			if($('#formres')[0].checkValidity()) {
@@ -120,7 +123,7 @@
 				$("#formres").find("#submit-hidden").click();
 			};
 		});
-	});
+	});*/
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
 
 	async function submitForm() {
