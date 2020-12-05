@@ -59,7 +59,7 @@ filterJson();
   case "interior":
     filtro =  jsonata('$[Localidad!="Paraná"]').evaluate(filtro);
 };
-           switch(tipo) {
+switch(tipo) {
   case "contactos":
     filtro =  jsonata('$[Respuesta!="Reservado"]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive show");
@@ -69,7 +69,8 @@ filterJson();
     filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive hidden");
     $("#tablereservas").attr("class", "table-responsive show");
-} ;    
+};    
+  console.log(filtro);     
         if (filtro) {
           filtro =  jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}').evaluate(filtro);
 
