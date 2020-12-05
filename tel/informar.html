@@ -113,7 +113,7 @@
 	});
 
 	async function submitForm() {
-      var respuesta
+      var respuesta = false;
 		await fetch(scriptURL, {
 				method: 'POST',
 				body: new FormData($("#formres")[0])
