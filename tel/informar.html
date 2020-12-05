@@ -82,6 +82,8 @@
             startDate: fechaMDY
 		};
 		$("#Fecha").datepicker(options);
+      console.log(fechaMDY)
+        $("#Fecha").attr("data-date-start-date", fechaMDY);
 		$("#cancelar").click(function() {
 			window.opener.postMessage('close', 'https://churruar.in')
 		});
