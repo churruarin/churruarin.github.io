@@ -98,11 +98,10 @@
 		});
 		$("#enviar").click(function() {
 			if($('#formres')[0].checkValidity()) {
-				$("#formres").find("#submit-hidden").click();
-             // if(submitForm()) {
+				if(submitForm()) {
 					// window.open(linkwa);
 					// window.opener.postMessage('close', 'https://churruar.in');
-			//	};
+				};
 			} else {
 				$("#formres").find("#submit-hidden").click();
 			};
