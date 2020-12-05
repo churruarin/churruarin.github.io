@@ -116,9 +116,9 @@
 	});
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
 
-	function submitForm() {
+	async function submitForm() {
       var respuesta
-		fetch(scriptURL, {
+		await fetch(scriptURL, {
 				method: 'POST',
 				body: new FormData($("#formres")[0])
 			}).then(response => {
