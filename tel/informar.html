@@ -39,6 +39,7 @@
 	var resp = Cookies.get('responsable');
 	var registrotel;
 	var form = document.forms['formres'];
+      var fechaMDY;
     
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
 	console.log(telefono);
@@ -57,6 +58,7 @@
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#pLocalidad").text(registrotel['Localidad']);
 			$('#cargando').modal('hide');
+            fechaMDY = jsonata('$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[M]/[D]/[Y]")').evaluate(registrotel);
 		});
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
@@ -76,7 +78,8 @@
 			todayBtn: "linked",
 			language: "es",
 			daysOfWeekHighlighted: "0,6",
-			todayHighlight: true
+			todayHighlight: true,
+            startDate: fechaMDY
 		};
 		date_input.datepicker(options);
 		$("#cancelar").click(function() {
@@ -114,19 +117,14 @@
 
 	async function submitForm() {
       var respuesta = false;
-		await fetch(scriptURL, {
+	  var response = await fetch(scriptURL, {
 				method: 'POST',
 				body: new FormData($("#formres")[0])
-			}).then(response => {
-   			    respuesta = response.ok;
-          //console.log(respuesta);
-          //     console.log(response);
-
-  			})
-  .catch(error => {
+			}).catch(error => {
           respuesta = false;
     	  	});
-      //console.log(respuesta); 
+      console.log(respuesta); 
+      respuesta = response.ok;
 		return respuesta;
 	};
 	</script>
