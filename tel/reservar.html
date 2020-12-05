@@ -12,6 +12,7 @@
 	<meta name="author" content="">
 	<link rel="icon" href="/favicon.ico">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<link href="/app/css/bootstrap.min.css" rel="stylesheet">
@@ -37,6 +38,7 @@
 		}
 	};
 	var telefono = getUrlParameter('telefono');
+    var responsable = getUrlParameter('responsable');
 	var registrotel;
 	var registrotelpretty;
 	var pubs;
@@ -53,6 +55,8 @@
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
 			$("#ddFecha").text(registrotelpretty['Fecha']);
 			$("#ddEstado").text(registrotelpretty['Respuesta']);
+            $("#ddResponsable").text(responsable);
+            $("#Responsable").val(responsable);
 			$("#ddObservaciones").text(registrotel['Observaciones']);
 			$("#Telefono").val(registrotel['Telefono']);
 			$("#Direccion").val(registrotel['Direccion']);
@@ -71,16 +75,7 @@
 			});
 			$("#Publicador").append(listitems);
 		});
-		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
-			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
-			var listitems = '';
-			$.each(data, function(key, value) {
-				listitems += '<option>' + value['Nombre'] + '</option>';
-			});
-			$("#Responsable").append(listitems);
-		});
-		$('#cargando').modal('hide');
-	});
+		
 	$(document).ready(function() {
 		form = document.forms['formres'];
 		$("#cancelar").click(function() {
@@ -159,6 +154,7 @@
 				<input id="Localidad" name="Localidad" type="hidden">
 				<input id="Estado" name="Estado" type="hidden">
 				<input id="Fecha" name="Fecha" type="hidden">
+              	<input id="Responsable" name="Responsable" type="hidden">
 				<input id="submit-hidden" type="submit" style="display: none" />
 				<div class="panel-body"> <dt>Asignar a publicador</dt>
 					<dd>
@@ -166,10 +162,9 @@
 							<option></option>
 						</select>
 					</dd> <dt>Responsable</dt>
-					<dd>
-						<select id="Responsable" name="Responsable" class="select form-control" required="required">
-							<option></option>
-						</select>
+					<dd id="ddResponsable">
+						
+
 					</dd>
 				</div>
 			</form>
