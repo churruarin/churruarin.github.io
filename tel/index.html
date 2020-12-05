@@ -78,6 +78,7 @@ filterJson();
 				data: filtro
 			});
 			$('#table').bootstrapTable('load', filtro);
+          
             $('#tableres').bootstrapTable({
 				data: filtro
 			});
@@ -130,14 +131,14 @@ filterJson();
           	$("#reservas").attr("class", "btn btn-warning");
             $("#titulo").text("Contactos disponibles para predicación telefónica");
           tipo = "contactos";
-          filterJson();
+          loadJson();
 		});
         $("#reservas").click(function(){
    			$("#contactos").attr("class", "btn btn-info");
           	$("#reservas").attr("class", "btn btn-warning active");
             $("#titulo").text("Contactos reservados para predicación telefónica");
           tipo = "reservas";
-          filterJson();
+          loadJson();
 		});
     });
 	</script>
