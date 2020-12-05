@@ -50,6 +50,7 @@
       var tipo = "contactos";
       var zona = "parana";
       var data;
+      var responsable;
 
 	function loadJson() {
 		$('#cargando').modal('show');
@@ -151,6 +152,13 @@ switch(tipo) {
           tipo = "reservas";
           loadJson();
 		});
+      if (Cookies.get('responsable') === undefined) {
+        $('#modResponsable').modal('show');
+        
+      } else {
+        responsable = Cookies.get('responsable');
+      }
+      
     });
 	</script>
 </head>
