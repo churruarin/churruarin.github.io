@@ -61,12 +61,12 @@ filterJson();
 };
 switch(tipo) {
   case "contactos":
-    filtro =  jsonata('[$[Respuesta!="Reservado"],{}]').evaluate(filtro);
+    filtro =  jsonata('[$[Respuesta!="Reservado"],{"Telefono": "", "Direccion": "", "Localidad": "", "Fecha": "", "Respuesta": "", "Publicador": "", "Turno": "", "Observaciones": "", "Responsable": ""}]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive show");
     $("#tablereservas").attr("class", "table-responsive hidden");
     break;
   case "reservas":
-    filtro =  jsonata('[$[Respuesta="Reservado"],{}]').evaluate(filtro);
+    filtro =  jsonata('[$[Respuesta="Reservado"],{"Telefono": "", "Direccion": "", "Localidad": "", "Fecha": "", "Respuesta": "", "Publicador": "", "Turno": "", "Observaciones": "", "Responsable": ""}]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive hidden");
     $("#tablereservas").attr("class", "table-responsive show");
 };    
