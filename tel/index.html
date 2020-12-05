@@ -170,7 +170,8 @@ switch(tipo) {
         		
 			if($('#formres')[0].checkValidity()) {
               responsable = $("#selResponsable").find(":selected").text();
-              Cookies.set('responsable', responsable)
+              Cookies.set('responsable', responsable);
+              $('#modResponsable').modal('hide');
 
 			} else {
 				$("#formres").find("#submit-hidden").click();
