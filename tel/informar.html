@@ -39,6 +39,7 @@
 	var resp = Cookies.get('responsable');
 	var registrotel;
 	var form = document.forms['formres'];
+      var respuesta = false;
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
 	console.log(telefono);
 	$(function() {
@@ -94,7 +95,7 @@
 		});
 		$("#enviar").click(function() {
 			if($('#formres')[0].checkValidity()) {
-				if(submitForm()) {
+				if (submitForm()) {
 					// window.open(linkwa);
 					//window.opener.postMessage('close', 'https://churruar.in');
                   console.log("ok");
@@ -106,13 +107,14 @@
 	});
 
 	function submitForm() {
-      var respuesta = false;
+      
 		fetch(scriptURL, {
 			method: 'POST',
 			body: new FormData($("#formres")[0])
 		}).then(response => {
    			 if (response.ok) {
     				  respuesta = true;
+               console.log(response);
    				 }
   			})
   .catch(error => {
