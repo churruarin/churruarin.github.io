@@ -50,7 +50,7 @@
       var tipo = "contactos";
       var zona = "parana";
       var data;
-      var resp;
+      var resp = Cookies.get('responsable');
 
 	function loadJson() {
 		$('#cargando').modal('show');
@@ -59,7 +59,7 @@
 			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
 filterJson();
 		});
-      $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+ if (resp === undefined) {     $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
 			var listitems = '';
 			$.each(data, function(key, value) {
@@ -67,10 +67,10 @@ filterJson();
 			});
 			$("#selResponsable").append(listitems);
 		});
-      
+                         };
 	};
       function filterJson() {
-        $("#spResponsable").text(resp);
+        
         $('#cargando').modal('show');
         var filtro = data;
         switch(zona) {
@@ -120,15 +120,11 @@ switch(tipo) {
 	var win;
 
 	function LinkFormatter(value, row, index) {
-        switch(tipo) {
-  case "contactos":
-   return "<a class='blurred' href='javascript:win = window.open(&apos;reservar.html?telefono=" + value + "&apos;);'>" + value.slice(0,3) + "<span>8888</span></a>";
-    break;
-  case "reservas":
-    return "<a href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'>" + value + "</a>";
-} ;    
+
+    return "<a href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'>" + value + "</a>"    
 		
 	};
+      
 	window.addEventListener('message', event => {
 		// Only accept messages from http://example.com.
 		if(event.origin === 'https://churruar.in') {
@@ -153,18 +149,18 @@ switch(tipo) {
           loadJson();
 		});
       
-      if (Cookies.get('responsable') === undefined) {
+      if (resp === undefined) {
         $('#modResponsable').modal('show');
         
       } else {
-        resp = Cookies.get('responsable');
+        $("#spResponsable").text(resp);
       };
       $("#btnResponsable").click(function(){
         		
 			if($('#formres')[0].checkValidity()) {
               resp = $("#selResponsable").find(":selected").text();
               Cookies.set('responsable', resp);
-              loadJson();
+              $("#spResponsable").text(resp);
               $('#modResponsable').modal('hide');
 
 			} else {
