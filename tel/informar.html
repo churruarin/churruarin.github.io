@@ -95,11 +95,13 @@
 		});
 		$("#enviar").click(function() {
 			if($('#formres')[0].checkValidity()) {
+              $('#cargando').modal('show');
 				if (submitForm()) {
 					// window.open(linkwa);
-					//window.opener.postMessage('close', 'https://churruar.in');
-                  console.log("ok");
+					window.opener.postMessage('close', 'https://churruar.in');
+                  //console.log("ok");
 				};
+              $('#cargando').modal('hide');
 			} else {
 				$("#formres").find("#submit-hidden").click();
 			};
