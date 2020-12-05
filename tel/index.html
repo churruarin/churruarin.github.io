@@ -73,24 +73,10 @@ filterJson();
         
         $('#cargando').modal('show');
         var filtro = data;
-        switch(zona) {
-  case "parana":
-    filtro =  jsonata('[$[Localidad="Paraná"]]').evaluate(filtro);
-    break;
-  case "interior":
-    filtro =  jsonata('[$[Localidad!="Paraná"]]').evaluate(filtro);
-};
-switch(tipo) {
-  case "contactos":
-    filtro =  jsonata('[$shuffle($[Respuesta!="Reservado"]),{"Telefono": "", "Direccion": "", "Localidad": "", "Fecha": "", "Respuesta": "", "Publicador": "", "Turno": "", "Observaciones": "", "Responsable": ""}]').evaluate(filtro);
-    $("#tablecontactos").attr("class", "table-responsive show");
-    $("#tablereservas").attr("class", "table-responsive hidden");
-    break;
-  case "reservas":
+
     filtro =  jsonata('[$[Respuesta="Reservado"][Responsable="' + resp + '"],{"Telefono": "", "Direccion": "", "Localidad": "", "Fecha": "", "Respuesta": "", "Publicador": "", "Turno": "", "Observaciones": "", "Responsable": ""}]').evaluate(filtro);
-    $("#tablecontactos").attr("class", "table-responsive hidden");
-    $("#tablereservas").attr("class", "table-responsive show");
-};    
+
+
   console.log(filtro);     
         if (filtro) {
           filtro =  jsonata('$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}').evaluate(filtro);
@@ -107,7 +93,6 @@ switch(tipo) {
 			});
 			$('#tableres').bootstrapTable('load', filtro);
         } else {
-          $("#tablecontactos").attr("class", "table-responsive hidden");
           $("#tablereservas").attr("class", "table-responsive hidden");
           $("#alert").attr("class", "alert alert-warning show");
         };
@@ -116,7 +101,7 @@ switch(tipo) {
 
 			$('#cargando').modal('hide');
         };
-	loadJson();
+	
 	var win;
 
 	function LinkFormatter(value, row, index) {
@@ -137,19 +122,20 @@ switch(tipo) {
         $("#contactos").click(function(){
    			$("#contactos").attr("class", "active");
           	$("#reservas").attr("class", "");
-            $("#titulo").text("Contactos disponibles para predicación telefónica");
+            
           tipo = "contactos";
        
 		});
         $("#reservas").click(function(){
    			$("#reservas").attr("class", "active");
           	$("#contactos").attr("class", "");
-            $("#titulo").text("Contactos reservados para predicación telefónica");
+           
           tipo = "reservas";
           loadJson();
 		});
       
       if (resp === undefined) {
+        loadJson();
         $('#modResponsable').modal('show');
         
       } else {
