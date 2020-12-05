@@ -78,10 +78,6 @@
 		if(filtro) {
 			filtro = jsonata('$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}').evaluate(filtro);
 			$("#alert").attr("class", "alert alert-warning hidden");
-			$('#table').bootstrapTable({
-				data: filtro
-			});
-			$('#table').bootstrapTable('load', filtro);
 			$('#tableres').bootstrapTable({
 				data: filtro
 			});
@@ -107,11 +103,15 @@
 	$(document).ready(function() {
 		$("#spResponsable").text(resp);
 		$("#contactos").click(function() {
+         $("#tablereservas").attr("class", "table-responsive hidden");
+         $("#pnlContactos").attr("class", "panel panel-primary ");   
 			$("#contactos").attr("class", "active");
 			$("#reservas").attr("class", "");
 			tipo = "contactos";
 		});
 		$("#reservas").click(function() {
+          $("#tablereservas").attr("class", "table-responsive");
+         $("#pnlContactos").attr("class", "panel panel-primary hidden"); 
 			$("#reservas").attr("class", "active");
 			$("#contactos").attr("class", "");
 			tipo = "reservas";
@@ -149,20 +149,7 @@
 			<li role="presentation" id="reservas"><a href="#">Reservas</a></li>
 		</ul>
 		<p>&nbsp;</p>
-		<div class="hidden">
-			<div class="table-responsive show" id="tablecontactos">
-				<table id="table" data-toggle="table" class="table table-striped">
-					<thead>
-						<tr>
-							<th data-field="Telefono" data-formatter="LinkFormatter">Teléfono</th>
-							<th data-field="Direccion">Dirección</th>
-							<th data-field="Respuesta">Última respuesta</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-		</div>
-		<div class="panel panel-primary">
+		<div id="pnlContactos" class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title">Asignación de contacto</h3> </div>
 			<div class="panel-body">
@@ -189,7 +176,7 @@
 			</table>
 		</div>
 		<div class="alert alert-warning hidden" role="alert" id="alert">No hay contactos disponibles.</div>
-	</div>
+	
 	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
 		<p>Cargando...</p>
 	</div>
