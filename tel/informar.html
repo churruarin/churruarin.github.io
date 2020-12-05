@@ -15,6 +15,7 @@
    	<script src="/app/js/formdata-polyfill.js"></script>
 	<script src="/app/js/promise-polyfill.js"></script>
 	<script src="/app/js/whatwg-fetch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<!-- Bootstrap Date-Picker Plugin -->
@@ -35,6 +36,7 @@
 		}
 	};
 	var telefono = getUrlParameter('telefono');
+    var responsable = getUrlParameter('responsable');
 	var registrotel;
 	var form = document.forms['formres'];
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
@@ -47,21 +49,15 @@
 			console.log(registrotel);
 			$("#Telefono").val(registrotel['Telefono']);
 			$("#pTelefono").text(registrotel['Telefono']);
+          $("#pResponsable").text(responsable);
+          $("#Responsable").val(responsable);
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#pDireccion").text(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#pLocalidad").text(registrotel['Localidad']);
 			$('#cargando').modal('hide');
 		});
-		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
-			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
-			var listitems = '';
-			$.each(data, function(key, value) {
-				listitems += '<option>' + value['Nombre'] + '</option>';
-			});
-			$("#Responsable").append(listitems);
-		});
-		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+				$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
 			var listitems = '';
 			$.each(data, function(key, value) {
@@ -171,14 +167,11 @@
 					<dd>
 						<textarea id="Observaciones" name="Observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock" placeholder="Opcional. Escribí solamente si es necesario."></textarea>
 					</dd> <dt>Responsable</dt>
-					<dd>
-						<select id="Responsable" name="Responsable" class="select form-control" required="required">
-							<option></option>
-						</select>
-					</dd>
+					<dd id="pResponsable"></dd>
 				</div>
            <input id="Localidad" name="Localidad" type="hidden" class="form-control">
           <input id="Direccion" name="Direccion" type="hidden" class="form-control"> 
+                <input id="Responsable" name="Responsable" type="hidden" class="form-control"> 
           <input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required"> 
 			<input id="submit-hidden" type="submit" style="display: none" />                
                 
