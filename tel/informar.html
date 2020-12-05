@@ -81,7 +81,7 @@
 			todayHighlight: true,
             startDate: fechaMDY
 		};
-		date_input.datepicker(options);
+		$("#Fecha").datepicker(options);
 		$("#cancelar").click(function() {
 			window.opener.postMessage('close', 'https://churruar.in')
 		});
