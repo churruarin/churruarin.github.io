@@ -50,7 +50,7 @@
       var tipo = "contactos";
       var zona = "parana";
       var data;
-      var responsable;
+      var resp;
 
 	function loadJson() {
 		$('#cargando').modal('show');
@@ -164,13 +164,13 @@ switch(tipo) {
         $('#modResponsable').modal('show');
         
       } else {
-        responsable = Cookies.get('responsable');
+        resp = Cookies.get('responsable');
       };
       $("#btnResponsable").click(function(){
         		
 			if($('#formres')[0].checkValidity()) {
-              responsable = $("#selResponsable").find(":selected").text();
-              Cookies.set('responsable', responsable);
+              resp = $("#selResponsable").find(":selected").text();
+              Cookies.set('responsable', resp);
               loadJson();
               $('#modResponsable').modal('hide');
 
