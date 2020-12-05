@@ -167,7 +167,15 @@ switch(tipo) {
         responsable = Cookies.get('responsable');
       };
       $("#btnResponsable").click(function(){
-        
+        		
+			if($('#formres')[0].checkValidity()) {
+              responsable = $("#selResponsable").find(":selected").text();
+              Cookies.set('responsable', responsable)
+
+			} else {
+				$("#formres").find("#submit-hidden").click();
+			};
+		
       });
       
     });
@@ -227,9 +235,12 @@ switch(tipo) {
       </div>
       <div class="modal-body">
         <p>Para continuar, elegí tu nombre entre la siguiente lista de responsables.</p>
+        <form name="formres" id="formres" autocomplete="off">
         <select id="selResponsable" name="selResponsable" class="select form-control" required="required">
 				<option></option>
 		</select>
+        <input id="submit-hidden" type="submit" style="display: none" />
+          </form>
       </div>
       <div class="modal-footer">
         <button type="button" id="btnResponsable" class="btn btn-primary">Guardar</button>
