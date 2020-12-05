@@ -157,7 +157,9 @@ switch(tipo) {
         
       } else {
         responsable = Cookies.get('responsable');
-      }
+      };
+      $("#btnResponsable").click(function(){
+      });
       
     });
 	</script>
@@ -208,7 +210,7 @@ switch(tipo) {
 		<p>Cargando...</p>
 	</div>
   
-  <div class="modal fade" id="modResponsable" tabindex="-1" role="dialog" backdrop="static" keyboard="false">
+  <div class="modal fade" id="modResponsable" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -221,7 +223,7 @@ switch(tipo) {
 		</select>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" id="btnResponsable" class="btn btn-primary">Guardar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
