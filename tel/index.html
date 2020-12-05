@@ -16,6 +16,14 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+  <style>
+  .blurred span {
+  filter: blur(6px);
+  /* As pointed out by Alexander Erlandsson (@alexerlandsson), for situations that require better cross-browser support, the blur effect is easily reproduced with transpartent text + text-shadow
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0,0,0,0.8); */
+}
+  </style>
 	<link href="/app/css/bootstrap.min.css" rel="stylesheet">
 	<script>
 	/*
@@ -66,13 +74,13 @@ switch(tipo) {
     $("#tablereservas").attr("class", "table-responsive hidden");
     break;
   case "reservas":
-    filtro =  jsonata('[$shuffle($[Respuesta="Reservado"]),{"Telefono": "", "Direccion": "", "Localidad": "", "Fecha": "", "Respuesta": "", "Publicador": "", "Turno": "", "Observaciones": "", "Responsable": ""}]').evaluate(filtro);
+    filtro =  jsonata('[$[Respuesta="Reservado"],{"Telefono": "", "Direccion": "", "Localidad": "", "Fecha": "", "Respuesta": "", "Publicador": "", "Turno": "", "Observaciones": "", "Responsable": ""}]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive hidden");
     $("#tablereservas").attr("class", "table-responsive show");
 };    
   console.log(filtro);     
         if (filtro) {
-          filtro =  jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}').evaluate(filtro);
+          filtro =  jsonata('$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}').evaluate(filtro);
           
 
           $("#alert").attr("class", "alert alert-warning hidden");
@@ -101,7 +109,7 @@ switch(tipo) {
 	function LinkFormatter(value, row, index) {
         switch(tipo) {
   case "contactos":
-   return "<a href='javascript:win = window.open(&apos;reservar.html?telefono=" + value + "&apos;);'>" + value + "</a>";
+   return "<a href='javascript:win = window.open(&apos;reservar.html?telefono=" + value + "&apos;);'>" + value.slice(0,3) + "</a>";
     break;
   case "reservas":
     return "<a href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'>" + value + "</a>";
