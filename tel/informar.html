@@ -40,6 +40,7 @@
 	var registrotel;
 	var form = document.forms['formres'];
       var fechaMDY;
+      var fechaHoy = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
     
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
 	console.log(telefono);
@@ -59,7 +60,9 @@
 			$("#pLocalidad").text(registrotel['Localidad']);
 			
             fechaMDY = jsonata('$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[Y0001]-[M01]-[D01]")').evaluate(registrotel);
-          $("#Fecha").val(fechaMDY);
+          $("#Fecha").attr("min", fechaMDY);
+          $("#Fecha").attr("max", fechaHoy);
+          $("#Fecha").val(fechaHoy);
           
           console.log(fechaMDY);
           $('#cargando').modal('hide');
@@ -163,8 +166,8 @@
 						</select>
 					</dd> <dt>Fecha</dt>
 					<dd>
-						<div class="input-group date" id="contFecha">
-							<input id="Fecha" name="Fecha" type="date" class="form-control" placeholder="Fecha en el que se hizo el llamado." required="required" pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span> </div>
+						
+							<input id="Fecha" name="Fecha" type="date" class="form-control" placeholder="Fecha en el que se hizo el llamado." required="required" pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)">
 					</dd> <dt>Turno</dt>
 					<dd>
 						<select id="Turno" name="Turno" class="select form-control" required="required">
