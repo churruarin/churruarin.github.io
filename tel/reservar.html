@@ -65,9 +65,9 @@
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#Estado").val("Reservado");
-			var d = new Date();
+			
           
-			$("#Fecha").val(d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear());
+			$("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(););
 			console.log(registrotel);
 			console.log(d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear());
 		});
