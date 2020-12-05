@@ -12,10 +12,10 @@
 	<meta name="author" content="">
 	<link rel="icon" href="/favicon.ico">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-   	<script src="/app/js/formdata-polyfill.js"></script>
+	<script src="/app/js/formdata-polyfill.js"></script>
 	<script src="/app/js/promise-polyfill.js"></script>
 	<script src="/app/js/whatwg-fetch.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<!-- Bootstrap Date-Picker Plugin -->
@@ -36,7 +36,7 @@
 		}
 	};
 	var telefono = getUrlParameter('telefono');
-    var responsable = getUrlParameter('responsable');
+	var responsable = Cookies.get('responsable');
 	var registrotel;
 	var form = document.forms['formres'];
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
@@ -49,13 +49,15 @@
 			console.log(registrotel);
 			$("#Telefono").val(registrotel['Telefono']);
 			$("#pTelefono").text(registrotel['Telefono']);
+			$("#pResponsable").text(responsable);
+			$("#Responsable").val(responsable);
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#pDireccion").text(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#pLocalidad").text(registrotel['Localidad']);
 			$('#cargando').modal('hide');
 		});
-				$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
 			var listitems = '';
 			$.each(data, function(key, value) {
@@ -65,8 +67,8 @@
 		});
 	});
 	$(document).ready(function() {
-		var form = $("#formres");//document.forms['formres'];
-      	var date_input = $('input[name="Fecha"]'); //our date input has the name "date"
+		var form = $("#formres"); //document.forms['formres'];
+		var date_input = $('input[name="Fecha"]'); //our date input has the name "date"
 		var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
 		var options = {
 			format: "dd/mm/yyyy",
@@ -104,11 +106,9 @@
 
 	function submitForm() {
 		fetch(scriptURL, {
-				method: 'POST',
-				body: new FormData( $("#formres")[0])
-			})
-			.then(response => console.log('Success!', response))
-			.catch(error => console.error('Error!', error.message));
+			method: 'POST',
+			body: new FormData($("#formres")[0])
+		}).then(response => console.log('Success!', response)).catch(error => console.error('Error!', error.message));
 		return true;
 	};
 	</script>
@@ -117,25 +117,18 @@
 <body role="document">
 	<div class="container">
 		<h1>Informe de llamado telefónico</h1>
-		
-			<dl class="dl-horizontal">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Datos del contacto</h3> </div>
-					<div class="panel-body"> 
-                      	<dt>Teléfono</dt>
-						<dd id="pTelefono">...</dd>
-						
-                      	<dt>Dirección</dt>
-						<dd id="pDireccion">...</dd>
-						
-                        <dt>Localidad</dt>
-						<dd id="pLocalidad">...</dd>
-						 </div>
+		<dl class="dl-horizontal">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Datos del contacto</h3> </div>
+				<div class="panel-body"> <dt>Teléfono</dt>
+					<dd id="pTelefono">...</dd> <dt>Dirección</dt>
+					<dd id="pDireccion">...</dd> <dt>Localidad</dt>
+					<dd id="pLocalidad">...</dd>
 				</div>
-              <form name="formres" id="formres" autocomplete="off">
-				<div class="panel-body"> 
-                  <dt>Respuesta</dt>
+			</div>
+			<form name="formres" id="formres" autocomplete="off">
+				<div class="panel-body"> <dt>Respuesta</dt>
 					<dd>
 						<select id="Estado" name="Estado" class="select form-control" required="required">
 							<option></option>
@@ -165,21 +158,14 @@
 					<dd>
 						<textarea id="Observaciones" name="Observaciones" cols="40" rows="1" class="form-control" aria-describedby="observacionesHelpBlock" placeholder="Opcional. Escribí solamente si es necesario."></textarea>
 					</dd> <dt>Responsable</dt>
-					<dd>
-						<select id="Responsable" name="Responsable" class="select form-control" required="required">
-							<option></option>
-						</select>
-					</dd>
+					<dd id="pResponsable"></dd>
 				</div>
-           <input id="Localidad" name="Localidad" type="hidden" class="form-control">
-          <input id="Direccion" name="Direccion" type="hidden" class="form-control"> 
-          <input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required"> 
-			<input id="submit-hidden" type="submit" style="display: none" />                
-                
-                </form>
-			</dl>
-
-        
+				<input id="Localidad" name="Localidad" type="hidden" class="form-control">
+				<input id="Direccion" name="Direccion" type="hidden" class="form-control">
+				<input id="Responsable" name="Responsable" type="hidden" class="form-control">
+				<input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required">
+				<input id="submit-hidden" type="submit" style="display: none" /> </form>
+		</dl>
 		<p class="text-right">
 			<button class="btn btn-primary" id="enviar" type="submit">Enviar informe</button>
 			<button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
@@ -189,8 +175,6 @@
 		<p>Cargando...</p>
 	</div>
 	<!-- /.modal -->
-
-
 </body>
 
 </html>
