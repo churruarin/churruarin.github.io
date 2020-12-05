@@ -98,9 +98,10 @@
 			if($('#formres')[0].checkValidity()) {
               $('#cargando').modal('show');
 				if(submitForm()) {
-                  
-					//window.open(linkwa);
-					//window.opener.postMessage('close', 'https://churruar.in');
+                  if (test != "y") {
+					window.open(linkwa);
+					window.opener.postMessage('close', 'https://churruar.in');
+                  };
                 } else {
                   alert("Ocurrió un error. Intentá enviarlo de nuevo.");
                 };
@@ -133,14 +134,14 @@
 				body: new FormData($("#formres")[0])
 			}).then(response => {
    			    respuesta = response.ok;
-          //console.log(respuesta);
-          //     console.log(response);
+          console.log(respuesta);
+               console.log(response);
 
   			})
   .catch(error => {
           respuesta = false;
     	  	});
-      //console.log(respuesta); 
+      console.log(respuesta); 
 		return respuesta;
 	};
 	</script>
