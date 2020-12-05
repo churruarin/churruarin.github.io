@@ -134,16 +134,11 @@
 		await fetch(scriptURL, {
 				method: 'POST',
 				body: new FormData($("#formres")[0])
-			}).then(response => {
-   			    respuesta = response.ok;
-          console.log(respuesta);
-               console.log(response);
-
-  			})
-  .catch(error => {
+			}).catch(error => {
           respuesta = false;
     	  	});
       console.log(respuesta); 
+      respuesta = response.ok;
 		return respuesta;
 	};
 	</script>
