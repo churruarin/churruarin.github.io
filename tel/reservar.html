@@ -99,9 +99,10 @@
 				if(submitForm()) {
 					window.open(linkwa);
 					window.opener.postMessage('close', 'https://churruar.in');
-				};
+                } else {
+                  alert("Ocurrió un error. Intentá enviarlo de nuevo.");
+                };
               $('#cargando').modal('hide');
-              alert("Ocurrió un error. Intentá enviarlo de nuevo.");
 			} else {
 				$("#formres").find("#submit-hidden").click();
 			};
