@@ -60,6 +60,7 @@
 			
             fechaMDY = jsonata('$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[M]/[D]/[Y]")').evaluate(registrotel);
           $("#Fecha").attr("data-date-start-date", fechaMDY);
+          $("#contFecha input").datepicker(options);
           console.log(fechaMDY);
           $('#cargando').modal('hide');
 		});
