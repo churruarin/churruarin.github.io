@@ -59,6 +59,7 @@
 			$("#pLocalidad").text(registrotel['Localidad']);
 			
             fechaMDY = jsonata('$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[M]/[D]/[Y]")').evaluate(registrotel);
+          $("#Fecha").attr("data-date-start-date", fechaMDY);
           console.log(fechaMDY);
           $('#cargando').modal('hide');
 		});
