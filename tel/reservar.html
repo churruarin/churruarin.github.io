@@ -38,7 +38,7 @@
 		}
 	};
 	var telefono = getUrlParameter('telefono');
-    var responsable = Cookies.get('responsable');
+    var resp = Cookies.get('responsable');
 	var registrotel;
 	var registrotelpretty;
 	var pubs;
@@ -55,8 +55,8 @@
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
 			$("#ddFecha").text(registrotelpretty['Fecha']);
 			$("#ddEstado").text(registrotelpretty['Respuesta']);
-            $("#ddResponsable").text(responsable);
-            $("#Responsable").val(responsable);
+            $("#ddResponsable").text(resp);
+            $("#Responsable").val(resp);
 			$("#ddObservaciones").text(registrotel['Observaciones']);
 			$("#Telefono").val(registrotel['Telefono']);
 			$("#Direccion").val(registrotel['Direccion']);
