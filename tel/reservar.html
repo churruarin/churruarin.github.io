@@ -96,8 +96,8 @@
 		$("#enviar").click(function() {
 			if($('#formres')[0].checkValidity()) {
 				if(submitForm()) {
-					//window.open(linkwa);
-					//window.opener.postMessage('close', 'https://churruar.in');
+					window.open(linkwa);
+					window.opener.postMessage('close', 'https://churruar.in');
 				};
 			} else {
 				$("#formres").find("#submit-hidden").click();
@@ -122,14 +122,15 @@
 				method: 'POST',
 				body: new FormData($("#formres")[0])
 			}).then(response => {
-   			    respuesta =  response.ok;
+   			    respuesta = response.ok;
           console.log(respuesta);
                console.log(response);
 
   			})
   .catch(error => {
+          respuesta = false;
     	  	});
-		return respuesta
+		return respuesta;
 	};
 	</script>
 </head>
