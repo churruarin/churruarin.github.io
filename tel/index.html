@@ -183,7 +183,7 @@ switch(tipo) {
 
 		<h1 id="titulo">Contactos para predicación telefónica</h1>
       <div class="pull-right"><span id="spResponsable"></span> 
-      <button type="button" id="reload" class="btn"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>	</div>
+      	</div>
       <ul class="nav nav-tabs padding-top-md">
 			<li role="presentation" id="contactos" class="active"><a href="#">Contactos</a></li>
 			<li role="presentation" id="reservas" ><a href="#">Reservas</a></li>
@@ -216,10 +216,12 @@ switch(tipo) {
               <option>Interior</option>
 		</select>
     <p>&nbsp;</p>
-   <button type="button" class="btn btn-success btn-lg float-right ">Asignar un contacto y reservarlo</button>
+   <button type="button" class="btn btn-success btn-lg pull-right ">Asignar un contacto y reservarlo</button>
   </div>
       </div>
+      
       	<div class="table-responsive hidden" id="tablereservas">
+          <button type="button" id="reload" class="btn pull-right"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
 			<table id="tableres" data-toggle="tableres" class="table table-striped">
 				<thead>
 					<tr>
