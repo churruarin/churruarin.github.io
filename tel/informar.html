@@ -36,7 +36,7 @@
 		}
 	};
 	var telefono = getUrlParameter('telefono');
-	var responsable = Cookies.get('responsable');
+	var resp = Cookies.get('responsable');
 	var registrotel;
 	var form = document.forms['formres'];
 	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec';
@@ -49,8 +49,8 @@
 			console.log(registrotel);
 			$("#Telefono").val(registrotel['Telefono']);
 			$("#pTelefono").text(registrotel['Telefono']);
-			$("#pResponsable").text(responsable);
-			$("#Responsable").val(responsable);
+			$("#pResponsable").text(resp);
+			$("#Responsable").val(resp);
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#pDireccion").text(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
@@ -146,7 +146,8 @@
 					</dd> <dt>Turno</dt>
 					<dd>
 						<select id="Turno" name="Turno" class="select form-control" required="required">
-							<option value="Mañana">Mañana</option>
+						<option></option>	
+                          <option value="Mañana">Mañana</option>
 							<option value="Tarde">Tarde</option>
 						</select>
 					</dd> <dt>Publicador (sólo para revisitas)</dt>
@@ -162,7 +163,7 @@
 				</div>
 				<input id="Localidad" name="Localidad" type="hidden" class="form-control">
 				<input id="Direccion" name="Direccion" type="hidden" class="form-control">
-				<input id="Responsable" name="Responsable" type="hidden" class="form-control">
+				<input id="Responsable" name="Responsable" type="hidden" class="form-control" required="required">
 				<input id="Telefono" name="Telefono" type="hidden" class="form-control" required="required">
 				<input id="submit-hidden" type="submit" style="display: none" /> </form>
 		</dl>
