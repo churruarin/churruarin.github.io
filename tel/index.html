@@ -128,14 +128,14 @@ filterJson();
         $("#contactos").click(function(){
    			$("#contactos").attr("class", "btn btn-info active");
           	$("#reservas").attr("class", "btn btn-warning");
-            $("#titulo").text("Contactos <strong>disponibles</strong> para predicación telefónica");
+            $("#titulo").text("Contactos disponibles para predicación telefónica");
           tipo = "contactos";
           filterJson();
 		});
         $("#reservas").click(function(){
    			$("#contactos").attr("class", "btn btn-info");
           	$("#reservas").attr("class", "btn btn-warning active");
-            $("#titulo").text("Contactos <strong>reservados</strong> para predicación telefónica");
+            $("#titulo").text("Contactos reservados para predicación telefónica");
           tipo = "reservas";
           filterJson();
 		});
