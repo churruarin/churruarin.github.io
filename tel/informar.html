@@ -71,7 +71,7 @@
 		});
 	});
 	$(document).ready(function() {
-		var form = document.forms['formres'];
+		var form = $("#formres");//document.forms['formres'];
       	var date_input = $('input[name="Fecha"]'); //our date input has the name "date"
 		var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
 		var options = {
@@ -114,8 +114,8 @@
 				body: new FormData(form)
 			})
 			.then(response => console.log('Success!', response))
-			.catch(error => console.error('Error!', error.message))
-		return true
+			.catch(error => console.error('Error!', error.message));
+		return true;
 	};
 	</script>
 </head>
