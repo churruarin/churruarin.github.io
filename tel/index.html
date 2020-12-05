@@ -54,19 +54,19 @@ filterJson();
         var filtro = data;
         switch(zona) {
   case "parana":
-    filtro =  jsonata('$[Localidad="Paraná"]').evaluate(filtro);
+    filtro =  jsonata('[$[Localidad="Paraná"]]').evaluate(filtro);
     break;
   case "interior":
-    filtro =  jsonata('$[Localidad!="Paraná"]').evaluate(filtro);
+    filtro =  jsonata('[$[Localidad!="Paraná"]]').evaluate(filtro);
 };
 switch(tipo) {
   case "contactos":
-    filtro =  jsonata('$[Respuesta!="Reservado"]').evaluate(filtro);
+    filtro =  jsonata('[$[Respuesta!="Reservado"]]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive show");
     $("#tablereservas").attr("class", "table-responsive hidden");
     break;
   case "reservas":
-    filtro =  jsonata('$[Respuesta="Reservado"]').evaluate(filtro);
+    filtro =  jsonata('[$[Respuesta="Reservado"]]').evaluate(filtro);
     $("#tablecontactos").attr("class", "table-responsive hidden");
     $("#tablereservas").attr("class", "table-responsive show");
 };    
