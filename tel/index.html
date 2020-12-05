@@ -143,10 +143,20 @@ var win = window.open('reservar.html?zona=');
 			zona = $("#selZona").find(":selected").text();
           Cookies.set('zona', zona);
          $("#btnAsignar").attr("disable", "false");
+         } else {
+         $("#btnAsignar").attr("disable", "disable");
          }
-          
+        
           
 		});
+      
+      if(resp != undefined) {
+$("#btnAsignar").attr("disable", "false");
+		} else {
+$("#btnAsignar").attr("disable", "disable");
+          
+		};
+      
 		$("#reload").click(function() {
 			loadJson();
 		});
