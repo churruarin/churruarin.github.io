@@ -54,7 +54,7 @@
 
 	function loadJson() {
 		$('#cargando').modal('show');
-       $("#spResponsable").text(resp);
+       
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
 filterJson();
@@ -67,8 +67,10 @@ filterJson();
 			});
 			$("#selResponsable").append(listitems);
 		});
+      
 	};
       function filterJson() {
+        $("#spResponsable").text(resp);
         $('#cargando').modal('show');
         var filtro = data;
         switch(zona) {
