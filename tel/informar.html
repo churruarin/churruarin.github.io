@@ -106,19 +106,21 @@
 		});
 	});
 
-	function submitForm() {
-      
-		fetch(scriptURL, {
-			method: 'POST',
-			body: new FormData($("#formres")[0])
-		}).then(response => {
-   			 if (response.ok) {
-    				  respuesta = true;
-               console.log(response);
-   				 }
+	async function submitForm() {
+      var respuesta
+		await fetch(scriptURL, {
+				method: 'POST',
+				body: new FormData($("#formres")[0])
+			}).then(response => {
+   			    respuesta = response.ok;
+          //console.log(respuesta);
+          //     console.log(response);
+
   			})
   .catch(error => {
+          respuesta = false;
     	  	});
+      //console.log(respuesta); 
 		return respuesta;
 	};
 	</script>
