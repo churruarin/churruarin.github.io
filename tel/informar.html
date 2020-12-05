@@ -111,7 +111,7 @@
 	function submitForm() {
 		fetch(scriptURL, {
 				method: 'POST',
-				body: new FormData( $("#formres"))
+				body: new FormData( $("#formres")[0])
 			})
 			.then(response => console.log('Success!', response))
 			.catch(error => console.error('Error!', error.message));
