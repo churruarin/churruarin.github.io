@@ -109,7 +109,7 @@ switch(tipo) {
 	function LinkFormatter(value, row, index) {
         switch(tipo) {
   case "contactos":
-   return "<a href='javascript:win = window.open(&apos;reservar.html?telefono=" + value + "&apos;);'>" + value.slice(0,3) + "</a>";
+   return "<a class="blurred" href='javascript:win = window.open(&apos;reservar.html?telefono=" + value + "&apos;);'>" + value.slice(0,3) + "<span>8888</span></a>";
     break;
   case "reservas":
     return "<a href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'>" + value + "</a>";
