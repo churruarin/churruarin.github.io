@@ -138,9 +138,14 @@
 var win = window.open('reservar.html?zona=');
 		});
       	$("#selZona").change(function() {
-          console.log($("#selZona").find(":selected").text())
-			zona = $("#selZona").find(":selected").text()
+          
+         if ($("#selZona").find(":selected").text() != "") {
+			zona = $("#selZona").find(":selected").text();
           Cookies.set('zona', zona);
+         $("#btnAsignar").attr("disable", "false");
+         }
+          
+          
 		});
 		$("#reload").click(function() {
 			loadJson();
@@ -169,7 +174,7 @@ var win = window.open('reservar.html?zona=');
 					<option>Interior</option>
 				</select>
 				<p>&nbsp;</p>
-				<button type="button" id="btnAsignar" class="btn btn-success btn-lg pull-right ">Asignar un contacto y reservarlo</button>
+				<button type="button" id="btnAsignar" class="btn btn-success btn-lg pull-right "  disabled="disabled">Asignar un contacto y reservarlo</button>
 			</div>
 		</div>
 		<div class="table-responsive hidden" id="tablereservas">
