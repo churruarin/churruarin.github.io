@@ -49,7 +49,7 @@
 			var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 			registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
 			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": Fecha &$string(Turno = "" ? "" : " por la "& Turno)}').evaluate(registrotel);
-			$("#ddTelefono").text(registrotelpretty['Telefono'].slice(0,3) + "8888");
+			$("#ddTelefono").text(registrotelpretty['Telefono'].slice(0,3) + "<span>8888</span>");
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
 			$("#ddFecha").text(registrotelpretty['Fecha']);
 			$("#ddEstado").text(registrotelpretty['Respuesta']);
@@ -140,7 +140,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Datos del contacto</h3> </div>
 				<div class="panel-body"> <dt>Teléfono</dt>
-					<dd id="ddTelefono">...</dd> <dt>Dirección</dt>
+					<dd id="ddTelefono" class="blurred">...</dd> <dt>Dirección</dt>
 					<dd id="ddDireccion">...</dd>
 				</div>
 			</div>
