@@ -128,14 +128,14 @@ filterJson();
         $("#contactos").click(function(){
    			$("#contactos").attr("class", "btn btn-info active");
           	$("#reservas").attr("class", "btn btn-warning");
-            $("#titulo").text("Contactos para predicación telefónica");
+            $("#titulo").text("Contactos <strong>disponibles</strong> para predicación telefónica");
           tipo = "contactos";
           filterJson();
 		});
         $("#reservas").click(function(){
    			$("#contactos").attr("class", "btn btn-info");
           	$("#reservas").attr("class", "btn btn-warning active");
-            $("#titulo").text("Contactos reservados para predicación telefónica");
+            $("#titulo").text("Contactos <strong>reservados</strong> para predicación telefónica");
           tipo = "reservas";
           filterJson();
 		});
@@ -150,7 +150,7 @@ filterJson();
 			<button type="button" id="reservas" class="btn btn-warning">Reservas</button>
 		</div>
 
-		<h1 id="titulo">Contactos para predicación telefónica</h1>
+		<h1 id="titulo">Contactos <strong>disponibles</strong> para predicación telefónica</h1>
       	<ul class="nav nav-tabs padding-top-md">
 			<li role="presentation" id="parana" class="active"><a href="#">Paraná</a></li>
 			<li role="presentation" id="interior" ><a href="#">Interior</a></li>
