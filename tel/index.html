@@ -142,18 +142,18 @@ var win = window.open('reservar.html?zona=');
          if ($("#selZona").find(":selected").text() != "") {
 			zona = $("#selZona").find(":selected").text();
           Cookies.set('zona', zona);
-         $("#btnAsignar").attr("disable", "false");
+         $("#btnAsignar").attr("disabled", "false");
          } else {
-         $("#btnAsignar").attr("disable", "disable");
+         $("#btnAsignar").attr("disabled", "disable");
          }
         
           
 		});
       
       if(resp != undefined) {
-$("#btnAsignar").attr("disable", "false");
+$("#btnAsignar").attr("disabled", "false");
 		} else {
-$("#btnAsignar").attr("disable", "disable");
+$("#btnAsignar").attr("disabled", "disable");
           
 		};
       
