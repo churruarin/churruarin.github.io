@@ -46,7 +46,7 @@
 	var pubs;
 	var linkwa;
 	var form = document.forms['formres'];
-	console.log(telefono);
+	
 	$(function() {
 		$('#cargando').modal('show');
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
@@ -67,9 +67,9 @@
 			$("#Estado").val("Reservado");
 			
           
-			$("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(););
+			$("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
 			console.log(registrotel);
-			console.log(d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear());
+			console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
 		});
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			pubs = jsonata('$.values.({"Nombre":$[0],"Tel":$[2]})').evaluate(jsonurl);
