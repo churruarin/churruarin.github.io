@@ -62,7 +62,10 @@
 		});
       
       
-		if(resp === undefined) {
+		if (resp === undefined) {
+          loadResp();
+        };
+        function loadResp() {
 			$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 				var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
 				var listitems = '';
