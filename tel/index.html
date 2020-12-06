@@ -84,13 +84,13 @@
 				data: filtro
 			});
 			$('#tableres').bootstrapTable('load', filtro);
-		} else {
+		/*} else {
 			$("#tablereservas").attr("class", "table-responsive hidden");
-			$("#alert").attr("class", "alert alert-warning show");
+			$("#alert").attr("class", "alert alert-warning show");*/
 		};
 		$('#cargando').modal('hide');
 	};
-	var win;
+	
 
 	function LinkFormatter(value, row, index) {
 		return "<a href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'>" + value + "</a>"
