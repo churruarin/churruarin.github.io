@@ -99,7 +99,7 @@
 		// Only accept messages from http://example.com.
 		if(event.origin === 'https://churruar.in') {
 			win.close()
-			loadJson();
+			//loadJson();
 		}
 	});
 	$(document).ready(function() {
@@ -136,7 +136,7 @@
 			};
 		});
       	$("#btnAsignar").click(function() {
-       win = window.open('reservar.html?zona=');
+       win = window.open('reservar.html');
 		});
       	$("#selZona").change(function() {
           
@@ -203,7 +203,7 @@ $("#btnAsignar").attr("disabled", true);
 		</div>
 		<div class="alert alert-warning hidden" role="alert" id="alert">No hay contactos disponibles.</div>
 	
-	<div class="modal fade" id="cargando" tabindex="-1" role="dialog">
+	<div class="modal fade" id="cargando" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 		<p>Cargando...</p>
 	</div>
 	<div class="modal fade" id="modResponsable" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
