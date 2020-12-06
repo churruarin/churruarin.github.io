@@ -60,6 +60,7 @@
 			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
 			filterJson();
 		});
+      
 		if(resp === undefined) {
 			loadResp()
 		};
@@ -73,8 +74,7 @@
 				});
 				$("#selResponsable").append(listitems);
 			});
-		};
-	};
+
 
 	function filterJson() {
 		$('#cargando').modal('show');
