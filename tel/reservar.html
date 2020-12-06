@@ -102,8 +102,8 @@
               $('#cargando').modal('show');
 				if(submitForm()) {
                   if (test != "y") {
-					//window.open(linkwa);
-					//window.opener.postMessage('close', 'https://churruar.in');
+					window.open(linkwa);
+					window.opener.postMessage('close', 'https://churruar.in');
                   };
                 } else {
                   alert("Ocurrió un error. Intentá enviarlo de nuevo.");
@@ -138,10 +138,11 @@
 			}).catch(error => {
           respuesta = false;
     	  	});
-      console.log(respuesta); 
-      console.log(response); 
+
       respuesta = response.ok;
 		return respuesta;
+            console.log(respuesta); 
+      console.log(response); 
 	};
 	</script>
 </head>
