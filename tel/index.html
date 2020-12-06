@@ -60,7 +60,8 @@
 			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
 			filterJson();
 		});
-		if(resp === undefined) {
+		if(resp === undefined) {loadResp()};
+        function loadResp() {
 			$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 				var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
 				var listitems = '';
@@ -125,7 +126,7 @@
         
 		} else {
 			$("#spResponsable").text(resp);
-          $("#selResponsable").val(resp);
+          
 		};
 		$("#btnResponsable").click(function() {
 			if($('#formres')[0].checkValidity()) {
@@ -165,6 +166,8 @@ $("#btnAsignar").attr("disabled", true);
 			loadJson();
 		});
       $("#nomResponsable").click(function() {
+        loadResp()
+        $("#selResponsable").val(resp);
        $('#modResponsable').modal('show');
 		});
 	});
