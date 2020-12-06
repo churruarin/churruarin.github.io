@@ -105,10 +105,10 @@
 				$("#Publicador").attr("disabled", true);
 			};
 		});
-		$("#enviar").click(function() {
+		$("#enviar").click(async function() {
 			if($('#formres')[0].checkValidity()) {
               $('#cargando').modal('show');
-				if (submitForm()) {
+				if (await submitForm()) {
 					// window.open(linkwa);
 					window.opener.postMessage('close', 'https://churruar.in');
                   //console.log("ok");
