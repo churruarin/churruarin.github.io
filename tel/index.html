@@ -168,8 +168,10 @@ $("#btnAsignar").attr("disabled", true);
 		$("#reload").click(function() {
 			loadJson();
 		});
-      $("#nomResponsable").click(function() {
+      $("#nomResponsable").click(async function() {
+       await loadResp();
        $('#modResponsable').modal('show');
+        $("#selZona").val(resp)
 		});
 	});
 	</script>
