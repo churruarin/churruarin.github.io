@@ -98,7 +98,7 @@
 	
 
 	function LinkFormatter(value, row, index) {
-		return "<a  class='btn btn-default' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'>" + value + "</a>"
+		return "<a  class='btn btn-primary' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'><strong>" + value + "</strong></a>"
 	};
 	window.addEventListener('message', event => {
 		// Only accept messages from http://example.com.
