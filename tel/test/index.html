@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Territorio para predicación telefónica</title>
+	<meta name="robots" content="noindex" />
+	<meta name="robots" content="nofollow" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="/favicon.ico">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+	<style>
+	.blurred span {
+		filter: blur(3px);
+		/* As pointed out by Alexander Erlandsson (@alexerlandsson), for situations that require better cross-browser support, the blur effect is easily reproduced with transpartent text + text-shadow
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0,0,0,0.8); */
+	}
+	</style>
+	<link href="/app/css/bootstrap.min.css" rel="stylesheet">
+	<script>
+	/*
+			$(window).on('message',function(e){
+			alert('Mensaje del iframe');
+			console.log("MESSAGE",e);
+				
+			});
+			
+			$(document).on('click', 'a[rel=modal]', function(e) {
+				e.stopImmediatePropagation();
+				e.preventDefault();
+				var modal = $('#modal').modal();
+				console.log('hey')
+				modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
+					if(textStatus === 'success' || textStatus === 'notmodified') {
+						$('#miframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
+						modal.show();
+					}
+				});
+			});*/
+	var $table = $('#table');
+	var tipo = "contactos";
+	var zona = "parana";
+	var data;
+	var resp = Cookies.get('responsable');
+    var zona = Cookies.get('zona');
+      var win;
+
+	function loadJson() {
+		$('#cargando').modal('show');
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
+			filterJson();
+		});
+      
+      };
+
+        function loadResp() {
+			$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+				var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+				var listitems = '';
+              $("#selResponsable").empty();
+				$.each(data, function(key, value) {
+					listitems += '<option>' + value['Nombre'] + '</option>';
+				});
+				$("#selResponsable").append(listitems);
+              $("#selResponsable").val(resp);
+			});
+		};
+	
+
+	function filterJson() {
+		$('#cargando').modal('show');
+		var filtro = data;
+		filtro = jsonata('$[Respuesta="Reservado"][Responsable="' + resp + '"]').evaluate(filtro);
+		console.log(filtro);
+		/*if(filtro) {*/
+			filtro = jsonata('[$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}]').evaluate(filtro);
+			$("#alert").attr("class", "alert alert-warning hidden");
+			$('#tableres').bootstrapTable({
+				data: filtro
+			});
+			$('#tableres').bootstrapTable('load', filtro);
+		/*} else {
+			$("#tablereservas").attr("class", "table-responsive hidden");
+			$("#alert").attr("class", "alert alert-warning show");
+		};*/
+		$('#cargando').modal('hide');
+	};
+	
+
+	function LinkFormatter(value, row, index) {
+		return "<a  class='btn btn-primary' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'><strong>" + value + "</strong></a>"
+	};
+	window.addEventListener('message', event => {
+		// Only accept messages from http://example.com.
+		if(event.origin === 'https://churruar.in') {
+			win.close()
+			//loadJson();
+		}
+	});
+	$(document).ready(function() {
+		$("#spResponsable").text(resp);
+		$("#contactos").click(function() {
+         $("#tablereservas").attr("class", "table-responsive hidden");
+         $("#pnlContactos").attr("class", "panel panel-primary ");   
+			$("#contactos").attr("class", "active");
+			$("#reservas").attr("class", "");
+			tipo = "contactos";
+		});
+		$("#reservas").click(function() {
+          $("#tablereservas").attr("class", "table-responsive");
+         $("#pnlContactos").attr("class", "panel panel-primary hidden"); 
+			$("#reservas").attr("class", "active");
+			$("#contactos").attr("class", "");
+			tipo = "reservas";
+			loadJson();
+		});
+		if(resp === undefined) {
+			loadJson();
+          loadResp();
+			$('#modResponsable').modal('show');
+        
+		} else {
+			$("#spResponsable").text(resp);
+          $("#selResponsable").val(resp);
+		};
+		$("#btnResponsable").click(function() {
+			if($('#formres')[0].checkValidity()) {
+				resp = $("#selResponsable").find(":selected").text();
+				Cookies.set('responsable', resp);
+				$("#spResponsable").text(resp);
+				$('#modResponsable').modal('hide');
+			} else {
+				$("#formres").find("#submit-hidden").click();
+			};
+		});
+      	$("#btnAsignar").click(function() {
+       win = window.open('reservar.html');
+		});
+      	$("#selZona").change(function() {
+          
+         if ($("#selZona").find(":selected").text() != "") {
+			zona = $("#selZona").find(":selected").text();
+          Cookies.set('zona', zona);
+         $("#btnAsignar").attr("disabled", false);
+         } else {
+         $("#btnAsignar").attr("disabled", true);
+         }
+        
+          
+		});
+      
+      if(zona != undefined) {
+$("#btnAsignar").attr("disabled", false);
+        $("#selZona").val(zona)
+		} else {
+$("#btnAsignar").attr("disabled", true);
+          
+		};
+      
+		$("#reload").click(function() {
+			loadJson();
+		});
+      $("#nomResponsable").click(async function() {
+       await loadResp();
+       $('#modResponsable').modal('show');
+        $("#selResponsable").val(resp);
+		});
+	});
+	</script>
+</head>
+
+<body role="document">
+	<div class="container">
+      
+		<h2 id="titulo"><small>Co. Churruarín</small> <br/>Contactos para predicación telefónica</h2>
+      <div class="pull-right"><a id="nomResponsable"><strong><span id="spResponsable"></span></strong></a></div>
+		<ul class="nav nav-tabs padding-top-md">
+			<li role="presentation" id="contactos" class="active"><a href="#">Contactos</a></li>
+			<li role="presentation" id="reservas"><a href="#">Reservas&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
+		</ul>
+		<p>&nbsp;</p>
+		<div id="pnlContactos" class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Seleccionar un contacto telefónico</h3> </div>
+			<div class="panel-body">
+				<div class="form-group">
+                  <label for="selZona">Zona</label>
+				<select id="selZona" name="selZona" class="select form-control" required="required">
+					<option></option>
+					<option>Paraná</option>
+					<option>Interior</option>
+				</select>
+              </div>
+				<p>&nbsp;</p>
+				<button type="button" id="btnAsignar" class="btn btn-success btn-lg pull-right "  disabled="disabled">Asignar un contacto y reservarlo</button>
+			</div>
+		</div>
+		<div class="table-responsive hidden" id="tablereservas">
+			<table id="tableres" data-toggle="tableres" class="table table-striped">
+				<thead>
+					<tr>
+						<th data-field="Telefono" data-formatter="LinkFormatter">Teléfono</th>
+						<th data-field="PublicadorFecha">Publicador</th>
+						<th data-field="Responsable">Responsable</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="alert alert-warning hidden" role="alert" id="alert">No hay contactos disponibles.</div>
+	
+	<div class="modal fade" id="cargando" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+		<p>Cargando...</p>
+	</div>
+	<div class="modal fade" id="modResponsable" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Responsable</h4> </div>
+				<div class="modal-body">
+					<p>Para continuar, elegí tu nombre entre la siguiente lista de responsables.</p>
+					<form name="formres" id="formres" autocomplete="off">
+						<select id="selResponsable" name="selResponsable" class="select form-control" required="required">
+							<option></option>
+						</select>
+						<input id="submit-hidden" type="submit" style="display: none" /> </form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btnResponsable" class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<!-- /.modal -->
+</body>
+
+</html>
