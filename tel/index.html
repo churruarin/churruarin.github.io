@@ -100,9 +100,9 @@
       reservasCount = jsonata('$count($)').evaluate(filtro);
             if (reservasCount > 0) {
         $("#reservasCount").text(reservasCount);
-              $("#reservasCount").attr("class", "badge show");
+              $("#reservasCount").attr("class", "label label-danger show");
       } else {
-        $("#reservasCount").attr("class", "badge hidden");
+        $("#reservasCount").attr("class", "label label-danger hidden");
       };
 		$('#cargando').modal('hide');
 	};
@@ -201,7 +201,7 @@ $("#btnAsignar").attr("disabled", true);
       <div class="pull-right"><a id="nomResponsable"><strong><span id="spResponsable"></span></strong></a></div>
 		<ul class="nav nav-tabs padding-top-md">
 			<li role="presentation" id="contactos" class="active"><a href="#">Contactos</a></li>
-			<li role="presentation" id="reservas"><a href="#">Reservas <span class="badge hidden" id="reservasCount"></span> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
+			<li role="presentation" id="reservas"><a href="#">Reservas <span class="label label-danger hidden" id="reservasCount"></span> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
 		</ul>
 		<p>&nbsp;</p>
 		<div id="pnlContactos" class="panel panel-primary">
