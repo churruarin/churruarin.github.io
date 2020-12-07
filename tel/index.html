@@ -53,12 +53,14 @@
 	var resp = Cookies.get('responsable');
     var zona = Cookies.get('zona');
       var win;
+      var reservasCount;
 
-	function loadJson() {
-		$('#cargando').modal('show');
-		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+	function loadJson(background) {
+		if (background != true) {
+          $('#cargando').modal('show');
+        };$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
-			filterJson();
+			filterJson(background);
 		});
       
       };
@@ -77,8 +79,10 @@
 		};
 	
 
-	function filterJson() {
-		$('#cargando').modal('show');
+	function filterJson(background) {
+		if (background != true) {
+          $('#cargando').modal('show');
+        };
 		var filtro = data;
 		filtro = jsonata('$[Respuesta="Reservado"][Responsable="' + resp + '"]').evaluate(filtro);
 		console.log(filtro);
@@ -93,6 +97,13 @@
 			$("#tablereservas").attr("class", "table-responsive hidden");
 			$("#alert").attr("class", "alert alert-warning show");
 		};*/
+      reservasCount = jsonata('$count($)').evaluate(filtro);
+            if (reservasCount > 0) {
+        $("#reservasCount").text(reservasCount);
+              $("#reservasCount").attr("class", "badge show");
+      } else {
+        $("#reservasCount").attr("class", "badge hidden");
+      };
 		$('#cargando').modal('hide');
 	};
 	
@@ -176,6 +187,10 @@ $("#btnAsignar").attr("disabled", true);
         $("#selResponsable").val(resp);
 		});
 	});
+      
+      loadJson(true);
+
+      
 	</script>
 </head>
 
@@ -186,7 +201,7 @@ $("#btnAsignar").attr("disabled", true);
       <div class="pull-right"><a id="nomResponsable"><strong><span id="spResponsable"></span></strong></a></div>
 		<ul class="nav nav-tabs padding-top-md">
 			<li role="presentation" id="contactos" class="active"><a href="#">Contactos</a></li>
-			<li role="presentation" id="reservas"><a href="#">Reservas&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
+			<li role="presentation" id="reservas"><a href="#">Reservas <span class="badge hidden" id="reservasCount"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
 		</ul>
 		<p>&nbsp;</p>
 		<div id="pnlContactos" class="panel panel-primary">
