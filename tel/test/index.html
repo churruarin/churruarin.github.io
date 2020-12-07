@@ -17,6 +17,7 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+  <script src="/app/js/tea-block.min.js"></script>
 	<style>
 	.blurred span {
 		filter: blur(3px);
@@ -52,7 +53,18 @@
 	var data;
 	var resp = Cookies.get('responsable');
     var zona = Cookies.get('zona');
+      var clave = Cookies.get('clave');
+      var claveEnc;
       var win;
+      
+      	function loadClave() {
+		//$('#cargando').modal('show');
+		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/claveEnc?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			claveEnc = jsonata('$.values[0][0]').evaluate(jsonurl);
+			
+		});
+      
+      };
 
 	function loadJson() {
 		$('#cargando').modal('show');
@@ -175,6 +187,12 @@ $("#btnAsignar").attr("disabled", true);
        $('#modResponsable').modal('show');
         $("#selResponsable").val(resp);
 		});
+      
+      $(async function() {
+        await loadClave();
+        
+      };
+      
 	});
 	</script>
 </head>
@@ -227,11 +245,18 @@ $("#btnAsignar").attr("disabled", true);
 				<div class="modal-header">
 					<h4 class="modal-title">Responsable</h4> </div>
 				<div class="modal-body">
-					<p>Para continuar, elegí tu nombre entre la siguiente lista de responsables.</p>
+					<p>Para continuar, elegí tu nombre entre la siguiente lista de responsables e ingresá la clave.</p>
 					<form name="formres" id="formres" autocomplete="off">
+                      <div class="form-group">
+                        <label for="selResponsable">Responsable</label>
 						<select id="selResponsable" name="selResponsable" class="select form-control" required="required">
 							<option></option>
 						</select>
+                      </div>
+                        <div class="form-group">
+    <label for="clave">Password</label>
+    <input type="password" class="form-control" id="clave" placeholder="Password">
+  </div>
 						<input id="submit-hidden" type="submit" style="display: none" /> </form>
 				</div>
 				<div class="modal-footer">
