@@ -53,7 +53,7 @@
 			var data = jsonata('$shuffle($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})[Respuesta!="Reservado"])[0]').evaluate(jsonurl);
           
 			registrotel = data //jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
-			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": Fecha &$string(Turno = "" ? "" : " por la "& Turno)}').evaluate(registrotel);
+			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}').evaluate(registrotel);
 			$("#ddTelefono").text(registrotelpretty['Telefono'].slice(0,3));
 			$("#ddDireccion").text(registrotelpretty['Direccion']);
 			$("#ddFecha").text(registrotelpretty['Fecha']);
@@ -95,7 +95,7 @@
 				linkwa = "https://wa.me/"
 			};
 			// 
-			linkwa = linkwa + "?text=" + encodeURIComponent("_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO* \n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" + registrotelpretty['Telefono'] + "*\nDirección: *" + registrotelpretty['Direccion'] + "*\nFue llamado la última vez: *" + registrotelpretty['Fecha'] + "*\nRespuesta a la última llamada: *" + registrotelpretty['Estado'] + "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.")
+			linkwa = linkwa + "?text=" + encodeURIComponent("_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO* \n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" + registrotelpretty['Telefono'] + "*\nDirección: *" + registrotelpretty['Direccion'] + "*\nFue llamado la última vez: *" + registrotelpretty['Fecha'] + "*\nRespuesta a la última llamada: *" + registrotelpretty['Respuesta'] + "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.")
 		});
 		$("#enviar").click(async function() {
 			if($('#formres')[0].checkValidity()) {
