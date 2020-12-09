@@ -142,10 +142,12 @@
 	};
       
       		$("#enviarwa").click(async function() {
-             console.log("click");
+             console.log(pubs);
+             
 			$('#cargando').modal('show');
               
             var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
+               console.log(selpubtel);
 			if(selpubtel) {
 				linkwa = "https://wa.me/+54" + selpubtel
 			} else {
