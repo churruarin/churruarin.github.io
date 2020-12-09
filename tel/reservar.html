@@ -65,7 +65,7 @@
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#Estado").val("Reservado");
-			
+			console.log(registrotelpretty);
           
 			$("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
 			console.log(registrotel);
@@ -229,9 +229,9 @@
          attributeName="transform" 
          attributeType="XML" 
          type="rotate"
-         dur="2s" 
+         dur="3s" 
          from="0 50 50"
-         to="360 50 50" 
+         to="-360 50 50" 
          repeatCount="indefinite" />
   </path>
 </svg>
