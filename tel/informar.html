@@ -142,6 +142,7 @@
 	};
       
       		$("#enviarwa").click(async function() {
+             console.log("click");
 			$('#cargando').modal('show');
               
             var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
