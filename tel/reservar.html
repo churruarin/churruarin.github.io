@@ -41,16 +41,21 @@
       var test = getUrlParameter('test');
     var resp = Cookies.get('responsable');
     var zona = Cookies.get('zona');  
+      var localidad;
 	var registrotel;
 	var registrotelpretty;
 	var pubs;
 	var linkwa;
 	var form = document.forms['formres'];
-	
+
 	$(function() {
 		$('#cargando').modal('show');
-		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
-			var data = jsonata('$shuffle($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})[Respuesta!="Reservado"])[0]').evaluate(jsonurl);
+			if (zona == "Paraná") {
+            localidad = '[Localidad="Paraná"]'
+            } else {
+        localidad = '[Localidad!="Paraná"]'};
+              $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$shuffle($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})[Respuesta!="Reservado"]' + localidad + ')[0]').evaluate(jsonurl);
           
 			registrotel = data //jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
 			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}').evaluate(registrotel);
