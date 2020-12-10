@@ -122,14 +122,14 @@
 	$(document).ready(function() {
 		$("#spResponsable").text(resp);
 		$("#contactos").click(function() {
-         $("#tablereservas").attr("class", "table-responsive hidden");
+         $("#tablereservas").attr("class", "hidden");
          $("#pnlContactos").attr("class", "panel panel-primary ");   
 			$("#contactos").attr("class", "active");
 			$("#reservas").attr("class", "");
 			tipo = "contactos";
 		});
 		$("#reservas").click(function() {
-          $("#tablereservas").attr("class", "table-responsive");
+          $("#tablereservas").attr("class", "show");
          $("#pnlContactos").attr("class", "panel panel-primary hidden"); 
 			$("#reservas").attr("class", "active");
 			$("#contactos").attr("class", "");
@@ -221,7 +221,9 @@ $("#btnAsignar").attr("disabled", true);
 				<button type="button" id="btnAsignar" class="btn btn-success btn-lg pull-right "  disabled="disabled">Asignar un contacto y reservarlo</button>
 			</div>
 		</div>
-		<div class="table-responsive hidden" id="tablereservas">
+      <div id="tablereservas" class="hidden">
+        <div class="alert alert-warning" role="alert">Puede tardar <strong>hasta 1 minuto</strong> en mostrar los datos actualizados</div>
+		<div class="table-responsive">
 			<table id="tableres" data-toggle="tableres" class="table table-striped">
 				<thead>
 					<tr>
@@ -232,7 +234,8 @@ $("#btnAsignar").attr("disabled", true);
 				</thead>
 			</table>
 		</div>
-		<div class="alert alert-warning hidden" role="alert" id="alert">No hay contactos disponibles.</div>
+      </div>
+		
 	
 
 		
