@@ -15,9 +15,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jsonata@1.6.4/jsonata.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jsonata/jsonata.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
-  <script src="/app/js/tea-block.min.js"></script>
 	<style>
 	.blurred span {
 		filter: blur(3px);
@@ -53,6 +52,8 @@
 	var data;
 	var resp = Cookies.get('responsable');
     var zona = Cookies.get('zona');
+      var win;
+      var reservasCount;
       var clave = Cookies.get('clave');
       var claveEnc;
       var win;
@@ -63,14 +64,12 @@
 			claveEnc = jsonata('$.values[0][0]').evaluate(jsonurl);
 			
 		});
-      
-      };
-
-	function loadJson() {
-		$('#cargando').modal('show');
-		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+	function loadJson(background) {
+		if (background != true) {
+          $('#cargando').modal('show');
+        };$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})').evaluate(jsonurl);
-			filterJson();
+			filterJson(background);
 		});
       
       };
@@ -89,14 +88,16 @@
 		};
 	
 
-	function filterJson() {
-		$('#cargando').modal('show');
+	function filterJson(background) {
+		if (background != true) {
+          $('#cargando').modal('show');
+        };
 		var filtro = data;
 		filtro = jsonata('$[Respuesta="Reservado"][Responsable="' + resp + '"]').evaluate(filtro);
 		console.log(filtro);
 		/*if(filtro) {*/
 			filtro = jsonata('[$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}]').evaluate(filtro);
-			$("#alert").attr("class", "alert alert-warning hidden");
+			//$("#alert").attr("class", "alert alert-warning hidden");
 			$('#tableres').bootstrapTable({
 				data: filtro
 			});
@@ -105,6 +106,14 @@
 			$("#tablereservas").attr("class", "table-responsive hidden");
 			$("#alert").attr("class", "alert alert-warning show");
 		};*/
+      reservasCount = jsonata('$count($)').evaluate(filtro);
+            if (reservasCount > 0) {
+        $("#reservasCount").text(reservasCount);
+           //   $("#reservasCount").attr("class", "badge show");
+      } else {
+        $("#reservasCount").text("");
+      //  $("#reservasCount").attr("class", "badge hidden");
+      };
 		$('#cargando').modal('hide');
 	};
 	
@@ -122,14 +131,14 @@
 	$(document).ready(function() {
 		$("#spResponsable").text(resp);
 		$("#contactos").click(function() {
-         $("#tablereservas").attr("class", "table-responsive hidden");
+         $("#tablereservas").attr("class", "hidden");
          $("#pnlContactos").attr("class", "panel panel-primary ");   
 			$("#contactos").attr("class", "active");
 			$("#reservas").attr("class", "");
 			tipo = "contactos";
 		});
 		$("#reservas").click(function() {
-          $("#tablereservas").attr("class", "table-responsive");
+          $("#tablereservas").attr("class", "show");
          $("#pnlContactos").attr("class", "panel panel-primary hidden"); 
 			$("#reservas").attr("class", "active");
 			$("#contactos").attr("class", "");
@@ -187,13 +196,11 @@ $("#btnAsignar").attr("disabled", true);
        $('#modResponsable').modal('show');
         $("#selResponsable").val(resp);
 		});
-      
-      $(async function() {
-        await loadClave();
-        
-      };
-      
 	});
+      
+      loadJson(true);
+
+      
 	</script>
 </head>
 
@@ -204,7 +211,7 @@ $("#btnAsignar").attr("disabled", true);
       <div class="pull-right"><a id="nomResponsable"><strong><span id="spResponsable"></span></strong></a></div>
 		<ul class="nav nav-tabs padding-top-md">
 			<li role="presentation" id="contactos" class="active"><a href="#">Contactos</a></li>
-			<li role="presentation" id="reservas"><a href="#">Reservas&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
+			<li role="presentation" id="reservas"><a href="#">Reservas <span class="badge" id="reservasCount"></span> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
 		</ul>
 		<p>&nbsp;</p>
 		<div id="pnlContactos" class="panel panel-primary">
@@ -219,11 +226,24 @@ $("#btnAsignar").attr("disabled", true);
 					<option>Interior</option>
 				</select>
               </div>
+              <div class="form-group">
+                <label for="Publicador">Publicador</label>
+						<select id="Publicador" name="Publicador" class="select form-control" required="required">
+							<option></option>
+						</select>
+					</div>
+              <dt>Responsable</dt>
+					<dd id="ddResponsable">
+						
+
+					</dd>
 				<p>&nbsp;</p>
 				<button type="button" id="btnAsignar" class="btn btn-success btn-lg pull-right "  disabled="disabled">Asignar un contacto y reservarlo</button>
 			</div>
 		</div>
-		<div class="table-responsive hidden" id="tablereservas">
+      <div id="tablereservas" class="hidden">
+        <div class="alert alert-warning" role="alert">Puede tardar <strong>hasta 1 minuto</strong> en mostrar los datos actualizados</div>
+		<div class="table-responsive">
 			<table id="tableres" data-toggle="tableres" class="table table-striped">
 				<thead>
 					<tr>
@@ -234,29 +254,75 @@ $("#btnAsignar").attr("disabled", true);
 				</thead>
 			</table>
 		</div>
-		<div class="alert alert-warning hidden" role="alert" id="alert">No hay contactos disponibles.</div>
+      </div>
+		
 	
-	<div class="modal fade" id="cargando" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-		<p>Cargando...</p>
+
+		
 	</div>
+  	<div class="modal fade" id="cargando" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+      <div style="padding-top:20%">
+      <div class="row" >
+ 
+  <div class="col-md-2 col-md-offset-5 col-xs-4 col-xs-offset-4" style="vertical-align:middle">
+    <svg version="1.1" id="L7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+ <path fill="#fff" d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+  c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z">
+      <animateTransform 
+         attributeName="transform" 
+         attributeType="XML" 
+         type="rotate"
+         dur="2s" 
+         from="0 50 50"
+         to="360 50 50" 
+         repeatCount="indefinite" />
+  </path>
+ <path fill="#fff" d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+  c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z">
+      <animateTransform 
+         attributeName="transform" 
+         attributeType="XML" 
+         type="rotate"
+         dur="1s" 
+         from="0 50 50"
+         to="-360 50 50" 
+         repeatCount="indefinite" />
+  </path>
+ <path fill="#fff" d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+  L82,35.7z">
+      <animateTransform 
+         attributeName="transform" 
+         attributeType="XML" 
+         type="rotate"
+         dur="3s" 
+         from="0 50 50"
+         to="-360 50 50" 
+         repeatCount="indefinite" />
+  </path>
+</svg>
+       </div>
+
+</div>
+              <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+        <h2 style="color:white" class="text-center">Procesando</h2>
+                <p class="lead text-center" style="color:white">Por favor, no cierres esta ventana.</p></div>
+      </div>
+      </div>
+      </div>
+
 	<div class="modal fade" id="modResponsable" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">Responsable</h4> </div>
 				<div class="modal-body">
-					<p>Para continuar, elegí tu nombre entre la siguiente lista de responsables e ingresá la clave.</p>
+					<p>Para continuar, elegí tu nombre entre la siguiente lista de responsables.</p>
 					<form name="formres" id="formres" autocomplete="off">
-                      <div class="form-group">
-                        <label for="selResponsable">Responsable</label>
 						<select id="selResponsable" name="selResponsable" class="select form-control" required="required">
 							<option></option>
 						</select>
-                      </div>
-                        <div class="form-group">
-    <label for="clave">Password</label>
-    <input type="password" class="form-control" id="clave" placeholder="Password">
-  </div>
 						<input id="submit-hidden" type="submit" style="display: none" /> </form>
 				</div>
 				<div class="modal-footer">
