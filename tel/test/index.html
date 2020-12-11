@@ -56,7 +56,9 @@
       var reservasCount;
       var clave = Cookies.get('clave');
       var claveEnc;
-      var win;
+      var rTelefono, rDireccion, rFecha, rEstado, rResponsable, rObservaciones, rLocalidad;
+      var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
+      var registrotelpretty, registrotel;
       
       	function loadClave() {
 		//$('#cargando').modal('show');
@@ -75,6 +77,40 @@
       
       };
 
+      
+      
+      	function loadContacto() {
+		$('#cargando').modal('show');
+			if (zona == "Paraná") {
+            localidad = '[Localidad="Paraná"]'
+            } else {
+        localidad = '[Localidad!="Paraná"]'};
+              $.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
+			var data = jsonata('$shuffle($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})[Respuesta!="Reservado"]' + localidad + ')[0]').evaluate(jsonurl);
+          
+			registrotel = data //jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
+			registrotelpretty = jsonata('$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}').evaluate(registrotel);
+			rpTelefono = registrotelpretty['Telefono'];
+			rpDireccion = registrotelpretty['Direccion'];
+			rpFecha = registrotelpretty['Fecha'];
+			rpRespuesta = registrotelpretty['Respuesta'];
+            $("#ddResponsable").text(resp);
+            $("#Responsable").val(resp);
+			$("#ddObservaciones").text(registrotel['Observaciones']);
+			$("#Telefono").val(registrotel['Telefono']);
+			$("#Direccion").val(registrotel['Direccion']);
+			$("#Localidad").val(registrotel['Localidad']);
+			$("#Estado").val("Reservado");
+			console.log(registrotelpretty);
+          
+			$("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
+			console.log(registrotel);
+			//console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
+		};
+      
+      
+      
+      
         function loadResp() {
 			$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 				var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
@@ -197,9 +233,43 @@ $("#btnAsignar").attr("disabled", true);
        $('#modResponsable').modal('show');
         $("#selResponsable").val(resp);
 		});
-	});
       
-      loadJson(true);
+      
+			$("#Publicador").change(function() {
+			var selpub = $("#Publicador").find(":selected").text()
+			var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
+			if(selpubtel) {
+				linkwa = "https://wa.me/+54" + selpubtel
+			} else {
+				linkwa = "https://wa.me/"
+			};
+			// 
+			linkwa = linkwa + "?text=" + encodeURIComponent("_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO* \n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" + registrotelpretty['Telefono'] + "*\nDirección: *" + registrotelpretty['Direccion'] + "*\nFue llamado la última vez: *" + registrotelpretty['Fecha'] + "*\nRespuesta a la última llamada: *" + registrotelpretty['Respuesta'] + "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.")
+		});
+      
+     		$("#enviar").click(async function() {
+			if($('#formres')[0].checkValidity()) {
+              $('#cargando').modal('show');
+              await loadContacto();
+				if(await submitForm()) {
+                  
+                  if (test != "y") {
+					window.open(linkwa);
+					//window.opener.postMessage('close', 'https://churruar.in');
+                  };
+                } else {
+                  alert("Ocurrió un error. Intentá enviarlo de nuevo.");
+                };
+              $('#cargando').modal('hide');
+			} else {
+				$("#formres").find("#submit-hidden").click();
+			};
+		}); 
+      
+        loadJson(true);
+    });
+      
+  
 
       
 	</script>
@@ -219,6 +289,7 @@ $("#btnAsignar").attr("disabled", true);
 			<div class="panel-heading">
 				<h3 class="panel-title">Asignar un contacto telefónico</h3> </div>
 			<div class="panel-body">
+              <form name="formres" id="formres" autocomplete="off">
 				<div class="form-group">
                   <label for="selZona">Zona</label>
 				<select id="selZona" name="selZona" class="select form-control" required="required">
@@ -239,6 +310,16 @@ $("#btnAsignar").attr("disabled", true);
 						<input class="form-control" type="text" id="ddResponsable" placeholder="" readonly>
 
 					</div>
+                
+                			
+				<input id="Telefono" name="Telefono" type="hidden" required="required">
+				<input id="Direccion" name="Direccion" type="hidden">
+				<input id="Localidad" name="Localidad" type="hidden">
+				<input id="Estado" name="Estado" type="hidden">
+				<input id="Fecha" name="Fecha" type="hidden">
+              	<input id="Responsable" name="Responsable" type="hidden">
+                <input id="submit-hidden" type="submit" style="display: none" />
+              </form>
 				<p>&nbsp;</p>
 				<button type="button" id="btnAsignar" class="btn btn-success btn-lg pull-right "  disabled="disabled">Reservar y enviar</button>
 			</div>
