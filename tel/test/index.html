@@ -265,7 +265,24 @@ $("#btnAsignar").attr("disabled", true);
 				$("#formres").find("#submit-hidden").click();
 			};
 		}); 
+      	const scriptURL = 'https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec'
+
+	async function submitForm() {
+      var respuesta = false;
+	  var response = await fetch(scriptURL, {
+				method: 'POST',
+				body: new FormData($("#formres")[0])
+			}).catch(error => {
+          respuesta = false;
+    	  	});
+
+      respuesta = response.ok;
+            console.log(respuesta); 
+      console.log(response); 		
       
+      return respuesta;
+
+	};
         loadJson(true);
     });
       
