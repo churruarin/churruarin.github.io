@@ -77,7 +77,9 @@
 			console.log(registrotelpretty);
           
 			$("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
+                
                 if (zona =="Campaña celulares 2021") {
+                  $("#Direccion").val("");
             bloquetel = jsonata('$join([$.numdesde..$.numhasta].$string().("\n"&$$.area&" "& $$.pre &" "&$))').evaluate(registrotel['Direccion']);
             console.log(bloquetel);      
                 };
