@@ -73,7 +73,7 @@
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#Estado").val("Reservado");
-                bloquetel = JSON.stringify(registrotel['Direccion']);
+                bloquetel = eval(registrotel['Direccion']);
                 
 			console.log(registrotelpretty);
           
