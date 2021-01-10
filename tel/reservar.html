@@ -73,7 +73,7 @@
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#Estado").val("Reservado");
-                bloquetel = registrotel['Direccion']
+                bloquetel = JSON.stringify(registrotel['Direccion']);
                 
 			console.log(registrotelpretty);
           
@@ -81,9 +81,9 @@
                 console.log(zona);  
                 if (zona == "Campaña celulares 2021") {
                   $("#ddDireccion").val("");
-                  bloquetel = bloquetel;
+                  //bloquetel = bloquetel;
                   console.log(bloquetel);   
-            bloquetel = jsonata("$.area").evaluate(JSON.stringify(bloquetel));
+            bloquetel = jsonata("$.area").evaluate(bloquetel);
             console.log(bloquetel);      
                   console.log(registrotel['Direccion']); 
                 };
