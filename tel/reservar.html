@@ -80,7 +80,7 @@
                 console.log(zona);  
                 if (zona == "Campaña celulares 2021") {
                   $("#ddDireccion").val("");
-            bloquetel = jsonata('$').evaluate(registrotel['Direccion']);
+            bloquetel = jsonata('$.area').evaluate(registrotel['Direccion']);
             console.log(bloquetel);      
                   console.log(registrotel['Direccion']); 
                 };
