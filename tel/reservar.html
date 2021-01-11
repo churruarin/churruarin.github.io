@@ -73,12 +73,13 @@
 			$("#Direccion").val(registrotel['Direccion']);
 			$("#Localidad").val(registrotel['Localidad']);
 			$("#Estado").val("Reservado");
-                bloquetel = JSON.parse(registrotel['Direccion']);
-                
-			console.log(registrotelpretty);
+               
+               $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate()); 
+                 bloquetel = JSON.parse(registrotel['Direccion']);
+			//console.log(registrotelpretty);
           
-			$("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
-                console.log(zona);  
+			
+               // console.log(zona);  
                 if (zona == "Campaña celulares 2021") {
                   $("#ddDireccion").val("");
                   //bloquetel = bloquetel;
