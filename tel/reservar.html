@@ -48,6 +48,8 @@
 	var linkwa;
     var bloquetel;
 	var form = document.forms['formres'];
+   //   var fecha = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
+   //   console.log(fecha);
 
 	$(function() {
 		$('#cargando').modal('show');
@@ -75,12 +77,13 @@
 			$("#Estado").val("Reservado");
                
                $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate()); 
-                 bloquetel = JSON.parse(registrotel['Direccion']);
+                 
 			//console.log(registrotelpretty);
           
 			
                // console.log(zona);  
                 if (zona == "Campaña celulares 2021") {
+                  bloquetel = JSON.parse(registrotel['Direccion']);
                   $("#ddDireccion").val("");
                   //bloquetel = bloquetel;
                   console.log(bloquetel);   
