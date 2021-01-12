@@ -87,7 +87,7 @@
                   $("#ddDireccion").val("");
                   //bloquetel = bloquetel;
                   console.log(bloquetel);   
-            bloquetel = jsonata('$join([$.numdesde..$.numhasta].$string().("\n"&$$.area&" "& $$.pre &" "&$))').evaluate(bloquetel);
+            bloquetel = jsonata('$join([$number($.numdesde)..$number($.numhasta)].$string().("\n"&$$.area&" "& $$.pre &" "&$pad($,-4,"0")))').evaluate(bloquetel);
             console.log(bloquetel);      
                   console.log(registrotel['Direccion']); 
                 };
