@@ -83,17 +83,18 @@
 			
                // console.log(zona);  
                 if (zona == "Campaña celulares 2021") {
-                  bloquetel = JSON.parse(registrotel['Direccion']);
-                  $("#ddDireccion").val("");
+                  //bloquetel = JSON.parse(registrotel['Direccion']);
+                  $("#ddDireccion").attr("class", "hidden");
+                  
                   //bloquetel = bloquetel;
-                  console.log(bloquetel);   
-            bloquetel = jsonata('$join([$number($.numdesde)..$number($.numhasta)].$string().("\n"&$$.area&" "& $$.pre &" "&$pad($,-4,"0")))').evaluate(bloquetel);
+                //  console.log(bloquetel);   
+            bloquetel = jsonata('$join([$number($.numdesde)..$number($.numhasta)].$string().("\n"&$$.area&" "& $$.pre &" "&$pad($,-4,"0")))').evaluate(JSON.parse(registrotel['Direccion']));
             console.log(bloquetel);      
-                  console.log(registrotel['Direccion']); 
+                //  console.log(registrotel['Direccion']); 
                 };
                 
 			console.log(registrotel);
-			console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
+			//console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
 		});
 		$.getJSON('https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc').done(function(jsonurl) {
 			pubs = jsonata('$.values.({"Nombre":$[0],"Tel":$[2]})').evaluate(jsonurl);
