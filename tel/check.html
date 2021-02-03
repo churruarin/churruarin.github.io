@@ -27,6 +27,7 @@
               var prefijo = getUrlParameter('prefijo');
               var sufijo = getUrlParameter('sufijo');
              var url = 'https://guias.telecom.com.ar/SearchByPhoneNumber.cgh?area=' + area + '&prefijo=' + prefijo + '&sufijo=' + sufijo + '&UseCaptcha=false';
+        var direccion, localidad;
          
          
          		$.getJSON(url).done(function(jsonurl) {
@@ -34,8 +35,14 @@
          		
                       $("#direccion").text(data['Direccion']);
                   $("#localidad").text(data['Localidad']);
+                  direccion = data['Direccion'];
+                  localidad = data['Localidad'],
          		});
-         
+         $(document).ready(function() {
+                                 $("#direccion").text(direccion);
+                  $("#localidad").text(localidad);
+           
+         };
          
       </script>
    </head>
