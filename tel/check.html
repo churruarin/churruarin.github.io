@@ -1,50 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-	<title>Territorio para predicación telefónica</title>
-	<meta name="robots" content="noindex" />
-	<meta name="robots" content="nofollow" />
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="icon" href="/favicon.ico">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jsonata/jsonata.min.js">
-
-	<script>
-      
-      	var getUrlParameter = function getUrlParameter(sParam) {
-		var sPageURL = window.location.search.substring(1),
-			sURLVariables = sPageURL.split('&'),
-			sParameterName,
-			i;
-		for(i = 0; i < sURLVariables.length; i++) {
-			sParameterName = sURLVariables[i].split('=');
-			if(sParameterName[0] === sParam) {
-				return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-			}
-		}
-	};
-	var area = getUrlParameter('area');
-      var prefijo = getUrlParameter('prefijo');
-      var sufijo = getUrlParameter('sufijo');
-     var url = 'https://guias.telecom.com.ar/SearchByPhoneNumber.cgh?area=' + area + '&prefijo=' + prefijo + '&sufijo=' + sufijo + '&UseCaptcha=false';
-
-
-			$.getJSON(url).done(function(jsonurl) {
-				var data = jsonata("$.Data.Busqueda.Resultado.Anunciante[0].( $.Domicilio.Calle & ' '& $.Domicilio.Altura & ','&$.Localidad.Descripcion)").evaluate(jsonurl);
-			
-              $("#csv").text(data);
-			});
-
-
-	</script>
-</head>
-
-<body role="document">
-  <span id="csv"></span>
-
-</body>
-
+   <head>
+      <title>Territorio para predicación telefónica</title>
+      <meta name="robots" content="noindex" />
+      <meta name="robots" content="nofollow" />
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <link rel="icon" href="/favicon.ico">
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/jsonata/jsonata.min.js"></script>
+      <script>
+              
+              	var getUrlParameter = function getUrlParameter(sParam) {
+         	var sPageURL = window.location.search.substring(1),
+         		sURLVariables = sPageURL.split('&'),
+         		sParameterName,
+         		i;
+         	for(i = 0; i < sURLVariables.length; i++) {
+         		sParameterName = sURLVariables[i].split('=');
+         		if(sParameterName[0] === sParam) {
+         			return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+         		}
+         	}
+         };
+         var area = getUrlParameter('area');
+              var prefijo = getUrlParameter('prefijo');
+              var sufijo = getUrlParameter('sufijo');
+             var url = 'https://guias.telecom.com.ar/SearchByPhoneNumber.cgh?area=' + area + '&prefijo=' + prefijo + '&sufijo=' + sufijo + '&UseCaptcha=false';
+         
+         
+         		$.getJSON(url).done(function(jsonurl) {
+         			var data = jsonata("$.Data.Busqueda.Resultado.Anunciante[0].( $.Domicilio.Calle & ' '& $.Domicilio.Altura & ','&$.Localidad.Descripcion)").evaluate(jsonurl);
+         		
+                      $("#csv").text(data);
+         		});
+         
+         
+      </script>
+   </head>
+   <body role="document">
+      <span id="csv"></span>
+   </body>
 </html>
 
