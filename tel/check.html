@@ -34,11 +34,11 @@
 	var area = getUrlParameter('area');
       var prefijo = getUrlParameter('prefijo');
       var sufijo = getUrlParameter('sufijo');
-      
+     var url = 'https://guias.telecom.com.ar/SearchByPhoneNumber.cgh?area=' + area + '&prefijo=' + prefijo + '&sufijo=' + sufijo + '&UseCaptcha=false'
 
 
-			$.getJSON('https://guias.telecom.com.ar/SearchByPhoneNumber.cgh?area=' + area + '&prefijo=' + prefijo + '&sufijo=' + sufijo + '&UseCaptcha=false').done(function(jsonurl) {
-				var data = jsonata('$.Data.Busqueda.Resultado.Anunciante[0].( $.Domicilio.Calle & ' '& $.Domicilio.Altura & ','&$.Localidad.Descripcion)').evaluate(jsonurl);
+			$.getJSON(url).done(function(jsonurl) {
+				var data = jsonata("$.Data.Busqueda.Resultado.Anunciante[0].( $.Domicilio.Calle & ' '& $.Domicilio.Altura & ','&$.Localidad.Descripcion)").evaluate(jsonurl);
 			
               $("#csv").text(data);
 			});
