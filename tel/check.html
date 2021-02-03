@@ -33,7 +33,7 @@
          			var data = jsonata("$.Data.Busqueda.Resultado.Anunciante[0].( {'Direccion' : $.Domicilio.Calle & ' '& $.Domicilio.Altura, 'Localidad' : $.Localidad.Descripcion})").evaluate(jsonurl);
          		
                       $("#direccion").text(data['Direccion']);
-                  $("#direccion").text(data['Localidad']);
+                  $("#localidad").text(data['Localidad']);
          		});
          
          
