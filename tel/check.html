@@ -30,16 +30,19 @@
          
          
          		$.getJSON(url).done(function(jsonurl) {
-         			var data = jsonata("$.Data.Busqueda.Resultado.Anunciante[0].( $.Domicilio.Calle & ' '& $.Domicilio.Altura & ','&$.Localidad.Descripcion)").evaluate(jsonurl);
+         			var data = jsonata("$.Data.Busqueda.Resultado.Anunciante[0].( {"Direccion" : $.Domicilio.Calle & ' '& $.Domicilio.Altura, "Localidad" : $.Localidad.Descripcion})
+").evaluate(jsonurl);
          		
-                      $("#csv").text(data);
+                      $("#direccion").text(data['Direccion']);
+                  $("#direccion").text(data['Localidad']);
          		});
          
          
       </script>
    </head>
    <body role="document">
-      <span id="csv"></span>
+     <ul><li><span id="direccion"></span></li>
+       <li><span id="localidad"></span></li></ul>
    </body>
 </html>
 
