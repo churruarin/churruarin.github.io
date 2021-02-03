@@ -36,30 +36,11 @@
       var prefijo = getUrlParameter('prefijo');
       var sufijo = getUrlParameter('sufijo');
       
-	/*
-			$(window).on('message',function(e){
-			alert('Mensaje del iframe');
-			console.log("MESSAGE",e);
-				
-			});
-			
-			$(document).on('click', 'a[rel=modal]', function(e) {
-				e.stopImmediatePropagation();
-				e.preventDefault();
-				var modal = $('#modal').modal();
-				console.log('hey')
-				modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
-					if(textStatus === 'success' || textStatus === 'notmodified') {
-						$('#miframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
-						modal.show();
-					}
-				});
-			});*/
-	
+
 
 			$.getJSON('https://guias.telecom.com.ar/SearchByPhoneNumber.cgh?area=' + area + '&prefijo=' + prefijo + '&sufijo=' + sufijo + '&UseCaptcha=false').done(function(jsonurl) {
 				var data = jsonata('$.Data.Busqueda.Resultado.Anunciante[0].( $.Domicilio.Calle & ' '& $.Domicilio.Altura & ','&$.Localidad.Descripcion)').evaluate(jsonurl);
-				var listitems = '';
+			
               $("#csv").text(data);
 			});
 		};
