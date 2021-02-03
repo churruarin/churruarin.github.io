@@ -60,7 +60,7 @@
 			$.getJSON('https://guias.telecom.com.ar/SearchByPhoneNumber.cgh?area=' + area + '&prefijo=' + prefijo + '&sufijo=' + sufijo + '&UseCaptcha=false').done(function(jsonurl) {
 				var data = jsonata('$.Data.Busqueda.Resultado.Anunciante[0].( $.Domicilio.Calle & ' '& $.Domicilio.Altura & ','&$.Localidad.Descripcion)').evaluate(jsonurl);
 				var listitems = '';
-              $("#csv").val(data);
+              $("#csv").text(data);
 			});
 		};
 	
