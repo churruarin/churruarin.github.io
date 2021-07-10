@@ -252,6 +252,9 @@
             $("#formresp").find("#submit-hidden").click();
           }
         });
+
+
+		
         $("#btnAsignar").click(function () {
           win = window.open("reservar.html");
         });
@@ -259,17 +262,17 @@
           if ($("#selZona").find(":selected").text() != "") {
             zona = $("#selZona").find(":selected").text();
             Cookies.set("zona", zona);
-            $("#btnAsignar").attr("disabled", false);
+            $("#enviar").attr("disabled", false);
           } else {
-            $("#btnAsignar").attr("disabled", true);
+            $("#enviar").attr("disabled", true);
           }
         });
 
         if (zona != undefined) {
-          $("#btnAsignar").attr("disabled", false);
+          $("#enviar").attr("disabled", false);
           $("#selZona").val(zona);
         } else {
-          $("#btnAsignar").attr("disabled", true);
+          $("#enviar").attr("disabled", true);
         }
 
         $("#reload").click(function () {
