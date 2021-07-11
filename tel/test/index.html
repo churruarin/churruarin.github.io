@@ -146,6 +146,13 @@
           $("#Localidad").val(registrotel["Localidad"]);
           $("#Estado").val("Reservado");
           console.log(registrotelpretty);
+		 rTelefono=registrotel["Telefono"];
+        rDireccion=registrotel["Direccion"];
+        rFecha=jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
+        rEstado="Reservado";
+        rResponsable=resp;
+        rObservaciones="";
+        rLocalidad=registrotel["Localidad"];
 
           $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
           console.log(registrotel);
@@ -333,10 +340,19 @@
           "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
         async function submitForm() {
-          var respuesta = false;
+          var data = {
+			Telefono: rTelefono,
+			Direccion: rDireccion,
+        Fecha: rFecha,
+        Estado: rEstado,
+        Responsable: rResponsable,
+        Observaciones: rObservaciones,
+        Localdad: rLocalidad};
+		  };
+			var respuesta = false;
           var response = await fetch(scriptURL, {
             method: "POST",
-            body: new FormData($("#formres")[0]),
+            body: JSON.stringify(data), //new FormData($("#formres")[0]),
           }).catch((error) => {
             respuesta = false;
           });
