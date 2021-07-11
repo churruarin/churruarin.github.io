@@ -165,7 +165,7 @@
         Localdad: rLocalidad};
 		  console.log(rTelefono);
 			var respuesta = false;
-          var response = fetch(scriptURL, {
+          var response = await fetch(scriptURL, {
             method: "POST",
             body: data, //new FormData($("#formres")[0]),
           }).catch((error) => {
