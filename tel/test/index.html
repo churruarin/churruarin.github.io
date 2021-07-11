@@ -76,6 +76,10 @@
       var registrotelpretty, registrotel;
 	  const scriptURL = "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
+	  function loadPubs(background) {
+		if (background != true) {
+          $("#cargando").modal("show");
+        }
       $.getJSON(
         "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
       ).done(function (jsonurl) {
@@ -96,7 +100,7 @@
         });
         $("#Publicador").append(listitems);
 		$("#ddResponsable").text(resp);
-      });
+      })};
 
       function loadClave() {
         //$('#cargando').modal('show');
@@ -118,6 +122,7 @@
             '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})'
           ).evaluate(jsonurl);
           filterJson(background);
+		  loadPubs();
         });
       }
 
@@ -160,6 +165,8 @@
         rResponsable=resp;
         rObservaciones="";
         rLocalidad=registrotel["Localidad"];
+		$("#spPub").text(resp);
+		$("#spTel").text(registrotel["Telefono"]);
 
 //return await submitForm();
 
@@ -636,8 +643,8 @@
               Se hizo la siguiente reserva de un contacto para predicación telefónica.
             </p>
 <ul>
-	<li>Publicador</li>
-	<li>Teléfono</li>
+	<li>Publicador: <strong><span id="spPub"></span></strong></li>
+	<li>Teléfono: <strong><span id="spTel"></span></strong></li>
 </ul>
 <p>En breve aparecerá en la pestaña reservas. No olvides <strong>cargar el informe de la llamada</strong>, en lo posible <strong>hoy mismo.</strong></p>
           </div>
