@@ -165,12 +165,12 @@
         Localdad: rLocalidad};
 		  console.log(rTelefono);
 			var respuesta = false;
-          var response = async (await fetch(scriptURL, {
+          var response = async() => await fetch(scriptURL, {
             method: "POST",
             body: data, //new FormData($("#formres")[0]),
           }).catch((error) => {
             respuesta = false;
-          }));
+          });
 		  console.log(data);
           respuesta = response.ok;
           console.log(respuesta);
