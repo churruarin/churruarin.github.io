@@ -74,6 +74,7 @@
         rLocalidad;
       var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
       var registrotelpretty, registrotel;
+	  const scriptURL = "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
       $.getJSON(
         "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
@@ -360,8 +361,7 @@
             $("#formres").find("#submit-hidden").click();
           }
         });
-        const scriptURL =
-          "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
+
 
         async function submitForm() {
 			await loadContacto();
