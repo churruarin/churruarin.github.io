@@ -330,8 +330,9 @@
 
 		$('#cbWarningAdv').change(function() {
         if(this.checked) {
-			$("spWarningTimeout").text(timeoutReservas)
+		
 			var counter = timeoutReservas;
+			$("spWarningTimeout").text(counter);
 var interval = setInterval(function() {
     counter--;
 	$("#spBtnWarningEnviar").text('('+counter+')');
