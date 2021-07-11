@@ -98,8 +98,10 @@
 		  };
           listitems += "<option value='" + value["Nombre"] + "''>" + item +"</option>";
         });
+		$("#Publicador").empty();
         $("#Publicador").append(listitems);
 		$("#ddResponsable").text(resp);
+		$("#cargando").modal("hide");
       })};
 
       function loadClave() {
@@ -123,6 +125,7 @@
           ).evaluate(jsonurl);
           filterJson(background);
 		  loadPubs(background);
+		  $("#cargando").modal("hide");
         });
       }
 
