@@ -254,7 +254,7 @@
         });
 
 
-		
+
         $("#btnAsignar").click(function () {
           win = window.open("reservar.html");
         });
@@ -316,11 +316,11 @@
             $("#cargando").modal("show");
             await loadContacto();
             if (await submitForm()) {
-              if (test != "y") {
+              
                 getWAlink();
                 window.open(linkwa);
                 //window.opener.postMessage('close', 'https://churruar.in');
-              }
+              
             } else {
               alert("Ocurrió un error. Intentá enviarlo de nuevo.");
             }
