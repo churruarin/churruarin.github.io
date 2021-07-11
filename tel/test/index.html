@@ -84,9 +84,15 @@
         );
 
         var listitems = "";
+		var item; 
 
         $.each(pubs, function (key, value) {
-          listitems += "<option>" + value["Nombre"] + "(" + value["Reservas"] + "reservados)" +"</option>";
+		  if  (value["Reservas"] > 0) {
+			  item = value["Nombre"] + "(" + value["Reservas"] + "reservados)"
+		  } else {
+			item = value["Nombre"]
+		  };
+          listitems += "<option>" + item +"</option>";
         });
         $("#Publicador").append(listitems);
 		$("#ddResponsable").text(resp);
