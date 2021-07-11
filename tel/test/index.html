@@ -309,6 +309,8 @@
 
         $("#btnSelect").click( function () {
 			if ($("#formres")[0].checkValidity()) {
+				$("#spConfirmPub").text($("#Publicador").find(":selected").text());
+				$("#spConfirmResp").text(resp);
             $("#modConfirm").modal("show");  } else {
             $("#formres").find("#submit-hidden").click();
           }
@@ -717,12 +719,13 @@
 		</div>
 		<div class="modal-body">
 		  <p>
-			Se asignará un contacto telefónico. 
+			Se reservará un contacto telefónico. 
 		  </p>
 		  <ul>
-		  <li>Publicador: <strong><span id="spPub"></span></strong></li>
-		  <li>Teléfono: <strong><span id="spTel"></span></strong></li></ul>
+		  <li>Publicador: <strong><span id="spConfirmPub"></span></strong></li></ul>
+		  
 <p>Queda bajo tu responsabilidad cargar el informe de la llamada que hará el publicador.</p>
+<ul><li>Responsable: <strong><span id="spConfirmResp"></span></strong></li></ul>
 		</div>
 		<div class="modal-footer">
 			<button type="button" id="btnAceptar"  data-dismiss="modal" class="btn btn-primary">Cancelar
