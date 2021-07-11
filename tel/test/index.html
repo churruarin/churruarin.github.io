@@ -122,7 +122,7 @@
         } else {
           localidad = '[Localidad!="Paraná"]';
         }
-        $.getJSON(
+        await $.getJSON(
           "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
         ).done(function (jsonurl) {
           var data = jsonata(
@@ -155,7 +155,7 @@
         rObservaciones="";
         rLocalidad=registrotel["Localidad"];
 
-return await submitForm();
+//return await submitForm();
 
 
           $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
@@ -325,8 +325,8 @@ return await submitForm();
         $("#enviar").click(async function () {
           if ($("#formres")[0].checkValidity()) {
             $("#cargando").modal("show");
-            
-            if (await loadContacto()) {
+            await loadContacto();
+            if (await submitForm()) {
               
                 getWAlink();
                 window.open(linkwa);
