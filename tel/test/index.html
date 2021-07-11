@@ -323,12 +323,18 @@
 			getWAlink();
         });
 
+        $("#btnWarningAdv").click(function () {
+			$("#btnWarningAdv").addClass('hidden');
+			$("#divWarningAdv").removeClass('hidden');
+        });
+
 		function preSelect() {
 			console.log($("#Publicador").val());
 			console.log(pubs);
 			selectedPub = jsonata("$[Nombre='"+ $("#Publicador").val() + "']").evaluate(pubs);
 			console.log(selectedPub);
 			var numReservas = selectedPub["Reservas"];
+			console.log(numReservas);
 			if (numReservas < limiteReservasMin) {
 			$("#spConfirmPub").text(selectedPub["Nombre"]);
 			$("#spConfirmResp").text(resp);
@@ -336,7 +342,10 @@
 			else if (numReservas >= limiteReservasMin && numReservas < limiteReservasMax) {
 				$("#modWarning").modal("show"); 
 			}
-			else {};
+			else {
+				$("#modInvalid").modal("show");
+
+			};
 		};
 
         function getWAlink() {
@@ -710,9 +719,16 @@
 				<li>Reservas: <strong><span id="spReservas"></span></strong></li>
 			</ul>
 		  </p>
-<p>Opciones avanzadas...</p>
+		  <button type="button" class="btn btn-primary" id="btnWarningAdv">Más opciones
+		</button>
+<div class="hidden" id="divWarningAdv">
 <p>Podés enviarle un número nuevo, bajo tu responsabilidad. Por favor, no olvides pedirle al publicador que informe los números reservados cuanto antes.</strong></p>
-<p>En <span id="spTimeout"></span> segundos se activará la opción para enviar un número nuevo.</p>
+<div class="checkbox">
+    <label>
+      <input type="checkbox" id="cbWarningAdv"> Me comprometo a cargar el informe de esta reserva cuanto antes.
+    </label>
+  </div>
+<p>En <span id="spTimeout"></span> segundos se activará la opción para enviar un número nuevo.</p></div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" data-dismiss="modal" class="btn btn-primary">Cancelar
