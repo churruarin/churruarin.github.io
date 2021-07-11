@@ -308,7 +308,10 @@
         });
 
         $("#btnSelect").click( function () {
-            $("#modConfirm").modal("show");
+			if ($("#formres")[0].checkValidity()) {
+            $("#modConfirm").modal("show");  } else {
+            $("#formres").find("#submit-hidden").click();
+          }
         });
 
         $("#btnReenviarwa").click(function () {
@@ -344,7 +347,8 @@
         }
 
         $("#btnEnviar").click(async function () {
-          if ($("#formres")[0].checkValidity()) {
+			$("#modConfirm").modal("hide");
+         
             $("#cargando").modal("show");
             await loadContacto();
             if (await submitForm()) {
@@ -357,9 +361,7 @@
               alert("Ocurrió un error. Intentá enviarlo de nuevo.");
             }
             $("#cargando").modal("hide");
-          } else {
-            $("#formres").find("#submit-hidden").click();
-          }
+        
         });
 
 
