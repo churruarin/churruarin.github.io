@@ -326,7 +326,7 @@
 		function preSelect() {
 			console.log($("#Publicador").val());
 			console.log(pubs);
-			selectedPub = jsonata("$[Nombre='"& $("#Publicador").val() & "']").evaluate(pubs);
+			selectedPub = jsonata("$[Nombre='"+ $("#Publicador").val() + "']").evaluate(pubs);
 			console.log(selectedPub);
 			var numReservas = selectedPub["Reservas"];
 			if (numReservas < limiteReservasMin) {
