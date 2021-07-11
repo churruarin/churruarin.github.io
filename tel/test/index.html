@@ -92,7 +92,7 @@
 		  } else {
 			item = value["Nombre"]
 		  };
-          listitems += "<option value=" + value["Nombre"] + ">" + item +"</option>";
+          listitems += "<option value='" + value["Nombre"] + "''>" + item +"</option>";
         });
         $("#Publicador").append(listitems);
 		$("#ddResponsable").text(resp);
