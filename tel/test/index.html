@@ -155,6 +155,7 @@
         rLocalidad=registrotel["Localidad"];
 
           $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
+		  submitForm();
           console.log(registrotel);
           //console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
         });
@@ -348,11 +349,11 @@
         Responsable: resp,
         Observaciones: rObservaciones,
         Localdad: rLocalidad};
-		  
+		  console.log(rTelefono);
 			var respuesta = false;
           var response = await fetch(scriptURL, {
             method: "POST",
-            body: JSON.stringify(data), //new FormData($("#formres")[0]),
+            body: data, //new FormData($("#formres")[0]),
           }).catch((error) => {
             respuesta = false;
           });
