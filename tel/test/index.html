@@ -124,7 +124,7 @@
             '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})'
           ).evaluate(jsonurl);
           filterJson(background);
-		  loadPubs(background);
+		  loadPubs(true);
 		  $("#cargando").modal("hide");
         });
       }
@@ -260,6 +260,7 @@
           $("#contactos").attr("class", "");
           tipo = "reservas";
           loadJson();
+
         });
         if (resp === undefined) {
           loadJson();
