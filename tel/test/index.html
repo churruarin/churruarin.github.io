@@ -285,10 +285,10 @@
 
 
         if (zona != undefined) {
-          $("#enviar").attr("disabled", false);
+          $("#btnSelect").attr("disabled", false);
           $("#selZona").val(zona);
         } else {
-          $("#enviar").attr("disabled", true);
+          $("#btnSelect").attr("disabled", true);
         }
 
         $("#reload").click(function () {
@@ -308,9 +308,7 @@
         });
 
         $("#btnSelect").click( function () {
-         
-          $("#modConfirm").modal("show");
-          
+            $("#modConfirm").modal("show");
         });
 
         $("#btnReenviarwa").click(function () {
@@ -480,7 +478,7 @@
             class="btn btn-success btn-lg pull-right"
             disabled="disabled"
           >
-            Reserva
+            Reservar
           </button>
         </div>
       </div>
