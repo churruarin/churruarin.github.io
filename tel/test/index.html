@@ -88,7 +88,7 @@
 
         $.each(pubs, function (key, value) {
 		  if  (value["Reservas"] > 0) {
-			  item = value["Nombre"] + "(" + value["Reservas"] + "reservados)"
+			  item = value["Nombre"] + " (" + value["Reservas"] + " reservados)"
 		  } else {
 			item = value["Nombre"]
 		  };
@@ -337,7 +337,7 @@
                 getWAlink();
                 window.open(linkwa);
                 //window.opener.postMessage('close', 'https://churruar.in');
-              
+				$("#modSuccess").modal("show");
             } else {
               alert("Ocurrió un error. Intentá enviarlo de nuevo.");
             }
@@ -615,6 +615,138 @@
       </div>
       <!-- /.modal-dialog -->
     </div>
+
+    <div
+      class="modal fade"
+      id="modSuccess"
+      tabindex="-1"
+      role="dialog"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Reserva exitosa</h4>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Se hizo la siguiente reserva de un contacto para predicación telefónica.
+            </p>
+<ul>
+	<li>Publicador</li>
+	<li>Teléfono</li>
+</ul>
+<p>En breve aparecerá en la pestaña reservas. No olvides <strong>cargar el informe de la llamada</strong>, en lo posible <strong>hoy mismo.</strong></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="btnEnviarWA" class="btn btn-primary">
+              Reenviar mensaje
+            </button>
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+	<div
+	class="modal fade"
+	id="modWarning"
+	tabindex="-1"
+	role="dialog"
+	data-backdrop="static"
+	data-keyboard="false"
+  >
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h4 class="modal-title">El publicador ya tiene contactos reservados</h4>
+		</div>
+		<div class="modal-body">
+		  <p>
+			Por favor, indicale que envíe el informe de los contactos que tiene reservado antes de solicitar uno nuevo.
+		  </p>
+<p>Opciones avanzadas...</p>
+<p>Podés enviarle un número nuevo, bajo tu responsabilidad. Por favor, no olvides pedirle al publicador que informe los números reservados cuanto antes.</strong></p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" id="btnEnviarWA" class="btn btn-primary">
+			Reservar y enviar
+		  </button>
+		  <button type="button" id="btnAceptar" class="btn btn-primary">
+			  Cerrar
+			</button>
+		</div>
+	  </div>
+	  <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+  </div>
+	<div
+	class="modal fade"
+	id="modWarning"
+	tabindex="-1"
+	role="dialog"
+	data-backdrop="static"
+	data-keyboard="false"
+  >
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h4 class="modal-title">El publicador ya tiene contactos reservados</h4>
+		</div>
+		<div class="modal-body">
+		  <p>
+			Por favor, indicale que envíe el informe de los contactos que tiene reservado antes de solicitar uno nuevo.
+		  </p>
+<p>Opciones avanzadas...</p>
+<p>Podés enviarle un número nuevo, bajo tu responsabilidad. Por favor, no olvides pedirle al publicador que informe los números reservados cuanto antes.</strong></p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" id="btnEnviarWA" class="btn btn-primary">
+			Reservar y enviar
+		  </button>
+		  <button type="button" id="btnAceptar" class="btn btn-primary">
+			  Cerrar
+			</button>
+		</div>
+	  </div>
+	  <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+  </div>
+</div>
+<div
+class="modal fade"
+id="modInvalid"
+tabindex="-1"
+role="dialog"
+data-backdrop="static"
+data-keyboard="false"
+>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+	<div class="modal-header">
+	  <h4 class="modal-title">El publicador alcanzó el límite de números reservados</h4>
+	</div>
+	<div class="modal-body">
+	  <p>
+	Ya no es posible reservar más números para el publicador hasta que envíe los informes de los números que tiene reservados. Por favor, indicale que lo haga cuanto antes para poder recibir más números.
+	  </p>	</div>
+	<div class="modal-footer">
+
+	  <button type="button" id="btnAceptar" class="btn btn-primary">
+		  Cerrar
+		</button>
+	</div>
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
     <!-- /.modal -->
     <!-- /.modal -->
   </body>
