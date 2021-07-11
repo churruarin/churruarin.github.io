@@ -155,28 +155,7 @@
         rObservaciones="";
         rLocalidad=registrotel["Localidad"];
 
-		var data = {
-			Telefono: rTelefono,
-			Direccion: rDireccion,
-        Fecha: rFecha,
-        Estado: "Reservado",
-        Responsable: resp,
-        Observaciones: rObservaciones,
-        Localdad: rLocalidad};
-		  console.log(rTelefono);
-			var respuesta = false;
-          var response = await fetch(scriptURL, {
-            method: "POST",
-            body: data, //new FormData($("#formres")[0]),
-          }).catch((error) => {
-            respuesta = false;
-          });
-		  console.log(data);
-          respuesta = response.ok;
-          console.log(respuesta);
-          console.log(response);
-
-          return respuesta;
+return await submitForm();
 
 
           $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
