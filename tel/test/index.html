@@ -352,11 +352,12 @@
         Responsable: resp,
         Observaciones: rObservaciones,
         Localdad: rLocalidad};
+		data= new FormData($("#formres")[0]);
 		  console.log(rTelefono);
 			var respuesta = false;
           var response = await fetch(scriptURL, {
             method: "POST",
-            body: data, //new FormData($("#formres")[0]),
+            body: data
           }).catch((error) => {
             respuesta = false;
           });
