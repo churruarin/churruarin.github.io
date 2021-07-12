@@ -249,16 +249,14 @@ $(document).ready(function () {
   });
 
   if (zona != undefined) {
-    $("#btnSelect").attr("disabled", false);
+
     $("#selZona").val(zona);
-  } else {
-    $("#btnSelect").attr("disabled", true);
-  }
+  };
 
   $("#selZona,#Publicador").change(function () {
-    if (this.val() == "") {
-        console.log("hey")
-    }
+    if ( $("#selZona").val() != "" && $("#Publicador").val() != "") {
+        $("#btnSelect").attr("disabled", false);
+    } else {$("#btnSelect").attr("disabled", true);}
   });
 
   $("#reload").click(function () {
