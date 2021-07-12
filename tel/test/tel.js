@@ -255,7 +255,7 @@ $(document).ready(function () {
     $("#btnSelect").attr("disabled", true);
   }
 
-  $("#selZona","#Publicador").change(function () {
+  $("#selZona,#Publicador").change(function () {
     console.log("hey")
   });
 
