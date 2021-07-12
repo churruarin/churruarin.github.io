@@ -40,6 +40,7 @@ var pubs;
 var limiteReservasMin = 1;
 var limiteReservasMax = 3;
 var timeoutReservas = 5;
+var interval
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
@@ -299,7 +300,7 @@ $(document).ready(function () {
     if (this.checked) {
       var counter = timeoutReservas;
 
-      var interval = setInterval(function () {
+      interval = setInterval(function () {
         counter--;
         $("#spBtnWarningTimeout").text("(" + counter + ")");
         // Display 'counter' wherever you want to display it.
