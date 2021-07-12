@@ -281,7 +281,7 @@
             $("#spResponsable").text(resp);
             $("#modResponsable").modal("hide");
           } else {
-            $("#formresp").find("#submit-hidden").click();
+            $("#formresp").find("#submit-hiddenResp").click();
           }
         });
 
@@ -343,7 +343,7 @@ var interval = setInterval(function() {
     }
 }, 1000);
 
-        }
+        } else {$("#btnWarningEnviar").prop('disabled', true)}
            
     });
 
@@ -667,7 +667,7 @@ var interval = setInterval(function() {
               >
                 <option></option>
               </select>
-              <input id="submit-hidden" type="submit" style="display: none;" />
+              <input id="submit-hiddenResp" type="submit" style="display: none;" />
             </form>
           </div>
           <div class="modal-footer">
