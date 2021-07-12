@@ -326,16 +326,17 @@
         $("#btnWarningAdv").click(function () {
 			$("#btnWarningAdv").addClass('hidden');
 			$("#divWarningAdv").removeClass('hidden');
+			$("#spWarningTimeout").text(timeoutReservas);
         });
 
 		$('#cbWarningAdv').change(function() {
         if(this.checked) {
 		
 			var counter = timeoutReservas;
-			$("#spWarningTimeout").text(counter);
+			
 var interval = setInterval(function() {
     counter--;
-	$("##spBtnWarningEnviar").text('('+counter+')');
+	$("#spBtnWarningEnviar").text('('+counter+')');
     // Display 'counter' wherever you want to display it.
     if (counter == 0) {
         // Display a login box
