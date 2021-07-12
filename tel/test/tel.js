@@ -256,7 +256,9 @@ $(document).ready(function () {
   }
 
   $("#selZona,#Publicador").change(function () {
-    console.log("hey")
+    if (this.val() == "") {
+        console.log("hey")
+    }
   });
 
   $("#reload").click(function () {
