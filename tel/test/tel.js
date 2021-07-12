@@ -288,10 +288,11 @@ $(document).ready(function () {
     getWAlink();
   });
 
-  $("#btnWarningAdv").click(function () {
-    $("#btnWarningAdv").addClass("hidden");
+  $("#cbWarningMore").change(function () {
+    if (this.checked) {
     $("#divWarningAdv").removeClass("hidden");
-    $("#spWarningTimeout").text(timeoutReservas);
+    $("#spWarningTimeout").text(timeoutReservas);}
+    else {$("#divWarningAdv").addClass("hidden");}
   });
 
   $("#cbWarningAdv").change(function () {
@@ -315,14 +316,13 @@ $(document).ready(function () {
   });
 
   function preSelect() {
-    console.log($("#Publicador").val());
-    console.log(pubs);
+
     selectedPub = jsonata(
       "$[Nombre='" + $("#Publicador").val() + "']"
     ).evaluate(pubs);
-    console.log(selectedPub);
+
     var numReservas = selectedPub["Reservas"];
-    console.log(numReservas);
+
     if (numReservas < limiteReservasMin) {
       $("#spConfirmPub").text(selectedPub["Nombre"]);
       $("#spConfirmResp").text(resp);
@@ -331,7 +331,10 @@ $(document).ready(function () {
       numReservas >= limiteReservasMin &&
       numReservas < limiteReservasMax
     ) {
+        $("#cbWarningAdv").checked("false");
+        $("#cbWarningMore").checked("false");
       $("#modWarning").modal("show");
+
     } else {
       $("#modInvalid").modal("show");
     }
