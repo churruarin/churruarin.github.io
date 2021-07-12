@@ -331,8 +331,10 @@ $(document).ready(function () {
       numReservas >= limiteReservasMin &&
       numReservas < limiteReservasMax
     ) {
-        $("#cbWarningAdv").checked("false");
-        $("#cbWarningMore").checked("false");
+        $("#cbWarningAdv").prop("checked", false);
+        $("#cbWarningMore").prop("checked", false);
+        $("#btnWarningEnviar").prop("disabled", false);
+        clearInterval(interval);
       $("#modWarning").modal("show");
 
     } else {
