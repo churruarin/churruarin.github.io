@@ -345,12 +345,15 @@ $(document).ready(function () {
           });
           $("#tableWarning").bootstrapTable("load", reservasPub);
       $("#modWarning").modal("show");
-      txtReservas = "\n\n*ATENCIÓN*\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las "+ limiteReservasMax +" reservas o pasan "+ tiempoMaxReservas +" días ya no será posible enviarte más números. Gracias."
+      txtReservas = "\n\n*ATENCIÓN*\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las "+ limiteReservasMax +" reservas o pasan "+ tiempoMaxReservas +" días ya no será posible enviarte más números. Gracias.";
 
     } else {
       $("#modInvalid").modal("show");
-      txtReservas = "*ATENCIÓN*\n\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.* Como se ha excedido el número de reservas, *no es posible asginarte más números.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!"
-
+      txtReservas = "*ATENCIÓN*\n\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.* Como se ha excedido el número de reservas, *no es posible asginarte más números.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+      $("#tableInvalid").bootstrapTable({
+        data: reservasPub,
+      });
+      $("#tableInvalid").bootstrapTable("load", reservasPub);
     }
   };
 

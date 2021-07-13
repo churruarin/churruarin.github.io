@@ -339,7 +339,7 @@
               <th data-field="Telefono">
                 Teléfono
               </th>
-              <th data-field="TimestampIso">Fecha</th>
+              <th data-field="TimestampIso">Fecha y hora</th>
               <th data-field="Responsable">Responsable</th>
             </tr>
           </thead>
@@ -420,7 +420,26 @@ data-keyboard="false"
 	<div class="modal-body">
 	  <p>
 	Ya no es posible reservar más números para el publicador hasta que envíe los informes de los números que tiene reservados. Por favor, indicale que lo haga cuanto antes para poder recibir más números.
-	  </p>	</div>
+	  </p>
+    <div class="table-responsive">
+      <table
+        id="tableInvalid"
+        data-toggle="tableInvalid"
+        class="table table-striped"
+      >
+        <thead>
+          <tr>
+            <th data-field="Telefono">
+              Teléfono
+            </th>
+            <th data-field="TimestampIso">Fecha y hora</th>
+            <th data-field="Responsable">Responsable</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  
+  </div>
 	<div class="modal-footer">
 
 		<button type="button" data-dismiss="modal" class="btn btn-primary">Cancelar
