@@ -340,7 +340,7 @@ $(document).ready(function () {
         clearInterval(interval);
         $("#divWarningAdv").addClass("hidden");
         $("#spBtnWarningTimeout").text("");
-        $("#tablWarning").bootstrapTable({
+        $("#tableWarning").bootstrapTable({
             data: reservasPub,
           });
           $("#tableWarning").bootstrapTable("load", reservasPub);
