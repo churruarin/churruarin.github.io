@@ -44,6 +44,7 @@ var tiempoMinReservas = 120; //segundos minimos entre reservas
 var tiempoMaxReservas = 30; //dias desde la reserva mas antigua para bloquear un pub
 var reservasPub;
 var txtReservas;
+var interval;
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
