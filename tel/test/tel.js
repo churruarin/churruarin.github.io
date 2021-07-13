@@ -398,6 +398,28 @@ $(document).ready(function () {
     $("#cargando").modal("hide");
   });
 
+  $("#btnEnviarInvalid").click(async function () {
+    $("#modConfirm").modal("hide");
+    $("#modWarning").modal("hide");
+    $("#cargando").modal("show");
+    var selpub = $("#Publicador").val();
+    var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
+    if (selpubtel) {
+      linkwa = "https://wa.me/+54" + selpubtel;
+    } else {
+      linkwa = "https://wa.me/";
+    }
+    linkwa =
+      linkwa +
+      "?text=" +
+      encodeURIComponent(txtReservas);
+      window.open(linkwa);
+      //window.opener.postMessage('close', 'https://churruar.in');
+      $("#modInvalid").modal("hide");
+    
+    $("#cargando").modal("hide");
+  });
+
   async function submitForm() {
     await loadContacto();
     var data = {
