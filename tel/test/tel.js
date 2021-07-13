@@ -375,7 +375,7 @@ $(document).ready(function () {
       );
   }
 
-  $("#btnEnviar").click(async function () {
+  $("#btnEnviar,#btnWarningEnviar").click(async function () {
     $("#modConfirm").modal("hide");
 
     $("#cargando").modal("show");
