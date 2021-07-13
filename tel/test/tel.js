@@ -340,6 +340,10 @@ $(document).ready(function () {
         clearInterval(interval);
         $("#divWarningAdv").addClass("hidden");
         $("#spBtnWarningTimeout").text("");
+        $("#tablWarning").bootstrapTable({
+            data: reservasPub,
+          });
+          $("#tableWarning").bootstrapTable("load", reservasPub);
       $("#modWarning").modal("show");
       txtReservas = "\n\n*ATENCIÓN*\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las "+ limiteReservasMax +" reservas o pasan "+ tiempoMaxReservas +" días ya no será posible enviarte más números. Gracias."
 
@@ -375,9 +379,9 @@ $(document).ready(function () {
       );
   }
 
-  $("#btnEnviar,#btnWarningEnviar").click(async function () {
+  $("#btnEnviar,#btnWarningEnviar,#btnReenviarwa").click(async function () {
     $("#modConfirm").modal("hide");
-
+    $("#modWarning").modal("hide");
     $("#cargando").modal("show");
     await loadContacto();
     if (await submitForm()) {

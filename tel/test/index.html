@@ -327,11 +327,24 @@
 		<div class="modal-body">
 		  <p>
 			Por favor, indicale que envíe el informe de los contactos que tiene reservados antes de solicitar uno nuevo.
-			<ul>
-				<li>Publicador: <strong><span id="spPub"></span></strong></li>
-				<li>Reservas: <strong><span id="spReservas"></span></strong></li>
-			</ul>
 		  </p>
+      <div class="table-responsive">
+        <table
+          id="tableWarning"
+          data-toggle="tableWarning"
+          class="table table-striped"
+        >
+          <thead>
+            <tr>
+              <th data-field="Telefono">
+                Teléfono
+              </th>
+              <th data-field="TimestampIso">Fecha</th>
+              <th data-field="Responsable">Responsable</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
 		  <input type="checkbox" id="cbWarningMore"> Ver más opciones
 
 <div class="hidden" id="divWarningAdv">
