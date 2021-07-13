@@ -334,8 +334,10 @@ $(document).ready(function () {
     ) {
         $("#cbWarningAdv").prop("checked", false);
         $("#cbWarningMore").prop("checked", false);
-        $("#btnWarningEnviar").prop("disabled", false);
+        $("#btnWarningEnviar").prop("disabled", true);
         clearInterval(interval);
+        $("#divWarningAdv").addClass("hidden");
+        $("#spBtnWarningTimeout").text("");
       $("#modWarning").modal("show");
 
     } else {
