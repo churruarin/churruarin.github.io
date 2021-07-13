@@ -37,10 +37,13 @@ var rTelefono,
 var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
 var registrotelpretty, registrotel;
 var pubs;
-var limiteReservasMin = 1;
-var limiteReservasMax = 3;
-var timeoutReservas = 5;
-var interval
+var limiteReservasMin = 1; //minimo de reservas sin restricciones
+var limiteReservasMax = 3; //máximo de reservas antes de bloquear
+var timeoutReservas = 5; //segundos de espera para hacer una reserva adicional
+var tiempoMinReservas = 120; //segundos minimos entre reservas
+var tiempoMaxReservas = 30; //dias desde la reserva mas antigua para bloquear un pub
+var reservasPub;
+var txtReservas;
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
@@ -88,11 +91,10 @@ function loadJson(background) {
     $("#cargando").modal("show");
   }
   $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
   ).done(function (jsonurl) {
     data = jsonata(
-      '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8]&""})'
-    ).evaluate(jsonurl);
+      '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
     filterJson(background);
     loadPubs(true);
     $("#cargando").modal("hide");
@@ -107,15 +109,15 @@ async function loadContacto() {
     localidad = '[Localidad!="Paraná"]';
   }
   await $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
   ).done(function (jsonurl) {
-    var data = jsonata(
+    var dataContacto = jsonata(
       '$shuffle($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})[Respuesta!="Reservado"]' +
         localidad +
         ")[0]"
     ).evaluate(jsonurl);
 
-    registrotel = data; //jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
+    registrotel = dataContacto; //jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
     registrotelpretty = jsonata(
       '$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}'
     ).evaluate(registrotel);
@@ -318,16 +320,15 @@ $(document).ready(function () {
 
   function preSelect() {
 
-    selectedPub = jsonata(
-      "$[Nombre='" + $("#Publicador").val() + "']"
-    ).evaluate(pubs);
-
+    selectedPub = jsonata("$[Nombre='" + $("#Publicador").val() + "']").evaluate(pubs);
+    reservasPub=jsonata("$[Publicador='" + $("#Publicador").val() + "']").evaluate(data);
     var numReservas = selectedPub["Reservas"];
-
+    txtReservas=jsonata('$[Publicador="'+ $("#Publicador").val() + '"].("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")').evaluate(data);
     if (numReservas < limiteReservasMin) {
       $("#spConfirmPub").text(selectedPub["Nombre"]);
       $("#spConfirmResp").text(resp);
       $("#modConfirm").modal("show");
+      txtReservas = "";
     } else if (
       numReservas >= limiteReservasMin &&
       numReservas < limiteReservasMax
@@ -339,11 +340,14 @@ $(document).ready(function () {
         $("#divWarningAdv").addClass("hidden");
         $("#spBtnWarningTimeout").text("");
       $("#modWarning").modal("show");
+      txtReservas = "\n\n*ATENCIÓN*\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las "+ limiteReservasMax +" reservas o pasan "+ tiempoMaxReservas +" días ya no será posible enviarte más números. Gracias."
 
     } else {
       $("#modInvalid").modal("show");
+      txtReservas = "*ATENCIÓN*\n\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.* Como se ha excedido el número de reservas, *no es posible asginarte más números.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!"
+
     }
-  }
+  };
 
   function getWAlink() {
     var selpub = $("#Publicador").val();
@@ -358,7 +362,7 @@ $(document).ready(function () {
       linkwa +
       "?text=" +
       encodeURIComponent(
-        "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO* \n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
+        "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*"+txtReservas+"\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
           registrotelpretty["Telefono"] +
           "*\nDirección: *" +
           registrotelpretty["Direccion"] +
