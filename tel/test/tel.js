@@ -263,10 +263,12 @@ $(document).ready(function () {
   $("#reload").click(function () {
     loadJson();
   });
-  $("button[name|='btnInformar']").click(function () {
+  $(document).on('click', 'button[name|="btnInformar"]', function(){ 
     $("#modInformar").modal("show");
-  });
-
+});
+ // $("button[name|='btnInformar']").click(function () {
+ //   $("#modInformar").modal("show");
+ // });
 
   $("#btnCloseSuccess").click(function () {
     loadJson(true);
