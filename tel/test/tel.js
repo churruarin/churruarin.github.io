@@ -324,7 +324,7 @@ $(document).ready(function () {
   function preSelect() {
 
     selectedPub = jsonata("$[Nombre='" + $("#Publicador").val() + "']").evaluate(pubs);
-    reservasPub=jsonata("$[Publicador='" + $("#Publicador").val() + "']").evaluate(data);
+    reservasPub=jsonata("[$[Publicador='" + $("#Publicador").val() + "']]").evaluate(data);
     maxminReservasPub=jsonata('$[Publicador="'+  $("#Publicador").val() +'"]{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(data);
     var firstDays = maxminReservasPub["FirstDays"];
     var numReservas = selectedPub["Reservas"];
