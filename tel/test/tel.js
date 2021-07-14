@@ -265,8 +265,7 @@ $(document).ready(function () {
   });
 
   $(document).on('click', 'button[data-informar]', function(){ 
-      alert("ok");
-    $("#modInformar").modal("show");
+          $("#modInformar").modal("show");
 });
  // $("button[name|='btnInformar']").click(function () {
  //   $("#modInformar").modal("show");
