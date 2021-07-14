@@ -263,7 +263,9 @@ $(document).ready(function () {
   $("#reload").click(function () {
     loadJson();
   });
+
   $(document).on('click', 'button[name|="btnInformar"]', function(){ 
+      alert("ok");
     $("#modInformar").modal("show");
 });
  // $("button[name|='btnInformar']").click(function () {
