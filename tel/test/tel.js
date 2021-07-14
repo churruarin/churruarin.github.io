@@ -1,22 +1,3 @@
-/*
-			$(window).on('message',function(e){
-			alert('Mensaje del iframe');
-			console.log("MESSAGE",e);
-				
-			});
-			
-			$(document).on('click', 'a[rel=modal]', function(e) {
-				e.stopImmediatePropagation();
-				e.preventDefault();
-				var modal = $('#modal').modal();
-				console.log('hey')
-				modal.find('.modal-body').load($(this).attr('href'), function(responseText, textStatus) {
-					if(textStatus === 'success' || textStatus === 'notmodified') {
-						$('#miframe').attr('src',"detalle.html?telefono=(343)%20424%20-%200288")
-						modal.show();
-					}
-				});
-			});*/
 var $table = $("#table");
 var tipo = "contactos";
 var zona = "parana";
