@@ -199,6 +199,8 @@ function filterJson(background) {
 }
 
 function LinkFormatter(value, row, index) {
+    //return "<a  class='btn btn-primary' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'><strong>" + value + "</strong></a>"
+    return "<button type='button' id='btnInformarReserva' class='btn btn-primary' tel='" + value + "'>" + value + "</button>";
     $("#modInformar").modal("show");
 }
 window.addEventListener("message", (event) => {
