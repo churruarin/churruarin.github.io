@@ -40,8 +40,8 @@ var pubs;
 var limiteReservasMin = 1; //minimo de reservas sin restricciones
 var limiteReservasMax = 3; //máximo de reservas antes de bloquear
 var timeoutReservas = 5; //segundos de espera para hacer una reserva adicional
-var tiempoMinReservas = 120; //segundos minimos entre reservas
-var tiempoMaxReservas = 30; //dias desde la reserva mas antigua para bloquear un pub
+var tiempoMinReservas = 2.5; //minutos minimos entre reservas
+var tiempoMaxReservas = 8; //dias desde la reserva mas antigua para bloquear un pub
 var reservasPub, txtReservas, maxminReservasPub, interval;
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
