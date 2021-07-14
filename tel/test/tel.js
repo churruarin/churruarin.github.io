@@ -200,7 +200,7 @@ function filterJson(background) {
 
 function LinkFormatter(value, row, index) {
     //return "<a  class='btn btn-primary' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'><strong>" + value + "</strong></a>"
-    return "<button type='button' id='btnInformar" + value + "' name='btnInformar" + value + "' class='btn btn-primary' tel='" + value + "'>" + value + "</button>";
+    return "<button type='button' id='btnInformar" + value + "' data-informar='"+ value + "' class='btn btn-primary' tel='" + value + "'>" + value + "</button>";
     
 }
 
@@ -264,7 +264,7 @@ $(document).ready(function () {
     loadJson();
   });
 
-  $(document).on('click', 'button[name|="btnInformar"]', function(){ 
+  $(document).on('click', 'button[data-informar]', function(){ 
       alert("ok");
     $("#modInformar").modal("show");
 });
