@@ -42,9 +42,7 @@ var limiteReservasMax = 3; //máximo de reservas antes de bloquear
 var timeoutReservas = 5; //segundos de espera para hacer una reserva adicional
 var tiempoMinReservas = 120; //segundos minimos entre reservas
 var tiempoMaxReservas = 30; //dias desde la reserva mas antigua para bloquear un pub
-var reservasPub;
-var txtReservas;
-var interval;
+var reservasPub, txtReservas, maxminReservasPub, interval;
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
@@ -323,6 +321,8 @@ $(document).ready(function () {
 
     selectedPub = jsonata("$[Nombre='" + $("#Publicador").val() + "']").evaluate(pubs);
     reservasPub=jsonata("$[Publicador='" + $("#Publicador").val() + "']").evaluate(data);
+    maxminReservasPub=jsonata('$[Publicador="'+  $("#Publicador").val() +'"]{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($)"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(data);
+    var firstDays = maxminReservasPub["FirstDays"];
     var numReservas = selectedPub["Reservas"];
     txtReservas=jsonata('$[Publicador="'+ $("#Publicador").val() + '"].("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")').evaluate(data);
     if (numReservas < limiteReservasMin) {
@@ -347,14 +347,28 @@ $(document).ready(function () {
       $("#modWarning").modal("show");
       txtReservas = "\n\n*ATENCIÓN*\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las "+ limiteReservasMax +" reservas o pasan "+ tiempoMaxReservas +" días ya no será posible enviarte más números. Gracias.";
 
-    } else {
+    } else if (
+        numReservas >= limiteReservasMax 
+        ) {
       $("#modInvalid").modal("show");
+      $("#pInvalid").text("El publicador excedió el límite de " + limiteReservasMax + " reservas.");
       txtReservas = "*ATENCIÓN*\n\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.* Como se ha excedido el número de reservas, *no es posible asginarte más números.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
       $("#tableInvalid").bootstrapTable({
         data: reservasPub,
       });
       $("#tableInvalid").bootstrapTable("load", reservasPub);
-    }
+    }  else if (
+        firstDays > tiempoMaxReservas
+        ) {
+            $("#modInvalid").modal("show");
+            $("#pInvalid").text("El publicador tiene reservas sin informar por más de " + tiempoMaxReservas + " días.");
+            txtReservas = "*ATENCIÓN*\n\nHay *"+ numReservas+" números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" + txtReservas +"\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+            $("#tableInvalid").bootstrapTable({
+              data: reservasPub,
+            });
+            $("#tableInvalid").bootstrapTable("load", reservasPub);
+
+        }
   };
 
   function getWAlink() {
