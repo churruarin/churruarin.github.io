@@ -431,7 +431,8 @@ $(document).ready(function () {
       Localdad: rLocalidad,
     };
    // data = new FormData($("#formres")[0]);
-   data = new FormData(JSON.stringify(dataJson));
+   data = new FormData();
+   data.append(JSON.stringify(dataJson));
     var respuesta = false;
     var response = await fetch(scriptURL, {
       method: "POST",
