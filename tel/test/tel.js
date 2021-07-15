@@ -430,7 +430,7 @@ $(document).ready(function () {
       Observaciones: rObservaciones,
       Localdad: rLocalidad,
     };
-   // data = new FormData($("#formres")[0]);
+   // data = new FormData($("#formres")[0]); 
    data = new FormData();
    data.append(JSON.stringify(dataJson));
     var respuesta = false;
