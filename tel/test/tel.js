@@ -432,7 +432,8 @@ $(document).ready(function () {
     };
    // data = new FormData($("#formres")[0]); 
    data = new FormData();
-   data.append(JSON.stringify(dataJson));
+   Object.keys(dataJson).forEach(key => data.append(key, dataJson[key]));
+   //data.append(JSON.stringify(dataJson));
     var respuesta = false;
     var response = await fetch(scriptURL, {
       method: "POST",
