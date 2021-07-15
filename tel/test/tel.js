@@ -421,7 +421,7 @@ $(document).ready(function () {
 
   async function submitForm() {
     await loadContacto();
-    var data = {
+    var dataJson = {
       Telefono: rTelefono,
       Direccion: rDireccion,
       Fecha: rFecha,
@@ -430,8 +430,8 @@ $(document).ready(function () {
       Observaciones: rObservaciones,
       Localdad: rLocalidad,
     };
-    data = new FormData($("#formres")[0]);
-
+   // data = new FormData($("#formres")[0]);
+   data = new FormData(JSON.stringify(dataJson));
     var respuesta = false;
     var response = await fetch(scriptURL, {
       method: "POST",
