@@ -14,7 +14,7 @@ var rTelefono,
   rEstado,
   rResponsable,
   rObservaciones,
-  rLocalidad;
+  rLocalidad, selectedPub;
 var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
 var registrotelpretty, registrotel;
 var pubs;
@@ -356,6 +356,7 @@ $(document).ready(function () {
     };
   };
 
+
   function getWAlink() {
     var selpub = $("#Publicador").val();
     var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
@@ -381,7 +382,7 @@ $(document).ready(function () {
       );
   }
 
-  $("#btnEnviar,#btnWarningEnviar,#btnReenviarwa").click(async function () {
+  $("#btnEnviar,#btnWarningEnviar").click(async function () {
     $("#modConfirm").modal("hide");
     $("#modWarning").modal("hide");
     $("#cargando").modal("show");
@@ -422,13 +423,14 @@ $(document).ready(function () {
   async function submitForm() {
     await loadContacto();
     var dataJson = {
-      Telefono: rTelefono,
-      Direccion: rDireccion,
-      Fecha: rFecha,
+      Publicador: selectedPub["Nombre"],
+      Telefono: registrotel["Telefono"],
+      Localidad: registrotel["Localidad"],
+      Direccion: registrotel["Direccion"],
+      Fecha: jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
       Estado: "Reservado",
       Responsable: resp,
-      Observaciones: rObservaciones,
-      Localdad: rLocalidad,
+      Observaciones: ""
     };
    // data = new FormData($("#formres")[0]); 
    data = new FormData();
