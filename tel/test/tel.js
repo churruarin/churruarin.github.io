@@ -248,7 +248,29 @@ $(document).ready(function () {
   $(document).on('click', 'button[data-informar]', function(){ 
           $("#modInformar").modal("show");
 var selTel =  $(this).attr("data-informar");
-alert(selTel);
+$('#cargando').modal('show');
+
+  //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+  registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
+  console.log(registrotel);
+  $("#Telefono").val(registrotel['Telefono']);
+  $("#pTelefono").text(registrotel['Telefono']);
+  $("#pResponsable").text(resp);
+  $("#Responsable").val(resp);
+  $("#Direccion").val(registrotel['Direccion']);
+  $("#pDireccion").text(registrotel['Direccion']);
+  $("#Localidad").val(registrotel['Localidad']);
+  $("#pLocalidad").text(registrotel['Localidad']);
+      selpub = registrotel['Publicador'];
+  
+        fechaMDY = jsonata('$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[Y0001]-[M01]-[D01]")').evaluate(registrotel);
+      $("#Fecha").attr("min", fechaMDY);
+      $("#Fecha").attr("max", fechaHoy);
+      $("#Fecha").val(fechaHoy);
+      
+      console.log(fechaMDY);
+      $('#cargando').modal('hide');
+});
 
 });
  // $("button[name|='btnInformar']").click(function () {
