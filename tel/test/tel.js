@@ -255,7 +255,7 @@ var selTel =  $(this).attr("data-informar");
   console.log(registrotel);
   $("#informarTelefono").val(registrotel['Telefono']);
   $("#pInfomarTelefono").text(registrotel['Telefono']);
-  $("#pResponsable").text(resp);
+  $("#pInformarResponsable").text(resp);
   $("#informarResponsable").val(resp);
   $("#informarDireccion").val(registrotel['Direccion']);
   $("#pInformarDireccion").text(registrotel['Direccion']);
