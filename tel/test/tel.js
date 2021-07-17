@@ -270,7 +270,7 @@ $('#cargando').modal('show');
       
       console.log(fechaMDY);
       $('#cargando').modal('hide');
-
+ 
 
 });
  // $("button[name|='btnInformar']").click(function () {
