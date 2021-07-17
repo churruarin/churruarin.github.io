@@ -247,7 +247,7 @@ $(document).ready(function () {
 
   $(document).on('click', 'button[data-informar]', function(){ 
           $("#modInformar").modal("show");
-var selTel = this.attr("data-informar");
+var selTel =  $(this).attr("data-informar");
 alert(selTel);
 
 });
