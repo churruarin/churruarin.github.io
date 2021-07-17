@@ -247,6 +247,9 @@ $(document).ready(function () {
 
   $(document).on('click', 'button[data-informar]', function(){ 
           $("#modInformar").modal("show");
+var selTel = this.attr("data-informar");
+alert(selTel);
+
 });
  // $("button[name|='btnInformar']").click(function () {
  //   $("#modInformar").modal("show");
