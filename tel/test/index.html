@@ -62,70 +62,75 @@
         </li>
       </ul>
       <p>&nbsp;</p>
-      <div id="pnlContactos" class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Asignar un contacto telefónico</h3>
-        </div>
-        <div class="panel-body">
-          <form name="formres" id="formres" autocomplete="off">
-            <div class="form-group">
-              <label for="selZona">Zona</label>
-              <select
-                id="selZona"
-                name="selZona"
-                class="select form-control"
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><div id="pnlContactos" class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Asignar un contacto telefónico</h3>
+          </div>
+          <div class="panel-body">
+            <form name="formres" id="formres" autocomplete="off">
+              <div class="form-group">
+                <label for="selZona">Zona</label>
+                <select
+                  id="selZona"
+                  name="selZona"
+                  class="select form-control"
+                  required="required"
+                >
+                  <option></option>
+                  <option>Paraná</option>
+                  <option>Interior</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Publicador">Publicador</label>
+                <select
+                  id="Publicador"
+                  name="Publicador"
+                  class="select form-control"
+                  required="required"
+                >
+                  <option></option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ddResponsable">Responsable</label>
+  
+                <span
+                  class="form-control"
+                  type="text"
+                  id="ddResponsable"                
+                ></span>
+              </div>
+  
+              <input
+                id="Telefono"
+                name="Telefono"
+                type="hidden"
                 required="required"
-              >
-                <option></option>
-                <option>Paraná</option>
-                <option>Interior</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="Publicador">Publicador</label>
-              <select
-                id="Publicador"
-                name="Publicador"
-                class="select form-control"
-                required="required"
-              >
-                <option></option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="ddResponsable">Responsable</label>
-
-              <span
-                class="form-control"
-                type="text"
-                id="ddResponsable"                
-              ></span>
-            </div>
-
-            <input
-              id="Telefono"
-              name="Telefono"
-              type="hidden"
-              required="required"
-            />
-            <input id="Direccion" name="Direccion" type="hidden" />
-            <input id="Localidad" name="Localidad" type="hidden" />
-            <input id="Estado" name="Estado" type="hidden" />
-            <input id="Fecha" name="Fecha" type="hidden" />
-            <input id="Responsable" name="Responsable" type="hidden" />
-            <input id="submit-hidden" type="submit" style="display: none;" />
-          </form>
-          <p>&nbsp;</p>
-          <button
-            type="button"
-            id="btnSelect"
-            class="btn btn-success btn-lg pull-right"
-            disabled="disabled"
-          >
-            Reservar
-          </button>
-        </div>
+              />
+              <input id="Direccion" name="Direccion" type="hidden" />
+              <input id="Localidad" name="Localidad" type="hidden" />
+              <input id="Estado" name="Estado" type="hidden" />
+              <input id="Fecha" name="Fecha" type="hidden" />
+              <input id="Responsable" name="Responsable" type="hidden" />
+              <input id="submit-hidden" type="submit" style="display: none;" />
+            </form>
+            <p>&nbsp;</p>
+            <button
+              type="button"
+              id="btnSelect"
+              class="btn btn-success btn-lg pull-right"
+              disabled="disabled"
+            >
+              Reservar
+            </button>
+          </div>
+        </div></div>
+        <div class="col-md-4"></div>
       </div>
+      
       <div id="tablereservas" class="hidden">
         <div class="alert alert-warning" role="alert">
           Puede tardar <strong>hasta 1 minuto</strong> en mostrar los datos
