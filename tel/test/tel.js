@@ -248,7 +248,7 @@ $(document).ready(function () {
   $(document).on('click', 'button[data-informar]', function(){ 
           $("#modInformar").modal("show");
 var selTel =  $(this).attr("data-informar");
-$('#cargando').modal('show');
+//$('#cargando').modal('show');
 
   //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
   registrotel = jsonata('$[Telefono="' + selTel + '"]').evaluate(data);
@@ -262,7 +262,8 @@ $('#cargando').modal('show');
   $("#Localidad").val(registrotel['Localidad']);
   $("#pLocalidad").text(registrotel['Localidad']);
       selpub = registrotel['Publicador'];
-  
+      var fechaHoy = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
+    
         fechaMDY = jsonata('$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[Y0001]-[M01]-[D01]")').evaluate(registrotel);
       $("#Fecha").attr("min", fechaMDY);
       $("#Fecha").attr("max", fechaHoy);
