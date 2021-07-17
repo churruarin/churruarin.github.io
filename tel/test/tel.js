@@ -251,7 +251,7 @@ var selTel =  $(this).attr("data-informar");
 $('#cargando').modal('show');
 
   //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-  registrotel = jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
+  registrotel = jsonata('$[Telefono="' + selTel + '"]').evaluate(data);
   console.log(registrotel);
   $("#Telefono").val(registrotel['Telefono']);
   $("#pTelefono").text(registrotel['Telefono']);
