@@ -84,16 +84,12 @@ function loadJson(background) {
   territorios = jsonata(
     '$distinct($.Localidad)'
   ).evaluate(data);
-  var listterritorios = "<option></option>";
+  var listterritorios = "<option>Indistinto</option>";
 
-  $.each(territorios, function (key, value) {
-    if (value["Reservas"] > 0) {
-      item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
-    } else {
-      item = value["Nombre"];
-    }
+  $.each(territorios, function (i) {
+
     listterritorios +=
-      "<option value='" + value["Nombre"] + "''>" + item + "</option>";
+      "<option>" + i + "</option>";
   });
   $("#selZona").empty();
   $("#selZona").append(listterritorios);
