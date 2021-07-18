@@ -78,7 +78,7 @@ function loadJson(background) {
     filterJson(background);
     loadPubs(true);
     $("#cargando").modal("hide");
-  });
+  
 
 
   territorios = jsonata(
@@ -97,8 +97,8 @@ function loadJson(background) {
   });
   $("#selZona").empty();
   $("#selZona").append(listterritorios);
-
-}
+});
+};
 
 async function loadContacto() {
   $("#cargando").modal("show");
