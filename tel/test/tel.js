@@ -265,9 +265,9 @@ var selTel =  $(this).attr("data-informar");
       var fechaHoy = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
     
         fechaMDY = jsonata('$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[Y0001]-[M01]-[D01]")').evaluate(registrotel);
-      $("#Fecha").attr("min", fechaMDY);
-      $("#Fecha").attr("max", fechaHoy);
-      $("#Fecha").val(fechaHoy);
+      $("#ddInformarFecha").attr("min", fechaMDY);
+      $("#ddInformarFecha").attr("max", fechaHoy);
+      $("#ddInformarFecha").val(fechaHoy);
       
       console.log(fechaMDY);
       $('#cargando').modal('hide');
@@ -457,7 +457,7 @@ var selTel =  $(this).attr("data-informar");
       $("#informarPublicador").attr("disabled", true);
     };
   });
-  $("#informarEnviar").click(async function() {
+  $("#btnInformarEnviar").click(async function() {
     if($('#formInformar')[0].checkValidity()) {
             $('#cargando').modal('show');
       if (await submitInformarForm()) {
