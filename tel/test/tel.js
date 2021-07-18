@@ -463,10 +463,11 @@ var selTel =  $(this).attr("data-informar");
   $("#btnInformarEnviar").click(async function() {
     if($('#formInformar')[0].checkValidity()) {
             $('#cargando').modal('show');
+            $("#modInformar").modal("hide");
       if (await submitInformarForm()) {
         // window.open(linkwa);
-        $("#modSuccess").modal("show");
-        $("#modInformar").modal("hide");
+        $("#modInformarSuccess").modal("show");
+        
                 //console.log("ok");
       } else {
                 alert("Ocurrió un error. Intentá enviarlo de nuevo.");
