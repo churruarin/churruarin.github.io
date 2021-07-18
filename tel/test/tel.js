@@ -446,6 +446,65 @@ var selTel =  $(this).attr("data-informar");
     $("#cargando").modal("hide");
   });
 
+  $("#informarEstado").change(function() {
+    if($("#informarEstado").find(":selected").text() == 'Revisita') {
+      console.log("rev");
+      $("#informarPublicador").attr("required", true);
+      $("#informarPublicador").attr("disabled", false);
+    } else {
+      console.log("no rev");
+      $("#informarPublicador").attr("required", false);
+      $("#informarPublicador").attr("disabled", true);
+    };
+  });
+  $("#informarEnviar").click(async function() {
+    if($('#formInformar')[0].checkValidity()) {
+            $('#cargando').modal('show');
+      if (await submitInformarForm()) {
+        // window.open(linkwa);
+      
+                //console.log("ok");
+      } else {
+                alert("Ocurrió un error. Intentá enviarlo de nuevo.");
+              };
+            
+            $('#cargando').modal('hide');
+            
+    } else {
+      $("#formres").find("#submit-hidden").click();
+    };
+  });
+
+	async function submitInformarForm() {
+    var dataJson = {
+     
+      Telefono: informarContacto["Telefono"],
+      Localidad: informarContacto["Localidad"],
+      Direccion: informarContacto["Direccion"],
+      Fecha: $("#ddInformarFecha").val(),
+      Turno: $("#ddInformarTurno").val(),
+      Estado: $("#ddInformarEstado").val(),
+      Responsable: resp,
+      Observaciones: $("#txtInformarObservaciones").val(),
+
+    };
+    data = new FormData();
+    Object.keys(dataJson).forEach(key => data.append(key, dataJson[key]));
+    //data.append(JSON.stringify(dataJson));
+     var respuesta = false;
+     var response = await fetch(scriptURL, {
+       method: "POST",
+       body: data,
+     }).catch((error) => {
+       respuesta = false;
+     });
+     console.log(data);
+     respuesta = response.ok;
+     console.log(respuesta);
+     console.log(response);
+  return respuesta;
+};
+
   async function submitForm() {
     await loadContacto();
     var dataJson = {
@@ -475,6 +534,6 @@ var selTel =  $(this).attr("data-informar");
     console.log(response);
 
     return respuesta;
-  }
+  };
   loadJson(true);
 });
