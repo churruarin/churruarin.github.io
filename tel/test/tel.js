@@ -282,7 +282,10 @@ var selTel =  $(this).attr("data-informar");
     loadJson(true);
     $("#modSuccess").modal("hide");
   });
-
+  $("#btnInformarCloseSuccess").click(function () {
+    loadJson(true);
+    $("#modInformarSuccess").modal("hide");
+  });
   $("#nomResponsable").click(async function () {
     await loadResp();
     $("#modResponsable").modal("show");
@@ -462,7 +465,8 @@ var selTel =  $(this).attr("data-informar");
             $('#cargando').modal('show');
       if (await submitInformarForm()) {
         // window.open(linkwa);
-      
+        $("#modSuccess").modal("show");
+        $("#modInformar").modal("hide");
                 //console.log("ok");
       } else {
                 alert("Ocurrió un error. Intentá enviarlo de nuevo.");
