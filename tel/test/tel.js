@@ -77,7 +77,7 @@ function loadJson(background) {
       '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
     filterJson(background);
     loadPubs(true);
-    $("#cargando").modal("hide");
+   
   
 
 
@@ -94,6 +94,7 @@ function loadJson(background) {
   $("#selZona").empty();
   $("#selZona").append(listterritorios);
 });
+$("#cargando").modal("hide");
 };
 
 async function loadContacto() {
