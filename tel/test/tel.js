@@ -78,9 +78,6 @@ function loadJson(background) {
     filterJson(background);
     loadPubs(true);
    
-  
-
-
   territorios = jsonata(
     '$distinct($.Localidad)'
   ).evaluate(data);
@@ -102,7 +99,7 @@ async function loadContacto() {
   if ($("#selZona").val() == "Indistinto") {
     localidad = '[Localidad!="Campaña celulares 2021"]';
   } else {
-    localidad = $("#selZona").val();
+    localidad = '[Localidad="'+$("#selZona").val()+'"]';
   }
   await $.getJSON(
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
