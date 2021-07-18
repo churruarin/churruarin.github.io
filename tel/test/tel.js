@@ -89,7 +89,7 @@ function loadJson(background) {
   $.each(territorios, function (i) {
 
     listterritorios +=
-      "<option>" + i + "</option>";
+      "<option>" + territorios[i] + "</option>";
   });
   $("#selZona").empty();
   $("#selZona").append(listterritorios);
