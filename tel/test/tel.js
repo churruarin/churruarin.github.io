@@ -520,7 +520,7 @@ var selTel =  $(this).attr("data-informar");
 };
 
   async function submitForm() {
-    await loadContacto();
+   // await loadContacto();
     var dataJson = {
       Publicador: selectedPub["Nombre"],
       Telefono: registrotel["Telefono"],
