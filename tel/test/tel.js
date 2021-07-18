@@ -17,7 +17,7 @@ var rTelefono,
   rLocalidad, selectedPub;
 var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
 var registrotelpretty, registrotel;
-var pubs;
+var pubs, territorios;
 var limiteReservasMin = 1; //minimo de reservas sin restricciones
 var limiteReservasMax = 3; //máximo de reservas antes de bloquear
 var timeoutReservas = 5; //segundos de espera para hacer una reserva adicional
@@ -35,10 +35,10 @@ function loadPubs(background) {
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
   ).done(function (jsonurl) {
     pubs = jsonata(
-      '$.values.({"Nombre":$[0],"Tel":$[2],"Reservas":$number($[3])})'
+      '$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})'
     ).evaluate(jsonurl);
 
-    var listitems = "<option></option>";
+    var listpubs = "<option></option>";
     var item;
 
     $.each(pubs, function (key, value) {
@@ -47,11 +47,11 @@ function loadPubs(background) {
       } else {
         item = value["Nombre"];
       }
-      listitems +=
+      listpubs +=
         "<option value='" + value["Nombre"] + "''>" + item + "</option>";
     });
     $("#Publicador").empty();
-    $("#Publicador").append(listitems);
+    $("#Publicador").append(listpubs);
     $("#ddResponsable").text(resp);
     $("#cargando").modal("hide");
   });
@@ -79,6 +79,25 @@ function loadJson(background) {
     loadPubs(true);
     $("#cargando").modal("hide");
   });
+
+
+  territorios = jsonata(
+    '$distinct($.Localidad)'
+  ).evaluate(data);
+  var listterritorios = "<option></option>";
+
+  $.each(territorios, function (key, value) {
+    if (value["Reservas"] > 0) {
+      item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
+    } else {
+      item = value["Nombre"];
+    }
+    listterritorios +=
+      "<option value='" + value["Nombre"] + "''>" + item + "</option>";
+  });
+  $("#selZona").empty();
+  $("#selZona").append(listterritorios);
+
 }
 
 async function loadContacto() {
@@ -132,6 +151,7 @@ async function loadContacto() {
 }
 
 function loadResp() {
+  $("#cargando").modal("show");
   $.getJSON(
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
   ).done(function (jsonurl) {
@@ -144,6 +164,7 @@ function loadResp() {
     $("#selResponsable").append(listitems);
     $("#selResponsable").val(resp);
   });
+  $("#cargando").modal("hide");
 }
 
 function filterJson(background) {
@@ -187,13 +208,6 @@ function LinkFormatter(value, row, index) {
 
 
 
-window.addEventListener("message", (event) => {
-  // Only accept messages from http://example.com.
-  if (event.origin === "https://churruar.in") {
-    win.close();
-    //loadJson();
-  }
-});
 $(document).ready(function () {
   $("#spResponsable").text(resp);
   $("#contactos").click(function () {
