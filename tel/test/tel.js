@@ -19,10 +19,13 @@ var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
 var registrotelpretty, registrotel;
 var pubs, territorios;
 var limiteReservasMin = 1; //minimo de reservas sin restricciones
-var limiteReservasMax = 3; //máximo de reservas antes de bloquear
+var limiteReservasMax = 15; //máximo de reservas antes de bloquear
 var timeoutReservas = 5; //segundos de espera para hacer una reserva adicional
 var tiempoMinReservas = 2.5; //minutos minimos entre reservas
-var tiempoMaxReservas = 8; //dias desde la reserva mas antigua para bloquear un pub
+var tiempoMaxReservas = 60; //dias desde la reserva mas antigua para bloquear un pub
+var limiteReservasRespMin = 10; //minimo de reservas sin restricciones
+var limiteReservasRespMax = 15; //máximo de reservas antes de bloquear
+var tiempoMaxReservasResp = 30; //dias desde la reserva mas antigua para bloquear un resp
 var reservasPub, txtReservas, maxminReservasPub, interval;
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
@@ -191,6 +194,25 @@ function filterJson(background) {
     $("#reservasCount").text("");
     //  $("#reservasCount").attr("class", "badge hidden");
   }
+if (reservasCount <limiteReservasRespMin) {
+  $("#pnlReservas").removeClass("hidden");
+  $("#pnlWarningResp").addClass("hidden");
+  $("#pnlInvalidResp").addClass("hidden");
+
+} else if (reservasCount >=limiteReservasRespMin && reservasCount <limiteReservasRespMax) {
+  $("#pnlReservas").removeClass("hidden");
+  $("#pnlWarningResp").removeClass("hidden");
+  $("#pnlInvalidResp").addClass("hidden");
+  $("#spWarningRespReservas").text(limiteReservasRespMax);
+  $("#spWarningRespDías").text(tiempoMaxReservasResp);
+} else if  (reservasCount >=limiteReservasRespMax) {
+  $("#pnlReservas").addClass("hidden");
+  $("#pnlWarningResp").addClass("hidden");
+  $("#pnlInvalidResp").removeClass("hidden");
+};
+
+
+
   $("#cargando").modal("hide");
 }
 
