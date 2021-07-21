@@ -53,10 +53,10 @@
 
      
       <div class="row">
-        <div class="alert alert-warning" role="alert"><h4>Hay muchas reservas hechas bajo tu responsabilidad</h4>
-        <p>Por favor, ingresá los informes de las reservas hechas cuanto antes. Pasadas las x reservas o x días ya no podrás reservar más números hasta que ingreses los informes.</p>
+        <div class="alert alert-warning hidden" role="alert" id="pnlWarningResp"><h4>Hay muchas reservas bajo tu responsabilidad</h4>
+        <p>Por favor, ingresá los informes de las reservas hechas cuanto antes. Pasadas las <span id="spWarningRespReservas"></span> reservas o <span id="spWarningRespDías"></span> días ya no podrás reservar más números hasta que ingreses los informes.</p>
         </div>
-<div class="alert alert-danger" role="alert"><h4>Hay demasiadas reservas bajo tu responsabilidad</h4>
+<div class="alert alert-danger hidden" role="alert" id="pnlInvalidResp"><h4>Hay demasiadas reservas bajo tu responsabilidad</h4>
   <p>No podrás hacer más reservas hasta que cargues los informes correspondientes.</p></div>
         <div class="col-md-3"></div>
         <div class="col-md-6"><div id="pnlContactos" class="panel panel-primary">
