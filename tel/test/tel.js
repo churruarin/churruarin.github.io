@@ -251,8 +251,8 @@ $(document).ready(function () {
   });
 
   $("#btnRefresh").click(function () {
-    loadJson();
-    $("#cargando").modal("hide");
+    loadJson(true);
+    
   });
 
   $(document).on('click', 'button[data-informar]', function(){ 
