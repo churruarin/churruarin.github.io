@@ -175,7 +175,7 @@ function filterJson(background) {
   console.log(filtro);
   /*if(filtro) {*/
   filtro = jsonata(
-    '[$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable}]'
+    '[$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable,"Days":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7)}]'
   ).evaluate(filtro);
   //$("#alert").attr("class", "alert alert-warning hidden");
   $("#tableres").bootstrapTable({
@@ -210,8 +210,13 @@ if (reservasCount <limiteReservasRespMin) {
   $("#pnlWarningResp").addClass("hidden");
   $("#pnlInvalidResp").removeClass("hidden");
 };
+var maxDays = jsonata("$max(Days)").evaluate(filtro);
+if (maxDays >= tiempoMaxReservasResp){
+  $("#pnlReservas").addClass("hidden");
+  $("#pnlWarningResp").addClass("hidden");
+  $("#pnlInvalidResp").removeClass("hidden");
 
-
+};
 
   $("#cargando").modal("hide");
 }
@@ -255,6 +260,7 @@ $(document).ready(function () {
       Cookies.set("responsable", resp);
       $("#spResponsable").text(resp);
       $("#modResponsable").modal("hide");
+      filterJson();
     } else {
       $("#formresp").find("#submit-hiddenResp").click();
     }
