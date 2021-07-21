@@ -250,7 +250,7 @@ $(document).ready(function () {
     zona=$("#selZona").val();
   });
 
-  $("#reload").click(function () {
+  $("#btnRefresh").click(function () {
     loadJson();
   });
 
