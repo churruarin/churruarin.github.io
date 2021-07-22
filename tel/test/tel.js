@@ -487,6 +487,31 @@ var selTel =  $(this).attr("data-informar");
     $("#cargando").modal("hide");
   });
 
+  $("#ddInformarEstado").change(function() {
+   
+    switch( $("#ddInformarEstado").val()) {
+      case "Atendió":
+      case "No atiende":
+      case "Mensaje en contestador":
+        $("#fgInformarFecha,fgInformarTurno").removeClass("hidden")
+        $("#fgInformarPublicador,fgInformarObservaciones").addClass("hidden")
+        
+        break;
+      case "No existente":
+        $("#fgInformarFecha").removeClass("hidden")
+        $("#fgInformarPublicador,fgInformarObservaciones,fgInformarTurno").addClass("hidden")
+        break;
+      case "Revisita":
+        $("#fgInformarFecha,fgInformarTurno,#fgInformarPublicador").removeClass("hidden")
+        $("fgInformarObservaciones").addClass("hidden")     
+        break;
+      default:
+
+        $("#fgInformarFecha,fgInformarTurno,#fgInformarPublicador,fgInformarObservaciones").addClass("hidden")
+        // code block
+    }
+  });
+
   $("#informarEstado").change(function() {
     if($("#informarEstado").find(":selected").text() == 'Revisita') {
       console.log("rev");
