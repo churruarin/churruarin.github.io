@@ -187,13 +187,16 @@ function filterJson(background) {
                   $("#alert").attr("class", "alert alert-warning show");
               };*/
   reservasCount = jsonata("$count($)").evaluate(filtro);
-  if (reservasCount > 0) {
-    $("#reservasCount").text(reservasCount);
+  $("#tablereservas").removeClass("hidden");
+  if (reservasCount == 1) {
+    $("#hReservas").text("Hay 1 reserva hecha bajo tu responsabilidad");
     //   $("#reservasCount").attr("class", "badge show");
-  } else {
-    $("#reservasCount").text("");
+  } else if (reservasCount > 1) {
+    $("#hReservas").text("Hay "+ reservasCount+" reservas hechas bajo tu responsabilidad");
     //  $("#reservasCount").attr("class", "badge hidden");
-  }
+  } else {
+    $("#tablereservas").addClass("hidden");
+  };
 if (reservasCount <limiteReservasRespMin) {
   $("#pnlReservas").removeClass("hidden");
   $("#pnlWarningResp").addClass("hidden");
