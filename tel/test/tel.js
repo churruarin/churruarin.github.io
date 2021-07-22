@@ -493,21 +493,32 @@ var selTel =  $(this).attr("data-informar");
       case "Atendió":
       case "No atiende":
       case "Mensaje en contestador":
-        $("#fgInformarFecha,fgInformarTurno").removeClass("hidden")
-        $("#fgInformarPublicador,fgInformarObservaciones").addClass("hidden")
+        $("#fgInformarFecha,fgInformarTurno").removeClass("hidden");
+        $("#ddInformarFecha,ddInformarTurno").attr("required", true);
+        $("#fgInformarPublicador,fgInformarObservaciones").addClass("hidden");
+        $("#ddInformarPublicador,txtInformarObservaciones").attr("required", false);
+        $("btnInformarEnviar").attr("disabled", false); 
         
         break;
       case "No existente":
-        $("#fgInformarFecha").removeClass("hidden")
-        $("#fgInformarPublicador,fgInformarObservaciones,fgInformarTurno").addClass("hidden")
+        $("#fgInformarFecha").removeClass("hidden");
+        $("#ddInformarFecha").attr("required", true);
+        $("#fgInformarPublicador,fgInformarObservaciones,fgInformarTurno").addClass("hidden");
+        $("#ddInformarPublicador,txtInformarObservaciones,ddInformarTurno").attr("required", false);
+        $("btnInformarEnviar").attr("disabled", false); 
         break;
+      case "No volver a llamar":
       case "Revisita":
-        $("#fgInformarFecha,fgInformarTurno,#fgInformarPublicador").removeClass("hidden")
-        $("fgInformarObservaciones").addClass("hidden")     
+        $("#fgInformarFecha,fgInformarTurno,#fgInformarPublicador").removeClass("hidden");
+        $("#ddInformarFecha,ddInformarTurno,ddInformarPublicador").attr("required", true);
+        $("fgInformarObservaciones").addClass("hidden");
+        $("txtInformarObservaciones").attr("required", false); 
+        $("btnInformarEnviar").attr("disabled", false); 
         break;
       default:
 
-        $("#fgInformarFecha,fgInformarTurno,#fgInformarPublicador,fgInformarObservaciones").addClass("hidden")
+        $("#fgInformarFecha,fgInformarTurno,#fgInformarPublicador,fgInformarObservaciones").addClass("hidden");
+        $("btnInformarEnviar").attr("disabled", true); 
         // code block
     }
   });
