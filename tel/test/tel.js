@@ -307,7 +307,7 @@ var selTel =  $(this).attr("data-informar");
       $("#ddInformarFecha").attr("min", fechaMDY);
       $("#ddInformarFecha").attr("max", fechaHoy);
       $("#ddInformarFecha").val(fechaHoy);
-      
+      $("#ddInformarEstado").val("");
       console.log(fechaMDY);
       $('#cargando').modal('hide');
  
