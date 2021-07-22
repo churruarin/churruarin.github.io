@@ -293,6 +293,7 @@ var selTel =  $(this).attr("data-informar");
   console.log(registrotel);
   $("#informarTelefono").val(informarContacto['Telefono']);
   $("#pInfomarTelefono").text(informarContacto['Telefono']);
+  $("#pInfomarPublicador").text(informarContacto['Publicador']);
   $("#pInformarResponsable").text(resp);
   $("#informarResponsable").val(resp);
   $("#informarDireccion").val(informarContacto['Direccion']);
@@ -509,10 +510,10 @@ var selTel =  $(this).attr("data-informar");
         break;
       case "No volver a llamar":
       case "Revisita":
-        $("#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador").removeClass("hidden");
-        $("#ddInformarFecha,#ddInformarTurno,#ddInformarPublicador").attr("required", true);
-        $("#fgInformarObservaciones").addClass("hidden");
-        $("#txtInformarObservaciones").attr("required", false); 
+        $("#fgInformarFecha,#fgInformarTurno").removeClass("hidden");
+        $("#ddInformarFecha,#ddInformarTurno").attr("required", true);
+        $("#fgInformarObservaciones,#fgInformarPublicador").addClass("hidden");
+        $("#txtInformarObservaciones,#ddInformarPublicador").attr("required", false); 
         $("#btnInformarEnviar").attr("disabled", false); 
         break;
       default:
@@ -523,17 +524,7 @@ var selTel =  $(this).attr("data-informar");
     }
   });
 
-  $("#informarEstado").change(function() {
-    if($("#informarEstado").find(":selected").text() == 'Revisita') {
-      console.log("rev");
-      $("#informarPublicador").attr("required", true);
-      $("#informarPublicador").attr("disabled", false);
-    } else {
-      console.log("no rev");
-      $("#informarPublicador").attr("required", false);
-      $("#informarPublicador").attr("disabled", true);
-    };
-  });
+
   $("#btnInformarEnviar").click(async function() {
     if($('#formInformar')[0].checkValidity()) {
             $('#cargando').modal('show');
