@@ -554,6 +554,7 @@ var selTel =  $(this).attr("data-informar");
       Fecha: $("#ddInformarFecha").val(),
       Turno: $("#ddInformarTurno").val(),
       Estado: $("#ddInformarEstado").val(),
+      Publicador: informarContacto["Publicador"],
       Responsable: resp,
       Observaciones: $("#txtInformarObservaciones").val(),
 
