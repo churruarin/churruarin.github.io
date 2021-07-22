@@ -496,6 +496,7 @@ var selTel =  $(this).attr("data-informar");
       case "Atendió":
       case "No atiende":
       case "Mensaje en contestador":
+      case "No volver a llamar":
         $("#fgInformarFecha,#fgInformarTurno").removeClass("hidden");
         $("#ddInformarFecha,#ddInformarTurno").attr("required", true);
         $("#fgInformarPublicador,#fgInformarObservaciones").addClass("hidden");
@@ -504,20 +505,14 @@ var selTel =  $(this).attr("data-informar");
         
         break;
       case "No existente":
+      case "Revisita":
         $("#fgInformarFecha").removeClass("hidden");
         $("#ddInformarFecha").attr("required", true);
         $("#fgInformarPublicador,#fgInformarObservaciones,#fgInformarTurno").addClass("hidden");
         $("#ddInformarPublicador,#txtInformarObservaciones,#ddInformarTurno").attr("required", false);
         $("#btnInformarEnviar").attr("disabled", false); 
         break;
-      case "No volver a llamar":
-      case "Revisita":
-        $("#fgInformarFecha,#fgInformarTurno").removeClass("hidden");
-        $("#ddInformarFecha,#ddInformarTurno").attr("required", true);
-        $("#fgInformarObservaciones,#fgInformarPublicador").addClass("hidden");
-        $("#txtInformarObservaciones,#ddInformarPublicador").attr("required", false); 
-        $("#btnInformarEnviar").attr("disabled", false); 
-        break;
+
       default:
 
         $("#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador,#fgInformarObservaciones").addClass("hidden");
