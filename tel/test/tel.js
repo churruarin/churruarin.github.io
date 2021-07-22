@@ -308,6 +308,8 @@ var selTel =  $(this).attr("data-informar");
       $("#ddInformarFecha").attr("max", fechaHoy);
       $("#ddInformarFecha").val(fechaHoy);
       $("#ddInformarEstado").val("");
+      $("#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador,#fgInformarObservaciones").addClass("hidden");
+      $("#btnInformarEnviar").attr("disabled", true); 
       console.log(fechaMDY);
       $('#cargando').modal('hide');
  
@@ -489,7 +491,7 @@ var selTel =  $(this).attr("data-informar");
   });
 
   $("#ddInformarEstado").change(function() {
-   
+    $("#ddInformarPublicador,#txtInformarObservaciones,#ddInformarTurno").val("");
     switch( $("#ddInformarEstado").val()) {
       case "Atendió":
       case "No atiende":
