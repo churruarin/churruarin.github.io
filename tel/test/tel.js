@@ -97,8 +97,8 @@ function loadJson(background) {
 $("#cargando").modal("hide");
 };
 
-function revisitas(responsable,publicador) {
-  $.getJSON(
+async function revisitas(responsable,publicador) {
+  await $.getJSON(
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
   ).done(function (jsonurl) {
     var revisitas = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
@@ -195,7 +195,7 @@ function filterJson(background) {
     data: filtro,
   });
   $("#tableres").bootstrapTable("load", filtro);
-console.log(revisitas(resp));
+console.log(await revisitas(resp));
   $("#tableRevisitas").bootstrapTable({
     data: revisitas(resp),
   });
