@@ -196,7 +196,7 @@ function loadResp() {
   });
   $("#tableres").bootstrapTable("load", filtro);
  
-revisitas(resp).then( (result) => {
+await revisitas(resp).then( (result) => {
 console.log(result);
 });
 
