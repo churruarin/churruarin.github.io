@@ -195,7 +195,7 @@ function filterJson(background) {
     data: filtro,
   });
   $("#tableres").bootstrapTable("load", filtro);
-console.log(revisitas(resp))
+console.log(revisitas(resp));
   $("#tableRevisitas").bootstrapTable({
     data: revisitas(resp),
   });
