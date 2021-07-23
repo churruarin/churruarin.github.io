@@ -195,7 +195,8 @@ async function filterJson(background) {
     data: filtro,
   });
   $("#tableres").bootstrapTable("load", filtro);
-console.log(await revisitas(resp));
+  var rev = await revisitas(resp)
+console.log(rev);
   $("#tableRevisitas").bootstrapTable({
     data: revisitas(resp),
   });
