@@ -177,7 +177,7 @@ function loadResp() {
   $("#cargando").modal("hide");
 }
 
- async function filterJson(background) {
+function filterJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
   }
@@ -196,11 +196,11 @@ function loadResp() {
   });
   $("#tableres").bootstrapTable("load", filtro);
  
-await revisitas(resp).then( (result) => {
+revisitas(resp).then( (result) => {
 console.log(result);
 });
 
-
+console.log(revisitas(resp));
 
 
   /*} else {
