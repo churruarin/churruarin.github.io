@@ -196,9 +196,8 @@ function filterJson(background) {
   });
   $("#tableres").bootstrapTable("load", filtro);
  
-revisitas(resp).then( (result) => {
-console.log(result);
-});
+revisitas(resp).then(  function(value) { console.log(value) },
+function(error) { console.log("error") });
 
 console.log(revisitas(resp));
 
