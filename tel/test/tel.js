@@ -177,7 +177,7 @@ function loadResp() {
   $("#cargando").modal("hide");
 }
 
- function filterJson(background) {
+ async function filterJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
   }
