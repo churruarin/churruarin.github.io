@@ -177,7 +177,7 @@ function loadResp() {
   $("#cargando").modal("hide");
 }
 
-async function filterJson(background) {
+ function filterJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
   }
@@ -195,12 +195,17 @@ async function filterJson(background) {
     data: filtro,
   });
   $("#tableres").bootstrapTable("load", filtro);
-  var rev = await revisitas(resp)
+ 
+revisitas(resp).then( function (rev) {
 console.log(rev);
   $("#tableRevisitas").bootstrapTable({
-    data: revisitas(resp),
+    data: revisitas(rev),
   });
-  $("#tableRevisitas").bootstrapTable("load", {rows: revisitas(resp)});
+  $("#tableRevisitas").bootstrapTable("load", rev);
+
+});
+
+
 
 
   /*} else {
