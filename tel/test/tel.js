@@ -97,7 +97,7 @@ function loadJson(background) {
 $("#cargando").modal("hide");
 };
 
-async function revisitas(responsable,publicador) {
+function revisitas(responsable,publicador) {
   await $.getJSON(
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
   ).done(function (jsonurl) {
