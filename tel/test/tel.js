@@ -97,6 +97,18 @@ function loadJson(background) {
 $("#cargando").modal("hide");
 };
 
+async function revisitas(responsable,publicador) {
+  await $.getJSON(
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
+  ).done(function (jsonurl) {
+    var revisitas = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
+if (responsable) { revisitas = jsonata('$[Responsable="'+responsable+'"]').evaluate(revisitas)};
+if (publicador) { revisitas = jsonata('$[Responsable="'+publicador+'"]').evaluate(revisitas)};
+return revisitas
+});
+};
+
+
 async function loadContacto() {
   $("#cargando").modal("show");
   if ($("#selZona").val() == "Indistinto") {
@@ -182,6 +194,13 @@ function filterJson(background) {
     data: filtro,
   });
   $("#tableres").bootstrapTable("load", filtro);
+
+  $("#tableRevisitas").bootstrapTable({
+    data: revisitas(resp),
+  });
+  $("#tableRevisitas").bootstrapTable("load", revisitas(resp));
+
+
   /*} else {
                   $("#tablereservas").attr("class", "table-responsive hidden");
                   $("#alert").attr("class", "alert alert-warning show");
