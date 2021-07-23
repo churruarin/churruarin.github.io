@@ -198,11 +198,6 @@ function loadResp() {
  
 revisitas(resp).then( (result) => {
 console.log(result);
-  $("#tableRevisitas").bootstrapTable({
-    data: revisitas(result),
-  });
-  $("#tableRevisitas").bootstrapTable("load", result);
-
 });
 
 
