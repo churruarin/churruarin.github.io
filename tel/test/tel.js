@@ -196,12 +196,12 @@ function loadResp() {
   });
   $("#tableres").bootstrapTable("load", filtro);
  
-revisitas(resp).then(function(rev) {
-console.log(rev);
+revisitas(resp).then( (result) => {
+console.log(result);
   $("#tableRevisitas").bootstrapTable({
-    data: revisitas(rev),
+    data: revisitas(result),
   });
-  $("#tableRevisitas").bootstrapTable("load", rev);
+  $("#tableRevisitas").bootstrapTable("load", result);
 
 });
 
