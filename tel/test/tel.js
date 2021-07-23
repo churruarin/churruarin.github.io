@@ -104,7 +104,7 @@ function revisitas(responsable,publicador) {
     var revisitas = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
 if (typeof responsable !== 'undefined') { revisitas = jsonata('[$[Responsable="'+responsable+'"]]').evaluate(revisitas)};
 if (typeof publicador !== 'undefined') { revisitas = jsonata('[$[Responsable="'+publicador+'"]]').evaluate(revisitas)};
-console.log(revisitas);
+//console.log(revisitas);
 return revisitas
 });
 };
@@ -195,11 +195,11 @@ function filterJson(background) {
     data: filtro,
   });
   $("#tableres").bootstrapTable("load", filtro);
-
+console.log(revisitas(resp))
   $("#tableRevisitas").bootstrapTable({
     data: revisitas(resp),
   });
-  $("#tableRevisitas").bootstrapTable("load", revisitas(resp));
+  $("#tableRevisitas").bootstrapTable("load", {rows: revisitas(resp)});
 
 
   /*} else {
