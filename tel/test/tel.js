@@ -27,6 +27,8 @@ var limiteReservasRespMin = 10; //minimo de reservas sin restricciones
 var limiteReservasRespMax = 20; //máximo de reservas antes de bloquear
 var tiempoMaxReservasResp = 60; //dias desde la reserva mas antigua para bloquear un resp
 var reservasPub, txtReservas, maxminReservasPub, interval;
+var jsonRevisitas, jsonPublicadores, jsonResponsables, jsonContactos;
+const urlRevisitas = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
@@ -97,17 +99,13 @@ function loadJson(background) {
 $("#cargando").modal("hide");
 };
 
-async function revisitas(responsable,publicador) {
-var revi;
-  await $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    revi = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
-if (typeof responsable !== 'undefined') { revi = jsonata('[$[Responsable="'+responsable+'"]]').evaluate(revi)};
-if (typeof publicador !== 'undefined') { revi = jsonata('[$[Publicador="'+publicador+'"]]').evaluate(revi)};
-console.log(revi);
-
+async function revisitas(tipo,nombre,refresh) {
+if (refresh === true || typeof jsonRevisitas === 'undefined')
+await $.getJSON(urlRevisitas).done(function (jsonurl) {
+  jsonRevisitas = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
 });
+revi = jsonRevisitas;
+if (typeof tipo !== 'undefined') { revi = jsonata('[$['+tipo+'="'+nombre+'"]]').evaluate(jsonRevisitas)};
 return revi
 };
 
@@ -199,7 +197,7 @@ async function filterJson(background) {
   $("#tableres").bootstrapTable("load", filtro);
  
 
-var revi = await revisitas(resp)
+var revi = await revisitas("Responsable",resp,true)
 console.log(revi);
 $("#tableRevisitas").bootstrapTable({
   data: revi,
