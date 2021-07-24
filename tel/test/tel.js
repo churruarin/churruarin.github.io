@@ -34,65 +34,6 @@ const urlPublicadores = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19
 const urlResponsables ="https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const scriptURL = "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
-function loadPubs(background) {
-  if (background != true) {
-    $("#cargando").modal("show");
-  }
-  $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    pubs = jsonata(
-      '$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})'
-    ).evaluate(jsonurl);
-
-    var listpubs = "<option></option>";
-    var item;
-
-    $.each(pubs, function (key, value) {
-      if (value["Reservas"] > 0) {
-        item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
-      } else {
-        item = value["Nombre"];
-      }
-      listpubs +=
-        "<option value='" + value["Nombre"] + "''>" + item + "</option>";
-    });
-    $("#Publicador").empty();
-    $("#Publicador").append(listpubs);
-    $("#ddResponsable").text(resp);
-    $("#cargando").modal("hide");
-  });
-}
-
-
-function loadJson(background) {
-  if (background != true) {
-    $("#cargando").modal("show");
-  }
-  $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    data = jsonata(
-      '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
-    filterJson(background);
-    loadPubs(true);
-   
-  territorios = jsonata(
-    '$distinct($.Localidad)'
-  ).evaluate(data);
-  var listterritorios = "<option>Indistinto</option>";
-
-  $.each(territorios, function (i) {
-
-    listterritorios +=
-      "<option>" + territorios[i] + "</option>";
-  });
-  $("#selZona").empty();
-  $("#selZona").append(listterritorios);
-});
-$("#cargando").modal("hide");
-};
-
 async function responsables(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonResponsables === 'undefined')
   await $.getJSON(urlResponsables).done(function (jsonurl) {
@@ -152,6 +93,81 @@ async function contactos(tipo,nombre,refresh) {
   };
    return contactos
   };
+
+	async function submit(dataJson) {
+    data = new FormData();
+    Object.keys(dataJson).forEach(key => data.append(key, dataJson[key]));
+    //data.append(JSON.stringify(dataJson));
+     var respuesta = false;
+     var response = await fetch(scriptURL, {
+       method: "POST",
+       body: data,
+     }).catch((error) => {
+       respuesta = false;
+     });
+     console.log(data);
+     respuesta = response.ok;
+     console.log(respuesta);
+     console.log(response);
+  return respuesta;
+};
+
+
+async function loadPubs(background) {
+  if (background != true) {
+    $("#cargando").modal("show");
+  }
+
+pubs = await publicadores(null, null, true)
+
+    var listpubs = "<option></option>";
+    var item;
+
+    $.each(pubs, function (key, value) {
+      if (value["Reservas"] > 0) {
+        item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
+      } else {
+        item = value["Nombre"];
+      }
+      listpubs +=
+        "<option value='" + value["Nombre"] + "''>" + item + "</option>";
+    });
+    $("#Publicador").empty();
+    $("#Publicador").append(listpubs);
+    $("#ddResponsable").text(resp);
+    $("#cargando").modal("hide");
+  });
+}
+
+
+function loadJson(background) {
+  if (background != true) {
+    $("#cargando").modal("show");
+  }
+  $.getJSON(
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
+  ).done(function (jsonurl) {
+    data = jsonata(
+      '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
+    filterJson(background);
+    loadPubs(true);
+   
+  territorios = jsonata(
+    '$distinct($.Localidad)'
+  ).evaluate(data);
+  var listterritorios = "<option>Indistinto</option>";
+
+  $.each(territorios, function (i) {
+
+    listterritorios +=
+      "<option>" + territorios[i] + "</option>";
+  });
+  $("#selZona").empty();
+  $("#selZona").append(listterritorios);
+});
+$("#cargando").modal("hide");
+};
+
 
 
 async function loadContacto() {
