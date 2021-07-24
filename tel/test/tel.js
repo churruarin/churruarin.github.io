@@ -29,8 +29,10 @@ var tiempoMaxReservasResp = 60; //dias desde la reserva mas antigua para bloquea
 var reservasPub, txtReservas, maxminReservasPub, interval;
 var jsonRevisitas, jsonPublicadores, jsonResponsables, jsonContactos;
 const urlRevisitas = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
-const scriptURL =
-  "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
+const urlContactos = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+const urlPublicadores = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+const urlResponsables ="https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+const scriptURL = "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
 
 function loadPubs(background) {
   if (background != true) {
@@ -62,14 +64,6 @@ function loadPubs(background) {
   });
 }
 
-function loadClave() {
-  //$('#cargando').modal('show');
-  $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/claveEnc?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    claveEnc = jsonata("$.values[0][0]").evaluate(jsonurl);
-  });
-}
 
 function loadJson(background) {
   if (background != true) {
@@ -99,6 +93,23 @@ function loadJson(background) {
 $("#cargando").modal("hide");
 };
 
+async function responsables(tipo,nombre,refresh) {
+  if (refresh === true || typeof jsonResponsables === 'undefined')
+  await $.getJSON(urlResponsables).done(function (jsonurl) {
+    jsonResponsables = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+  });
+  return jsonResponsables;
+  };
+
+
+async function publicadores(tipo,nombre,refresh) {
+  if (refresh === true || typeof jsonPublicadores === 'undefined')
+  await $.getJSON(urlPublicadores).done(function (jsonurl) {
+    jsonPublicadores = jsonata('$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})').evaluate(jsonurl);
+  });
+  return jsonPublicadores;
+  };
+
 async function revisitas(tipo,nombre,refresh) {
 if (refresh === true || typeof jsonRevisitas === 'undefined')
 await $.getJSON(urlRevisitas).done(function (jsonurl) {
@@ -108,6 +119,39 @@ revi = jsonRevisitas;
 if (typeof tipo !== 'undefined') { revi = jsonata('[$['+tipo+'="'+nombre+'"]]').evaluate(jsonRevisitas)};
 return revi
 };
+
+
+async function contactos(tipo,nombre,refresh) {
+  if (refresh === true || typeof jsonContactos === 'undefined')
+  await $.getJSON(urlContactos).done(function (jsonurl) {
+    jsonContactos = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]}').evaluate(jsonurl);
+  });
+  var contactos
+  switch(tipo) {
+    case "asignar":
+      if (nombre == "Indistinto") {
+        localidad = '[Localidad!="Campaña celulares 2021"]';
+      } else {
+        localidad = '[Localidad="'+nombre+'"]';
+      }
+     contactos = jsonata('$shuffle($)[Respuesta!="Reservado"]' + localidad +")[0]" ).evaluate(jsonContactos);
+      break;
+    case "reservasPublicador":
+      contactos = jsonata(
+        '$[Respuesta="Reservado"][Publicador="' + nombre + '"]'
+      ).evaluate(jsonContactos);
+        break;
+      break;
+    case "reservasResponsable":
+      contactos = jsonata(
+        '$[Respuesta="Reservado"][Responsable="' + nombre + '"]'
+      ).evaluate(jsonContactos);
+        break;
+    default:
+      contactos = jsonContactos;
+  };
+   return contactos
+  };
 
 
 async function loadContacto() {
