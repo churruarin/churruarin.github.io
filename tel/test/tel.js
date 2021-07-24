@@ -134,7 +134,7 @@ async function contactos(tipo,nombre,refresh) {
       } else {
         localidad = '[Localidad="'+nombre+'"]';
       }
-     contactos = jsonata('$shuffle($)[Respuesta!="Reservado"]' + localidad +")[0]" ).evaluate(jsonContactos);
+     contactos = jsonata('$shuffle($[Respuesta!="Reservado"]' + localidad +")[0]" ).evaluate(jsonContactos);
       break;
     case "reservasPublicador":
       contactos = jsonata(
