@@ -124,7 +124,7 @@ return revi
 async function contactos(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonContactos === 'undefined')
   await $.getJSON(urlContactos).done(function (jsonurl) {
-    jsonContactos = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+    jsonContactos = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$[9],})').evaluate(jsonurl);
   });
   var contactos
   switch(tipo) {
@@ -138,13 +138,13 @@ async function contactos(tipo,nombre,refresh) {
       break;
     case "reservasPublicador":
       contactos = jsonata(
-        '$[Respuesta="Reservado"][Publicador="' + nombre + '"]'
+        '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
       ).evaluate(jsonContactos);
         break;
       break;
     case "reservasResponsable":
       contactos = jsonata(
-        '$[Respuesta="Reservado"][Responsable="' + nombre + '"]'
+        '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
       ).evaluate(jsonContactos);
         break;
     default:
