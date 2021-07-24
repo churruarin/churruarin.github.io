@@ -136,8 +136,8 @@ pubs = await publicadores(null, null, true)
     $("#Publicador").append(listpubs);
     $("#ddResponsable").text(resp);
     $("#cargando").modal("hide");
-  });
-}
+  
+};
 
 
 function loadJson(background) {
