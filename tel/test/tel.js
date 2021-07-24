@@ -113,7 +113,7 @@ async function contactos(tipo,nombre,refresh) {
 };
 
 
-async function loadPubs(background) {
+async function fillPublicadores(background) {
   if (background != true) {
     $("#cargando").modal("show");
   }
@@ -144,13 +144,9 @@ function loadJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
   }
-  $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    data = jsonata(
-      '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
+  data = await contactos();
     filterJson(background);
-    loadPubs(true);
+    fillPublicadores(true);
    
   territorios = jsonata(
     '$distinct($.Localidad)'
