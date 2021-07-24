@@ -129,7 +129,7 @@ async function contactos(tipo,nombre,refresh) {
   var contactos
   switch(tipo) {
     case "asignar":
-      if (nombre == "Indistinto") {
+      if (typeof nombre === 'undefined') {
         localidad = '[Localidad!="Campaña celulares 2021"]';
       } else {
         localidad = '[Localidad="'+nombre+'"]';
