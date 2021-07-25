@@ -143,7 +143,7 @@ pubs = await publicadores(null, null, true)
 async function loadJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
-  }
+  };
   data = await contactos();
     filterJson(background);
     fillPublicadores(true);
