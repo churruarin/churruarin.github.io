@@ -207,7 +207,7 @@ async function loadContacto() {
  
 }
 
-function loadResp() {
+async function loadResp() {
   $("#cargando").modal("show");
   var responsables = await responsables();
     var listitems = "";
