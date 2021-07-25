@@ -124,9 +124,9 @@ async function contactos(tipo,nombre,refresh) {
 async function waLink(publicador,contacto,tipo) {
 
   var selpubtel =  await publicadores(undefined,publicador);
-  console.log(selpubtel);
-  selpubtel = selpubtel["Tel"];
-  console.log(selpubtel);
+
+  selpubtel = selpubtel.Tel;
+
   var link;
   if (selpubtel) {
     link = "https://wa.me/+54" + selpubtel;
@@ -139,13 +139,13 @@ async function waLink(publicador,contacto,tipo) {
     "?text=" +
     encodeURIComponent(
       "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*"+txtReservas+"\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
-       // registrotel["Telefono"] +
+        contacto.Telefono +
         "*\nDirección: *" +
-      //  registrotel["DireccionP"] +
+        contacto.DireccionP +
         "*\nFue llamado la última vez: *" +
-     //   registrotel["FechaP"] +
+        contacto.FechaP +
         "*\nRespuesta a la última llamada: *" +
-      //  registrotel["Respuesta"] +
+        contacto.Respuesta +
         "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
     );
     return link
@@ -550,20 +550,20 @@ var selTel =  $(this).attr("data-informar");
     $("#modConfirm").modal("hide");
     $("#modWarning").modal("hide");
     $("#cargando").modal("show");
-    await loadContacto();
+    var contacto = await loadContacto();
     var dataJson = {
       Publicador: selectedPub["Nombre"],
-      Telefono: registrotel["Telefono"],
-      Localidad: registrotel["Localidad"],
-      Direccion: registrotel["Direccion"],
+      Telefono: contacto.Telefono,
+      Localidad: contacto.Localidad,
+      Direccion: contacto.Direccion,
       Fecha: jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
       Estado: "Reservado",
       Responsable: resp,
       Observaciones: ""
     };
     if (await submit(dataJson)) {
-      getWAlink();
-      window.open(linkwa);
+      var link = await waLink(selectedPub["Nombre"],contacto);
+      window.open(link);
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#modSuccess").modal("show");
     } else {
