@@ -237,7 +237,7 @@ async function loadContacto() {
     $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
     console.log(registrotel);
     //console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
- 
+ return registrotel
 }
 
 async function loadResp() {
