@@ -117,6 +117,32 @@ async function contactos(tipo,nombre,refresh) {
   return respuesta;
 };
 
+async function waLink(publicador,contacto,tipo) {
+
+  var selpubtel =  await publicadores(null,publicador)["Tel"];
+  var link;
+  if (selpubtel) {
+    link = "https://wa.me/+54" + selpubtel;
+  } else {
+    link = "https://wa.me/";
+  }
+  //
+  link =
+    link +
+    "?text=" +
+    encodeURIComponent(
+      "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*"+txtReservas+"\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
+        registrotel["Telefono"] +
+        "*\nDirección: *" +
+        registrotel["DireccionP"] +
+        "*\nFue llamado la última vez: *" +
+        registrotel["FechaP"] +
+        "*\nRespuesta a la última llamada: *" +
+        registrotel["Respuesta"] +
+        "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
+    );
+    return link
+}
 
 async function fillPublicadores(background) {
   if (background != true) {
@@ -626,66 +652,6 @@ var selTel =  $(this).attr("data-informar");
     };
   });
 
-	async function submitInformarForm() {
-    var dataJson = {
-     
-      Telefono: informarContacto["Telefono"],
-      Localidad: informarContacto["Localidad"],
-      Direccion: informarContacto["Direccion"],
-      Fecha: $("#ddInformarFecha").val(),
-      Turno: $("#ddInformarTurno").val(),
-      Estado: $("#ddInformarEstado").val(),
-      Publicador: informarContacto["Publicador"],
-      Responsable: resp,
-      Observaciones: $("#txtInformarObservaciones").val(),
 
-    };
-    data = new FormData();
-    Object.keys(dataJson).forEach(key => data.append(key, dataJson[key]));
-    //data.append(JSON.stringify(dataJson));
-     var respuesta = false;
-     var response = await fetch(scriptURL, {
-       method: "POST",
-       body: data,
-     }).catch((error) => {
-       respuesta = false;
-     });
-     console.log(data);
-     respuesta = response.ok;
-     console.log(respuesta);
-     console.log(response);
-  return respuesta;
-};
-
-  async function submitForm() {
-   // await loadContacto();
-    var dataJson = {
-      Publicador: selectedPub["Nombre"],
-      Telefono: registrotel["Telefono"],
-      Localidad: registrotel["Localidad"],
-      Direccion: registrotel["Direccion"],
-      Fecha: jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
-      Estado: "Reservado",
-      Responsable: resp,
-      Observaciones: ""
-    };
-   // data = new FormData($("#formres")[0]); 
-   data = new FormData();
-   Object.keys(dataJson).forEach(key => data.append(key, dataJson[key]));
-   //data.append(JSON.stringify(dataJson));
-    var respuesta = false;
-    var response = await fetch(scriptURL, {
-      method: "POST",
-      body: data,
-    }).catch((error) => {
-      respuesta = false;
-    });
-    console.log(data);
-    respuesta = response.ok;
-    console.log(respuesta);
-    console.log(response);
-
-    return respuesta;
-  };
   loadJson(true);
 });
