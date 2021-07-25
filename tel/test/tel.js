@@ -123,7 +123,8 @@ async function contactos(tipo,nombre,refresh) {
 
 async function waLink(publicador,contacto,tipo) {
 
-  var selpubtel =  await publicadores(null,publicador)["Tel"];
+  var selpubtel =  await publicadores(null,publicador);
+  selpubtel = selpubtel["Tel"]
   var link;
   if (selpubtel) {
     link = "https://wa.me/+54" + selpubtel;
