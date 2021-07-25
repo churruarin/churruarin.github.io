@@ -173,10 +173,8 @@ $("#cargando").modal("hide");
 
 async function loadContacto() {
   $("#cargando").modal("show");
-  if ($("#selZona").val() == "Indistinto") {
-    localidad = '[Localidad!="Campaña celulares 2021"]';
-  } else {
-    localidad = '[Localidad="'+$("#selZona").val()+'"]';
+  if ($("#selZona").val() != "Indistinto") {
+    localidad = $("#selZona").val();
   }
   registrotel = await contactos("asignar",localidad,true); 
     rpTelefono = registrotel["Telefono"];
