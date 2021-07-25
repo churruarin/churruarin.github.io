@@ -150,7 +150,7 @@ async function loadJson(background) {
 
   territorios = jsonata(
     '$distinct($.Localidad)'
-  ).evaluate(data);
+  ).evaluate(await contactos());
   var listterritorios = "<option>Indistinto</option>";
 
   $.each(territorios, function (i) {
