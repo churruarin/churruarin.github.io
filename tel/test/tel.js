@@ -65,7 +65,7 @@ return revi
 async function contactos(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonContactos === 'undefined')
   await $.getJSON(urlContactos).done(function (jsonurl) {
-    jsonContactos = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$[9]})').evaluate(jsonurl);
+    jsonContactos = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
   });
   var contactos
   switch(tipo) {
@@ -150,25 +150,6 @@ async function loadJson(background) {
 
   territorios = jsonata(
     '$distinct($.Localidad)'
-  ).evaluate(await contactos());
-  var listterritorios = "<option>Indistinto</option>";
-
-  $.each(territorios, function (i) {
-
-    listterritorios +=
-      "<option>" + territorios[i] + "</option>";
-  });
-
-  $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    data = jsonata(
-      '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
-    filterJson(background);
-    fillPublicadores(true);
-   
-  territorios = jsonata(
-    '$distinct($.Localidad)'
   ).evaluate(data);
   var listterritorios = "<option>Indistinto</option>";
 
@@ -177,9 +158,10 @@ async function loadJson(background) {
     listterritorios +=
       "<option>" + territorios[i] + "</option>";
   });
+
   $("#selZona").empty();
   $("#selZona").append(listterritorios);
-});
+
 $("#cargando").modal("hide");
 };
 
