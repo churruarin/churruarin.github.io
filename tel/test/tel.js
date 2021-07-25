@@ -173,6 +173,7 @@ $("#cargando").modal("hide");
 
 async function loadContacto() {
   $("#cargando").modal("show");
+  var localidad
   if ($("#selZona").val() != "Indistinto") {
     localidad = $("#selZona").val();
   }
