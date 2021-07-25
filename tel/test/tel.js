@@ -607,7 +607,7 @@ var selTel =  $(this).attr("data-informar");
               Estado: $("#ddInformarEstado").val(),
               Publicador: informarContacto["Publicador"],
               Responsable: resp,
-              Observaciones: $("#txtInformarObservaciones").val(),
+              Observaciones: $("#txtInformarObservaciones").val()
         
             };
       if (await submit(dataJson)) {
