@@ -153,7 +153,7 @@ async function fillPublicadores(background) {
     $("#cargando").modal("show");
   }
 
-pubs = await publicadores(null, null, true)
+pubs = await publicadores(undefined, undefined, true)
 
     var listpubs = "<option></option>";
     var item;
