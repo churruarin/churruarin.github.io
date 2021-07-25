@@ -49,7 +49,7 @@ async function publicadores(tipo,nombre,refresh) {
     jsonPublicadores = jsonata('$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})').evaluate(jsonurl);
   });
   if (typeof nombre !== 'undefined') {
-    var jsonPubs = jsonata('[$[Nombre="'+nombre+'"]]').evaluate(jsonPublicadores);
+    var jsonPubs = jsonata('$[Nombre="'+nombre+'"]').evaluate(jsonPublicadores);
   return jsonPubs
   }; 
   return jsonPublicadores
@@ -124,7 +124,9 @@ async function contactos(tipo,nombre,refresh) {
 async function waLink(publicador,contacto,tipo) {
 
   var selpubtel =  await publicadores(undefined,publicador);
+  console.log(selpubtel);
   selpubtel = selpubtel["Tel"];
+  console.log(selpubtel);
   var link;
   if (selpubtel) {
     link = "https://wa.me/+54" + selpubtel;
