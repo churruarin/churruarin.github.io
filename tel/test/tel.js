@@ -145,6 +145,20 @@ async function loadJson(background) {
     $("#cargando").modal("show");
   }
   data = await contactos();
+  filterJson(background);
+  fillPublicadores(true);
+
+  territorios = jsonata(
+    '$distinct($.Localidad)'
+  ).evaluate(data);
+  var listterritorios = "<option>Indistinto</option>";
+
+  $.each(territorios, function (i) {
+
+    listterritorios +=
+      "<option>" + territorios[i] + "</option>";
+  });
+
   $.getJSON(
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
   ).done(function (jsonurl) {
