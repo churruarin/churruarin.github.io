@@ -43,7 +43,7 @@ async function responsables(tipo,nombre,refresh) {
   };
 
 
-async function publicadores(nombre,refresh) {
+async function publicadores(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonPublicadores === 'undefined')
   await $.getJSON(urlPublicadores).done(function (jsonurl) {
     jsonPublicadores = jsonata('$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})').evaluate(jsonurl);
