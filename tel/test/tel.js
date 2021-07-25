@@ -66,9 +66,10 @@ async function contactos(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonContactos === 'undefined')
   await $.getJSON(urlContactos).done(function (jsonurl) {
     jsonContactos = jsonata(
-      '$.values.({"Telefono":$[0], "Direccion":($[2]="Campaña celulares 2021"? ($eval($[1])) :$[1]), "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],'+
+      '$map($.values.({"Telefono":$[0], "Direccion":($[2]="Campaña celulares 2021"? ($eval($[1])) :$[1]), "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],'+
       '"Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
-      '"DireccionP":($[2]="Campaña celulares 2021"? () : $[1] & ", " & $[2]), "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))})'
+      '"DireccionP":($[2]="Campaña celulares 2021"? () : $[1] & ", " & $[2]), "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))}), function($v){'+
+         '$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.Direccion.[$number($.numdesde)..$number($.numhasta)], function($val){$v.Direccion.area & "-" & $v.Direccion.pre & "-" & $pad($string($val),-4,"0") })}]):$v})'
       ).evaluate(jsonurl);
   });
   var contactos
