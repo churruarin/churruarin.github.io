@@ -43,11 +43,15 @@ async function responsables(tipo,nombre,refresh) {
   };
 
 
-async function publicadores(tipo,nombre,refresh) {
+async function publicadores(nombre,refresh) {
   if (refresh === true || typeof jsonPublicadores === 'undefined')
   await $.getJSON(urlPublicadores).done(function (jsonurl) {
     jsonPublicadores = jsonata('$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})').evaluate(jsonurl);
   });
+  if (typeof nombre !== 'undefined') {
+    var jsonPubs = jsonata('[$[Nombre="'+nombre+'"]]').evaluate(jsonPublicadores);
+  return jsonPubs
+  };
   return jsonPublicadores;
   };
 
@@ -132,13 +136,13 @@ async function waLink(publicador,contacto,tipo) {
     "?text=" +
     encodeURIComponent(
       "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*"+txtReservas+"\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
-        registrotel["Telefono"] +
+       // registrotel["Telefono"] +
         "*\nDirección: *" +
-        registrotel["DireccionP"] +
+      //  registrotel["DireccionP"] +
         "*\nFue llamado la última vez: *" +
-        registrotel["FechaP"] +
+     //   registrotel["FechaP"] +
         "*\nRespuesta a la última llamada: *" +
-        registrotel["Respuesta"] +
+      //  registrotel["Respuesta"] +
         "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
     );
     return link
