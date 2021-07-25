@@ -562,8 +562,8 @@ var selTel =  $(this).attr("data-informar");
       Observaciones: ""
     };
     if (await submit(dataJson)) {
-      var link = await waLink(selectedPub["Nombre"],contacto);
-      window.open(link);
+     // var link = await waLink(selectedPub["Nombre"],contacto);
+      window.open(await waLink(selectedPub["Nombre"],contacto));
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#modSuccess").modal("show");
     } else {
