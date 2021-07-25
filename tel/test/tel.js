@@ -200,7 +200,6 @@ async function loadContacto() {
     $("#spPub").text(resp);
     $("#spTel").text(registrotel["Telefono"]);
 
-    //return await submitForm();
 
     $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
     console.log(registrotel);
@@ -598,7 +597,20 @@ var selTel =  $(this).attr("data-informar");
     if($('#formInformar')[0].checkValidity()) {
             $('#cargando').modal('show');
             $("#modInformar").modal("hide");
-      if (await submitInformarForm()) {
+            var dataJson = {
+     
+              Telefono: informarContacto["Telefono"],
+              Localidad: informarContacto["Localidad"],
+              Direccion: informarContacto["Direccion"],
+              Fecha: $("#ddInformarFecha").val(),
+              Turno: $("#ddInformarTurno").val(),
+              Estado: $("#ddInformarEstado").val(),
+              Publicador: informarContacto["Publicador"],
+              Responsable: resp,
+              Observaciones: $("#txtInformarObservaciones").val(),
+        
+            };
+      if (await submit(dataJson)) {
         // window.open(linkwa);
         $("#modInformarSuccess").modal("show");
         
