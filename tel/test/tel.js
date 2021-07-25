@@ -16,7 +16,7 @@ var rTelefono,
   rObservaciones,
   rLocalidad, selectedPub;
 var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
-var registrotelpretty, registrotel;
+var registrotel;
 var pubs, territorios;
 var limiteReservasMin = 1; //minimo de reservas sin restricciones
 var limiteReservasMax = 15; //máximo de reservas antes de bloquear
@@ -513,13 +513,13 @@ var selTel =  $(this).attr("data-informar");
       "?text=" +
       encodeURIComponent(
         "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*"+txtReservas+"\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
-          registrotelpretty["Telefono"] +
+          registrotel["Telefono"] +
           "*\nDirección: *" +
-          registrotelpretty["Direccion"] +
+          registrotel["DireccionP"] +
           "*\nFue llamado la última vez: *" +
-          registrotelpretty["Fecha"] +
+          registrotel["FechaP"] +
           "*\nRespuesta a la última llamada: *" +
-          registrotelpretty["Respuesta"] +
+          registrotel["Respuesta"] +
           "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
       );
   }
