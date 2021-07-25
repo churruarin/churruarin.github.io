@@ -178,23 +178,11 @@ async function loadContacto() {
   } else {
     localidad = '[Localidad="'+$("#selZona").val()+'"]';
   }
-  await $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    var dataContacto = jsonata(
-      '$shuffle($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})[Respuesta!="Reservado"]' +
-        localidad +
-        ")[0]"
-    ).evaluate(jsonurl);
-
-    registrotel = dataContacto; //jsonata('$[Telefono="' + telefono + '"]').evaluate(data);
-    registrotelpretty = jsonata(
-      '$.{"Telefono":Telefono, "Direccion":Direccion & ", " & Localidad, "Respuesta":Respuesta, "Fecha": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}'
-    ).evaluate(registrotel);
-    rpTelefono = registrotelpretty["Telefono"];
-    rpDireccion = registrotelpretty["Direccion"];
-    rpFecha = registrotelpretty["Fecha"];
-    rpRespuesta = registrotelpretty["Respuesta"];
+  registrotel = await contactos("asignar",localidad,true); 
+    rpTelefono = registrotel["Telefono"];
+    rpDireccion = registrotel["DireccionP"];
+    rpFecha = registrotel["FechaP"];
+    rpRespuesta = registrotel["Respuesta"];
     $("#ddResponsable").text(resp);
     $("#Responsable").val(resp);
     $("#ddObservaciones").text(registrotel["Observaciones"]);
@@ -202,8 +190,7 @@ async function loadContacto() {
     $("#Direccion").val(registrotel["Direccion"]);
     $("#Localidad").val(registrotel["Localidad"]);
     $("#Estado").val("Reservado");
-    console.log(registrotelpretty);
-    rTelefono = registrotel["Telefono"];
+     rTelefono = registrotel["Telefono"];
     rDireccion = registrotel["Direccion"];
     rFecha = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
     rEstado = "Reservado";
@@ -218,7 +205,7 @@ async function loadContacto() {
     $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
     console.log(registrotel);
     //console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
-  });
+ 
 }
 
 function loadResp() {
