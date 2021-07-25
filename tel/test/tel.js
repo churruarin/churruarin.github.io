@@ -140,7 +140,7 @@ pubs = await publicadores(null, null, true)
 };
 
 
-function loadJson(background) {
+async function loadJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
   }
@@ -160,7 +160,7 @@ function loadJson(background) {
   });
   $("#selZona").empty();
   $("#selZona").append(listterritorios);
-});
+
 $("#cargando").modal("hide");
 };
 
