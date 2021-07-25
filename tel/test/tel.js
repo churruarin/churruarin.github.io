@@ -209,18 +209,15 @@ async function loadContacto() {
 
 function loadResp() {
   $("#cargando").modal("show");
-  $.getJSON(
-    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc"
-  ).done(function (jsonurl) {
-    var data = jsonata('$.values.({"Nombre":$[0]})').evaluate(jsonurl);
+  var responsables = await responsables();
     var listitems = "";
     $("#selResponsable").empty();
-    $.each(data, function (key, value) {
+    $.each(responsables, function (key, value) {
       listitems += "<option>" + value["Nombre"] + "</option>";
     });
     $("#selResponsable").append(listitems);
     $("#selResponsable").val(resp);
-  });
+
   $("#cargando").modal("hide");
 }
 
