@@ -51,8 +51,8 @@ async function publicadores(tipo,nombre,refresh) {
   if (typeof nombre !== 'undefined') {
     var jsonPubs = jsonata('[$[Nombre="'+nombre+'"]]').evaluate(jsonPublicadores);
   return jsonPubs
-  } else {
-  return jsonPublicadores};
+  }; 
+  return jsonPublicadores
   };
 
 async function revisitas(tipo,nombre,refresh) {
