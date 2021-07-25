@@ -519,7 +519,17 @@ var selTel =  $(this).attr("data-informar");
     $("#modWarning").modal("hide");
     $("#cargando").modal("show");
     await loadContacto();
-    if (await submitForm()) {
+    var dataJson = {
+      Publicador: selectedPub["Nombre"],
+      Telefono: registrotel["Telefono"],
+      Localidad: registrotel["Localidad"],
+      Direccion: registrotel["Direccion"],
+      Fecha: jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
+      Estado: "Reservado",
+      Responsable: resp,
+      Observaciones: ""
+    };
+    if (await submit(dataJson)) {
       getWAlink();
       window.open(linkwa);
       //window.opener.postMessage('close', 'https://churruar.in');
