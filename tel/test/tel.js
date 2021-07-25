@@ -68,7 +68,7 @@ async function contactos(tipo,nombre,refresh) {
     jsonContactos = jsonata(
       '$map($.values.({"Telefono":$[0], "Direccion":($[2]="Campaña celulares 2021"? ($eval($[1])) :$[1]), "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],'+
       '"Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
-      '"DireccionP":($[2]="Campaña celulares 2021"? () : $[1] & ", " & $[2]), "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))}), function($v){'+
+      '"DireccionP":($[2]="Campaña celulares 2021"? () : $[1] & ", " & $[2]),"PublicadorFecha":$[5] &" ("& $[3] &")" , "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))}), function($v){'+
          '$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.Direccion.[$number($.numdesde)..$number($.numhasta)], function($val){$v.Direccion.area & "-" & $v.Direccion.pre & "-" & $pad($string($val),-4,"0") })}]):$v})'
       ).evaluate(jsonurl);
   });
@@ -226,16 +226,8 @@ async function filterJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
   }
-  var filtro = data;
-  filtro = jsonata(
-    '$[Respuesta="Reservado"][Responsable="' + resp + '"]'
-  ).evaluate(filtro);
-  console.log(filtro);
-  /*if(filtro) {*/
-  filtro = jsonata(
-    '[$.{"Telefono":Telefono, "TelefonoBlur":Telefono, "Direccion":Direccion & ", "& Localidad, "Respuesta":Respuesta &" ("& Fecha &$string(Turno = "" ? ")": " por la "& Turno &")"), "PublicadorFecha":Publicador &" ("& Fecha &")", "Responsable":Responsable,"Days":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7)}]'
-  ).evaluate(filtro);
-  //$("#alert").attr("class", "alert alert-warning hidden");
+  var filtro = await contactos("reservasResponsable",resp);
+
   $("#tableres").bootstrapTable({
     data: filtro,
   });
