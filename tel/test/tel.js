@@ -210,10 +210,10 @@ async function loadContacto() {
 
 async function loadResp() {
   $("#cargando").modal("show");
-  var responsables = await responsables();
+  var vresponsables = await responsables();
     var listitems = "";
     $("#selResponsable").empty();
-    $.each(responsables, function (key, value) {
+    $.each(vresponsables, function (key, value) {
       listitems += "<option>" + value["Nombre"] + "</option>";
     });
     $("#selResponsable").append(listitems);
