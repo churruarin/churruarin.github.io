@@ -71,7 +71,7 @@ async function publicadores(tipo, nombre, refresh) {
     var jsonPubs = jsonata('$[Nombre="' + nombre + '"]').evaluate(
       jsonPublicadores
     );
-    selectedRecord.publicador.publicador = jsonPubs;
+    
     return jsonPubs;
   }
   return jsonPublicadores;
@@ -100,7 +100,7 @@ async function revisitas(tipo, nombre, refresh) {
       break;
     case "revisita":
       revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(jsonRevisitas);
-      selectedRecord.publicador.revisita = revi;
+      
       break;
   }
 
@@ -128,7 +128,7 @@ async function contactos(tipo, nombre, refresh) {
       contactos = jsonata(
         '$shuffle($[Respuesta!="Reservado"]' + localidad + ")[0]"
       ).evaluate(jsonContactos);
-      selectedRecord.publicador.reserva = contactos;
+      
       break;
     case "reservasPublicador":
       contactos = jsonata(
@@ -136,7 +136,7 @@ async function contactos(tipo, nombre, refresh) {
       ).evaluate(jsonContactos);
       selectedRecord.publicador.reservas = contactos;
       break;
-      break;
+      
     case "reservasResponsable":
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
@@ -147,7 +147,7 @@ async function contactos(tipo, nombre, refresh) {
         contactos = jsonata(
           '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
         ).evaluate(jsonContactos);
-        selectedRecord.publicador.reserva = contactos;
+        
         break;
     default:
       contactos = jsonContactos;
@@ -207,9 +207,23 @@ async function waLink(publicador, contacto, tipo) {
 async function selectRecord(tipo,nombre,refresh) {
 switch (tipo) {
   case "reserva":
-await contactos("reserva",nombre,refresh);
-await publicadores("publicador",selectedRecord.publicador.reserva.Publicador,refresh)
+    selectedRecord.publicador.reserva = await contactos("reserva",nombre,refresh);
+    selectedRecord.publicador.reservas = await contactos("reservas",selectedRecord.publicador.reserva[0].Publicador);
+    selectedRecord.publicador.publicador = await publicadores("publicador",selectedRecord.publicador.reserva[0].Publicador,refresh);
+return selectedRecord;
     break;
+    case "revisita":
+      selectedRecord.publicador.revisita = await revisitas("revisita",nombre,refresh);
+      selectedRecord.publicador.revisita = await revisitas("revisita",selectedRecord.publicador.revisita[0].Publicador);
+      selectedRecord.publicador.publicador = await publicadores("publicador",selectedRecord.publicador.revisita[0].Publicador,refresh);
+      return selectedRecord;
+          break;
+case "asignar":
+  selectedRecord.publicador.reserva = await contactos("reserva",nombre,refresh);
+  selectedRecord.publicador.reservas = await contactos("reservas",selectedRecord.publicador.publicador.nombre);
+  
+break;
+
 
 }
 };
@@ -444,27 +458,27 @@ $(document).ready(function () {
 
   $(document).on("click", "button[data-informar]", function () {
     $("#modInformar").modal("show");
-    var selTel = $(this).attr("data-informar");
+    await selectRecord("reserva",$(this).attr("data-informar"),true)
     //$('#cargando').modal('show');
-
+var reserva = selecteedRecord.reserva[0]
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-    informarContacto = jsonata('$[Telefono="' + selTel + '"]').evaluate(data);
-    console.log(registrotel);
-    $("#informarTelefono").val(informarContacto["Telefono"]);
-    $("#pInfomarTelefono").text(informarContacto["Telefono"]);
-    $("#pInfomarPublicador").text(informarContacto["Publicador"]);
+    
+    
+    $("#informarTelefono").val(reserva.Telefono);
+    $("#pInfomarTelefono").text(reserva.Telefono);
+    $("#pInfomarPublicador").text(reserva.Publicador);
     $("#pInformarResponsable").text(resp);
     $("#informarResponsable").val(resp);
-    $("#informarDireccion").val(informarContacto["Direccion"]);
-    $("#pInformarDireccion").text(informarContacto["Direccion"]);
-    $("#informarLocalidad").val(informarContacto["Localidad"]);
-    $("#pInformarLocalidad").text(informarContacto["Localidad"]);
-    selpub = informarContacto["Publicador"];
+    $("#informarDireccion").val(reserva.Direccion);
+    $("#pInformarDireccion").text(reserva.Direccion);
+    $("#informarLocalidad").val(reserva.Localidad);
+    $("#pInformarLocalidad").text(reserva.Localidad);
+    //selpub = informarContacto["Publicador"];
     var fechaHoy = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
 
     fechaMDY = jsonata(
       '$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[Y0001]-[M01]-[D01]")'
-    ).evaluate(registrotel);
+    ).evaluate(reserva);
     $("#ddInformarFecha").attr("min", fechaMDY);
     $("#ddInformarFecha").attr("max", fechaHoy);
     $("#ddInformarFecha").val(fechaHoy);
