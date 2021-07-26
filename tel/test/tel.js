@@ -456,7 +456,7 @@ $(document).ready(function () {
     loadJson(true);
   });
 
-  $(document).on("click", "button[data-informar]", function () {
+  $(document).on("click", "button[data-informar]", async function () {
     $("#modInformar").modal("show");
     await selectRecord("reserva",$(this).attr("data-informar"),true)
     //$('#cargando').modal('show');
