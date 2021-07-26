@@ -33,6 +33,7 @@ const urlContactos = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7
 const urlPublicadores = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const urlResponsables ="https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const scriptURL = "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
+var selectedRecord;
 
 async function responsables(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonResponsables === 'undefined')
@@ -50,6 +51,7 @@ async function publicadores(tipo,nombre,refresh) {
   });
   if (typeof nombre !== 'undefined') {
     var jsonPubs = jsonata('$[Nombre="'+nombre+'"]').evaluate(jsonPublicadores);
+    selectedRecord.publicador = jsonPubs;
   return jsonPubs
   }; 
   return jsonPublicadores
@@ -61,7 +63,9 @@ await $.getJSON(urlRevisitas).done(function (jsonurl) {
   jsonRevisitas = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
 });
 revi = jsonRevisitas;
-if (typeof tipo !== 'undefined') { revi = jsonata('[$['+tipo+'="'+nombre+'"]]').evaluate(jsonRevisitas)};
+if (typeof tipo !== 'undefined') { revi = jsonata('[$['+tipo+'="'+nombre+'"]]').evaluate(jsonRevisitas);
+selectedRecord.revisita = revi;
+};
 return revi
 };
 
@@ -520,31 +524,6 @@ var selTel =  $(this).attr("data-informar");
     };
   };
 
-
-  function getWAlink() {
-    var selpub = $("#Publicador").val();
-    var selpubtel = jsonata('$[Nombre="' + selpub + '"].Tel').evaluate(pubs);
-    if (selpubtel) {
-      linkwa = "https://wa.me/+54" + selpubtel;
-    } else {
-      linkwa = "https://wa.me/";
-    }
-    //
-    linkwa =
-      linkwa +
-      "?text=" +
-      encodeURIComponent(
-        "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*"+txtReservas+"\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
-          registrotel["Telefono"] +
-          "*\nDirección: *" +
-          registrotel["DireccionP"] +
-          "*\nFue llamado la última vez: *" +
-          registrotel["FechaP"] +
-          "*\nRespuesta a la última llamada: *" +
-          registrotel["Respuesta"] +
-          "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
-      );
-  }
 
   $("#btnEnviar,#btnWarningEnviar").click(async function () {
     $("#modConfirm").modal("hide");
