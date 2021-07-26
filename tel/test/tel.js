@@ -33,7 +33,7 @@ const urlContactos = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7
 const urlPublicadores = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const urlResponsables ="https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const scriptURL = "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
-var selectedRecord = {"publicador":{},"revisita":{},"contacto":{}};
+var selectedRecord = {"publicador":{},"revisita":{},"reserva":{},"revisitas":{},"reservas":{}};
 
 async function responsables(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonResponsables === 'undefined')
@@ -64,7 +64,7 @@ await $.getJSON(urlRevisitas).done(function (jsonurl) {
 });
 revi = jsonRevisitas;
 if (typeof tipo !== 'undefined') { revi = jsonata('[$['+tipo+'="'+nombre+'"]]').evaluate(jsonRevisitas);
-selectedRecord.revisita = revi;
+selectedRecord.revisitas = revi;
 };
 return revi
 };
@@ -94,6 +94,7 @@ async function contactos(tipo,nombre,refresh) {
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
       ).evaluate(jsonContactos);
+      selectedRecord.reservas = contactos;
         break;
       break;
     case "reservasResponsable":
