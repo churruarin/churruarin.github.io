@@ -143,6 +143,12 @@ async function contactos(tipo, nombre, refresh) {
       ).evaluate(jsonContactos);
       selectedRecord.responsable.reservas = contactos;
       break;
+      case "reserva":
+        contactos = jsonata(
+          '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
+        ).evaluate(jsonContactos);
+        selectedRecord.publicador.reserva = contactos;
+        break;
     default:
       contactos = jsonContactos;
   }
@@ -197,6 +203,16 @@ async function waLink(publicador, contacto, tipo) {
     );
   return link;
 }
+
+async function selectRecord(tipo,nombre,refresh) {
+switch (tipo) {
+  case "reserva":
+await contactos("reserva",nombre,refresh);
+await publicadores("publicador",selectedRecord.publicador.reserva.Publicador,refresh)
+    break;
+
+}
+};
 
 async function fillPublicadores(background) {
   if (background != true) {
@@ -291,6 +307,8 @@ async function loadResp() {
 
   $("#cargando").modal("hide");
 }
+
+
 
 async function filterJson(background) {
   if (background != true) {
