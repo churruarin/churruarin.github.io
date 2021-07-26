@@ -460,7 +460,7 @@ $(document).ready(function () {
     $("#modInformar").modal("show");
     await selectRecord("reserva",$(this).attr("data-informar"),true)
     //$('#cargando').modal('show');
-var reserva = selecteedRecord.reserva[0]
+var reserva = selectedRecord.publicador.reserva[0]
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
     
     
