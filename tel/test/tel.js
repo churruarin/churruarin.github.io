@@ -47,7 +47,7 @@ var selectedRecord = {
     revisitas: {},
     reservas: {},
   },
-  responsable: { reservas: {}, revisitas: {} },
+  responsable: { responsable: Cookies.get("responsable"), reservas: {}, revisitas: {} },
 };
 
 async function responsables(tipo, nombre, refresh) {
@@ -456,40 +456,7 @@ $(document).ready(function () {
     loadJson(true);
   });
 
-  $(document).on("click", "button[data-informar]", async function () {
-    $("#modInformar").modal("show");
-    await selectRecord("reserva",$(this).attr("data-informar"),true)
-    //$('#cargando').modal('show');
-var reserva = selectedRecord.publicador.reserva[0]
-    //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-    
-    
-    $("#informarTelefono").val(reserva.Telefono);
-    $("#pInfomarTelefono").text(reserva.Telefono);
-    $("#pInfomarPublicador").text(reserva.Publicador);
-    $("#pInformarResponsable").text(resp);
-    $("#informarResponsable").val(resp);
-    $("#informarDireccion").val(reserva.Direccion);
-    $("#pInformarDireccion").text(reserva.Direccion);
-    $("#informarLocalidad").val(reserva.Localidad);
-    $("#pInformarLocalidad").text(reserva.Localidad);
-    //selpub = informarContacto["Publicador"];
-    var fechaHoy = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
 
-    fechaMDY = jsonata(
-      '$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[Y0001]-[M01]-[D01]")'
-    ).evaluate(reserva);
-    $("#ddInformarFecha").attr("min", fechaMDY);
-    $("#ddInformarFecha").attr("max", fechaHoy);
-    $("#ddInformarFecha").val(fechaHoy);
-    $("#ddInformarEstado").val("");
-    $(
-      "#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador,#fgInformarObservaciones"
-    ).addClass("hidden");
-    $("#btnInformarEnviar").attr("disabled", true);
-    console.log(fechaMDY);
-    $("#cargando").modal("hide");
-  });
   // $("button[name|='btnInformar']").click(function () {
   //   $("#modInformar").modal("show");
   // });
@@ -678,6 +645,41 @@ var reserva = selectedRecord.publicador.reserva[0]
     $("#cargando").modal("hide");
   });
 
+  //-----INFORMAR RESERVA-----
+  $(document).on("click", "button[data-informar]", async function () {
+    $("#modInformar").modal("show");
+    await selectRecord("reserva",$(this).attr("data-informar"),true)
+    //$('#cargando').modal('show');
+var reserva = selectedRecord.publicador.reserva[0]
+    //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+    
+    
+    $("#informarTelefono").val(reserva.Telefono);
+    $("#pInfomarTelefono").text(reserva.Telefono);
+    $("#pInfomarPublicador").text(reserva.Publicador);
+    $("#pInformarResponsable").text(resp);
+    $("#informarResponsable").val(resp);
+    $("#informarDireccion").val(reserva.Direccion);
+    $("#pInformarDireccion").text(reserva.Direccion);
+    $("#informarLocalidad").val(reserva.Localidad);
+    $("#pInformarLocalidad").text(reserva.Localidad);
+    //selpub = informarContacto["Publicador"];
+    var fechaHoy = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
+
+    fechaMDY = jsonata(
+      '$fromMillis($toMillis($.Fecha,"[D]/[M]/[Y]"),"[Y0001]-[M01]-[D01]")'
+    ).evaluate(reserva);
+    $("#ddInformarFecha").attr("min", fechaMDY);
+    $("#ddInformarFecha").attr("max", fechaHoy);
+    $("#ddInformarFecha").val(fechaHoy);
+    $("#ddInformarEstado").val("");
+    $(
+      "#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador,#fgInformarObservaciones"
+    ).addClass("hidden");
+    $("#btnInformarEnviar").attr("disabled", true);
+    console.log(fechaMDY);
+    $("#cargando").modal("hide");
+  });
   $("#ddInformarEstado").change(function () {
     $("#ddInformarPublicador,#txtInformarObservaciones,#ddInformarTurno").val(
       ""
@@ -722,15 +724,16 @@ var reserva = selectedRecord.publicador.reserva[0]
     if ($("#formInformar")[0].checkValidity()) {
       $("#cargando").modal("show");
       $("#modInformar").modal("hide");
+      var reserva = selectedRecord.publicador.reserva[0]
       var dataJson = {
-        Telefono: informarContacto["Telefono"],
-        Localidad: informarContacto["Localidad"],
-        Direccion: informarContacto["Direccion"],
+        Telefono: reserva.Telefono,
+        Localidad: reserva.Localidad,
+        Direccion: reserva.Direccion,
         Fecha: $("#ddInformarFecha").val(),
         Turno: $("#ddInformarTurno").val(),
         Estado: $("#ddInformarEstado").val(),
-        Publicador: informarContacto["Publicador"],
-        Responsable: resp,
+        Publicador: reserva.Publicador,
+        Responsable: selectedRecord.responsable.responsable,
         Observaciones: $("#txtInformarObservaciones").val(),
       };
       if (await submit(dataJson)) {
