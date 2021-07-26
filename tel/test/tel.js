@@ -33,7 +33,7 @@ const urlContactos = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7
 const urlPublicadores = "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const urlResponsables ="https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const scriptURL = "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
-var selectedRecord = {"publicador":{},"revisita":{},"reserva":{},"revisitas":{},"reservas":{}};
+var selectedRecord = {"publicador":{"publicador":{},"revisita":{},"reserva":{},"revisitas":{},"reservas":{}},"responsable":{"reservas":{},"revisitas":{}}};
 
 async function responsables(tipo,nombre,refresh) {
   if (refresh === true || typeof jsonResponsables === 'undefined')
@@ -51,7 +51,7 @@ async function publicadores(tipo,nombre,refresh) {
   });
   if (typeof nombre !== 'undefined') {
     var jsonPubs = jsonata('$[Nombre="'+nombre+'"]').evaluate(jsonPublicadores);
-    selectedRecord.publicador = jsonPubs;
+    selectedRecord.publicador.publicador = jsonPubs;
   return jsonPubs
   }; 
   return jsonPublicadores
@@ -63,9 +63,21 @@ await $.getJSON(urlRevisitas).done(function (jsonurl) {
   jsonRevisitas = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})').evaluate(jsonurl);
 });
 revi = jsonRevisitas;
-if (typeof tipo !== 'undefined') { revi = jsonata('[$['+tipo+'="'+nombre+'"]]').evaluate(jsonRevisitas);
-selectedRecord.revisitas = revi;
-};
+switch (tipo) {
+  case "responsable":
+    revi = jsonata('[$[Responsable="'+nombre+'"]]').evaluate(jsonRevisitas);
+selectedRecord.responsable.revisitas = revi;
+    break;
+    case "publicador":
+      revi = jsonata('[$[Publicador="'+nombre+'"]]').evaluate(jsonRevisitas);
+      selectedRecord.publicador.revisitas = revi;
+      break;
+      case "revisita":
+        revi = jsonata('[$[Telefono="'+nombre+'"]]').evaluate(jsonRevisitas);
+      selectedRecord.publicador.revisita = revi;      
+        break;
+}
+
 return revi
 };
 
@@ -89,18 +101,20 @@ async function contactos(tipo,nombre,refresh) {
         localidad = '[Localidad="'+nombre+'"]';
       }
      contactos = jsonata('$shuffle($[Respuesta!="Reservado"]' + localidad +")[0]" ).evaluate(jsonContactos);
+     selectedRecord.publicador.reserva = contactos; 
       break;
     case "reservasPublicador":
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
       ).evaluate(jsonContactos);
-      selectedRecord.reservas = contactos;
+      selectedRecord.publicador.reservas = contactos; 
         break;
       break;
     case "reservasResponsable":
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
       ).evaluate(jsonContactos);
+      selectedRecord.responsable.reservas = contactos; 
         break;
     default:
       contactos = jsonContactos;
