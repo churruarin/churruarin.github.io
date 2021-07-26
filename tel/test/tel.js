@@ -141,7 +141,7 @@ async function contactos(tipo, nombre, refresh) {
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
       ).evaluate(jsonContactos);
-      selectedRecord.responsable.reservas = contactos;
+      //selectedRecord.responsable.reservas = contactos;
       break;
       case "reserva":
         contactos = jsonata(
@@ -221,8 +221,12 @@ return selectedRecord;
 case "asignar":
   selectedRecord.publicador.reserva = await contactos("reserva",nombre,refresh);
   selectedRecord.publicador.reservas = await contactos("reservas",selectedRecord.publicador.publicador.nombre);
+  break;
+  case "reservasResponsable":
+    selectedRecord.responsable.reservas = await contactos("reservasResponsable",selectedRecord.responsable.responsable,refresh);
+    $("#tableres").bootstrapTable("load", selectedRecord.responsable.reservas);
+  break;
   
-break;
 
 
 }
@@ -465,10 +469,7 @@ $(document).ready(function () {
     loadJson(true);
     $("#modSuccess").modal("hide");
   });
-  $("#btnInformarCloseSuccess").click(function () {
-    loadJson(true);
-    $("#modInformarSuccess").modal("hide");
-  });
+
   $("#nomResponsable").click(async function () {
     await loadResp();
     $("#modResponsable").modal("show");
@@ -749,6 +750,11 @@ var reserva = selectedRecord.publicador.reserva[0]
     } else {
       $("#formres").find("#submit-hidden").click();
     }
+  });
+  $("#btnInformarCloseSuccess").click(function () {
+    //loadJson(true);
+    selectRecord("reservasResponsable".undefined,true);
+    $("#modInformarSuccess").modal("hide");
   });
 
   loadJson(true);
