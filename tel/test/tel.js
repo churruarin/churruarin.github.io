@@ -224,6 +224,7 @@ case "asignar":
   break;
   case "reservasResponsable":
     selectedRecord.responsable.reservas = await contactos("reservasResponsable",selectedRecord.responsable.responsable,refresh);
+    $("#tableres").bootstrapTable({data: selectedRecord.responsable.reservas});
     $("#tableres").bootstrapTable("load", selectedRecord.responsable.reservas);
   break;
   
