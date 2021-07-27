@@ -62,24 +62,24 @@ async function responsables(tipo, nombre, refresh) {
 }
 
 async function publicadores(tipo, nombre, refresh) {
-  if (refresh === true || typeof jsonPublicadores === "undefined")
+  if (refresh === true || jQuery.isEmptyObject(allRecords.publicadores) === true)
     await $.getJSON(urlPublicadores).done(function (jsonurl) {
-      jsonPublicadores = jsonata(
+      allRecords.publicadores = jsonata(
         '$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})'
       ).evaluate(jsonurl);
     });
   if (typeof nombre !== "undefined") {
     var jsonPubs = jsonata('$[Nombre="' + nombre + '"]').evaluate(
-      jsonPublicadores
+      allRecords.publicadores
     );
     
     return jsonPubs;
   }
-  return jsonPublicadores;
+  return allRecords.publicadores;
 }
 
 async function revisitas(tipo, nombre, refresh) {
-  if (refresh === true || typeof jsonRevisitas === "undefined")
+  if (refresh === true || jQuery.isEmptyObject(allRecords.revisitas) === true)
     await $.getJSON(urlRevisitas).done(function (jsonurl) {
       allRecords.revisitas = jsonata(
         '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})'
