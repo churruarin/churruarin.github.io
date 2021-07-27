@@ -237,10 +237,27 @@ case "asignar":
     $("#tableRevisitas").bootstrapTable({data: selectedRecord.responsable.revisitas});
     $("#tableRevisitas").bootstrapTable("load", selectedRecord.responsable.revisitas);
   break;
+  case "publicadores":
+    var pubs = await publicadores(undefined,undefined,refresh);
+    var listpubs = "<option></option>";
+    var item;
+  
+    $.each(pubs, function (key, value) {
+      if (value["Reservas"] > 0) {
+        item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
+      } else {
+        item = value["Nombre"];
+      }
+      listpubs +=
+        "<option value='" + value["Nombre"] + "''>" + item + "</option>";
+    });
+    $("#Publicador").empty();
+    $("#Publicador").append(listpubs);
+    break;
   default:
     await selectRecord("reservasResponsable",undefined,true);
     await selectRecord("revisitasResponsable",undefined,true);
-    await publicadores(undefined,undefined,true);
+    await selectRecord("publicadores",undefined,true);
     await responsables(undefined,undefined,true);
     break;
   
