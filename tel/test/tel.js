@@ -857,5 +857,6 @@ $("#btnRevisitaCloseSuccess").click(function () {
   $('input[name="radioRevisita"]').prop('checked', false);
 });
 
-  loadJson(true);
+  //loadJson(true);
+  selectRecord();
 });
