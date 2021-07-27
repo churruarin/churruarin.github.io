@@ -406,6 +406,20 @@ function LinkFormatter(value, row, index) {
     "</button>"
   );
 }
+function LinkFormatterRevisita(value, row, index) {
+  //return "<a  class='btn btn-primary' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'><strong>" + value + "</strong></a>"
+  return (
+    "<button type='button' id='btnRevisita" +
+    value +
+    "' data-revisita='" +
+    value +
+    "' class='btn btn-primary' tel='" +
+    value +
+    "'>" +
+    value +
+    "</button>"
+  );
+}
 
 $(document).ready(function () {
   $("#spResponsable").text(resp);
@@ -659,8 +673,8 @@ var reserva = selectedRecord.publicador.reserva[0]
     $("#informarTelefono").val(reserva.Telefono);
     $("#pInfomarTelefono").text(reserva.Telefono);
     $("#pInfomarPublicador").text(reserva.Publicador);
-    $("#pInformarResponsable").text(resp);
-    $("#informarResponsable").val(resp);
+    $("#pInformarResponsable").text(selectedRecord.responsable.responsable);
+    $("#informarResponsable").val(selectedRecord.responsable.responsable);
     $("#informarDireccion").val(reserva.Direccion);
     $("#pInformarDireccion").text(reserva.Direccion);
     $("#informarLocalidad").val(reserva.Localidad);
@@ -686,6 +700,7 @@ var reserva = selectedRecord.publicador.reserva[0]
     $("#ddInformarPublicador,#txtInformarObservaciones,#ddInformarTurno").val(
       ""
     );
+
     switch ($("#ddInformarEstado").val()) {
       case "Atendió":
       case "No atiende":
@@ -754,9 +769,83 @@ var reserva = selectedRecord.publicador.reserva[0]
   });
   $("#btnInformarCloseSuccess").click(function () {
     //loadJson(true);
-    selectRecord("reservasResponsable".undefined,true);
+    selectRecord("reservasResponsable",undefined,true);
     $("#modInformarSuccess").modal("hide");
+    $("#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador,#fgInformarObservaciones").addClass("hidden");
+    $("#btnInformarEnviar").attr("disabled", true);
   });
+
+
+ //-----INFORMAR REVISITA-----
+ $(document).on("click", "button[data-revisita]", async function () {
+  $("#modInformar").modal("show");
+  await selectRecord("revisita",$(this).attr("data-revisita"),true)
+  //$('#cargando').modal('show');
+var revisita = selectedRecord.publicador.revisita[0]
+  //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
+  
+  
+ 
+  $("#pRevisitaTelefono").text(revisita.Telefono);
+  $("#pRevisitaPublicador").text(revisita.Publicador);
+  $("#pRevisitaResponsable").text(selectedRecord.responsable.responsable);
+  $("#pRevisitaDireccion").text(revisita.Direccion);
+  $("#pRevisitaLocalidad").text(revisita.Localidad);
+  //selpub = informarContacto["Publicador"];
+
+  $("#btnRevisitaEnviar").attr("disabled", true);
+  $('input[name="radioRevisita"]').prop('checked', false);
+
+  $("#cargando").modal("hide");
+});
+$('input[name="radioRevisita"]').change(function () {
+  $("#btnRevisitaEnviar").attr("disabled", false);
+});
+
+$("#btnRevisitaEnviar").click(async function () {
+  var revisita = selectedRecord.publicador.revisita[0]
+  var dataJson = {
+    Telefono: revisita.Telefono,
+    Localidad: revisita.Localidad,
+    Direccion: revisita.Direccion,
+    Fecha:  jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
+    Estado: "Atendió",
+    Publicador: revisita.Publicador,
+    Responsable: selectedRecord.responsable.responsable,
+    Observaciones: "",
+  };
+switch ($("input[name='radioRevisita']:checked").val()){
+case "radioRevisitaContinua":
+  dataJson.Estado = "Revisita"
+  dataJson.Observaciones = "Verificada continuidad de revisita"
+  break;
+  case "radioRevisitaFinaliza":
+    dataJson.Estado = "Atendió"
+    dataJson.Observaciones = "Fin de revisita"
+  break;
+}
+    $("#cargando").modal("show");
+    $("#modRevisita").modal("hide");
+
+    if (await submit(dataJson)) {
+      // window.open(linkwa);
+      $("#modRevisitaSuccess").modal("show");
+
+      //console.log("ok");
+    } else {
+      alert("Ocurrió un error. Intentá enviarlo de nuevo.");
+    }
+
+    $("#cargando").modal("hide");
+
+});
+$("#btnRevisitaCloseSuccess").click(function () {
+  //loadJson(true);
+  selectRecord("revisitasResponsable",undefined,true);
+  $("#modRevisitaSuccess").modal("hide");
+  $("#btnRevisitaEnviar").attr("disabled", true);
+  $('input[name="radioRevisita"]').prop('checked', false);
+});
 
   loadJson(true);
 });
