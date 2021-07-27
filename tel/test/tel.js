@@ -29,14 +29,7 @@ var limiteReservasRespMax = 20; //máximo de reservas antes de bloquear
 var tiempoMaxReservasResp = 60; //dias desde la reserva mas antigua para bloquear un resp
 var reservasPub, txtReservas, maxminReservasPub, interval;
 var jsonRevisitas, jsonPublicadores, jsonResponsables, jsonContactos;
-const urlRevisitas =
-  "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
-const urlContactos =
-  "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
-const urlPublicadores =
-  "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
-const urlResponsables =
-  "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
   const urls = {
@@ -65,13 +58,13 @@ var selectedRecord = {
 var allRecords = {publicadores:{},responsables:{},contactos:{},revisitas:{}};
 
 async function responsables(tipo, nombre, refresh) {
-  if (refresh === true || typeof jsonResponsables === "undefined")
+  if (refresh === true || jQuery.isEmptyObject(allRecords.responsables) === true)
     await $.getJSON(urls.responsables).done(function (jsonurl) {
-      jsonResponsables = jsonata('$.values.({"Nombre":$[0]})').evaluate(
+      allRecords.responsables = jsonata('$.values.({"Nombre":$[0]})').evaluate(
         jsonurl
       );
     });
-  return jsonResponsables;
+  return allRecords.responsables;
 }
 
 async function publicadores(tipo, nombre, refresh) {
@@ -120,9 +113,9 @@ async function revisitas(tipo, nombre, refresh) {
 }
 
 async function contactos(tipo, nombre, refresh) {
-  if (refresh === true || typeof jsonContactos === "undefined")
+  if (refresh === true || jQuery.isEmptyObject(allRecords.contactos) === true)
     await $.getJSON(urls.contactos).done(function (jsonurl) {
-      jsonContactos = jsonata(
+      allRecords.contactos = jsonata(
         '$map($.values.({"Telefono":$[0], "Direccion":($[2]="Campaña celulares 2021"? ($eval($[1])) :$[1]), "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],' +
           '"Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),' +
           '"DireccionP":($[2]="Campaña celulares 2021"? () : $[1] & ", " & $[2]),"PublicadorFecha":$[5] &" ("& $[3] &")" , "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))}), function($v){' +
@@ -162,7 +155,7 @@ async function contactos(tipo, nombre, refresh) {
         
         break;
     default:
-      contactos = jsonContactos;
+      contactos = allRecords.contactos;
   }
   return contactos;
 }
@@ -247,6 +240,8 @@ case "asignar":
   default:
     await selectRecord("reservasResponsable",undefined,true);
     await selectRecord("revisitasResponsable",undefined,true);
+    await publicadores(undefined,undefined,true);
+    await responsables(undefined,undefined,true);
     break;
   
 
