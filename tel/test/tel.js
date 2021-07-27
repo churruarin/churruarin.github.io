@@ -779,7 +779,7 @@ var reserva = selectedRecord.publicador.reserva[0]
  //-----INFORMAR REVISITA-----
  $(document).on("click", "button[data-revisita]", async function () {
   $("#modRevisita").modal("show");
-  await selectRecord("revisita",$(this).attr("data-revisita"))
+  await selectRecord("revisita",$(this).attr("data-revisita"));
   //$('#cargando').modal('show');
 var revisita = selectedRecord.publicador.revisita[0]
   //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
@@ -799,11 +799,12 @@ var revisita = selectedRecord.publicador.revisita[0]
   $("#cargando").modal("hide");
 });
 $('input[name="radioRevisita"]').change(function () {
+  console.log("changed");
   $("#btnRevisitaEnviar").attr("disabled", false);
 });
 
 $("#btnRevisitaEnviar").click(async function () {
-  var revisita = selectedRecord.publicador.revisita[0]
+  var revisita = selectedRecord.publicador.revisita[0];
   var dataJson = {
     Telefono: revisita.Telefono,
     Localidad: revisita.Localidad,
@@ -816,12 +817,12 @@ $("#btnRevisitaEnviar").click(async function () {
   };
 switch ($("input[name='radioRevisita']:checked").val()){
 case "radioRevisitaContinua":
-  dataJson.Estado = "Revisita"
-  dataJson.Observaciones = "Verificada continuidad de revisita"
+  dataJson.Estado = "Revisita";
+  dataJson.Observaciones = "Verificada continuidad de revisita";
   break;
   case "radioRevisitaFinaliza":
-    dataJson.Estado = "Atendió"
-    dataJson.Observaciones = "Fin de revisita"
+    dataJson.Estado = "Atendió";
+    dataJson.Observaciones = "Fin de revisita";
   break;
 }
     $("#cargando").modal("show");
