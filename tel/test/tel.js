@@ -303,7 +303,7 @@ async function selectRecord(tipo, nombre, refresh) {
           nombre,
           refresh
         );
-        await selectRecord("publicador","nombre");
+        await selectRecord("publicador",nombre);
 
         break;
         case "publicador":
@@ -393,10 +393,10 @@ function LinkFormatterRevisita(value, row, index) {
   );
 };
 
-async function prepararReserva(publicador) {
-selectRecord("reservasPublicador",publicador,true)
-var reservas = selectedRecord.publicador.reservas
-  var stats = selectedRecord.publicador.reservasStats
+async function reservaPrecheck(publicador) {
+await selectRecord("reservasPublicador",publicador,true);
+var reservas = selectedRecord.publicador.reservas;
+  var stats = selectedRecord.publicador.reservasStats;
   var numReservas = reservas.lenght;
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
@@ -696,7 +696,7 @@ $(document).ready(function () {
 
   $("#btnSelect").click(function () {
     if ($("#formres")[0].checkValidity()) {
-      preSelect();
+      reservaPrecheck( $("#Publicador").val());
     } else {
       $("#formres").find("#submit-hidden").click();
     }
