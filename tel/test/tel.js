@@ -29,36 +29,55 @@ var limiteReservasRespMax = 20; //máximo de reservas antes de bloquear
 var tiempoMaxReservasResp = 60; //dias desde la reserva mas antigua para bloquear un resp
 var reservasPub, txtReservas, maxminReservasPub, interval;
 var jsonRevisitas, jsonPublicadores, jsonResponsables, jsonContactos;
-
-const scriptURL =
-  "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
-  const urls = {
-    revisitas :
+const settings = {
+  limiteReservasMin : 1, //minimo de reservas sin restricciones
+  limiteReservasMax : 15, //máximo de reservas antes de bloquear
+  timeoutReservas : 5, //segundos de espera para hacer una reserva adicional
+  tiempoMinReservas : 2.5, //minutos minimos entre reservas
+  tiempoMaxReservas : 60, //dias desde la reserva mas antigua para bloquear un pub
+  limiteReservasRespMin : 10, //minimo de reservas sin restricciones
+  limiteReservasRespMax : 20, //máximo de reservas antes de bloquear
+  tiempoMaxReservasResp : 60 //dias desde la reserva mas antigua para bloquear un resp
+};
+const urls = {
+  revisitas:
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
-  contactos :
+  contactos:
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
-  publicadores :
+  publicadores:
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
-  responsables :
+  responsables:
     "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
-  script :
-    "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec"
-  }
+  script:
+    "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec",
+};
 var selectedRecord = {
   publicador: {
     publicador: {},
     revisita: {},
     reserva: {},
     revisitas: {},
-    reservas: {}
+    reservas: {},
   },
-  responsable: { responsable: Cookies.get("responsable"), reservas: {}, revisitas: {} },
-  territorio: Cookies.get("zona")
+  responsable: {
+    responsable: Cookies.get("responsable"),
+    reservas: {},
+    revisitas: {},
+  },
+  territorio: Cookies.get("zona"),
 };
-var allRecords = {publicadores:{},responsables:{},contactos:{},revisitas:{}};
+var allRecords = {
+  publicadores: {},
+  responsables: {},
+  contactos: {},
+  revisitas: {},
+};
 
 async function responsables(tipo, nombre, refresh) {
-  if (refresh === true || jQuery.isEmptyObject(allRecords.responsables) === true)
+  if (
+    refresh === true ||
+    jQuery.isEmptyObject(allRecords.responsables) === true
+  )
     await $.getJSON(urls.responsables).done(function (jsonurl) {
       allRecords.responsables = jsonata('$.values.({"Nombre":$[0]})').evaluate(
         jsonurl
@@ -68,7 +87,10 @@ async function responsables(tipo, nombre, refresh) {
 }
 
 async function publicadores(tipo, nombre, refresh) {
-  if (refresh === true || jQuery.isEmptyObject(allRecords.publicadores) === true)
+  if (
+    refresh === true ||
+    jQuery.isEmptyObject(allRecords.publicadores) === true
+  )
     await $.getJSON(urls.publicadores).done(function (jsonurl) {
       allRecords.publicadores = jsonata(
         '$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})'
@@ -78,7 +100,7 @@ async function publicadores(tipo, nombre, refresh) {
     var jsonPubs = jsonata('$[Nombre="' + nombre + '"]').evaluate(
       allRecords.publicadores
     );
-    
+
     return jsonPubs;
   }
   return allRecords.publicadores;
@@ -104,8 +126,10 @@ async function revisitas(tipo, nombre, refresh) {
       );
       break;
     case "revisita":
-      revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(allRecords.revisitas);
-      
+      revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(
+        allRecords.revisitas
+      );
+
       break;
   }
 
@@ -133,7 +157,7 @@ async function contactos(tipo, nombre, refresh) {
       contactos = jsonata(
         '$shuffle($[Respuesta!="Reservado"]' + localidad + ")[0]"
       ).evaluate(jsonContactos);
-      
+
       break;
     case "reservasPublicador":
       contactos = jsonata(
@@ -141,19 +165,19 @@ async function contactos(tipo, nombre, refresh) {
       ).evaluate(jsonContactos);
       selectedRecord.publicador.reservas = contactos;
       break;
-      
+
     case "reservasResponsable":
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
       ).evaluate(jsonContactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
-      case "reserva":
-        contactos = jsonata(
-          '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
-        ).evaluate(jsonContactos);
-        
-        break;
+    case "reserva":
+      contactos = jsonata(
+        '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
+      ).evaluate(jsonContactos);
+
+      break;
     default:
       contactos = allRecords.contactos;
   }
@@ -165,7 +189,7 @@ async function submit(dataJson) {
   Object.keys(dataJson).forEach((key) => data.append(key, dataJson[key]));
   //data.append(JSON.stringify(dataJson));
   var respuesta = false;
-  var response = await fetch(scriptURL, {
+  var response = await fetch(urls.script, {
     method: "POST",
     body: data,
   }).catch((error) => {
@@ -209,72 +233,144 @@ async function waLink(publicador, contacto, tipo) {
   return link;
 }
 
-async function selectRecord(tipo,nombre,refresh) {
-switch (tipo) {
-  case "reserva":
-    selectedRecord.publicador.reserva = await contactos("reserva",nombre,refresh);
-    selectedRecord.publicador.reservas = await contactos("reservas",selectedRecord.publicador.reserva[0].Publicador);
-    selectedRecord.publicador.publicador = await publicadores("publicador",selectedRecord.publicador.reserva[0].Publicador,refresh);
-return selectedRecord;
-    break;
-case "revisita":
-      selectedRecord.publicador.revisita = await revisitas("revisita",nombre,refresh);
-      selectedRecord.publicador.revisitas = await revisitas("revisitas",selectedRecord.publicador.revisita[0].Publicador);
-      selectedRecord.publicador.publicador = await publicadores("publicador",selectedRecord.publicador.revisita[0].Publicador);
+async function selectRecord(tipo, nombre, refresh) {
+  switch (tipo) {
+    case "reserva":
+      selectedRecord.publicador.reserva = await contactos(
+        "reserva",
+        nombre,
+        refresh
+      );
+      selectedRecord.publicador.reservas = await contactos(
+        "reservas",
+        selectedRecord.publicador.reserva[0].Publicador
+      );
+      selectedRecord.publicador.publicador = await publicadores(
+        "publicador",
+        selectedRecord.publicador.reserva[0].Publicador,
+        refresh
+      );
       return selectedRecord;
-          break;
-case "asignar":
-  selectedRecord.publicador.reserva = await contactos("reserva",nombre,refresh);
-  selectedRecord.publicador.reservas = await contactos("reservas",selectedRecord.publicador.publicador.nombre);
-  break;
-  case "reservasResponsable":
-    selectedRecord.responsable.reservas = await contactos("reservasResponsable",selectedRecord.responsable.responsable,refresh);
-    $("#tableres").bootstrapTable({data: selectedRecord.responsable.reservas});
-    $("#tableres").bootstrapTable("load", selectedRecord.responsable.reservas);
-  break;
-  case "revisitasResponsable":
-    selectedRecord.responsable.revisitas = await revisitas("responsable",selectedRecord.responsable.responsable,refresh);
-    $("#tableRevisitas").bootstrapTable({data: selectedRecord.responsable.revisitas});
-    $("#tableRevisitas").bootstrapTable("load", selectedRecord.responsable.revisitas);
-  break;
-  case "publicadores":
-    var pubs = await publicadores(undefined,undefined,refresh);
-    var listpubs = "<option></option>";
-    var item;
-  
-    $.each(pubs, function (key, value) {
-      if (value["Reservas"] > 0) {
-        item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
-      } else {
-        item = value["Nombre"];
-      }
-      listpubs +=
-        "<option value='" + value["Nombre"] + "''>" + item + "</option>";
-    });
-    $("#Publicador").empty();
-    $("#Publicador").append(listpubs);
-    break;
-    case "territorios":
-      var territorios = jsonata("$distinct($.Localidad)").evaluate(await contactos(undefined,undefined,refresh));
-  var listterritorios = "<option>Indistinto</option>";
-  $.each(territorios, function (i) {
-    listterritorios += "<option>" + territorios[i] + "</option>";
-  });
-  $("#selZona").empty();
-  $("#selZona").append(listterritorios);
       break;
-  default:
-    selectRecord("reservasResponsable",undefined,true);
-    selectRecord("revisitasResponsable",undefined,true);
-    selectRecord("publicadores",undefined,true);
-    responsables(undefined,undefined,true);
-    selectRecord("territorios");
-    break;
-  
+    case "revisita":
+      selectedRecord.publicador.revisita = await revisitas(
+        "revisita",
+        nombre,
+        refresh
+      );
+      selectedRecord.publicador.revisitas = await revisitas(
+        "revisitas",
+        selectedRecord.publicador.revisita[0].Publicador
+      );
+      selectedRecord.publicador.publicador = await publicadores(
+        "publicador",
+        selectedRecord.publicador.revisita[0].Publicador
+      );
+      return selectedRecord;
+      break;
+    case "asignar":
+      selectedRecord.publicador.reserva = await contactos(
+        "reserva",
+        nombre,
+        refresh
+      );
+      selectedRecord.publicador.reservas = await contactos(
+        "reservas",
+        selectedRecord.publicador.publicador.nombre
+      );
+      break;
+    case "reservasResponsable":
+      selectedRecord.responsable.reservas = await contactos(
+        "reservasResponsable",
+        selectedRecord.responsable.responsable,
+        refresh
+      );
+      $("#tableres").bootstrapTable({
+        data: selectedRecord.responsable.reservas,
+      });
+      $("#tableres").bootstrapTable(
+        "load",
+        selectedRecord.responsable.reservas
+      );
+      break;
+    case "revisitasResponsable":
+      selectedRecord.responsable.revisitas = await revisitas(
+        "responsable",
+        selectedRecord.responsable.responsable,
+        refresh
+      );
+      $("#tableRevisitas").bootstrapTable({
+        data: selectedRecord.responsable.revisitas,
+      });
+      $("#tableRevisitas").bootstrapTable(
+        "load",
+        selectedRecord.responsable.revisitas
+      );
+      break;
+    case "publicadores":
+      var pubs = await publicadores(undefined, undefined, refresh);
+      var listpubs = "<option></option>";
+      var item;
 
-
+      $.each(pubs, function (key, value) {
+        if (value["Reservas"] > 0) {
+          item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
+        } else {
+          item = value["Nombre"];
+        }
+        listpubs +=
+          "<option value='" + value["Nombre"] + "''>" + item + "</option>";
+      });
+      $("#Publicador").empty();
+      $("#Publicador").append(listpubs);
+      break;
+    case "territorios":
+      var territorios = jsonata("$distinct($.Localidad)").evaluate(
+        await contactos(undefined, undefined, refresh)
+      );
+      var listterritorios = "<option>Indistinto</option>";
+      $.each(territorios, function (i) {
+        listterritorios += "<option>" + territorios[i] + "</option>";
+      });
+      $("#selZona").empty();
+      $("#selZona").append(listterritorios);
+      break;
+    default:
+      selectRecord("reservasResponsable", undefined, true);
+      selectRecord("revisitasResponsable", undefined, true);
+      selectRecord("publicadores", undefined, true);
+      responsables(undefined, undefined, true);
+      selectRecord("territorios");
+      break;
+  }
 }
-};
+
+function LinkFormatter(value, row, index) {
+  return (
+    "<button type='button' id='btnInformar" +
+    value +
+    "' data-informar='" +
+    value +
+    "' class='btn btn-primary' tel='" +
+    value +
+    "'>" +
+    value +
+    "</button>"
+  );
+}
+function LinkFormatterRevisita(value, row, index) {
+  return (
+    "<button type='button' id='btnRevisita" +
+    value +
+    "' data-revisita='" +
+    value +
+    "' class='btn btn-primary' tel='" +
+    value +
+    "'>" +
+    value +
+    "</button>"
+  );
+}
 
 async function fillPublicadores(background) {
   if (background != true) {
@@ -370,8 +466,6 @@ async function loadResp() {
   $("#cargando").modal("hide");
 }
 
-
-
 async function filterJson(background) {
   if (background != true) {
     $("#cargando").modal("show");
@@ -435,35 +529,6 @@ async function filterJson(background) {
   $("#cargando").modal("hide");
 }
 
-function LinkFormatter(value, row, index) {
-  //return "<a  class='btn btn-primary' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'><strong>" + value + "</strong></a>"
-  return (
-    "<button type='button' id='btnInformar" +
-    value +
-    "' data-informar='" +
-    value +
-    "' class='btn btn-primary' tel='" +
-    value +
-    "'>" +
-    value +
-    "</button>"
-  );
-}
-function LinkFormatterRevisita(value, row, index) {
-  //return "<a  class='btn btn-primary' role='button' href='javascript:win = window.open(&apos;informar.html?telefono=" + value + "&apos;);'><strong>" + value + "</strong></a>"
-  return (
-    "<button type='button' id='btnRevisita" +
-    value +
-    "' data-revisita='" +
-    value +
-    "' class='btn btn-primary' tel='" +
-    value +
-    "'>" +
-    value +
-    "</button>"
-  );
-}
-
 $(document).ready(function () {
   $("#spResponsable").text(resp);
   $("#contactos").click(function () {
@@ -517,7 +582,6 @@ $(document).ready(function () {
   $("#btnRefresh").click(function () {
     loadJson(true);
   });
-
 
   // $("button[name|='btnInformar']").click(function () {
   //   $("#modInformar").modal("show");
@@ -707,12 +771,11 @@ $(document).ready(function () {
   //-----INFORMAR RESERVA-----
   $(document).on("click", "button[data-informar]", async function () {
     $("#modInformar").modal("show");
-    await selectRecord("reserva",$(this).attr("data-informar"),true)
+    await selectRecord("reserva", $(this).attr("data-informar"), true);
     //$('#cargando').modal('show');
-var reserva = selectedRecord.publicador.reserva[0]
+    var reserva = selectedRecord.publicador.reserva[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-    
-    
+
     $("#informarTelefono").val(reserva.Telefono);
     $("#pInfomarTelefono").text(reserva.Telefono);
     $("#pInfomarPublicador").text(reserva.Publicador);
@@ -784,7 +847,7 @@ var reserva = selectedRecord.publicador.reserva[0]
     if ($("#formInformar")[0].checkValidity()) {
       $("#cargando").modal("show");
       $("#modInformar").modal("hide");
-      var reserva = selectedRecord.publicador.reserva[0]
+      var reserva = selectedRecord.publicador.reserva[0];
       var dataJson = {
         Telefono: reserva.Telefono,
         Localidad: reserva.Localidad,
@@ -812,62 +875,61 @@ var reserva = selectedRecord.publicador.reserva[0]
   });
   $("#btnInformarCloseSuccess").click(function () {
     //loadJson(true);
-    selectRecord("reservasResponsable",undefined,true);
+    selectRecord("reservasResponsable", undefined, true);
     $("#modInformarSuccess").modal("hide");
-    $("#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador,#fgInformarObservaciones").addClass("hidden");
+    $(
+      "#fgInformarFecha,#fgInformarTurno,#fgInformarPublicador,#fgInformarObservaciones"
+    ).addClass("hidden");
     $("#btnInformarEnviar").attr("disabled", true);
   });
 
+  //-----INFORMAR REVISITA-----
+  $(document).on("click", "button[data-revisita]", async function () {
+    $("#modRevisita").modal("show");
+    await selectRecord("revisita", $(this).attr("data-revisita"));
+    //$('#cargando').modal('show');
+    var revisita = selectedRecord.publicador.revisita[0];
+    //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 
- //-----INFORMAR REVISITA-----
- $(document).on("click", "button[data-revisita]", async function () {
-  $("#modRevisita").modal("show");
-  await selectRecord("revisita",$(this).attr("data-revisita"));
-  //$('#cargando').modal('show');
-var revisita = selectedRecord.publicador.revisita[0]
-  //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
-  
-  
- 
-  $("#pRevisitaTelefono").text(revisita.Telefono);
-  $("#pRevisitaPublicador").text(revisita.Publicador);
-  $("#pRevisitaResponsable").text(selectedRecord.responsable.responsable);
-  $("#pRevisitaDireccion").text(revisita.Direccion);
-  $("#pRevisitaLocalidad").text(revisita.Localidad);
-  //selpub = informarContacto["Publicador"];
+    $("#pRevisitaTelefono").text(revisita.Telefono);
+    $("#pRevisitaPublicador").text(revisita.Publicador);
+    $("#pRevisitaResponsable").text(selectedRecord.responsable.responsable);
+    $("#pRevisitaDireccion").text(revisita.Direccion);
+    $("#pRevisitaLocalidad").text(revisita.Localidad);
+    //selpub = informarContacto["Publicador"];
 
-  $("#btnRevisitaEnviar").attr("disabled", true);
-  $('input[name="radioRevisita"]').prop('checked', false);
+    $("#btnRevisitaEnviar").attr("disabled", true);
+    $('input[name="radioRevisita"]').prop("checked", false);
 
-  $("#cargando").modal("hide");
-});
-$('input[name="radioRevisita"]').change(function () {
-  console.log("changed");
-  $("#btnRevisitaEnviar").attr("disabled", false);
-});
+    $("#cargando").modal("hide");
+  });
+  $('input[name="radioRevisita"]').change(function () {
+    console.log("changed");
+    $("#btnRevisitaEnviar").attr("disabled", false);
+  });
 
-$("#btnRevisitaEnviar").click(async function () {
-  var revisita = selectedRecord.publicador.revisita[0];
-  var dataJson = {
-    Telefono: revisita.Telefono,
-    Localidad: revisita.Localidad,
-    Direccion: revisita.Direccion,
-    Fecha:  jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
-    Estado: "Atendió",
-    Publicador: revisita.Publicador,
-    Responsable: selectedRecord.responsable.responsable,
-    Observaciones: "",
-  };
-switch ($("input[name='radioRevisita']:checked").val()){
-case "radioRevisitaContinua":
-  dataJson.Estado = "Revisita";
-  dataJson.Observaciones = "Verificada continuidad de revisita";
-  break;
-  case "radioRevisitaFinaliza":
-    dataJson.Estado = "Atendió";
-    dataJson.Observaciones = "Fin de revisita";
-  break;
-}
+  $("#btnRevisitaEnviar").click(async function () {
+    var revisita = selectedRecord.publicador.revisita[0];
+    var dataJson = {
+      Telefono: revisita.Telefono,
+      Localidad: revisita.Localidad,
+      Direccion: revisita.Direccion,
+      Fecha: jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
+      Estado: "Atendió",
+      Publicador: revisita.Publicador,
+      Responsable: selectedRecord.responsable.responsable,
+      Observaciones: "",
+    };
+    switch ($("input[name='radioRevisita']:checked").val()) {
+      case "radioRevisitaContinua":
+        dataJson.Estado = "Revisita";
+        dataJson.Observaciones = "Verificada continuidad de revisita";
+        break;
+      case "radioRevisitaFinaliza":
+        dataJson.Estado = "Atendió";
+        dataJson.Observaciones = "Fin de revisita";
+        break;
+    }
     $("#cargando").modal("show");
     $("#modRevisita").modal("hide");
 
@@ -881,15 +943,14 @@ case "radioRevisitaContinua":
     }
 
     $("#cargando").modal("hide");
-
-});
-$("#btnRevisitaCloseSuccess").click(function () {
-  //loadJson(true);
-  selectRecord("revisitasResponsable",undefined,true);
-  $("#modRevisitaSuccess").modal("hide");
-  $("#btnRevisitaEnviar").attr("disabled", true);
-  $('input[name="radioRevisita"]').prop('checked', false);
-});
+  });
+  $("#btnRevisitaCloseSuccess").click(function () {
+    //loadJson(true);
+    selectRecord("revisitasResponsable", undefined, true);
+    $("#modRevisitaSuccess").modal("hide");
+    $("#btnRevisitaEnviar").attr("disabled", true);
+    $('input[name="radioRevisita"]').prop("checked", false);
+  });
 
   //loadJson(true);
   selectRecord();
