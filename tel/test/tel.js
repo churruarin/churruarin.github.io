@@ -274,12 +274,10 @@ async function selectRecord(tipo, nombre, refresh) {
         "reserva",
         nombre,
         true
-      );
-      selectedRecord.publicador.reservas = await contactos(
-        "reservasPublicador",
-        selectedRecord.publicador.publicador.nombre
+        
       );
 
+return selectedRecord.publicador.reserva[0]
 
 
       break;
@@ -472,52 +470,6 @@ var reservas = selectedRecord.publicador.reservas;
   return txtReservas
 }
 
-
-async function fillPublicadores(background) {
-  if (background != true) {
-    $("#cargando").modal("show");
-  }
-
-  pubs = await publicadores(undefined, undefined, true);
-
-  var listpubs = "<option></option>";
-  var item;
-
-  $.each(pubs, function (key, value) {
-    if (value["Reservas"] > 0) {
-      item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
-    } else {
-      item = value["Nombre"];
-    }
-    listpubs +=
-      "<option value='" + value["Nombre"] + "''>" + item + "</option>";
-  });
-  $("#Publicador").empty();
-  $("#Publicador").append(listpubs);
-  $("#ddResponsable").text(resp);
-  $("#cargando").modal("hide");
-}
-
-async function loadJson(background) {
-  if (background != true) {
-    $("#cargando").modal("show");
-  }
-  data = await contactos();
-  filterJson(background);
-  fillPublicadores(true);
-
-  territorios = jsonata("$distinct($.Localidad)").evaluate(data);
-  var listterritorios = "<option>Indistinto</option>";
-
-  $.each(territorios, function (i) {
-    listterritorios += "<option>" + territorios[i] + "</option>";
-  });
-
-  $("#selZona").empty();
-  $("#selZona").append(listterritorios);
-
-  $("#cargando").modal("hide");
-}
 
 async function loadContacto() {
   $("#cargando").modal("show");
@@ -745,7 +697,8 @@ $(document).ready(function () {
     $("#modConfirm").modal("hide");
     $("#modWarning").modal("hide");
     $("#cargando").modal("show");
-    var contacto = await loadContacto();
+    var localidad = ($("#selZona").val() != "Indistinto")? $("#selZona").val():undefined;
+    var contacto = await selectRecord("asignar", localidad, true);
     var dataJson = {
       Publicador: selectedRecord.publicador.publicador.Nombre,
       Telefono: contacto.Telefono,
@@ -760,7 +713,10 @@ $(document).ready(function () {
       // var link = await waLink(selectedPub["Nombre"],contacto);
       window.open(await waLink(selectedRecord.publicador.publicador.Nombre, contacto));
       //window.opener.postMessage('close', 'https://churruar.in');
+      $("#spSuccessPublicador").text(selectedRecord.publicador.publicador.Nombre);
+      $("#spSuccessTelefono").text(selectedRecord.publicador.reserva[0].Telefono);
       $("#modSuccess").modal("show");
+
     } else {
       alert("Ocurrió un error. Intentá enviarlo de nuevo.");
     }
