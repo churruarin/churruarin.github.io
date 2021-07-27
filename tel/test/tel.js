@@ -220,7 +220,7 @@ async function waLink(publicador, contacto, tipo) {
     "?text=" +
     encodeURIComponent(
       "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*" +
-        txtReservas +
+      selectedRecord.publicador.txtReservas +
         "\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
         contacto.Telefono +
         "*\nDirección: *" +
@@ -394,7 +394,9 @@ function LinkFormatterRevisita(value, row, index) {
 };
 
 async function reservaPrecheck(publicador) {
-await selectRecord("reservasPublicador",publicador,true);
+  $("#cargando").modal("show");
+  await selectRecord("reservasPublicador",publicador,true);
+  $("#cargando").modal("hide");
 var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
 
@@ -738,90 +740,7 @@ $(document).ready(function () {
     }
   });
 
-  function preSelect() {
-    selectedPub = jsonata(
-      "$[Nombre='" + $("#Publicador").val() + "']"
-    ).evaluate(pubs);
-    reservasPub = jsonata(
-      "[$[Publicador='" + $("#Publicador").val() + "']]"
-    ).evaluate(data);
-    maxminReservasPub = jsonata(
-      '$[Publicador="' +
-        $("#Publicador").val() +
-        '"]{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}'
-    ).evaluate(data);
-    var firstDays = maxminReservasPub["FirstDays"];
-    var numReservas = selectedPub["Reservas"];
-    txtReservas = jsonata(
-      '$[Publicador="' +
-        $("#Publicador").val() +
-        '"].("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
-    ).evaluate(data);
-    if (numReservas < limiteReservasMin) {
-      $("#spConfirmPub").text(selectedPub["Nombre"]);
-      $("#spConfirmResp").text(resp);
-      $("#modConfirm").modal("show");
-      txtReservas = "";
-    } else if (
-      numReservas >= limiteReservasMin &&
-      numReservas < limiteReservasMax
-    ) {
-      $("#cbWarningAdv").prop("checked", false);
-      $("#cbWarningMore").prop("checked", false);
-      $("#btnWarningEnviar").prop("disabled", true);
-      clearInterval(interval);
-      $("#divWarningAdv").addClass("hidden");
-      $("#spBtnWarningTimeout").text("");
-      $("#tableWarning").bootstrapTable({
-        data: reservasPub,
-      });
-      $("#tableWarning").bootstrapTable("load", reservasPub);
-      $("#modWarning").modal("show");
-      txtReservas =
-        "\n\n*ATENCIÓN*\nHay *" +
-        numReservas +
-        " números reservados a tu nombre que aún no han sido informados.*\n" +
-        txtReservas +
-        "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las " +
-        limiteReservasMax +
-        " reservas o pasan " +
-        tiempoMaxReservas +
-        " días ya no será posible enviarte más números. Gracias.";
-    } else if (firstDays > tiempoMaxReservas) {
-      $("#modInvalid").modal("show");
-      $("#pInvalid").text(
-        "El publicador tiene reservas sin informar por más de " +
-          tiempoMaxReservas +
-          " días."
-      );
-      txtReservas =
-        "*ATENCIÓN*\n\nHay *" +
-        numReservas +
-        " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
-        txtReservas +
-        "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
-      $("#tableInvalid").bootstrapTable({
-        data: reservasPub,
-      });
-      $("#tableInvalid").bootstrapTable("load", reservasPub);
-    } else if (numReservas >= limiteReservasMax) {
-      $("#modInvalid").modal("show");
-      $("#pInvalid").text(
-        "El publicador excedió el límite de " + limiteReservasMax + " reservas."
-      );
-      txtReservas =
-        "*ATENCIÓN*\n\nHay *" +
-        numReservas +
-        " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido el número de reservas, *no es posible asginarte más números.*\n" +
-        txtReservas +
-        "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
-      $("#tableInvalid").bootstrapTable({
-        data: reservasPub,
-      });
-      $("#tableInvalid").bootstrapTable("load", reservasPub);
-    }
-  }
-
+  
   $("#btnEnviar,#btnWarningEnviar").click(async function () {
     $("#modConfirm").modal("hide");
     $("#modWarning").modal("hide");
