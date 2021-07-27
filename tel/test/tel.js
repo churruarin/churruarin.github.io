@@ -39,6 +39,18 @@ const urlResponsables =
   "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
+  const urls = {
+    revisitas :
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+  contactos :
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+  publicadores :
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+  responsables :
+    "https://sheets.googleapis.com/v4/spreadsheets/1VGOPLJ19ms7Xi1NyLFE83cjAkq3OrffrwRjjxgcgSQ4/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc";
+  script :
+    "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec";
+  }
 var selectedRecord = {
   publicador: {
     publicador: {},
@@ -53,7 +65,7 @@ var allRecords = {publicadores:{},responsables:{},contactos:{},revisitas:{}};
 
 async function responsables(tipo, nombre, refresh) {
   if (refresh === true || typeof jsonResponsables === "undefined")
-    await $.getJSON(urlResponsables).done(function (jsonurl) {
+    await $.getJSON(urls.responsables).done(function (jsonurl) {
       jsonResponsables = jsonata('$.values.({"Nombre":$[0]})').evaluate(
         jsonurl
       );
@@ -63,7 +75,7 @@ async function responsables(tipo, nombre, refresh) {
 
 async function publicadores(tipo, nombre, refresh) {
   if (refresh === true || jQuery.isEmptyObject(allRecords.publicadores) === true)
-    await $.getJSON(urlPublicadores).done(function (jsonurl) {
+    await $.getJSON(urls.publicadores).done(function (jsonurl) {
       allRecords.publicadores = jsonata(
         '$.values.({"Nombre":$[0],"Grupo":$[1],"Tel":$[2],"Reservas":$number($[3])})'
       ).evaluate(jsonurl);
@@ -80,7 +92,7 @@ async function publicadores(tipo, nombre, refresh) {
 
 async function revisitas(tipo, nombre, refresh) {
   if (refresh === true || jQuery.isEmptyObject(allRecords.revisitas) === true)
-    await $.getJSON(urlRevisitas).done(function (jsonurl) {
+    await $.getJSON(urls.revisitas).done(function (jsonurl) {
       allRecords.revisitas = jsonata(
         '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})'
       ).evaluate(jsonurl);
@@ -108,7 +120,7 @@ async function revisitas(tipo, nombre, refresh) {
 
 async function contactos(tipo, nombre, refresh) {
   if (refresh === true || typeof jsonContactos === "undefined")
-    await $.getJSON(urlContactos).done(function (jsonurl) {
+    await $.getJSON(urls.contactos).done(function (jsonurl) {
       jsonContactos = jsonata(
         '$map($.values.({"Telefono":$[0], "Direccion":($[2]="Campaña celulares 2021"? ($eval($[1])) :$[1]), "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],' +
           '"Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),' +
