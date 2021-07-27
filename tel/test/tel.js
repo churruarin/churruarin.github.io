@@ -30,14 +30,14 @@ var tiempoMaxReservasResp = 60; //dias desde la reserva mas antigua para bloquea
 var reservasPub, txtReservas, maxminReservasPub, interval;
 var jsonRevisitas, jsonPublicadores, jsonResponsables, jsonContactos;
 const settings = {
-  limiteReservasMin : 1, //minimo de reservas sin restricciones
-  limiteReservasMax : 15, //máximo de reservas antes de bloquear
-  timeoutReservas : 5, //segundos de espera para hacer una reserva adicional
-  tiempoMinReservas : 2.5, //minutos minimos entre reservas
-  tiempoMaxReservas : 60, //dias desde la reserva mas antigua para bloquear un pub
-  limiteReservasRespMin : 10, //minimo de reservas sin restricciones
-  limiteReservasRespMax : 20, //máximo de reservas antes de bloquear
-  tiempoMaxReservasResp : 60 //dias desde la reserva mas antigua para bloquear un resp
+  limiteReservasMin: 1, //minimo de reservas sin restricciones
+  limiteReservasMax: 15, //máximo de reservas antes de bloquear
+  timeoutReservas: 5, //segundos de espera para hacer una reserva adicional
+  tiempoMinReservas: 2.5, //minutos minimos entre reservas
+  tiempoMaxReservas: 60, //dias desde la reserva mas antigua para bloquear un pub
+  limiteReservasRespMin: 10, //minimo de reservas sin restricciones
+  limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
+  tiempoMaxReservasResp: 60, //dias desde la reserva mas antigua para bloquear un resp
 };
 const urls = {
   revisitas:
@@ -164,6 +164,7 @@ async function contactos(tipo, nombre, refresh) {
         '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
       ).evaluate(jsonContactos);
       selectedRecord.publicador.reservas = contactos;
+      selectedRecord.publicador.reservasStats = jsonata('{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(contactos);
       break;
 
     case "reservasResponsable":
@@ -272,12 +273,15 @@ async function selectRecord(tipo, nombre, refresh) {
       selectedRecord.publicador.reserva = await contactos(
         "reserva",
         nombre,
-        refresh
+        true
       );
       selectedRecord.publicador.reservas = await contactos(
-        "reservas",
+        "reservasPublicador",
         selectedRecord.publicador.publicador.nombre
       );
+
+
+
       break;
     case "reservasResponsable":
       selectedRecord.responsable.reservas = await contactos(
@@ -357,7 +361,7 @@ function LinkFormatter(value, row, index) {
     value +
     "</button>"
   );
-}
+};
 function LinkFormatterRevisita(value, row, index) {
   return (
     "<button type='button' id='btnRevisita" +
@@ -370,7 +374,83 @@ function LinkFormatterRevisita(value, row, index) {
     value +
     "</button>"
   );
+};
+
+async function asignarContacto(publicador) {
+
+
+  var firstDays = maxminReservasPub["FirstDays"];
+  var numReservas = selectedPub["Reservas"];
+  txtReservas = jsonata(
+    '$[Publicador="' +
+      $("#Publicador").val() +
+      '"].("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
+  ).evaluate(data);
+  if (numReservas < limiteReservasMin) {
+    $("#spConfirmPub").text(selectedPub["Nombre"]);
+    $("#spConfirmResp").text(resp);
+    $("#modConfirm").modal("show");
+    txtReservas = "";
+  } else if (
+    numReservas >= limiteReservasMin &&
+    numReservas < limiteReservasMax
+  ) {
+    $("#cbWarningAdv").prop("checked", false);
+    $("#cbWarningMore").prop("checked", false);
+    $("#btnWarningEnviar").prop("disabled", true);
+    clearInterval(interval);
+    $("#divWarningAdv").addClass("hidden");
+    $("#spBtnWarningTimeout").text("");
+    $("#tableWarning").bootstrapTable({
+      data: reservasPub,
+    });
+    $("#tableWarning").bootstrapTable("load", reservasPub);
+    $("#modWarning").modal("show");
+    txtReservas =
+      "\n\n*ATENCIÓN*\nHay *" +
+      numReservas +
+      " números reservados a tu nombre que aún no han sido informados.*\n" +
+      txtReservas +
+      "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las " +
+      limiteReservasMax +
+      " reservas o pasan " +
+      tiempoMaxReservas +
+      " días ya no será posible enviarte más números. Gracias.";
+  } else if (firstDays > tiempoMaxReservas) {
+    $("#modInvalid").modal("show");
+    $("#pInvalid").text(
+      "El publicador tiene reservas sin informar por más de " +
+        tiempoMaxReservas +
+        " días."
+    );
+    txtReservas =
+      "*ATENCIÓN*\n\nHay *" +
+      numReservas +
+      " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
+      txtReservas +
+      "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+    $("#tableInvalid").bootstrapTable({
+      data: reservasPub,
+    });
+    $("#tableInvalid").bootstrapTable("load", reservasPub);
+  } else if (numReservas >= limiteReservasMax) {
+    $("#modInvalid").modal("show");
+    $("#pInvalid").text(
+      "El publicador excedió el límite de " + limiteReservasMax + " reservas."
+    );
+    txtReservas =
+      "*ATENCIÓN*\n\nHay *" +
+      numReservas +
+      " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido el número de reservas, *no es posible asginarte más números.*\n" +
+      txtReservas +
+      "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+    $("#tableInvalid").bootstrapTable({
+      data: reservasPub,
+    });
+    $("#tableInvalid").bootstrapTable("load", reservasPub);
+  }
 }
+
 
 async function fillPublicadores(background) {
   if (background != true) {
@@ -776,14 +856,10 @@ $(document).ready(function () {
     var reserva = selectedRecord.publicador.reserva[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 
-    $("#informarTelefono").val(reserva.Telefono);
     $("#pInfomarTelefono").text(reserva.Telefono);
     $("#pInfomarPublicador").text(reserva.Publicador);
     $("#pInformarResponsable").text(selectedRecord.responsable.responsable);
-    $("#informarResponsable").val(selectedRecord.responsable.responsable);
-    $("#informarDireccion").val(reserva.Direccion);
     $("#pInformarDireccion").text(reserva.Direccion);
-    $("#informarLocalidad").val(reserva.Localidad);
     $("#pInformarLocalidad").text(reserva.Localidad);
     //selpub = informarContacto["Publicador"];
     var fechaHoy = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
