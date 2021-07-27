@@ -49,6 +49,7 @@ var selectedRecord = {
   },
   responsable: { responsable: Cookies.get("responsable"), reservas: {}, revisitas: {} },
 };
+var allRecords = {publicadores:{},responsables:{},contactos:{},revisitas:{}};
 
 async function responsables(tipo, nombre, refresh) {
   if (refresh === true || typeof jsonResponsables === "undefined")
@@ -80,26 +81,24 @@ async function publicadores(tipo, nombre, refresh) {
 async function revisitas(tipo, nombre, refresh) {
   if (refresh === true || typeof jsonRevisitas === "undefined")
     await $.getJSON(urlRevisitas).done(function (jsonurl) {
-      jsonRevisitas = jsonata(
+      allRecords.revisitas = jsonata(
         '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})'
       ).evaluate(jsonurl);
     });
-  revi = jsonRevisitas;
+  revi = allRecords.revisitas;
   switch (tipo) {
     case "responsable":
       revi = jsonata('[$[Responsable="' + nombre + '"]]').evaluate(
-        jsonRevisitas
+        allRecords.revisitas
       );
-      selectedRecord.responsable.revisitas = revi;
       break;
     case "publicador":
       revi = jsonata('[$[Publicador="' + nombre + '"]]').evaluate(
-        jsonRevisitas
+        allRecords.revisitas
       );
-      selectedRecord.publicador.revisitas = revi;
       break;
     case "revisita":
-      revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(jsonRevisitas);
+      revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(allRecords.revisitas);
       
       break;
   }
