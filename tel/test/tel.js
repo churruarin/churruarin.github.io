@@ -254,11 +254,21 @@ case "asignar":
     $("#Publicador").empty();
     $("#Publicador").append(listpubs);
     break;
+    case "territorios":
+      var territorios = jsonata("$distinct($.Localidad)").evaluate(await contactos(undefined,undefined,refresh));
+  var listterritorios = "<option>Indistinto</option>";
+  $.each(territorios, function (i) {
+    listterritorios += "<option>" + territorios[i] + "</option>";
+  });
+  $("#selZona").empty();
+  $("#selZona").append(listterritorios);
+      break;
   default:
-    await selectRecord("reservasResponsable",undefined,true);
-    await selectRecord("revisitasResponsable",undefined,true);
-    await selectRecord("publicadores",undefined,true);
-    await responsables(undefined,undefined,true);
+    selectRecord("reservasResponsable",undefined,true);
+    selectRecord("revisitasResponsable",undefined,true);
+    selectRecord("publicadores",undefined,true);
+    responsables(undefined,undefined,true);
+    selectRecord("territorios");
     break;
   
 
