@@ -212,10 +212,10 @@ switch (tipo) {
     selectedRecord.publicador.publicador = await publicadores("publicador",selectedRecord.publicador.reserva[0].Publicador,refresh);
 return selectedRecord;
     break;
-    case "revisita":
+case "revisita":
       selectedRecord.publicador.revisita = await revisitas("revisita",nombre,refresh);
-      selectedRecord.publicador.revisita = await revisitas("revisita",selectedRecord.publicador.revisita[0].Publicador);
-      selectedRecord.publicador.publicador = await publicadores("publicador",selectedRecord.publicador.revisita[0].Publicador,refresh);
+      selectedRecord.publicador.revisitas = await revisitas("revisitas",selectedRecord.publicador.revisita[0].Publicador);
+      selectedRecord.publicador.publicador = await publicadores("publicador",selectedRecord.publicador.revisita[0].Publicador);
       return selectedRecord;
           break;
 case "asignar":
@@ -779,7 +779,7 @@ var reserva = selectedRecord.publicador.reserva[0]
  //-----INFORMAR REVISITA-----
  $(document).on("click", "button[data-revisita]", async function () {
   $("#modRevisita").modal("show");
-  await selectRecord("revisita",$(this).attr("data-revisita"),true)
+  await selectRecord("revisita",$(this).attr("data-revisita"))
   //$('#cargando').modal('show');
 var revisita = selectedRecord.publicador.revisita[0]
   //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
