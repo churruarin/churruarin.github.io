@@ -778,7 +778,7 @@ var reserva = selectedRecord.publicador.reserva[0]
 
  //-----INFORMAR REVISITA-----
  $(document).on("click", "button[data-revisita]", async function () {
-  $("#modInformar").modal("show");
+  $("#modRevisita").modal("show");
   await selectRecord("revisita",$(this).attr("data-revisita"),true)
   //$('#cargando').modal('show');
 var revisita = selectedRecord.publicador.revisita[0]
