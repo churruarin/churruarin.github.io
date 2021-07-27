@@ -156,13 +156,13 @@ async function contactos(tipo, nombre, refresh) {
       }
       contactos = jsonata(
         '$shuffle($[Respuesta!="Reservado"]' + localidad + ")[0]"
-      ).evaluate(jsonContactos);
+      ).evaluate(allRecords.contactos);
 
       break;
     case "reservasPublicador":
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
-      ).evaluate(jsonContactos);
+      ).evaluate(allRecords.contactos);
       selectedRecord.publicador.reservas = contactos;
       selectedRecord.publicador.reservasStats = jsonata('{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(contactos);
       break;
@@ -170,13 +170,13 @@ async function contactos(tipo, nombre, refresh) {
     case "reservasResponsable":
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
-      ).evaluate(jsonContactos);
+      ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
     case "reserva":
       contactos = jsonata(
         '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
-      ).evaluate(jsonContactos);
+      ).evaluate(allRecords.contactos);
 
       break;
     default:
@@ -297,6 +297,23 @@ async function selectRecord(tipo, nombre, refresh) {
         selectedRecord.responsable.reservas
       );
       break;
+      case "reservasPublicador":
+        selectedRecord.publicador.reservas = await contactos(
+          "reservasPublicador",
+          nombre,
+          refresh
+        );
+        await selectRecord("publicador","nombre");
+
+        break;
+        case "publicador":
+          selectedRecord.publicador.publicador = await publicadores(
+            "publicador",
+            nombre,
+            refresh
+          );
+  
+          break;        
     case "revisitasResponsable":
       selectedRecord.responsable.revisitas = await revisitas(
         "responsable",
@@ -376,24 +393,22 @@ function LinkFormatterRevisita(value, row, index) {
   );
 };
 
-async function asignarContacto(publicador) {
-
-
-  var firstDays = maxminReservasPub["FirstDays"];
-  var numReservas = selectedPub["Reservas"];
-  txtReservas = jsonata(
-    '$[Publicador="' +
-      $("#Publicador").val() +
-      '"].("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
-  ).evaluate(data);
-  if (numReservas < limiteReservasMin) {
+async function prepararReserva(publicador) {
+selectRecord("reservasPublicador",publicador,true)
+var reservas = selectedRecord.publicador.reservas
+  var stats = selectedRecord.publicador.reservasStats
+  var numReservas = reservas.lenght;
+  var txtReservas = jsonata(
+    '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
+  ).evaluate(reservas);
+  if (numReservas < settings.limiteReservasMin) {
     $("#spConfirmPub").text(selectedPub["Nombre"]);
     $("#spConfirmResp").text(resp);
     $("#modConfirm").modal("show");
     txtReservas = "";
   } else if (
-    numReservas >= limiteReservasMin &&
-    numReservas < limiteReservasMax
+    numReservas >= settings.limiteReservasMin &&
+    numReservas < settings.limiteReservasMax
   ) {
     $("#cbWarningAdv").prop("checked", false);
     $("#cbWarningMore").prop("checked", false);
@@ -402,9 +417,9 @@ async function asignarContacto(publicador) {
     $("#divWarningAdv").addClass("hidden");
     $("#spBtnWarningTimeout").text("");
     $("#tableWarning").bootstrapTable({
-      data: reservasPub,
+      data: reservas,
     });
-    $("#tableWarning").bootstrapTable("load", reservasPub);
+    $("#tableWarning").bootstrapTable("load", reservas);
     $("#modWarning").modal("show");
     txtReservas =
       "\n\n*ATENCIÓN*\nHay *" +
@@ -412,15 +427,15 @@ async function asignarContacto(publicador) {
       " números reservados a tu nombre que aún no han sido informados.*\n" +
       txtReservas +
       "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las " +
-      limiteReservasMax +
+      settings.limiteReservasMax +
       " reservas o pasan " +
-      tiempoMaxReservas +
+      settings.tiempoMaxReservas +
       " días ya no será posible enviarte más números. Gracias.";
-  } else if (firstDays > tiempoMaxReservas) {
+  } else if (stats.firstDays > settings.tiempoMaxReservas) {
     $("#modInvalid").modal("show");
     $("#pInvalid").text(
       "El publicador tiene reservas sin informar por más de " +
-        tiempoMaxReservas +
+      settings.tiempoMaxReservas +
         " días."
     );
     txtReservas =
@@ -430,13 +445,13 @@ async function asignarContacto(publicador) {
       txtReservas +
       "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
     $("#tableInvalid").bootstrapTable({
-      data: reservasPub,
+      data: reservas,
     });
-    $("#tableInvalid").bootstrapTable("load", reservasPub);
-  } else if (numReservas >= limiteReservasMax) {
+    $("#tableInvalid").bootstrapTable("load", reservas);
+  } else if (numReservas >= settings.limiteReservasMax) {
     $("#modInvalid").modal("show");
     $("#pInvalid").text(
-      "El publicador excedió el límite de " + limiteReservasMax + " reservas."
+      "El publicador excedió el límite de " + settings.limiteReservasMax + " reservas."
     );
     txtReservas =
       "*ATENCIÓN*\n\nHay *" +
@@ -445,10 +460,11 @@ async function asignarContacto(publicador) {
       txtReservas +
       "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
     $("#tableInvalid").bootstrapTable({
-      data: reservasPub,
+      data: reservas,
     });
-    $("#tableInvalid").bootstrapTable("load", reservasPub);
+    $("#tableInvalid").bootstrapTable("load", reservas);
   }
+  return txtReservas
 }
 
 
