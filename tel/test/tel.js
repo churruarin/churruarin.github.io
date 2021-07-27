@@ -397,7 +397,8 @@ async function reservaPrecheck(publicador) {
 await selectRecord("reservasPublicador",publicador,true);
 var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
-  var numReservas = reservas.lenght;
+
+  var numReservas = reservas.length;
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
   ).evaluate(reservas);
@@ -464,6 +465,8 @@ var reservas = selectedRecord.publicador.reservas;
     });
     $("#tableInvalid").bootstrapTable("load", reservas);
   }
+  selectedRecord.publicador.txtReservas = txtReservas;
+
   return txtReservas
 }
 
@@ -694,9 +697,9 @@ $(document).ready(function () {
     $("#selResponsable").val(resp);
   });
 
-  $("#btnSelect").click(function () {
+  $("#btnSelect").click(async function () {
     if ($("#formres")[0].checkValidity()) {
-      reservaPrecheck( $("#Publicador").val());
+      await reservaPrecheck( $("#Publicador").val());
     } else {
       $("#formres").find("#submit-hidden").click();
     }
