@@ -232,6 +232,10 @@ case "asignar":
     $("#tableRevisitas").bootstrapTable({data: selectedRecord.responsable.revisitas});
     $("#tableRevisitas").bootstrapTable("load", selectedRecord.responsable.revisitas);
   break;
+  default:
+    await selectRecord("reservasResponsable",undefined,true);
+    await selectRecord("revisitasResponsable",undefined,true);
+    break;
   
 
 
