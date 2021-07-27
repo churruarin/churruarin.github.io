@@ -204,9 +204,9 @@ async function submit(dataJson) {
 }
 
 async function waLink(publicador, contacto, tipo) {
-  var selpubtel = await publicadores(undefined, publicador);
+ // var selpubtel = await publicadores(undefined, publicador);
 
-  selpubtel = selpubtel.Tel;
+  selpubtel = selectedRecord.publicador.publicador.Tel;
 
   var link;
   if (selpubtel) {
@@ -747,18 +747,18 @@ $(document).ready(function () {
     $("#cargando").modal("show");
     var contacto = await loadContacto();
     var dataJson = {
-      Publicador: selectedPub["Nombre"],
+      Publicador: selectedRecord.publicador.publicador.Nombre,
       Telefono: contacto.Telefono,
       Localidad: contacto.Localidad,
       Direccion: contacto.Direccion,
       Fecha: jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate(),
       Estado: "Reservado",
-      Responsable: resp,
+      Responsable: selectedRecord.responsable.responsable,
       Observaciones: "",
     };
     if (await submit(dataJson)) {
       // var link = await waLink(selectedPub["Nombre"],contacto);
-      window.open(await waLink(selectedPub["Nombre"], contacto));
+      window.open(await waLink(selectedRecord.publicador.publicador.Nombre, contacto));
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#modSuccess").modal("show");
     } else {
