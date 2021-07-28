@@ -49,6 +49,9 @@ var selectedRecord = {
     reserva: {},
     revisitas: {},
     reservas: {},
+    dataReservas: {
+      interval : undefined
+    }
   },
   responsable: {
     responsable: Cookies.get("responsable"),
@@ -502,7 +505,7 @@ function reservaDisplay(tipo){
         $("#cbWarningAdv").prop("checked", false);
         $("#cbWarningMore").prop("checked", false);
         $("#btnWarningEnviar").prop("disabled", true);
-        clearInterval(interval);
+        clearInterval(selectedRecord.publicador.dataReservas.interval);
         $("#divWarningAdv").addClass("hidden");
         $("#spBtnWarningTimeout").text("");
         $("#tableWarning").bootstrapTable({
@@ -541,6 +544,7 @@ function reservaDisplay(tipo){
 async function reservaPrecheck(publicador) {
   $("#cargando").modal("show");
   await selectRecord("reservasPublicador", publicador, true);
+  var reservas = selectedRecord.publicador.reservas;
   $("#cargando").modal("hide");
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
@@ -651,7 +655,7 @@ $(document).ready(function () {
     if (this.checked) {
       var counter = settings.timeoutReservas;
 
-      interval = setInterval(function () {
+      selectedRecord.publicador.dataReservas.interval = setInterval(function () {
         counter--;
         $("#spBtnWarningTimeout").text("(" + counter + ")");
         // Display 'counter' wherever you want to display it.
@@ -659,7 +663,7 @@ $(document).ready(function () {
           // Display a login box
           $("#btnWarningEnviar").prop("disabled", false);
           $("#spBtnWarningTimeout").text("");
-          clearInterval(interval);
+          clearInterval(selectedRecord.publicador.dataReservas.interval);
         }
       }, 1000);
     } else {
