@@ -133,7 +133,7 @@ async function revisitas(tipo, nombre, refresh) {
 }
 
 async function contactos(tipo, nombre, refresh) {
-  if (refresh === true || jQuery.isEmptyObject(allRecords.contactos) === true)
+  if (refresh == true || jQuery.isEmptyObject(allRecords.contactos) === true)
     await $.getJSON(urls.contactos).done(function (jsonurl) {
       allRecords.contactos = jsonata(
         '$map($.values.({"Telefono":$[0], "Direccion":($[2]="Campaña celulares 2021"? ($eval($[1])) :$[1]), "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],' +
@@ -327,7 +327,7 @@ async function selectRecord(tipo, nombre, refresh) {
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
       };
-selectRecord("publicadores",undefined,false);
+await selectRecord("publicadores",undefined,false);
 
       break;
     case "reservasPublicador":
