@@ -240,11 +240,11 @@ async function selectRecord(tipo, nombre, refresh) {
       );
       selectedRecord.publicador.reservas = await contactos(
         "reservasPublicador",
-        selectedRecord.publicador.reserva[0].Publicador
+        selectedRecord.publicador.reserva.Publicador
       );
       selectedRecord.publicador.publicador = await publicadores(
         "publicador",
-        selectedRecord.publicador.reserva[0].Publicador,
+        selectedRecord.publicador.reserva.Publicador,
         refresh
       );
       return selectedRecord;
