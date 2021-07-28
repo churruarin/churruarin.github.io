@@ -112,17 +112,17 @@ async function revisitas(tipo, nombre, refresh) {
   revi = allRecords.revisitas;
   switch (tipo) {
     case "responsable":
-      revi = jsonata('$[Responsable="' + nombre + '"]').evaluate(
+      revi = jsonata('[$[Responsable="' + nombre + '"]]').evaluate(
         allRecords.revisitas
       );
       break;
     case "publicador":
-      revi = jsonata('$[Publicador="' + nombre + '"]').evaluate(
+      revi = jsonata('[$[Publicador="' + nombre + '"]]').evaluate(
         allRecords.revisitas
       );
       break;
     case "revisita":
-      revi = jsonata('$[Telefono="' + nombre + '"]').evaluate(
+      revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(
         allRecords.revisitas
       );
 
@@ -158,7 +158,7 @@ async function contactos(tipo, nombre, refresh) {
       break;
     case "reservasPublicador":
       contactos = jsonata(
-        '$[Respuesta="Reservado"][Publicador="' + nombre + '"]'
+        '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
       ).evaluate(allRecords.contactos);
       selectedRecord.publicador.reservas = contactos;
       selectedRecord.publicador.reservasStats = jsonata('{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(contactos);
@@ -166,13 +166,13 @@ async function contactos(tipo, nombre, refresh) {
 
     case "reservasResponsable":
       contactos = jsonata(
-        '$[Respuesta="Reservado"][Responsable="' + nombre + '"]'
+        '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
       ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
     case "reserva":
       contactos = jsonata(
-        '$[Respuesta="Reservado"][Telefono="' + nombre + '"]'
+        '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
       ).evaluate(allRecords.contactos);
 
       break;
@@ -240,11 +240,11 @@ async function selectRecord(tipo, nombre, refresh) {
       );
       selectedRecord.publicador.reservas = await contactos(
         "reservasPublicador",
-        selectedRecord.publicador.reserva.Publicador
+        selectedRecord.publicador.reserva[0].Publicador
       );
       selectedRecord.publicador.publicador = await publicadores(
         "publicador",
-        selectedRecord.publicador.reserva.Publicador,
+        selectedRecord.publicador.reserva[0].Publicador,
         refresh
       );
       return selectedRecord;
@@ -258,7 +258,7 @@ async function selectRecord(tipo, nombre, refresh) {
 
       selectedRecord.publicador.publicador = await publicadores(
         "publicador",
-        selectedRecord.publicador.revisita.Publicador
+        selectedRecord.publicador.revisita[0].Publicador
       );
       selectedRecord.publicador.revisitas = await revisitas(
         "publicador",
@@ -284,13 +284,12 @@ async function selectRecord(tipo, nombre, refresh) {
         selectedRecord.responsable.responsable,
         refresh
       );
-      var t = jsonata("[$]").evaluate(selectedRecord.responsable.reservas);
       $("#tableres").bootstrapTable({
-        data: t,
+        data: selectedRecord.responsable.reservas,
       });
       $("#tableres").bootstrapTable(
         "load",
-        t
+        selectedRecord.responsable.reservas
       );
 
       var reservasCount = selectedRecord.responsable.reservas.length
@@ -434,10 +433,10 @@ function LinkFormatterRevisita(value, row, index) {
     "</button>"
   );
 };
-async function generarMensaje(tipo) {
+async function generarMensaje(tipo){
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
-var contacto = selectedRecord.publicador.reserva;
+var contacto = selectedRecord.publicador.reserva[0];
   var numReservas = reservas.length;
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
@@ -748,7 +747,7 @@ $(document).ready(function () {
     $("#modInformar").modal("show");
     await selectRecord("reserva", $(this).attr("data-informar"), true);
     //$('#cargando').modal('show');
-    var reserva = selectedRecord.publicador.reserva;
+    var reserva = selectedRecord.publicador.reserva[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 
     $("#pInfomarTelefono").text(reserva.Telefono);
@@ -818,7 +817,7 @@ $(document).ready(function () {
     if ($("#formInformar")[0].checkValidity()) {
       $("#cargando").modal("show");
       $("#modInformar").modal("hide");
-      var reserva = selectedRecord.publicador.reserva;
+      var reserva = selectedRecord.publicador.reserva[0];
       var dataJson = {
         Telefono: reserva.Telefono,
         Localidad: reserva.Localidad,
@@ -859,7 +858,7 @@ $(document).ready(function () {
     $("#modRevisita").modal("show");
     await selectRecord("revisita", $(this).attr("data-revisita"));
     //$('#cargando').modal('show');
-    var revisita = selectedRecord.publicador.revisita;
+    var revisita = selectedRecord.publicador.revisita[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 
     $("#pRevisitaTelefono").text(revisita.Telefono);
@@ -878,10 +877,9 @@ $(document).ready(function () {
     console.log("changed");
     $("#btnRevisitaEnviar").attr("disabled", false);
   });
-  $("#btnRevisitaReenviar").click(async function () {
-    // window.open(await waLink(await generarMensaje(await reservaPrecheck(selectedRecord.publicador.publicador.Nombre))));
-    window.open(await waLink(await generarMensaje("revisitas")));
-  });
+  //$("#btnInformarReenviar").click(function () {
+  //  window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva,"revisitas")));
+  //});
   $("#btnRevisitaEnviar").click(async function () {
     var revisita = selectedRecord.publicador.revisita[0];
     var dataJson = {
