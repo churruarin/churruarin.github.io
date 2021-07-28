@@ -284,12 +284,13 @@ async function selectRecord(tipo, nombre, refresh) {
         selectedRecord.responsable.responsable,
         refresh
       );
+      var t = jsonata("[$]").evaluate(selectedRecord.responsable.reservas);
       $("#tableres").bootstrapTable({
-        data: jsonata("[$]").evaluate(selectedRecord.responsable.reservas),
+        data: t,
       });
       $("#tableres").bootstrapTable(
         "load",
-        jsonata("[$]").evaluate(selectedRecord.responsable.reservas)
+        t
       );
 
       var reservasCount = selectedRecord.responsable.reservas.length
