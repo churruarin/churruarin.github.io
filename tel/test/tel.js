@@ -50,7 +50,8 @@ var selectedRecord = {
     revisitas: {},
     reservas: {},
     dataReservas: {
-      interval : undefined
+      interval : undefined,
+      tipoReserva : undefined
     }
   },
   responsable: {
@@ -199,7 +200,7 @@ async function submit(dataJson) {
   return respuesta;
 }
 
-async function waLink(contacto, texto) {
+async function waLink(texto) {
   // var selpubtel = await publicadores(undefined, publicador);
 
   selpubtel = selectedRecord.publicador.publicador.Tel;
@@ -434,7 +435,7 @@ function LinkFormatterRevisita(value, row, index) {
 async function generarMensaje(tipo){
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
-
+var contacto = selectedRecord.publicador.reserva;
   var numReservas = reservas.length;
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
@@ -475,6 +476,7 @@ case "reservaBlockedDays":
 case "revisitas":
   break;
   };
+  if (tipo == "revisita") {} else {
   var reservaBody =
   "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*" +
   txtReservas +
@@ -487,7 +489,8 @@ case "revisitas":
   "*\nRespuesta a la última llamada: *" +
   contacto.Respuesta +
   "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio.  \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.";
-
+return reservaBody  
+};
 
 
 
@@ -497,7 +500,7 @@ function reservaDisplay(tipo){
   var reservas = selectedRecord.publicador.reservas;
   switch (tipo) {
     case "reserva":
-      $("#spConfirmPub").text(selectedRecord.publicador.publicador.nombre);
+      $("#spConfirmPub").text(selectedRecord.publicador.publicador.Nombre);
       $("#spConfirmResp").text(selectedRecord.responsable.responsable);
       $("#modConfirm").modal("show");
       break;
@@ -565,8 +568,8 @@ async function reservaPrecheck(publicador) {
   } else if (numReservas >= settings.limiteReservasMax) {
 
     tipo="reservaBlockedNumber";
-  }
-
+  };
+selectedRecord.publicador.dataReservas.tipoReserva = tipo;
 
   return tipo
 }
@@ -690,7 +693,7 @@ $(document).ready(function () {
     };
     if (await submit(dataJson)) {
       // var link = await waLink(selectedPub["Nombre"],contacto);
-      window.open(await waLink(selectedRecord.publicador.publicador.Nombre, contacto));
+      window.open(await waLink(generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#spSuccessPublicador").text(selectedRecord.publicador.publicador.Nombre);
       $("#spSuccessTelefono").text(selectedRecord.publicador.reserva.Telefono);
