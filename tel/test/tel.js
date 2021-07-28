@@ -433,7 +433,7 @@ function LinkFormatterRevisita(value, row, index) {
     "</button>"
   );
 };
-async function generarMensaje(tipo){
+async function generarMensaje(tipo) {
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
 var contacto = selectedRecord.publicador.reserva;
@@ -877,7 +877,7 @@ $(document).ready(function () {
     console.log("changed");
     $("#btnRevisitaEnviar").attr("disabled", false);
   });
-  $("#btnRevisitaReenviar").click(function () {
+  $("#btnRevisitaReenviar").click(async function () {
     // window.open(await waLink(await generarMensaje(await reservaPrecheck(selectedRecord.publicador.publicador.Nombre))));
    // window.open(await waLink(await generarMensaje("revisitas")));
   });
