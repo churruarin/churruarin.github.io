@@ -689,7 +689,8 @@ $(document).ready(function () {
     $("#modWarning").modal("hide");
     $("#cargando").modal("show");
     var localidad = ($("#selZona").val() != "Indistinto") ? $("#selZona").val() : undefined;
-    var contacto = await selectRecord("asignar", localidad, true)[0];
+    var contacto = await selectRecord("asignar", localidad, true);
+    contacto = contacto[0]
     var dataJson = {
       Publicador: selectedRecord.publicador.publicador.Nombre,
       Telefono: contacto.Telefono,
