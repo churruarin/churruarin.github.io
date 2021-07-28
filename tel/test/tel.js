@@ -63,6 +63,7 @@ var selectedRecord = {
     responsable: Cookies.get("responsable"),
     reservas: {},
     revisitas: {},
+    reservasStats:{}
   },
   territorio: Cookies.get("zona"),
 };
