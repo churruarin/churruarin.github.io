@@ -436,7 +436,7 @@ function LinkFormatterRevisita(value, row, index) {
 async function generarMensaje(tipo){
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
-var contacto = selectedRecord.publicador.reserva;
+var contacto = selectedRecord.publicador.reserva[0];
   var numReservas = reservas.length;
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
@@ -553,9 +553,9 @@ function reservaDisplay(tipo){
   }
 }
 
-async function reservaPrecheck(publicador) {
+async function reservaPrecheck(publicador,refresh) {
   $("#cargando").modal("show");
-  await selectRecord("reservasPublicador", publicador, true);
+  await selectRecord("reservasPublicador", publicador, refresh);
   var reservas = selectedRecord.publicador.reservas;
   $("#cargando").modal("hide");
   var reservas = selectedRecord.publicador.reservas;
@@ -651,7 +651,7 @@ $(document).ready(function () {
   });
 
   $("#btnSelect").click(async function () {
-   reservaDisplay( await reservaPrecheck($("#Publicador").val()))
+   reservaDisplay( await reservaPrecheck($("#Publicador").val()),true)
   });
 
   $("#cbWarningMore").change(function () {
@@ -715,7 +715,7 @@ $(document).ready(function () {
   });
 
  $("#btnInformarReenviar,#btnReenviarwa").click(async function () {
-    window.open(await waLink(await generarMensaje(reservaPrecheck(selectedRecord.publicador.publicador.Nombre))));
+    window.open(await waLink(await generarMensaje(await reservaPrecheck(selectedRecord.publicador.publicador.Nombre))));
   });
   
   $("#btnCloseSuccess").click(function () {
