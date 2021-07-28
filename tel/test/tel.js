@@ -879,7 +879,7 @@ $(document).ready(function () {
   });
   $("#btnRevisitaReenviar").click(function () {
     // window.open(await waLink(await generarMensaje(await reservaPrecheck(selectedRecord.publicador.publicador.Nombre))));
-    window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva,"revisitas")));
+    window.open(await waLink(await generarMensaje("revisitas")));
   });
   $("#btnRevisitaEnviar").click(async function () {
     var revisita = selectedRecord.publicador.revisita[0];
