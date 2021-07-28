@@ -152,7 +152,7 @@ async function contactos(tipo, nombre, refresh) {
         localidad = '[Localidad="' + nombre + '"]';
       }
       contactos = jsonata(
-        '$shuffle($[Respuesta!="Reservado"]' + localidad + ")[0]"
+        '[$shuffle($[Respuesta!="Reservado"]' + localidad + ")[0]]"
       ).evaluate(allRecords.contactos);
 
       break;
