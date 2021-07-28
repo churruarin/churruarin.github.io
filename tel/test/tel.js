@@ -271,7 +271,7 @@ async function selectRecord(tipo, nombre, refresh) {
       break;
     case "asignar":
       selectedRecord.publicador.reserva = await contactos(
-        "reserva",
+        "asignar",
         nombre,
         true
         
