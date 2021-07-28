@@ -715,7 +715,7 @@ $(document).ready(function () {
   });
 
  $("#btnInformarReenviar,#btnReenviarwa").click(async function () {
-  //  window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
+    window.open(await waLink(await generarMensaje(reservaPrecheck(selectedRecord.publicador.publicador.Nombre))));
   });
   
   $("#btnCloseSuccess").click(function () {
