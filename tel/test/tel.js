@@ -411,6 +411,13 @@ async function selectRecord(tipo, nombre, refresh) {
       selectRecord("publicadores", undefined, true);
       responsables(undefined, undefined, true);
       selectRecord("territorios");
+      if (selectedRecord.responsable.responsable === undefined) {
+        await selectRecord("responsables");
+        $("#modResponsable").modal("show");
+      } else {
+        $("#spResponsable").text(selectedRecord.responsable.responsable);
+        $("#selResponsable").val(selectedRecord.responsable.responsable);
+      }
       break;
   }
 }
@@ -564,13 +571,7 @@ $(document).ready(function () {
 
   $("#spResponsable").text(selectedRecord.responsable.responsable);
 
-  if (selectedRecord.responsable.responsable === undefined) {
-    await selectRecord("responsables");
-    $("#modResponsable").modal("show");
-  } else {
-    $("#spResponsable").text(selectedRecord.responsable.responsable);
-    $("#selResponsable").val(selectedRecord.responsable.responsable);
-  }
+
   $("#btnResponsable").click(function () {
     if ($("#formresp")[0].checkValidity()) {
       selectedRecord.responsable.responsable = $("#selResponsable").find(":selected").text();
