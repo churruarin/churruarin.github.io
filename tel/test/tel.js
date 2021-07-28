@@ -706,7 +706,7 @@ $(document).ready(function () {
   });
 
   $("#btnReenviarwa").click(function () {
-    getWAlink();
+    window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
   });
   $("#btnCloseSuccess").click(function () {
     selectRecord("reservasResponsable", undefined, true);
