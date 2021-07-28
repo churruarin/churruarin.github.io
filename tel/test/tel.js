@@ -158,7 +158,7 @@ async function contactos(tipo, nombre, refresh) {
       break;
     case "reservasPublicador":
       contactos = jsonata(
-        '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
+        '$[Respuesta="Reservado"][Publicador="' + nombre + '"]'
       ).evaluate(allRecords.contactos);
       selectedRecord.publicador.reservas = contactos;
       selectedRecord.publicador.reservasStats = jsonata('{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(contactos);
@@ -166,13 +166,13 @@ async function contactos(tipo, nombre, refresh) {
 
     case "reservasResponsable":
       contactos = jsonata(
-        '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
+        '$[Respuesta="Reservado"][Responsable="' + nombre + '"]'
       ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
     case "reserva":
       contactos = jsonata(
-        '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
+        '$[Respuesta="Reservado"][Telefono="' + nombre + '"]'
       ).evaluate(allRecords.contactos);
 
       break;
@@ -436,7 +436,7 @@ function LinkFormatterRevisita(value, row, index) {
 async function generarMensaje(tipo){
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
-var contacto = selectedRecord.publicador.reserva[0];
+var contacto = selectedRecord.publicador.reserva;
   var numReservas = reservas.length;
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
