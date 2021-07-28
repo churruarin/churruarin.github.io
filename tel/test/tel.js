@@ -239,7 +239,7 @@ async function selectRecord(tipo, nombre, refresh) {
         refresh
       );
       selectedRecord.publicador.reservas = await contactos(
-        "reservas",
+        "reservasPublicador",
         selectedRecord.publicador.reserva[0].Publicador
       );
       selectedRecord.publicador.publicador = await publicadores(
@@ -327,7 +327,7 @@ async function selectRecord(tipo, nombre, refresh) {
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
       };
-await selectRecord("publicadores",undefined,false);
+ selectRecord("publicadores",undefined,refresh);
 
       break;
     case "reservasPublicador":
