@@ -112,17 +112,17 @@ async function revisitas(tipo, nombre, refresh) {
   revi = allRecords.revisitas;
   switch (tipo) {
     case "responsable":
-      revi = jsonata('[$[Responsable="' + nombre + '"]]').evaluate(
+      revi = jsonata('$[Responsable="' + nombre + '"]').evaluate(
         allRecords.revisitas
       );
       break;
     case "publicador":
-      revi = jsonata('[$[Publicador="' + nombre + '"]]').evaluate(
+      revi = jsonata('$[Publicador="' + nombre + '"]').evaluate(
         allRecords.revisitas
       );
       break;
     case "revisita":
-      revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(
+      revi = jsonata('$[Telefono="' + nombre + '"]').evaluate(
         allRecords.revisitas
       );
 
@@ -258,7 +258,7 @@ async function selectRecord(tipo, nombre, refresh) {
 
       selectedRecord.publicador.publicador = await publicadores(
         "publicador",
-        selectedRecord.publicador.revisita[0].Publicador
+        selectedRecord.publicador.revisita.Publicador
       );
       selectedRecord.publicador.revisitas = await revisitas(
         "publicador",
@@ -747,7 +747,7 @@ $(document).ready(function () {
     $("#modInformar").modal("show");
     await selectRecord("reserva", $(this).attr("data-informar"), true);
     //$('#cargando').modal('show');
-    var reserva = selectedRecord.publicador.reserva[0];
+    var reserva = selectedRecord.publicador.reserva;
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 
     $("#pInfomarTelefono").text(reserva.Telefono);
@@ -817,7 +817,7 @@ $(document).ready(function () {
     if ($("#formInformar")[0].checkValidity()) {
       $("#cargando").modal("show");
       $("#modInformar").modal("hide");
-      var reserva = selectedRecord.publicador.reserva[0];
+      var reserva = selectedRecord.publicador.reserva;
       var dataJson = {
         Telefono: reserva.Telefono,
         Localidad: reserva.Localidad,
@@ -858,7 +858,7 @@ $(document).ready(function () {
     $("#modRevisita").modal("show");
     await selectRecord("revisita", $(this).attr("data-revisita"));
     //$('#cargando').modal('show');
-    var revisita = selectedRecord.publicador.revisita[0];
+    var revisita = selectedRecord.publicador.revisita;
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 
     $("#pRevisitaTelefono").text(revisita.Telefono);
