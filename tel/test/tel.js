@@ -705,7 +705,7 @@ $(document).ready(function () {
       window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#spSuccessPublicador").text(selectedRecord.publicador.publicador.Nombre);
-      $("#spSuccessTelefono").text(selectedRecord.publicador.reserva.Telefono);
+      $("#spSuccessTelefono").text(selectedRecord.publicador.reserva[0].Telefono);
       $("#modSuccess").modal("show");
 
     } else {
