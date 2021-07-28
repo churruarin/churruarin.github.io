@@ -452,13 +452,23 @@ case "reservaWarning":
   " reservas o pasan " +
   settings.tiempoMaxReservas +
   " días ya no será posible enviarte más números. Gracias.";
-case "reservaBlock":
+  break;
+case "reservaBlockedDays":
   txtReservas =
   "*ATENCIÓN*\n\nHay *" +
   numReservas +
   " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
   txtReservas +
   "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+  break;
+  case "reservaBlockedNumber":
+  txtReservas =
+  "*ATENCIÓN*\n\nHay *" +
+  numReservas +
+  " números reservados a tu nombre que aún no han sido informados.* Como has excedido el líimite de reservas sin informar, *no es posible asginarte más números.*\n" +
+  txtReservas +
+  "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+  break;
 case "revisitas":
   break;
   };
@@ -480,59 +490,77 @@ case "revisitas":
 
 };
 
+function reservaDisplay(tipo){
+  var reservas = selectedRecord.publicador.reservas;
+  switch (tipo) {
+    case "reserva":
+      $("#spConfirmPub").text(selectedRecord.publicador.publicador.nombre);
+      $("#spConfirmResp").text(selectedRecord.responsable.responsable);
+      $("#modConfirm").modal("show");
+      break;
+      case "reservaWarning":
+        $("#cbWarningAdv").prop("checked", false);
+        $("#cbWarningMore").prop("checked", false);
+        $("#btnWarningEnviar").prop("disabled", true);
+        clearInterval(interval);
+        $("#divWarningAdv").addClass("hidden");
+        $("#spBtnWarningTimeout").text("");
+        $("#tableWarning").bootstrapTable({
+          data: reservas,
+        });
+        $("#tableWarning").bootstrapTable("load", reservas);
+        $("#modWarning").modal("show");
+        break;
+        case "reservaBlockedDays":
+          $("#modInvalid").modal("show");
+          $("#pInvalid").text(
+            "El publicador tiene reservas sin informar por más de " +
+            settings.tiempoMaxReservas +
+            " días."
+          );
+         
+          $("#tableInvalid").bootstrapTable({
+            data: reservas,
+          });
+          $("#tableInvalid").bootstrapTable("load", reservas);
+          break;
+          case "reservaBlockedNumber":
+            $("#modInvalid").modal("show");
+            $("#pInvalid").text(
+              "El publicador excedió el límite de " + settings.limiteReservasMax + " reservas."
+            );
+        
+            $("#tableInvalid").bootstrapTable({
+              data: reservas,
+            });
+            $("#tableInvalid").bootstrapTable("load", reservas);
+            break;
+  }
+}
+
 async function reservaPrecheck(publicador) {
   $("#cargando").modal("show");
   await selectRecord("reservasPublicador", publicador, true);
   $("#cargando").modal("hide");
+  var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
   var numReservas = reservas.length;
   var tipo;
   if (numReservas < settings.limiteReservasMin) {
-    $("#spConfirmPub").text(selectedPub["Nombre"]);
-    $("#spConfirmResp").text(resp);
-    $("#modConfirm").modal("show");
     tipo = "reserva";
   } else if (
     numReservas >= settings.limiteReservasMin &&
     numReservas < settings.limiteReservasMax
   ) {
-    $("#cbWarningAdv").prop("checked", false);
-    $("#cbWarningMore").prop("checked", false);
-    $("#btnWarningEnviar").prop("disabled", true);
-    clearInterval(interval);
-    $("#divWarningAdv").addClass("hidden");
-    $("#spBtnWarningTimeout").text("");
-    $("#tableWarning").bootstrapTable({
-      data: reservas,
-    });
-    $("#tableWarning").bootstrapTable("load", reservas);
-    $("#modWarning").modal("show");
+
     tipo = "reservaWarning";
 
   } else if (stats.firstDays > settings.tiempoMaxReservas) {
-    $("#modInvalid").modal("show");
-    $("#pInvalid").text(
-      "El publicador tiene reservas sin informar por más de " +
-      settings.tiempoMaxReservas +
-      " días."
-    );
-   
-    $("#tableInvalid").bootstrapTable({
-      data: reservas,
-    });
-    $("#tableInvalid").bootstrapTable("load", reservas);
-    tipo = "reservaBlocked";
-  } else if (numReservas >= settings.limiteReservasMax) {
-    $("#modInvalid").modal("show");
-    $("#pInvalid").text(
-      "El publicador excedió el límite de " + settings.limiteReservasMax + " reservas."
-    );
 
-    $("#tableInvalid").bootstrapTable({
-      data: reservas,
-    });
-    $("#tableInvalid").bootstrapTable("load", reservas);
-    tipo="reservaBlocked";
+    tipo = "reservaBlockedDays";
+  } else if (numReservas >= settings.limiteReservasMax) {
+
+    tipo="reservaBlockedNumber";
   }
 
 
@@ -607,11 +635,7 @@ $(document).ready(function () {
   });
 
   $("#btnSelect").click(async function () {
-    if ($("#formres")[0].checkValidity()) {
-      await reservaPrecheck($("#Publicador").val());
-    } else {
-      $("#formres").find("#submit-hidden").click();
-    }
+   reservaDisplay( await reservaPrecheck($("#Publicador").val()))
   });
 
   $("#cbWarningMore").change(function () {
