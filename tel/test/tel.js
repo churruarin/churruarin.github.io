@@ -475,10 +475,17 @@ case "reservaBlockedDays":
   "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
   break;
 case "revisitas":
-  txtReservas= "Hay " + + " números que están reservados como revisita a tu nombre. Por favor, informales a los hermanos que te los asignaron si continuás revisitando a esos contactos. Gracias."
+  var txtRevisitas = jsonata(
+    '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
+  ).evaluate(selectedRecord.publicador.revisitas);
+  var plural = selectedRecord.publicador.revisitas.length>0?"s":"";
+  txtRevisitas= " _Co. Churruarín_ \r\n*PREDICACIÓN TELEFÓNICA*\n\nHay *" + selectedRecord.publicador.revisitas.length + "* número"+plural+" reservado"+plural+" como *revisita"+plural+"* a tu nombre. Por favor, informales a los hermanos que te los asignaron si continuás revisitando a esos contactos. Gracias.\n\n" +
+  txtRevisitas;
+
+  
   break;
   };
-  if (tipo == "revisita") {} else {
+  if (tipo == "revisitas") {return txtRevisitas;} else {
   var reservaBody =
   "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*" +
   txtReservas +
@@ -707,7 +714,7 @@ $(document).ready(function () {
     $("#cargando").modal("hide");
   });
 
-  $("#btnInformarReenviar").click(function () {
+  $("#btnInformarReenviar,#btnReenviarwa").click(function () {
     window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
   });
   $("#btnCloseSuccess").click(function () {
@@ -869,7 +876,9 @@ $(document).ready(function () {
     console.log("changed");
     $("#btnRevisitaEnviar").attr("disabled", false);
   });
-
+  $("#btnInformarReenviar").click(function () {
+    window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva,"revisitas")));
+  });
   $("#btnRevisitaEnviar").click(async function () {
     var revisita = selectedRecord.publicador.revisita[0];
     var dataJson = {
