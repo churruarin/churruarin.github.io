@@ -238,6 +238,16 @@ async function waLink(publicador, contacto, tipo) {
 
 async function selectRecord(tipo, nombre, refresh) {
   switch (tipo) {
+    case "responsables":
+      var vresponsables = await responsables(undefined,undefined,refresh);
+      var listitems = "";
+  $("#selResponsable").empty();
+  $.each(vresponsables, function (key, value) {
+    listitems += "<option>" + value["Nombre"] + "</option>";
+  });
+  $("#selResponsable").append(listitems);
+  $("#selResponsable").val(selectedRecord.responsable.responsable);
+      break;
     case "reserva":
       selectedRecord.publicador.reserva = await contactos(
         "reserva",
@@ -512,39 +522,6 @@ async function reservaPrecheck(publicador) {
 }
 
 
-async function loadContacto() {
-  $("#cargando").modal("show");
-  var localidad;
-  if ($("#selZona").val() != "Indistinto") {
-    localidad = $("#selZona").val();
-  }
-  registrotel = await contactos("asignar", localidad, true);
-  rpTelefono = registrotel["Telefono"];
-  rpDireccion = registrotel["DireccionP"];
-  rpFecha = registrotel["FechaP"];
-  rpRespuesta = registrotel["Respuesta"];
-  $("#ddResponsable").text(resp);
-  $("#Responsable").val(resp);
-  $("#ddObservaciones").text(registrotel["Observaciones"]);
-  $("#Telefono").val(registrotel["Telefono"]);
-  $("#Direccion").val(registrotel["Direccion"]);
-  $("#Localidad").val(registrotel["Localidad"]);
-  $("#Estado").val("Reservado");
-  rTelefono = registrotel["Telefono"];
-  rDireccion = registrotel["Direccion"];
-  rFecha = jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate();
-  rEstado = "Reservado";
-  rResponsable = resp;
-  rObservaciones = "";
-  rLocalidad = registrotel["Localidad"];
-  $("#spPub").text(resp);
-  $("#spTel").text(registrotel["Telefono"]);
-
-  $("#Fecha").val(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
-  console.log(registrotel);
-  //console.log(jsonata('$now("[Y0001]-[M01]-[D01]")').evaluate());
-  return registrotel;
-}
 
 async function loadResp() {
   $("#cargando").modal("show");
@@ -560,112 +537,17 @@ async function loadResp() {
   $("#cargando").modal("hide");
 }
 
-async function filterJson(background) {
-  if (background != true) {
-    $("#cargando").modal("show");
-  }
-  var filtro = await contactos("reservasResponsable", resp);
-
-  $("#tableres").bootstrapTable({
-    data: filtro,
-  });
-  $("#tableres").bootstrapTable("load", filtro);
-
-  var revi = await revisitas("responsable", resp, true);
-  console.log(revi);
-  $("#tableRevisitas").bootstrapTable({
-    data: revi,
-  });
-  $("#tableRevisitas").bootstrapTable("load", revi);
-
-  /*} else {
-                  $("#tablereservas").attr("class", "table-responsive hidden");
-                  $("#alert").attr("class", "alert alert-warning show");
-              };*/
-  reservasCount = jsonata("$count($)").evaluate(filtro);
-  $("#tablereservas").removeClass("hidden");
-  if (reservasCount == 1) {
-    $("#hReservas").text("Hay una reserva hecha bajo tu responsabilidad");
-    //   $("#reservasCount").attr("class", "badge show");
-  } else if (reservasCount > 1) {
-    $("#hReservas").text(
-      "Hay " + reservasCount + " reservas hechas bajo tu responsabilidad"
-    );
-    //  $("#reservasCount").attr("class", "badge hidden");
-  } else {
-    $("#tablereservas").addClass("hidden");
-  }
-  if (reservasCount < limiteReservasRespMin) {
-    $("#pnlReservas").removeClass("hidden");
-    $("#pnlWarningResp").addClass("hidden");
-    $("#pnlInvalidResp").addClass("hidden");
-  } else if (
-    reservasCount >= limiteReservasRespMin &&
-    reservasCount < limiteReservasRespMax
-  ) {
-    $("#pnlReservas").removeClass("hidden");
-    $("#pnlWarningResp").removeClass("hidden");
-    $("#pnlInvalidResp").addClass("hidden");
-    $("#spWarningRespReservas").text(limiteReservasRespMax);
-    $("#spWarningRespDías").text(tiempoMaxReservasResp);
-  } else if (reservasCount >= limiteReservasRespMax) {
-    $("#pnlReservas").addClass("hidden");
-    $("#pnlWarningResp").addClass("hidden");
-    $("#pnlInvalidResp").removeClass("hidden");
-  }
-  var maxDays = jsonata("$max(Days)").evaluate(filtro);
-  if (maxDays >= tiempoMaxReservasResp) {
-    $("#pnlReservas").addClass("hidden");
-    $("#pnlWarningResp").addClass("hidden");
-    $("#pnlInvalidResp").removeClass("hidden");
-  }
-
-  $("#cargando").modal("hide");
-}
 
 $(document).ready(function () {
-  $("#spResponsable").text(resp);
-  $("#contactos").click(function () {
-    $("#tablereservas").attr("class", "hidden");
-    $("#pnlContactos").attr("class", "panel panel-primary ");
-    $("#contactos").attr("class", "active");
-    $("#reservas").attr("class", "");
-    tipo = "contactos";
-  });
-  $("#reservas").click(function () {
-    $("#tablereservas").attr("class", "show");
-    $("#pnlContactos").attr("class", "panel panel-primary hidden");
-    $("#reservas").attr("class", "active");
-    $("#contactos").attr("class", "");
-    tipo = "reservas";
-    loadJson();
-  });
-  if (resp === undefined) {
-    loadJson();
-    loadResp();
-    $("#modResponsable").modal("show");
-  } else {
-    $("#spResponsable").text(resp);
-    $("#selResponsable").val(resp);
-  }
-  $("#btnResponsable").click(function () {
-    if ($("#formresp")[0].checkValidity()) {
-      resp = $("#selResponsable").find(":selected").text();
-      Cookies.set("responsable", resp);
-      $("#spResponsable").text(resp);
-      $("#modResponsable").modal("hide");
-      selectRecord();
-    } else {
-      $("#formresp").find("#submit-hiddenResp").click();
-    }
-  });
+  
+
 
   if (zona != undefined) {
     $("#selZona").val(zona);
   }
 
   $("#btnRefresh").click(function () {
-    loadJson(true);
+    selectRecord();
   });
 
   // $("button[name|='btnInformar']").click(function () {
@@ -675,12 +557,31 @@ $(document).ready(function () {
 
   // ------RESPONSABLE--------
   $("#nomResponsable").click(async function () {
-    await loadResp();
+    await selectRecord("responsables");
     $("#modResponsable").modal("show");
-    $("#selResponsable").val(resp);
+    $("#selResponsable").val(selectedRecord.responsable.responsable);
   });
 
+  $("#spResponsable").text(selectedRecord.responsable.responsable);
 
+  if (selectedRecord.responsable.responsable === undefined) {
+    await selectRecord("responsables");
+    $("#modResponsable").modal("show");
+  } else {
+    $("#spResponsable").text(selectedRecord.responsable.responsable);
+    $("#selResponsable").val(selectedRecord.responsable.responsable);
+  }
+  $("#btnResponsable").click(function () {
+    if ($("#formresp")[0].checkValidity()) {
+      selectedRecord.responsable.responsable = $("#selResponsable").find(":selected").text();
+      Cookies.set("responsable", selectedRecord.responsable.responsable);
+      $("#spResponsable").text(selectedRecord.responsable.responsable);
+      $("#modResponsable").modal("hide");
+      selectRecord();
+    } else {
+      $("#formresp").find("#submit-hiddenResp").click();
+    }
+  });
 
 
   // ------RESERVAR---------
