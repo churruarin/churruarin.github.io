@@ -277,7 +277,7 @@ async function selectRecord(tipo, nombre, refresh) {
         
       );
 
-return selectedRecord.publicador.reserva[0]
+return selectedRecord.publicador.reserva;
 
 
       break;
@@ -714,7 +714,7 @@ $(document).ready(function () {
       window.open(await waLink(selectedRecord.publicador.publicador.Nombre, contacto));
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#spSuccessPublicador").text(selectedRecord.publicador.publicador.Nombre);
-      $("#spSuccessTelefono").text(selectedRecord.publicador.reserva[0].Telefono);
+      $("#spSuccessTelefono").text(selectedRecord.publicador.reserva.Telefono);
       $("#modSuccess").modal("show");
 
     } else {
