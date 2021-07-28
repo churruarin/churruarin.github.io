@@ -141,9 +141,10 @@ async function contactos(tipo, nombre, refresh) {
     await $.getJSON(urls.contactos).done(function (jsonurl) {
       allRecords.contactos = jsonata(
         '$map($.values.({"Telefono":$[0], "Direccion":($[2]="Campaña celulares 2021"? ($eval($[1])) :$[1]), "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],' +
-          '"Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),' +
-          '"DireccionP":($[2]="Campaña celulares 2021"? () : $[1] & ", " & $[2]),"PublicadorFecha":$[5] &" ("& $[3] &")" , "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))}), function($v){' +
-          '$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.Direccion.[$number($.numdesde)..$number($.numhasta)], function($val){$v.Direccion.area & "-" & $v.Direccion.pre & "-" & $pad($string($val),-4,"0") })}]):$v})'
+        '"Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),' +
+        '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
+        '"DireccionP":($[2]="Campaña celulares 2021"? () : $[1] & ", " & $[2]),"PublicadorFecha":$[5] &" ("& $[3] &")" , "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))}), function($v){' +
+        '$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.Direccion.[$number($.numdesde)..$number($.numhasta)], function($val){$v.Direccion.area & "-" & $v.Direccion.pre & "-" & $pad($string($val),-4,"0") })}]):$v})'
       ).evaluate(jsonurl);
     });
   var contactos;
@@ -204,7 +205,7 @@ async function submit(dataJson) {
 }
 
 async function waLink(publicador, contacto, tipo) {
- // var selpubtel = await publicadores(undefined, publicador);
+  // var selpubtel = await publicadores(undefined, publicador);
 
   selpubtel = selectedRecord.publicador.publicador.Tel;
 
@@ -221,15 +222,15 @@ async function waLink(publicador, contacto, tipo) {
     encodeURIComponent(
       "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*" +
       selectedRecord.publicador.txtReservas +
-        "\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
-        contacto.Telefono +
-        "*\nDirección: *" +
-        contacto.DireccionP +
-        "*\nFue llamado la última vez: *" +
-        contacto.FechaP +
-        "*\nRespuesta a la última llamada: *" +
-        contacto.Respuesta +
-        "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
+      "\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
+      contacto.Telefono +
+      "*\nDirección: *" +
+      contacto.DireccionP +
+      "*\nFue llamado la última vez: *" +
+      contacto.FechaP +
+      "*\nRespuesta a la última llamada: *" +
+      contacto.Respuesta +
+      "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
     );
   return link;
 }
@@ -274,10 +275,10 @@ async function selectRecord(tipo, nombre, refresh) {
         "asignar",
         nombre,
         true
-        
+
       );
 
-return selectedRecord.publicador.reserva;
+      return selectedRecord.publicador.reserva;
 
 
       break;
@@ -294,24 +295,63 @@ return selectedRecord.publicador.reserva;
         "load",
         selectedRecord.responsable.reservas
       );
-      break;
-      case "reservasPublicador":
-        selectedRecord.publicador.reservas = await contactos(
-          "reservasPublicador",
-          nombre,
-          refresh
-        );
-        await selectRecord("publicador",nombre);
 
-        break;
-        case "publicador":
-          selectedRecord.publicador.publicador = await publicadores(
-            "publicador",
-            nombre,
-            refresh
-          );
-  
-          break;        
+      var reservasCount = selectedRecord.responsable.reservas.length
+      $("#tablereservas").removeClass("hidden");
+      if (reservasCount == 1) {
+        $("#hReservas").text("Hay una reserva hecha bajo tu responsabilidad");
+      } else if (reservasCount > 1) {
+        $("#hReservas").text(
+          "Hay " + reservasCount + " reservas hechas bajo tu responsabilidad"
+        );
+      } else {
+        $("#tablereservas").addClass("hidden");
+      }
+
+      if (reservasCount < settings.limiteReservasRespMin) {
+        $("#pnlReservas").removeClass("hidden");
+        $("#pnlWarningResp").addClass("hidden");
+        $("#pnlInvalidResp").addClass("hidden");
+      } else if (
+        reservasCount >= settings.limiteReservasRespMin &&
+        reservasCount < settings.limiteReservasRespMax
+      ) {
+        $("#pnlReservas").removeClass("hidden");
+        $("#pnlWarningResp").removeClass("hidden");
+        $("#pnlInvalidResp").addClass("hidden");
+        $("#spWarningRespReservas").text(settings.limiteReservasRespMax);
+        $("#spWarningRespDías").text(settings.tiempoMaxReservasResp);
+      } else if (reservasCount >= settings.limiteReservasRespMax) {
+        $("#pnlReservas").addClass("hidden");
+        $("#pnlWarningResp").addClass("hidden");
+        $("#pnlInvalidResp").removeClass("hidden");
+      }
+      selectedRecord.responsable.reservasStats.maxDays = jsonata("$max(Days)").evaluate(selectedRecord.responsable.reservas);
+      if (selectedRecord.responsable.reservasStats.maxDays >= settings.tiempoMaxReservasResp) {
+        $("#pnlReservas").addClass("hidden");
+        $("#pnlWarningResp").addClass("hidden");
+        $("#pnlInvalidResp").removeClass("hidden");
+      }
+
+
+      break;
+    case "reservasPublicador":
+      selectedRecord.publicador.reservas = await contactos(
+        "reservasPublicador",
+        nombre,
+        refresh
+      );
+      await selectRecord("publicador", nombre);
+
+      break;
+    case "publicador":
+      selectedRecord.publicador.publicador = await publicadores(
+        "publicador",
+        nombre,
+        refresh
+      );
+
+      break;
     case "revisitasResponsable":
       selectedRecord.responsable.revisitas = await revisitas(
         "responsable",
@@ -393,9 +433,9 @@ function LinkFormatterRevisita(value, row, index) {
 
 async function reservaPrecheck(publicador) {
   $("#cargando").modal("show");
-  await selectRecord("reservasPublicador",publicador,true);
+  await selectRecord("reservasPublicador", publicador, true);
   $("#cargando").modal("hide");
-var reservas = selectedRecord.publicador.reservas;
+  var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
 
   var numReservas = reservas.length;
@@ -437,7 +477,7 @@ var reservas = selectedRecord.publicador.reservas;
     $("#pInvalid").text(
       "El publicador tiene reservas sin informar por más de " +
       settings.tiempoMaxReservas +
-        " días."
+      " días."
     );
     txtReservas =
       "*ATENCIÓN*\n\nHay *" +
@@ -613,7 +653,7 @@ $(document).ready(function () {
       Cookies.set("responsable", resp);
       $("#spResponsable").text(resp);
       $("#modResponsable").modal("hide");
-      filterJson();
+      selectRecord();
     } else {
       $("#formresp").find("#submit-hiddenResp").click();
     }
@@ -623,6 +663,26 @@ $(document).ready(function () {
     $("#selZona").val(zona);
   }
 
+  $("#btnRefresh").click(function () {
+    loadJson(true);
+  });
+
+  // $("button[name|='btnInformar']").click(function () {
+  //   $("#modInformar").modal("show");
+  // });
+
+
+  // ------RESPONSABLE--------
+  $("#nomResponsable").click(async function () {
+    await loadResp();
+    $("#modResponsable").modal("show");
+    $("#selResponsable").val(resp);
+  });
+
+
+
+
+  // ------RESERVAR---------
   $("#selZona,#Publicador").change(function () {
     if ($("#selZona").val() != "" && $("#Publicador").val() != "") {
       $("#btnSelect").attr("disabled", false);
@@ -632,41 +692,18 @@ $(document).ready(function () {
     zona = $("#selZona").val();
   });
 
-  $("#btnRefresh").click(function () {
-    loadJson(true);
-  });
-
-  // $("button[name|='btnInformar']").click(function () {
-  //   $("#modInformar").modal("show");
-  // });
-
-  $("#btnCloseSuccess").click(function () {
-    loadJson(true);
-    $("#modSuccess").modal("hide");
-  });
-
-  $("#nomResponsable").click(async function () {
-    await loadResp();
-    $("#modResponsable").modal("show");
-    $("#selResponsable").val(resp);
-  });
-
   $("#btnSelect").click(async function () {
     if ($("#formres")[0].checkValidity()) {
-      await reservaPrecheck( $("#Publicador").val());
+      await reservaPrecheck($("#Publicador").val());
     } else {
       $("#formres").find("#submit-hidden").click();
     }
   });
 
-  $("#btnReenviarwa").click(function () {
-    getWAlink();
-  });
-
   $("#cbWarningMore").change(function () {
     if (this.checked) {
       $("#divWarningAdv").removeClass("hidden");
-      $("#spWarningTimeout").text(timeoutReservas);
+      $("#spWarningTimeout").text(settings.timeoutReservas);
     } else {
       $("#divWarningAdv").addClass("hidden");
     }
@@ -674,7 +711,7 @@ $(document).ready(function () {
 
   $("#cbWarningAdv").change(function () {
     if (this.checked) {
-      var counter = timeoutReservas;
+      var counter = settings.timeoutReservas;
 
       interval = setInterval(function () {
         counter--;
@@ -692,12 +729,12 @@ $(document).ready(function () {
     }
   });
 
-  
+
   $("#btnEnviar,#btnWarningEnviar").click(async function () {
     $("#modConfirm").modal("hide");
     $("#modWarning").modal("hide");
     $("#cargando").modal("show");
-    var localidad = ($("#selZona").val() != "Indistinto")? $("#selZona").val():undefined;
+    var localidad = ($("#selZona").val() != "Indistinto") ? $("#selZona").val() : undefined;
     var contacto = await selectRecord("asignar", localidad, true);
     var dataJson = {
       Publicador: selectedRecord.publicador.publicador.Nombre,
@@ -721,6 +758,14 @@ $(document).ready(function () {
       alert("Ocurrió un error. Intentá enviarlo de nuevo.");
     }
     $("#cargando").modal("hide");
+  });
+
+  $("#btnReenviarwa").click(function () {
+    getWAlink();
+  });
+  $("#btnCloseSuccess").click(function () {
+    loadJson(true);
+    $("#modSuccess").modal("hide");
   });
 
   $("#btnEnviarInvalid").click(async function () {
