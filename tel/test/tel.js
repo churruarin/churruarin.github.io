@@ -705,7 +705,7 @@ $(document).ready(function () {
     $("#cargando").modal("hide");
   });
 
-  $("#btnReenviarwa").click(function () {
+  $("#btnInformarReenviar").click(function () {
     window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
   });
   $("#btnCloseSuccess").click(function () {
