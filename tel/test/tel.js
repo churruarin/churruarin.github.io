@@ -436,7 +436,7 @@ function LinkFormatterRevisita(value, row, index) {
 async function generarMensaje(tipo){
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
-var contacto = selectedRecord.publicador.reserva[0];
+var contacto = selectedRecord.publicador.reserva;
   var numReservas = reservas.length;
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
