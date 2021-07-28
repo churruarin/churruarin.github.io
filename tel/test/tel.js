@@ -714,9 +714,10 @@ $(document).ready(function () {
     $("#cargando").modal("hide");
   });
 
-  $("#btnInformarReenviar,#btnReenviarwa").click(function () {
+  $("#btnInformarReenviar,#btnReenviarwa").click(async function () {
     window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
   });
+  
   $("#btnCloseSuccess").click(function () {
     selectRecord("reservasResponsable", undefined, true);
     $("#modSuccess").modal("hide");
