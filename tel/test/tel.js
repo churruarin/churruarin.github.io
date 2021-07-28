@@ -19,16 +19,7 @@ var rTelefono,
 var rpTelefono, rpDireccion, rpFecha, rpRespuesta;
 var registrotel;
 var pubs, territorios;
-var limiteReservasMin = 1; //minimo de reservas sin restricciones
-var limiteReservasMax = 15; //máximo de reservas antes de bloquear
-var timeoutReservas = 5; //segundos de espera para hacer una reserva adicional
-var tiempoMinReservas = 2.5; //minutos minimos entre reservas
-var tiempoMaxReservas = 60; //dias desde la reserva mas antigua para bloquear un pub
-var limiteReservasRespMin = 10; //minimo de reservas sin restricciones
-var limiteReservasRespMax = 20; //máximo de reservas antes de bloquear
-var tiempoMaxReservasResp = 60; //dias desde la reserva mas antigua para bloquear un resp
-var reservasPub, txtReservas, maxminReservasPub, interval;
-var jsonRevisitas, jsonPublicadores, jsonResponsables, jsonContactos;
+
 const settings = {
   limiteReservasMin: 1, //minimo de reservas sin restricciones
   limiteReservasMax: 15, //máximo de reservas antes de bloquear
@@ -205,7 +196,7 @@ async function submit(dataJson) {
   return respuesta;
 }
 
-async function waLink(publicador, contacto, tipo) {
+async function waLink(contacto, texto) {
   // var selpubtel = await publicadores(undefined, publicador);
 
   selpubtel = selectedRecord.publicador.publicador.Tel;
@@ -220,19 +211,8 @@ async function waLink(publicador, contacto, tipo) {
   link =
     link +
     "?text=" +
-    encodeURIComponent(
-      "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*" +
-      selectedRecord.publicador.txtReservas +
-      "\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
-      contacto.Telefono +
-      "*\nDirección: *" +
-      contacto.DireccionP +
-      "*\nFue llamado la última vez: *" +
-      contacto.FechaP +
-      "*\nRespuesta a la última llamada: *" +
-      contacto.Respuesta +
-      "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio. \nPor favor, incluí en tu respuesta estos datos: \n*Teléfono:* \n*Respuesta* (Opciones: atendió / no atendió / no existente / no volver a llamar / mensaje en el contestador / revisita): \n*Fecha de la llamada:* \n*Turno de la llamada* (mañana o tarde): \n*Observaciones* (opcional): \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias."
-    );
+    encodeURIComponent(texto
+       );
   return link;
 }
 
@@ -448,11 +428,7 @@ function LinkFormatterRevisita(value, row, index) {
     "</button>"
   );
 };
-
-async function reservaPrecheck(publicador) {
-  $("#cargando").modal("show");
-  await selectRecord("reservasPublicador", publicador, true);
-  $("#cargando").modal("hide");
+async function generarMensaje(tipo){
   var reservas = selectedRecord.publicador.reservas;
   var stats = selectedRecord.publicador.reservasStats;
 
@@ -460,11 +436,62 @@ async function reservaPrecheck(publicador) {
   var txtReservas = jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
   ).evaluate(reservas);
+  
+  switch (tipo) {
+case "reserva":
+  txtReservas = "";
+  break;
+case "reservaWarning":
+  txtReservas =
+  "\n\n*ATENCIÓN*\nHay *" +
+  numReservas +
+  " números reservados a tu nombre que aún no han sido informados.*\n" +
+  txtReservas +
+  "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las " +
+  settings.limiteReservasMax +
+  " reservas o pasan " +
+  settings.tiempoMaxReservas +
+  " días ya no será posible enviarte más números. Gracias.";
+case "reservaBlock":
+  txtReservas =
+  "*ATENCIÓN*\n\nHay *" +
+  numReservas +
+  " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
+  txtReservas +
+  "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+case "revisitas":
+  break;
+  };
+  var reservaBody =
+  "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*" +
+  txtReservas +
+  "\n\nSe te asignó el siguiente número telefónico para que lo atiendas: \nNúmero: *" +
+  contacto.Telefono +
+  "*\nDirección: *" +
+  contacto.DireccionP +
+  "*\nFue llamado la última vez: *" +
+  contacto.FechaP +
+  "*\nRespuesta a la última llamada: *" +
+  contacto.Respuesta +
+  "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio.  \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.";
+
+
+
+
+};
+
+async function reservaPrecheck(publicador) {
+  $("#cargando").modal("show");
+  await selectRecord("reservasPublicador", publicador, true);
+  $("#cargando").modal("hide");
+  var stats = selectedRecord.publicador.reservasStats;
+  var numReservas = reservas.length;
+  var tipo;
   if (numReservas < settings.limiteReservasMin) {
     $("#spConfirmPub").text(selectedPub["Nombre"]);
     $("#spConfirmResp").text(resp);
     $("#modConfirm").modal("show");
-    txtReservas = "";
+    tipo = "reserva";
   } else if (
     numReservas >= settings.limiteReservasMin &&
     numReservas < settings.limiteReservasMax
@@ -480,16 +507,8 @@ async function reservaPrecheck(publicador) {
     });
     $("#tableWarning").bootstrapTable("load", reservas);
     $("#modWarning").modal("show");
-    txtReservas =
-      "\n\n*ATENCIÓN*\nHay *" +
-      numReservas +
-      " números reservados a tu nombre que aún no han sido informados.*\n" +
-      txtReservas +
-      "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las " +
-      settings.limiteReservasMax +
-      " reservas o pasan " +
-      settings.tiempoMaxReservas +
-      " días ya no será posible enviarte más números. Gracias.";
+    tipo = "reservaWarning";
+
   } else if (stats.firstDays > settings.tiempoMaxReservas) {
     $("#modInvalid").modal("show");
     $("#pInvalid").text(
@@ -497,35 +516,27 @@ async function reservaPrecheck(publicador) {
       settings.tiempoMaxReservas +
       " días."
     );
-    txtReservas =
-      "*ATENCIÓN*\n\nHay *" +
-      numReservas +
-      " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
-      txtReservas +
-      "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+   
     $("#tableInvalid").bootstrapTable({
       data: reservas,
     });
     $("#tableInvalid").bootstrapTable("load", reservas);
+    tipo = "reservaBlocked";
   } else if (numReservas >= settings.limiteReservasMax) {
     $("#modInvalid").modal("show");
     $("#pInvalid").text(
       "El publicador excedió el límite de " + settings.limiteReservasMax + " reservas."
     );
-    txtReservas =
-      "*ATENCIÓN*\n\nHay *" +
-      numReservas +
-      " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido el número de reservas, *no es posible asginarte más números.*\n" +
-      txtReservas +
-      "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+
     $("#tableInvalid").bootstrapTable({
       data: reservas,
     });
     $("#tableInvalid").bootstrapTable("load", reservas);
+    tipo="reservaBlocked";
   }
-  selectedRecord.publicador.txtReservas = txtReservas;
 
-  return txtReservas
+
+  return tipo
 }
 
 
