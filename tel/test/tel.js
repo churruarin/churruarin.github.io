@@ -714,6 +714,10 @@ $(document).ready(function () {
     $("#cargando").modal("hide");
   });
 
+  //$("#btnInformarReenviar,#btnReenviarwa").click(async function () {
+  //  window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
+ // });
+  
   $("#btnCloseSuccess").click(function () {
     selectRecord("reservasResponsable", undefined, true);
     $("#modSuccess").modal("hide");
@@ -873,9 +877,9 @@ $(document).ready(function () {
     console.log("changed");
     $("#btnRevisitaEnviar").attr("disabled", false);
   });
-  $("#btnInformarReenviar").click(function () {
-    window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva,"revisitas")));
-  });
+  //$("#btnInformarReenviar").click(function () {
+  //  window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva,"revisitas")));
+  //});
   $("#btnRevisitaEnviar").click(async function () {
     var revisita = selectedRecord.publicador.revisita[0];
     var dataJson = {
