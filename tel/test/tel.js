@@ -877,9 +877,10 @@ $(document).ready(function () {
     console.log("changed");
     $("#btnRevisitaEnviar").attr("disabled", false);
   });
-  //$("#btnInformarReenviar").click(function () {
-  //  window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva,"revisitas")));
-  //});
+  $("#btnRevisitaReenviar").click(async function () {
+    // window.open(await waLink(await generarMensaje(await reservaPrecheck(selectedRecord.publicador.publicador.Nombre))));
+    window.open(await waLink(await generarMensaje("revisitas")));
+  });
   $("#btnRevisitaEnviar").click(async function () {
     var revisita = selectedRecord.publicador.revisita[0];
     var dataJson = {
