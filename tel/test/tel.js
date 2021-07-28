@@ -255,13 +255,14 @@ async function selectRecord(tipo, nombre, refresh) {
         nombre,
         refresh
       );
-      selectedRecord.publicador.revisitas = await revisitas(
-        "revisitas",
-        selectedRecord.publicador.revisita[0].Publicador
-      );
+
       selectedRecord.publicador.publicador = await publicadores(
         "publicador",
         selectedRecord.publicador.revisita[0].Publicador
+      );
+      selectedRecord.publicador.revisitas = await revisitas(
+        "publicador",
+        selectedRecord.publicador.publicador.Nombre
       );
       return selectedRecord;
       break;
@@ -474,6 +475,7 @@ case "reservaBlockedDays":
   "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
   break;
 case "revisitas":
+  txtReservas= "Hay " + + " números que están reservados como revisita a tu nombre. Por favor, informales a los hermanos que te los asignaron si continuás revisitando a esos contactos. Gracias."
   break;
   };
   if (tipo == "revisita") {} else {
