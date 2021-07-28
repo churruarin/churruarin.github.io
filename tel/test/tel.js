@@ -111,7 +111,7 @@ async function revisitas(tipo, nombre, refresh) {
   if (refresh === true || jQuery.isEmptyObject(allRecords.revisitas) === true)
     await $.getJSON(urls.revisitas).done(function (jsonurl) {
       allRecords.revisitas = jsonata(
-        '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]")})'
+        '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"), "Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7)})'
       ).evaluate(jsonurl);
     });
   revi = allRecords.revisitas;
