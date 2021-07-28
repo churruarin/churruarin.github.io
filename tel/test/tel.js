@@ -301,7 +301,7 @@ async function selectRecord(tipo, nombre, refresh) {
         );
       } else {
         $("#tablereservas").addClass("hidden");
-      }
+      };
 
       if (reservasCount < settings.limiteReservasRespMin) {
         $("#pnlReservas").removeClass("hidden");
@@ -320,14 +320,14 @@ async function selectRecord(tipo, nombre, refresh) {
         $("#pnlReservas").addClass("hidden");
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
-      }
+      };
       selectedRecord.responsable.reservasStats.maxDays = jsonata("$max(Days)").evaluate(selectedRecord.responsable.reservas);
       if (selectedRecord.responsable.reservasStats.maxDays >= settings.tiempoMaxReservasResp) {
         $("#pnlReservas").addClass("hidden");
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
-      }
-
+      };
+selectRecord("publicadores",undefined,false);
 
       break;
     case "reservasPublicador":
@@ -693,7 +693,7 @@ $(document).ready(function () {
     };
     if (await submit(dataJson)) {
       // var link = await waLink(selectedPub["Nombre"],contacto);
-      window.open(await waLink(generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
+      window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#spSuccessPublicador").text(selectedRecord.publicador.publicador.Nombre);
       $("#spSuccessTelefono").text(selectedRecord.publicador.reserva.Telefono);
@@ -709,7 +709,7 @@ $(document).ready(function () {
     getWAlink();
   });
   $("#btnCloseSuccess").click(function () {
-    loadJson(true);
+    selectRecord("reservasResponsable", undefined, true);
     $("#modSuccess").modal("hide");
   });
 
