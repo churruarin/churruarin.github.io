@@ -421,14 +421,13 @@ async function selectRecord(tipo, nombre, refresh) {
         */
       var a = selectRecord("reservasResponsable", undefined, true);
       var b = selectRecord("revisitasResponsable", undefined, true);
-      var c = selectRecord("publicadores", undefined);
       var d = responsables(undefined, undefined, true);
-      
       await a;
       await b;
-      await c;
       await d;
+      var c = selectRecord("publicadores", undefined);
       var e = selectRecord("territorios");
+      await c;
       await e;
 
       if (selectedRecord.responsable.responsable === undefined) {
