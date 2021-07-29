@@ -421,7 +421,7 @@ async function selectRecord(tipo, nombre, refresh) {
         */
       var a = selectRecord("reservasResponsable", undefined, true);
       var b = selectRecord("revisitasResponsable", undefined, true);
-      var c = selectRecord("publicadores", undefined, true);
+      var c = selectRecord("publicadores", undefined);
       var d = responsables(undefined, undefined, true);
       var e = selectRecord("territorios");
       await a;
