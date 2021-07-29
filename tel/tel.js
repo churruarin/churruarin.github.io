@@ -331,7 +331,7 @@ async function selectRecord(tipo, nombre, refresh) {
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
       };
- selectRecord("publicadores",undefined,refresh);
+ await selectRecord("publicadores",undefined,refresh);
 
       break;
     case "reservasPublicador":
