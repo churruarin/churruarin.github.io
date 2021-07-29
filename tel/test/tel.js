@@ -305,26 +305,26 @@ async function selectRecord(tipo, nombre, refresh) {
       };
 
       if (reservasCount < settings.limiteReservasRespMin) {
-        $("#pnlReservas").removeClass("hidden");
+        $("#pnlContactos").removeClass("hidden");
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").addClass("hidden");
       } else if (
         reservasCount >= settings.limiteReservasRespMin &&
         reservasCount < settings.limiteReservasRespMax
       ) {
-        $("#pnlReservas").removeClass("hidden");
+        $("#pnlContactos").removeClass("hidden");
         $("#pnlWarningResp").removeClass("hidden");
         $("#pnlInvalidResp").addClass("hidden");
         $("#spWarningRespReservas").text(settings.limiteReservasRespMax);
         $("#spWarningRespDías").text(settings.tiempoMaxReservasResp);
       } else if (reservasCount >= settings.limiteReservasRespMax) {
-        $("#pnlReservas").addClass("hidden");
+        $("#pnlContactos").addClass("hidden");
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
       };
       selectedRecord.responsable.reservasStats.maxDays = jsonata("$max(Days)").evaluate(selectedRecord.responsable.reservas);
       if (selectedRecord.responsable.reservasStats.maxDays >= settings.tiempoMaxReservasResp) {
-        $("#pnlReservas").addClass("hidden");
+        $("#pnlContactos").addClass("hidden");
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
       };
