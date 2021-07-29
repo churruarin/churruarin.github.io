@@ -296,12 +296,15 @@ async function selectRecord(tipo, nombre, refresh) {
       $("#tablereservas").removeClass("hidden");
       if (reservasCount == 1) {
         $("#hReservas").text("Hay una reserva hecha bajo tu responsabilidad");
+        $("#spResponsableReservas").text(selectedRecord.responsable.reservas.length);
       } else if (reservasCount > 1) {
         $("#hReservas").text(
           "Hay " + reservasCount + " reservas hechas bajo tu responsabilidad"
         );
+        $("#spResponsableReservas").text(selectedRecord.responsable.reservas.length);
       } else {
         $("#tablereservas").addClass("hidden");
+        $("#spResponsableReservas").text("0");
       };
 
       if (reservasCount < settings.limiteReservasRespMin) {
@@ -366,13 +369,16 @@ async function selectRecord(tipo, nombre, refresh) {
       if ( selectedRecord.responsable.revisitas.length == 1) {
         $("#hRevisitas").text("Hay una revisita asignada bajo tu responsabilidad");
         $("#divRevisitas").removeClass("hidden");
+        $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);
       } else if (selectedRecord.responsable.revisitas.length > 1) {
         $("#hRevisitas").text(
           "Hay " + selectedRecord.responsable.revisitas.length + " revisitas asignadas bajo tu responsabilidad"
         );
         $("#divRevisitas").removeClass("hidden");
+        $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);
       } else {
         $("#divRevisitas").addClass("hidden");
+        $("#spResponsableRevisitas").text("0");
       };
 
 
