@@ -362,13 +362,15 @@ async function selectRecord(tipo, nombre, refresh) {
         selectedRecord.responsable.revisitas
       );
 
-      $("#tablerevisitas").removeClass("hidden");
+      $("#tablerevisitas").addClass("hidden");
       if ( selectedRecord.responsable.revisitas.length == 1) {
         $("#hRevisitas").text("Hay una revisita asignada bajo tu responsabilidad");
+        $("#tablerevisitas").removeClass("hidden");
       } else if (selectedRecord.responsable.revisitas.length > 1) {
         $("#hRevisitas").text(
           "Hay " + selectedRecord.responsable.revisitas.length + " revisitas asignadas bajo tu responsabilidad"
         );
+        $("#tablerevisitas").removeClass("hidden");
       } else {
         $("#tablerevisitas").addClass("hidden");
       };
