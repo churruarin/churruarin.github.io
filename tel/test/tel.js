@@ -519,6 +519,7 @@ function reservaDisplay(tipo){
         $("#btnWarningEnviar").prop("disabled", true);
         clearInterval(selectedRecord.publicador.dataReservas.interval);
        // $("#divWarningAdv").addClass("hidden");
+        $("#divTableWarning").removeClass("in");
         $("#spBtnWarningTimeout").text("");
         $("#tableWarning").bootstrapTable({
           data: reservas,
