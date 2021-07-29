@@ -634,8 +634,9 @@ data-keyboard="false"
 			<div class="panel-body">
         
         <form name="formRevisita" id="formRevisita" autocomplete="off" class="form-horizontal">
-        
-          <div class="radio">
+          <div class="form-group"><label for="divRadioRevisita"  class="col-sm-4 control-label text-right">Respuesta</label>
+            <div class="col-sm-8">
+          <div class="radio" id="divRadioRevisita">
             <label>
               <input type="radio" name="radioRevisita" id="radioRevisitaContinua" value="radioRevisitaContinua">
               El publicador <strong>continúa revisitando</strong> al contacto
@@ -647,6 +648,7 @@ data-keyboard="false"
               El publicador ya <strong>no lo revisita más</strong> al contacto
             </label>
           </div>
+          </div></div>
           
 				<input id="submit-hidden-Revisita" type="submit" style="display: none" /> </form></div>
 		</dl>

@@ -513,7 +513,7 @@ case "revisitas":
       txtReservas +
       "\n\nSe te asignó la siguiente serie de números celulares para que los atiendas: \n" +
       contacto.Telefono +
-      "*\n\nPor favor, *no olvides informar* cuando completes esta serie. Llevar un buen registro es esencial para dar un buen testimonio. Gracias.\n\n" + reservasPendientes;
+      "\n\nPor favor, *no olvides informar* cuando completes esta serie. Llevar un buen registro es esencial para dar un buen testimonio. Gracias.\n\n" + reservasPendientes;
     return reservaBody  
   } else {
   var reservaBody =
