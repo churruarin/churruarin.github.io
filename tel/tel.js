@@ -413,11 +413,11 @@ async function selectRecord(tipo, nombre, refresh) {
       break;
     default:
       $("#cargando").modal("show");
-      Promise.allSettled(electRecord("reservasResponsable", undefined, true),
+      Promise.allSettled(selectRecord("reservasResponsable", undefined, true),
       selectRecord("revisitasResponsable", undefined, true),
       selectRecord("publicadores", undefined, true),
       responsables(undefined, undefined, true),
-      selectRecord("territorios"))
+      selectRecord("territorios"));
         /*
       selectRecord("reservasResponsable", undefined, true);
       selectRecord("revisitasResponsable", undefined, true);
