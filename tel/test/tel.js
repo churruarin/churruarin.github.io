@@ -665,6 +665,7 @@ $(document).ready(function () {
 
   $("#cbWarningAdv").change(function () {
     if (this.checked) {
+      /*
       var counter = settings.timeoutReservas;
 
       selectedRecord.publicador.dataReservas.interval = setInterval(function () {
@@ -672,15 +673,16 @@ $(document).ready(function () {
         $("#spBtnWarningTimeout").text("(" + counter + ")");
         // Display 'counter' wherever you want to display it.
         if (counter == 0) {
-          // Display a login box
+          // Display a login box*/
           $("#btnWarningEnviar").prop("disabled", false);
-          $("#spBtnWarningTimeout").text("");
+          /*$("#spBtnWarningTimeout").text("");
           clearInterval(selectedRecord.publicador.dataReservas.interval);
         }
-      }, 1000);
+      }, 1000);*/
     } else {
       $("#btnWarningEnviar").prop("disabled", true);
     }
+
   });
 
 
