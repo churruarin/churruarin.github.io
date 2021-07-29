@@ -465,9 +465,9 @@ case "reserva":
   break;
 case "reservaWarning":
   txtReservas =
-  "\n\n*ATENCIÓN*\nHay *" +
+  "\n\n*ATENCIÓN:* Hay *" +
   numReservas +
-  " números reservados a tu nombre que aún no han sido informados,* encontrarás el detalle al final de este mensaje.\nPor favor, no olvides informar estas llamadas al hermano que te los asignó. Si se exceden las " +
+  " reservas hechas a tu nombre que aún no han sido informadas,* encontrarás el detalle *al final de este mensaje.*\nPor favor, no olvides informar estas llamadas al hermano que te los asignó. Si se exceden las " +
   settings.limiteReservasMax +
   " reservas o pasan " +
   settings.tiempoMaxReservas +
@@ -475,17 +475,17 @@ case "reservaWarning":
   break;
 case "reservaBlockedDays":
   txtReservas =
-  "*ATENCIÓN*\n\nHay *" +
+  "*ATENCIÓN:* Hay *" +
   numReservas +
-  " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
+  " reservas hechas a tu nombre que aún no han sido informadas,* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
   reservasPendientes +
   "\nPor favor,no olvides informar estas llamadas al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
   break;
   case "reservaBlockedNumber":
   txtReservas =
-  "*ATENCIÓN*\n\nHay *" +
+  "*ATENCIÓN:* Hay *" +
   numReservas +
-  " números reservados a tu nombre que aún no han sido informados.* Como has excedido el líimite de reservas sin informar, *no es posible asginarte más números.*\n" +
+  " reservas hechas a tu nombre que aún no han sido informadas,* Como has excedido el líimite de reservas sin informar, *no es posible asginarte más números.*\n" +
   reservasPendientes +
   "\nPor favor, no olvides informar estas llamadas al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
   break;
@@ -494,7 +494,7 @@ case "revisitas":
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
   ).evaluate(selectedRecord.publicador.revisitas);
   var plural = selectedRecord.publicador.revisitas.length>0?"s":"";
-  txtRevisitas= " _Co. Churruarín_ \r\n*PREDICACIÓN TELEFÓNICA*\n\nHay *" + selectedRecord.publicador.revisitas.length + "* número"+plural+" reservado"+plural+" como *revisita"+plural+"* a tu nombre. Por favor, informales a los hermanos que te los asignaron si continuás revisitando a esos contactos. Gracias.\n\n" +
+  txtRevisitas= " _Co. Churruarín_ \r\n*PREDICACIÓN TELEFÓNICA*\n\nHay *" + selectedRecord.publicador.revisitas.length + "* número"+plural+" reservado"+plural+" como *revisita"+plural+"* a tu nombre, que se detallan a continuación. Por favor, informales a los hermanos que te los asignaron si continuás revisitando a esos contactos. Gracias.\n\n" +
   txtRevisitas;
 
   
