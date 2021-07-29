@@ -65,7 +65,16 @@
 <div class="alert alert-danger hidden" role="alert" id="pnlInvalidResp"><h4>Hay demasiadas reservas bajo tu responsabilidad</h4>
   <p>No podrás hacer más reservas hasta que cargues los informes correspondientes.</p></div>
   <div id="pnlReservas">   
-  <div class="col-md-3"></div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Responsable: Abel Bour.</div>
+      <table class="table">
+        <tr><td>Reservas</td><td>0</td></tr>
+        <tr><td>Revisitas</td><td>0</td></tr>
+      </table>
+    </div>
+  </div>
         <div class="col-md-6"><div id="pnlContactos" class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Reservar un contacto telefónico</h3>
@@ -482,10 +491,11 @@ data-keyboard="false"
 	  <p>
 	Ya no es posible reservar más números para el publicador hasta que envíe los informes de los números que tiene reservados. Por favor, indicale que lo haga cuanto antes para poder recibir más números.
 	  </p>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#divTableBlocked" data-toggle="button" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#divTableBlocked" data-toggle="button" aria-expanded="false" aria-controls="divTableBlocked">
       Ver detalle de reservas
     </button>
     <div class="table-responsive collapse" id="divTableBlocked">
+      <br/>
       <table
         id="tableInvalid"
         data-toggle="tableInvalid"
