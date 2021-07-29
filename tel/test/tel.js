@@ -361,6 +361,19 @@ async function selectRecord(tipo, nombre, refresh) {
         "load",
         selectedRecord.responsable.revisitas
       );
+
+      $("#tablerevisitas").removeClass("hidden");
+      if ( selectedRecord.responsable.revisitas.length == 1) {
+        $("#hRevisitas").text("Hay una revisita asignada bajo tu responsabilidad");
+      } else if (selectedRecord.responsable.revisitas.length > 1) {
+        $("#hRevisitas").text(
+          "Hay " + selectedRecord.responsable.revisitas.length + " revisitas asignadas bajo tu responsabilidad"
+        );
+      } else {
+        $("#tablerevisitas").addClass("hidden");
+      };
+
+
       break;
     case "publicadores":
       var pubs = await publicadores(undefined, undefined, refresh);
