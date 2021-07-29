@@ -518,7 +518,7 @@ function reservaDisplay(tipo){
         $("#cbWarningMore").prop("checked", false);
         $("#btnWarningEnviar").prop("disabled", true);
         clearInterval(selectedRecord.publicador.dataReservas.interval);
-        $("#divWarningAdv").addClass("hidden");
+       // $("#divWarningAdv").addClass("hidden");
         $("#spBtnWarningTimeout").text("");
         $("#tableWarning").bootstrapTable({
           data: reservas,
