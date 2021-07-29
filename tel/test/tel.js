@@ -500,7 +500,20 @@ case "revisitas":
   
   break;
   };
-  if (tipo == "revisitas") {return txtRevisitas;} else {
+
+
+  if (tipo == "revisitas") {return txtRevisitas;} 
+  else if (contacto.Localidad="Campaña celulares 2021") {
+    
+      contacto.Telefono = jsonata('$join($," \n")').evaluate(contacto.Telefono);
+      var reservaBody =
+      "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*\CAMPAÑA DE PREDICACIÓN A TELÉFONOS CELULARES" +
+      txtReservas +
+      "\n\nSe te asignó la siguiente serie de números celulares para que los atiendas: \n" +
+      contacto.Telefono +
+      "*\n\nPor favor, *no olvides informar* cuando completes esta serie. Llevar un buen registro es esencial para dar un buen testimonio. Gracias.\n\n" + reservasPendientes;
+    return reservaBody  
+  } else {
   var reservaBody =
   "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*" +
   txtReservas +
