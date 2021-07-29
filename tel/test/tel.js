@@ -509,7 +509,7 @@ case "revisitas":
     
       contacto.Telefono = jsonata('$join($," \n")').evaluate(contacto.DireccionP);
       var reservaBody =
-      "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*\CAMPAÑA DE PREDICACIÓN A TELÉFONOS CELULARES" +
+      "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*\nCAMPAÑA DE PREDICACIÓN A TELÉFONOS CELULARES" +
       txtReservas +
       "\n\nSe te asignó la siguiente serie de números celulares para que los atiendas: \n" +
       contacto.Telefono +
