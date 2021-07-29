@@ -412,6 +412,7 @@ async function selectRecord(tipo, nombre, refresh) {
       $("#selZona").append(listterritorios);
       break;
     default:
+      $("#cargando").modal("show");
       selectRecord("reservasResponsable", undefined, true);
       selectRecord("revisitasResponsable", undefined, true);
       selectRecord("publicadores", undefined, true);
@@ -424,6 +425,7 @@ async function selectRecord(tipo, nombre, refresh) {
         $("#spResponsable").text(selectedRecord.responsable.responsable);
         $("#selResponsable").val(selectedRecord.responsable.responsable);
       }
+      $("#cargando").modal("hide");
       break;
   }
 }
@@ -966,5 +968,6 @@ $(document).ready(function () {
   });
 
   //loadJson(true);
+  
   selectRecord();
 });
