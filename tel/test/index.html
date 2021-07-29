@@ -382,9 +382,7 @@
 		  <p>
 			Por favor, indicale que envíe el informe de los contactos que tiene reservados antes de solicitar uno nuevo.
 		  </p>
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#divTableWarning" data-toggle="button" aria-expanded="false" aria-controls="collapseExample">
-        Ver detalle de reservas
-      </button>
+
     
       <div class="table-responsive collapse" id="divTableWarning">
         <table
@@ -481,7 +479,10 @@ data-keyboard="false"
 	  <p>
 	Ya no es posible reservar más números para el publicador hasta que envíe los informes de los números que tiene reservados. Por favor, indicale que lo haga cuanto antes para poder recibir más números.
 	  </p>
-    <div class="table-responsive">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#divTableBlocked" data-toggle="button" aria-expanded="false" aria-controls="collapseExample">
+      Ver detalle de reservas
+    </button>
+    <div class="table-responsive collapse" id="divTableBlocked">
       <table
         id="tableInvalid"
         data-toggle="tableInvalid"
