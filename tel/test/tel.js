@@ -453,9 +453,15 @@ async function generarMensaje(tipo){
   var stats = selectedRecord.publicador.reservasStats;
 var contacto = selectedRecord.publicador.reserva[0];
   var numReservas = reservas.length;
-  var reservasPendientes = "*RESERVAS PENDIENTES DE INFORMAR*\n" + jsonata(
+  var reservasPendientes = "*RESERVAS PENDIENTES DE INFORMAR*\n" + 
+  "Por favor, no olvides informar estas llamadas al hermano que te los asignó. Si se exceden las " +
+  settings.limiteReservasMax +
+  " reservas o pasan " +
+  settings.tiempoMaxReservas +
+  " días ya no será posible enviarte más números. Gracias.\n" + 
+  jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
-  ).evaluate(reservas);
+  ).evaluate(reservas); 
   var txtReservas;
   
   switch (tipo) {
@@ -467,11 +473,7 @@ case "reservaWarning":
   txtReservas =
   "\n\n*ATENCIÓN:* Hay *" +
   numReservas +
-  " reservas hechas a tu nombre que aún no han sido informadas,* encontrarás el detalle *al final de este mensaje.*\nPor favor, no olvides informar estas llamadas al hermano que te los asignó. Si se exceden las " +
-  settings.limiteReservasMax +
-  " reservas o pasan " +
-  settings.tiempoMaxReservas +
-  " días ya no será posible enviarte más números. Gracias.";
+  " reservas hechas a tu nombre que aún no han sido informadas,* encontrarás el detalle *al final de este mensaje.*";
   break;
 case "reservaBlockedDays":
   txtReservas =
@@ -503,9 +505,9 @@ case "revisitas":
 
 
   if (tipo == "revisitas") {return txtRevisitas;} 
-  else if (contacto.Localidad="Campaña celulares 2021") {
+  else if (contacto.Localidad=="Campaña celulares 2021") {
     
-      contacto.Telefono = jsonata('$join($," \n")').evaluate(contacto.Telefono);
+      contacto.Telefono = jsonata('$join($," \n")').evaluate(contacto.DireccionP);
       var reservaBody =
       "_Co. Churruarín_ \r\n*ASIGNACIÓN DE TERRITORIO TELEFÓNICO*\CAMPAÑA DE PREDICACIÓN A TELÉFONOS CELULARES" +
       txtReservas +
