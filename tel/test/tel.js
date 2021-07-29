@@ -438,21 +438,21 @@ async function generarMensaje(tipo){
   var stats = selectedRecord.publicador.reservasStats;
 var contacto = selectedRecord.publicador.reserva[0];
   var numReservas = reservas.length;
-  var txtReservas = jsonata(
+  var reservasPendientes = "*RESERVAS PENDIENTES DE INFORMAR*\n" + jsonata(
     '$.("*"&Telefono&"* el "&TimestampIso&", responsable: *"&Responsable&"*")~> $join("\n")'
   ).evaluate(reservas);
+  var txtReservas;
   
   switch (tipo) {
 case "reserva":
   txtReservas = "";
+  reservasPendientes ="";
   break;
 case "reservaWarning":
   txtReservas =
   "\n\n*ATENCIÓN*\nHay *" +
   numReservas +
-  " números reservados a tu nombre que aún no han sido informados.*\n" +
-  txtReservas +
-  "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó. Si se exceden las " +
+  " números reservados a tu nombre que aún no han sido informados,* encontrarás el detalle al final de este mensaje.\nPor favor, no olvides informar estas llamadas al hermano que te los asignó. Si se exceden las " +
   settings.limiteReservasMax +
   " reservas o pasan " +
   settings.tiempoMaxReservas +
@@ -463,16 +463,16 @@ case "reservaBlockedDays":
   "*ATENCIÓN*\n\nHay *" +
   numReservas +
   " números reservados a tu nombre que aún no han sido informados.* Como se ha excedido la cantidad de días para informarlas, *no es posible asginarte más números.*\n" +
-  txtReservas +
-  "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+  reservasPendientes +
+  "\nPor favor,no olvides informar estas llamadas al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
   break;
   case "reservaBlockedNumber":
   txtReservas =
   "*ATENCIÓN*\n\nHay *" +
   numReservas +
   " números reservados a tu nombre que aún no han sido informados.* Como has excedido el líimite de reservas sin informar, *no es posible asginarte más números.*\n" +
-  txtReservas +
-  "\nPor favor, enviá cuanto antes el informe de estos numeros al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
+  reservasPendientes +
+  "\nPor favor, no olvides informar estas llamadas al hermano que te los asignó para que puedas seguir recibiendo números. Gracias!";
   break;
 case "revisitas":
   var txtRevisitas = jsonata(
@@ -497,7 +497,7 @@ case "revisitas":
   contacto.FechaP +
   "*\nRespuesta a la última llamada: *" +
   contacto.Respuesta +
-  "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio.  \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.";
+  "*\n\nPor favor, *no olvides informar* la respuesta del amo de casa al hermano que te asignó este número. Llevar un buen registro es esencial para dar un buen testimonio.  \nSi deseás reservar el número como *revisita*, por favor no olvides informarle al hermano cuando ya no lo sigas revisitando. Gracias.\n\n" + reservasPendientes;
 return reservaBody  
 };
 
