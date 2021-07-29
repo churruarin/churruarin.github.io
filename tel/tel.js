@@ -419,11 +419,17 @@ async function selectRecord(tipo, nombre, refresh) {
       responsables(undefined, undefined, true),
       selectRecord("territorios"));
         */
-      selectRecord("reservasResponsable", undefined, true);
-      selectRecord("revisitasResponsable", undefined, true);
-      selectRecord("publicadores", undefined, true);
-      responsables(undefined, undefined, true);
-      selectRecord("territorios");
+      var a = selectRecord("reservasResponsable", undefined, true);
+      var b = selectRecord("revisitasResponsable", undefined, true);
+      var c = selectRecord("publicadores", undefined, true);
+      var d = responsables(undefined, undefined, true);
+      var e = selectRecord("territorios");
+      await a;
+      await b;
+      await c;
+      await d;
+      await e;
+
       if (selectedRecord.responsable.responsable === undefined) {
         await selectRecord("responsables");
         $("#modResponsable").modal("show");
