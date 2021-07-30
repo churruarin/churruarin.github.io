@@ -117,7 +117,7 @@ async function revisitas(tipo, nombre, refresh) {
       ).evaluate(jsonurl);
     });
   revi = allRecords.revisitas;
-  switch (tipo) {
+  switch (tipo) { 
     case "responsable":
       revi = jsonata('[$map($[Responsable="'+nombre+'"], function ($v){($d:=$v.Publicador &" ("& $v.Days>1?$fromMillis($v.Timestamp,"[D01]/[M01]/[Y0001]")&", hace "&$v.Days &" días)":$fromMillis($v.Timestamp,"[D01]/[M01]/[Y0001]")&")";$merge([$v,{"PublicadorFecha":$d}]))})]').evaluate(
         allRecords.revisitas
