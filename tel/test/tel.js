@@ -425,15 +425,18 @@ async function selectRecord(tipo, nombre, refresh) {
       if ( selectedRecord.responsable.revisitasPendientes.length == 1) {
         $("#hRevisitasPendientes").html("Hay <strong>una revisita a verificar</strong> asignada bajo tu responsabilidad");
         $("#divRevisitasPendientes").removeClass("hidden");
+        $("#trRevisitasPendientes").removeClass("hidden");
         $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
       } else if (selectedRecord.responsable.revisitasPendientes.length > 1) {
         $("#hRevisitasPendientes").html(
           "Hay <strong>" + selectedRecord.responsable.revisitasPendientes.length + " revisitas a verificar</strong> asignadas bajo tu responsabilidad"
         );
         $("#divRevisitasPendientes").removeClass("hidden");
+        $("#trRevisitasPendientes").removeClass("hidden");
         $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
       } else {
         $("#divRevisitasPendientes").addClass("hidden");
+        $("#trRevisitasPendientes").addClass("hidden");
         $("#spResponsableRevisitasPendientes").text("0");
       };
 
