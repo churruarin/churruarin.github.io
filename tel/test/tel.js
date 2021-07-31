@@ -209,7 +209,7 @@ async function contactos(tipo, nombre, refresh) {
       ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
-    case "reserva":
+    case "reserva":/*
       contactos = jsonata(
         '[$map($[Respuesta="Reservado"][Telefono="'+nombre+'"].$merge([$,{'+
         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
@@ -222,7 +222,8 @@ async function contactos(tipo, nombre, refresh) {
          '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
           ')})]'
       ).evaluate(allRecords.contactos);
-
+*/
+contactos = jsonata('$[Respuesta="Reservado"][Telefono="'+nombre+'"]').evaluate(selectedRecord.responsable.reservas);
       break;
     default:
       contactos = allRecords.contactos;
