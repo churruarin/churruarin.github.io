@@ -420,12 +420,12 @@ async function selectRecord(tipo, nombre, refresh) {
       );
       $("#divRevisitasPendientes").addClass("hidden");
       if ( selectedRecord.responsable.revisitasPendientes.length == 1) {
-        $("#hRevisitasPendientes").text("Hay una revisita asignada bajo tu responsabilidad");
+        $("#hRevisitasPendientes").text("Hay una revisita asignada bajo tu responsabilidad para verificar");
         $("#divRevisitasPendientes").removeClass("hidden");
         $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
       } else if (selectedRecord.responsable.revisitasPendientes.length > 1) {
         $("#hRevisitasPendientes").text(
-          "Hay " + selectedRecord.responsable.revisitasPendientes.length + " revisitas asignadas bajo tu responsabilidad"
+          "Hay " + selectedRecord.responsable.revisitasPendientes.length + " revisitas asignadas bajo tu responsabilidad para verificar"
         );
         $("#divRevisitasPendientes").removeClass("hidden");
         $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
