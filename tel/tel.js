@@ -183,8 +183,12 @@ async function contactos(tipo, nombre, refresh) {
         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
          '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
         '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
-         '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),"PublicadorFecha":Publicador &" ("& Fecha &")",'+ 
-         '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}]):$v})]'
+         '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),'+ 
+         '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){('+
+         '$loc:= $v.Localidad="Campaña celulares 2021"?{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}:{};'+
+         '$d := $v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");'+
+         '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
+          ')})]'
       ).evaluate(allRecords.contactos);
       selectedRecord.publicador.reservas = contactos;
       selectedRecord.publicador.reservasStats = jsonata('{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(contactos);
@@ -196,21 +200,30 @@ async function contactos(tipo, nombre, refresh) {
          '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
           '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
          '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
-          '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),"PublicadorFecha":Publicador &" ("& Fecha &")",'+ 
-          '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}]):$v})]'
+          '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),'+ 
+          '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){('+
+          '$loc:= $v.Localidad="Campaña celulares 2021"?{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}:{};'+
+          '$d := $v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");'+
+          '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
+           ')})]'
       ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
-    case "reserva":
+    case "reserva":/*
       contactos = jsonata(
         '[$map($[Respuesta="Reservado"][Telefono="'+nombre+'"].$merge([$,{'+
         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
          '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
         '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
-         '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),"PublicadorFecha":Publicador &" ("& Fecha &")",'+ 
-         '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}]):$v})]'
+         '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),'+ 
+         '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){('+
+         '$loc:= $v.Localidad="Campaña celulares 2021"?{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}:{};'+
+         '$d := $v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");'+
+         '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
+          ')})]'
       ).evaluate(allRecords.contactos);
-
+*/
+contactos = jsonata('[$[Respuesta="Reservado"][Telefono="'+nombre+'"]]').evaluate(selectedRecord.responsable.reservas);
       break;
     default:
       contactos = allRecords.contactos;
@@ -834,8 +847,10 @@ $(document).ready(function () {
 
   //-----INFORMAR RESERVA-----
   $(document).on("click", "button[data-informar]", async function () {
-    $("#modInformar").modal("show");
+    $('#cargando').modal('show');
     await selectRecord("reserva", $(this).attr("data-informar"), true);
+    $('#cargando').modal('hide');
+    $("#modInformar").modal("show");
     //$('#cargando').modal('show');
     var reserva = selectedRecord.publicador.reserva[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
@@ -945,9 +960,11 @@ $(document).ready(function () {
 
   //-----INFORMAR REVISITA-----
   $(document).on("click", "button[data-revisita]", async function () {
-    $("#modRevisita").modal("show");
+    $('#cargando').modal('show');
     await selectRecord("revisita", $(this).attr("data-revisita"));
-    //$('#cargando').modal('show');
+    $('#cargando').modal('hide');
+    $("#modRevisita").modal("show");
+    
     var revisita = selectedRecord.publicador.revisita[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 
