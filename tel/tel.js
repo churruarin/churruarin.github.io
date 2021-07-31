@@ -1,4 +1,4 @@
-var $table = $("#table");
+var $table = $("#table"); 
 var tipo = "contactos";
 var zona = "parana";
 var data;
