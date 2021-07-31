@@ -28,7 +28,7 @@ const settings = {
   tiempoMaxReservas: 60, //dias desde la reserva mas antigua para bloquear un pub
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
   limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
-  tiempoMaxReservasResp: 60, //dias desde la reserva mas antigua para bloquear un resp
+  tiempoMaxReservasResp: 30, //dias desde la reserva mas antigua para bloquear un resp
   tiempoInformeRevisitas: 120 //días para informar revisitas
 };
 const urls = {
@@ -210,7 +210,7 @@ async function contactos(tipo, nombre, refresh) {
       ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
-    case "reserva":/*
+    case "reserva":
       contactos = jsonata(
         '[$map($[Respuesta="Reservado"][Telefono="'+nombre+'"].$merge([$,{'+
         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
@@ -223,8 +223,8 @@ async function contactos(tipo, nombre, refresh) {
          '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
           ')})]'
       ).evaluate(allRecords.contactos);
-*/
-contactos = jsonata('[$[Respuesta="Reservado"][Telefono="'+nombre+'"]]').evaluate(selectedRecord.responsable.reservas);
+/*
+contactos = jsonata('[$[Respuesta="Reservado"][Telefono="'+nombre+'"]]').evaluate(selectedRecord.responsable.reservas);*/
       break;
     default:
       contactos = allRecords.contactos;
