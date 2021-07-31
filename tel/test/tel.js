@@ -223,7 +223,7 @@ async function contactos(tipo, nombre, refresh) {
           ')})]'
       ).evaluate(allRecords.contactos);
 */
-contactos = jsonata('$[Respuesta="Reservado"][Telefono="'+nombre+'"]').evaluate(selectedRecord.responsable.reservas);
+contactos = jsonata('[$[Respuesta="Reservado"][Telefono="'+nombre+'"]]').evaluate(selectedRecord.responsable.reservas);
       break;
     default:
       contactos = allRecords.contactos;
