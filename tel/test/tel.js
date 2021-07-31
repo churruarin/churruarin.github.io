@@ -119,7 +119,12 @@ async function revisitas(tipo, nombre, refresh) {
   revi = allRecords.revisitas;
   switch (tipo) { 
     case "responsable":
-      revi = jsonata('[$map($[Responsable="'+nombre+'"], function ($v){($d:=$v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"}]))})]').evaluate(
+      revi = jsonata(
+        '[$map($[Responsable="'+nombre+'"].$merge('+
+          '[$,{"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"), "Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7)}])'+
+      ',function ($v){($d:=$v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"}]))})]'
+        
+        ).evaluate(
         allRecords.revisitas
       );
       break;
