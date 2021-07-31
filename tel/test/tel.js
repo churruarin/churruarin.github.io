@@ -29,7 +29,7 @@ const settings = {
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
   limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
   tiempoMaxReservasResp: 60, //dias desde la reserva mas antigua para bloquear un resp
-  tiempoInformeRevisitas: 30 //días para informar revisitas
+  tiempoInformeRevisitas: 120 //días para informar revisitas
 };
 const urls = {
   revisitas:
