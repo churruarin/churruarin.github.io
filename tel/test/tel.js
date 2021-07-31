@@ -143,7 +143,7 @@ async function contactos(tipo, nombre, refresh) {
   if (refresh == true || jQuery.isEmptyObject(allRecords.contactos) === true)
     await $.getJSON(urls.contactos).done(function (jsonurl) {
       allRecords.contactos = jsonata(
-        '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],"Timestamp":[9])'
+        '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],"Timestamp":$[9]})'
       ).evaluate(jsonurl);
     });
 
