@@ -420,15 +420,15 @@ async function selectRecord(tipo, nombre, refresh) {
       );
       $("#divRevisitasPendientes").addClass("hidden");
       if ( selectedRecord.responsable.revisitasPendientes.length == 1) {
-        $("#hRevisitasPendientes").text("Hay una revisita asignada bajo tu responsabilidad para verificar");
+        $("#hRevisitasPendientes").text("Hay una revisita a verificar asignada bajo tu responsabilidad");
         $("#divRevisitasPendientes").removeClass("hidden");
-        $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
+        $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitas.length);
       } else if (selectedRecord.responsable.revisitasPendientes.length > 1) {
         $("#hRevisitasPendientes").text(
-          "Hay " + selectedRecord.responsable.revisitasPendientes.length + " revisitas asignadas bajo tu responsabilidad para verificar"
+          "Hay " + selectedRecord.responsable.revisitasPendientes.length + " revisitas a verificar asignadas bajo tu responsabilidad"
         );
         $("#divRevisitasPendientes").removeClass("hidden");
-        $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
+        $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitas.length);
       } else {
         $("#divRevisitasPendientes").addClass("hidden");
         $("#spResponsableRevisitasPendientes").text("0");
