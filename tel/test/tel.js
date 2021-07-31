@@ -345,10 +345,10 @@ async function selectRecord(tipo, nombre, refresh) {
       var reservasCount = selectedRecord.responsable.reservas.length
       $("#tablereservas").removeClass("hidden");
       if (reservasCount == 1) {
-        $("#hReservas").text("Hay <strong>una reserva</strong> hecha bajo tu responsabilidad");
+        $("#hReservas").html("Hay <strong>una reserva</strong> hecha bajo tu responsabilidad");
         $("#spResponsableReservas").text(selectedRecord.responsable.reservas.length);
       } else if (reservasCount > 1) {
-        $("#hReservas").text(
+        $("#hReservas").html(
           "Hay <strong>" + reservasCount + " reservas</strong> hechas bajo tu responsabilidad"
         );
         $("#spResponsableReservas").text(selectedRecord.responsable.reservas.length);
