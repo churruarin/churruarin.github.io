@@ -29,6 +29,7 @@ const settings = {
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
   limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
   tiempoMaxReservasResp: 60, //dias desde la reserva mas antigua para bloquear un resp
+  tiempoInformeRevisitas: 30 //días para informar revisitas
 };
 const urls = {
   revisitas:
@@ -389,6 +390,7 @@ async function selectRecord(tipo, nombre, refresh) {
         nombre,
         refresh
       );
+
       await selectRecord("publicador", nombre);
 
       break;
@@ -406,6 +408,9 @@ async function selectRecord(tipo, nombre, refresh) {
         selectedRecord.responsable.responsable,
         refresh
       );
+      selectedRecord.responsable.revisitasPendientes = jsonata('[$[Days>='+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
+      selectedRecord.responsable.revisitasOk = jsonata('[$[Days>='+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
+
       $("#tableRevisitas").bootstrapTable({
         data: selectedRecord.responsable.revisitas,
       });
