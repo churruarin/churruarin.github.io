@@ -410,6 +410,9 @@ async function selectRecord(tipo, nombre, refresh) {
       );
       selectedRecord.responsable.revisitasPendientes = jsonata('[$[Days>='+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
       selectedRecord.responsable.revisitasOk = jsonata('[$[Days<'+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
+      if ( selectedRecord.responsable.revisitas.length > 0) {
+      $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);}
+      else { $("#spResponsableRevisitas").text(0)};
 
       $("#tableRevisitasPendientes").bootstrapTable({
         data: selectedRecord.responsable.revisitasPendientes,
@@ -446,16 +449,16 @@ async function selectRecord(tipo, nombre, refresh) {
       if ( selectedRecord.responsable.revisitasOk.length == 1) {
         $("#hRevisitas").html("Hay <strong>una revisita</strong> asignada bajo tu responsabilidad");
         $("#divRevisitas").removeClass("hidden");
-        $("#spResponsableRevisitas").html(selectedRecord.responsable.revisitas.length);
+       // $("#spResponsableRevisitas").html(selectedRecord.responsable.revisitas.length);
       } else if (selectedRecord.responsable.revisitasOk.length > 1) {
         $("#hRevisitas").html(
           "Hay <strong>" + selectedRecord.responsable.revisitasOk.length + " revisitas</strong> asignadas bajo tu responsabilidad"
         );
         $("#divRevisitas").removeClass("hidden");
-        $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);
+       // $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);
       } else {
         $("#divRevisitas").addClass("hidden");
-        $("#spResponsableRevisitas").text("0");
+       // $("#spResponsableRevisitas").text("0");
       };
 
 
