@@ -176,7 +176,12 @@ async function contactos(tipo, nombre, refresh) {
 
     case "reservasResponsable":
       contactos = jsonata(
-        '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
+        '$map($[Respuesta="Reservado"][Responsable="'+nombre+'"].$merge([$,{'+
+         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
+          '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
+         '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
+          '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),"PublicadorFecha":Publicador &" ("& Fecha &")",'+ 
+          '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}]):$v})'
       ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
