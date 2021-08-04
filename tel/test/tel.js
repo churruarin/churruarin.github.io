@@ -495,7 +495,7 @@ async function selectRecord(tipo, nombre, refresh) {
             "<option value='"+ value +"'>" + p + "</option>";
         });
         listpubs +=
-        "<option value=''> ======   Todos   ======</option>";
+        "<option value=''> ======== Todos ========</option>";
       };
 
       $.each(pubs, function (key, value) {
