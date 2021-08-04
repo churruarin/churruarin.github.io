@@ -485,6 +485,21 @@ async function selectRecord(tipo, nombre, refresh) {
       var listpubs = "<option></option>";
       var item;
 
+      if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
+        listpubs +=
+        "<option value=''>---Recientes---</option>";
+        $.each(selectedRecord.responsable.history, function( index, value ) {
+          listpubs +=
+            "<option>" + value + "</option>";
+        });
+        $.each(selectedRecord.responsable.history, function (key, value) {
+          listpubs +=
+            "<option value='" + value["Nombre"] + "'>" + item + "</option>";
+        });
+        listpubs +=
+        "<option value=''>---Todos---</option>";
+      };
+
       $.each(pubs, function (key, value) {
         if (value["Reservas"] > 0) {
           item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
@@ -492,7 +507,7 @@ async function selectRecord(tipo, nombre, refresh) {
           item = value["Nombre"];
         }
         listpubs +=
-          "<option value='" + value["Nombre"] + "''>" + item + "</option>";
+          "<option value='" + value["Nombre"] + "'>" + item + "</option>";
       });
       $("#Publicador").empty();
       $("#Publicador").append(listpubs);
