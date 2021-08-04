@@ -60,7 +60,7 @@ var selectedRecord = {
     reservas: {},
     revisitas: {},
     reservasStats:{},
-    history: Cookies.get("history")
+    history: JSON.parse(Cookies.get("history"))
   },
   territorio: Cookies.get("zona"),
 };
@@ -868,7 +868,7 @@ $(document).ready(function () {
     };
     var history = (typeof selectedRecord.responsable.history === "undefined")?[]:selectedRecord.responsable.history;
     selectedRecord.responsable.history=jsonata('[$map($append(["'+selectedRecord.publicador.publicador.Nombre+'"],$[$!="'+selectedRecord.publicador.publicador.Nombre+'"]), function($v, $i) {$i<5?$v})]').evaluate(history);
-    Cookies.set("history", history);
+    Cookies.set("history", JSON.stringify(history));
     if (await submit(dataJson)) {
       // var link = await waLink(selectedPub["Nombre"],contacto);
       window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
