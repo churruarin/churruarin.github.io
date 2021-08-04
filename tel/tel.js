@@ -28,7 +28,7 @@ const settings = {
   tiempoMaxReservas: 60, //dias desde la reserva mas antigua para bloquear un pub
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
   limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
-  tiempoMaxReservasResp: 30, //dias desde la reserva mas antigua para bloquear un resp
+  tiempoMaxReservasResp: 35, //dias desde la reserva mas antigua para bloquear un resp
   tiempoInformeRevisitas: 120 //días para informar revisitas
 };
 const urls = {
