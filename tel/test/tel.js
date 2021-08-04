@@ -277,6 +277,9 @@ async function waLink(texto) {
     "?text=" +
     encodeURIComponent(texto
        );
+       console.log(texto);
+       console.log(selpubtel);
+       console.log(link);
   return link;
 }
 
