@@ -487,17 +487,13 @@ async function selectRecord(tipo, nombre, refresh) {
 
       if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
         listpubs +=
-        "<option value=''>---Recientes---</option>";
+        "<option value=''>====== Recientes ======</option>";
         $.each(selectedRecord.responsable.history, function( index, value ) {
           listpubs +=
             "<option>" + value + "</option>";
         });
-        $.each(selectedRecord.responsable.history, function (key, value) {
-          listpubs +=
-            "<option value='" + value["Nombre"] + "'>" + item + "</option>";
-        });
         listpubs +=
-        "<option value=''>---Todos---</option>";
+        "<option value=''>====== Todos ======</option>";
       };
 
       $.each(pubs, function (key, value) {
