@@ -35,7 +35,7 @@
       }
     </style>
     <link href="/app/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="tel.js"></script>
+    <script src="tel.js?v=2.2.3"></script>
 
   </head>
 
@@ -70,7 +70,10 @@
       </div>
       <table class="table">
         <tr><td><a href="#tablereservas">Reservas</a></td><td class="text-right"><a href="#tablereservas"><span id="spResponsableReservas">0</span></a></td></tr>
-        <tr><td> <a href="#divRevisitas">Revisitas</a></td><td class="text-right"> <a href="#divRevisitas"><span id="spResponsableRevisitas">0</span></a></td></tr>
+        <tr><td> <a href="#divRevisitasPendientes">Revisitas</a></td><td class="text-right"> <a href="#divRevisitasPendientes"><span id="spResponsableRevisitas">0</span></a></td></tr>
+        <tr id="trRevisitasPendientes"><td><ul>
+          <li> <a href="#divRevisitasPendientes">A verificar</a></td><td class="text-right"></li>
+        </ul> <a href="#divRevisitasPendientes"><span id="spResponsableRevisitasPendientes">0</span></a></td></tr>
       </table>
     </div>
   </div>
@@ -168,6 +171,26 @@
           </table>
         </div>
       </div>
+      <div id="divRevisitasPendientes" class="hidden">
+        <h3 id="hRevisitasPendientes">Revisitas asignadas bajo tu responsabilidad que debes verificar</h3>
+
+        <div class="table-responsive">
+          <table
+            id="tableRevisitasPendientes"
+            data-toggle="tableRevisitasPendientes"
+            class="table table-striped"
+          >
+            <thead>
+              <tr>
+                <th data-field="Telefono" data-formatter="LinkFormatterRevisita">
+                  Teléfono
+                </th>
+                <th data-field="PublicadorFecha">Publicador</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
       <div id="divRevisitas" class="hidden">
         <h3 id="hRevisitas">Revisitas asignadas bajo tu responsabilidad</h3>
 
@@ -182,7 +205,7 @@
                 <th data-field="Telefono" data-formatter="LinkFormatterRevisita">
                   Teléfono
                 </th>
-                <th data-field="Publicador">Publicador</th>
+                <th data-field="PublicadorFecha">Publicador</th>
               </tr>
             </thead>
           </table>
