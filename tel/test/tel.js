@@ -409,9 +409,10 @@ async function selectRecord(tipo, nombre, refresh) {
         $("#pnlInvalidDiasResp").removeClass("hidden");
       };
       if ($('#pnlInvalidResp.hidden').length && $('#pnlInvalidDiasResp.hidden').length) {
-        $("#pnlContactos").addClass("hidden");
-      } else {
         $("#pnlContactos").removeClass("hidden");
+      } else {
+        
+        $("#pnlContactos").addClass("hidden");
       };
 
 
