@@ -512,7 +512,7 @@ async function selectRecord(tipo, nombre, refresh) {
 
       if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
         listpubs +=
-        "<option value=''>🕘▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recientes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</option>";
+        "<option value=''>🕘&nbsp;𝗥𝗲𝗰𝗶𝗲𝗻𝘁𝗲𝘀</option>";
         $.each(selectedRecord.responsable.history, function( index, value ) {
           var p = jsonata('$[Nombre="'+value+'"].Reservas').evaluate(pubs);
           p= p>0? value + " (" + p + " reservados)":value;
@@ -520,7 +520,7 @@ async function selectRecord(tipo, nombre, refresh) {
             "<option value='"+ value +"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + p + "</option>";
         });
         listpubs +=
-        "<option value=''>🗂️▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Todos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</option>";
+        "<option value=''>🗂️&nbsp;𝗧𝗼𝗱𝗼𝘀</option>";
       };
 
       $.each(pubs, function (key, value) {
