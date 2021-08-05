@@ -512,15 +512,15 @@ async function selectRecord(tipo, nombre, refresh) {
 
       if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
         listpubs +=
-        "<option value='' disabled> RECIENTES</option>";
+        "<option value='' disabled>🕘 RECIENTES</option>";
         $.each(selectedRecord.responsable.history, function( index, value ) {
           var p = jsonata('$[Nombre="'+value+'"].Reservas').evaluate(pubs);
           p= p>0? value + " (" + p + " reservados)":value;
           listpubs +=
-            "<option value='"+ value +"'>" + p + "</option>";
+            "<option value='"+ value +"'>&nbsp;&nbsp;" + p + "</option>";
         });
         listpubs +=
-        "<option value='' disabled> TODOS</option>";
+        "<option value='' disabled>🗂️ TODOS</option>";
       };
 
       $.each(pubs, function (key, value) {
