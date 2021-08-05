@@ -28,7 +28,7 @@ const settings = {
   tiempoMaxReservas: 60, //dias desde la reserva mas antigua para bloquear un pub
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
   limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
-  tiempoMaxReservasResp: 30, //dias desde la reserva mas antigua para bloquear un resp
+  tiempoMaxReservasResp: 35, //dias desde la reserva mas antigua para bloquear un resp
   tiempoInformeRevisitas: 120 //días para informar revisitas
 };
 const urls = {
@@ -59,8 +59,7 @@ var selectedRecord = {
     responsable: Cookies.get("responsable"),
     reservas: {},
     revisitas: {},
-    reservasStats:{},
-    history: JSON.parse(Cookies.get("history"))
+    reservasStats:{}
   },
   territorio: Cookies.get("zona"),
 };
@@ -278,7 +277,6 @@ async function waLink(texto) {
     "?text=" +
     encodeURIComponent(texto
        );
-       
   return link;
 }
 
@@ -421,7 +419,7 @@ async function selectRecord(tipo, nombre, refresh) {
         refresh
       );
       selectedRecord.responsable.revisitasPendientes = jsonata('[$[Days>='+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
-      selectedRecord.responsable.revisitasOk = jsonata('[$map($[Days<'+settings.tiempoInformeRevisitas+'], function($v, $i, $a) {$merge([$v,($p:=$v.Observaciones="Verificada continuidad de revisita"?$v.PublicadorFecha&" ✔️":$v.PublicadorFecha;{"PublicadorFecha":$p})])})]').evaluate(selectedRecord.responsable.revisitas);
+      selectedRecord.responsable.revisitasOk = jsonata('[$[Days<'+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
       if ( selectedRecord.responsable.revisitas.length > 0) {
       $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);}
       else { $("#spResponsableRevisitas").text(0)};
@@ -483,19 +481,6 @@ async function selectRecord(tipo, nombre, refresh) {
       var listpubs = "<option></option>";
       var item;
 
-      if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
-        listpubs +=
-        "<option value=''> ====== Recientes ======</option>";
-        $.each(selectedRecord.responsable.history, function( index, value ) {
-          var p = jsonata('$[Nombre="'+value+'"].Reservas').evaluate(pubs);
-          p= p>0? value + " (" + p + " reservados)":value;
-          listpubs +=
-            "<option value='"+ value +"'>" + p + "</option>";
-        });
-        listpubs +=
-        "<option value=''> ======== Todos ========</option>";
-      };
-
       $.each(pubs, function (key, value) {
         if (value["Reservas"] > 0) {
           item = value["Nombre"] + " (" + value["Reservas"] + " reservados)";
@@ -503,7 +488,7 @@ async function selectRecord(tipo, nombre, refresh) {
           item = value["Nombre"];
         }
         listpubs +=
-          "<option value='" + value["Nombre"] + "'>" + item + "</option>";
+          "<option value='" + value["Nombre"] + "''>" + item + "</option>";
       });
       $("#Publicador").empty();
       $("#Publicador").append(listpubs);
@@ -862,9 +847,6 @@ $(document).ready(function () {
       Responsable: selectedRecord.responsable.responsable,
       Observaciones: "",
     };
-    var history = (typeof selectedRecord.responsable.history === "undefined")?[]:selectedRecord.responsable.history;
-    selectedRecord.responsable.history=jsonata('[$sort($map($append(["'+selectedRecord.publicador.publicador.Nombre+'"],$[$!="'+selectedRecord.publicador.publicador.Nombre+'"]), function($v, $i) {$i<10?$v}))]').evaluate(history);
-    Cookies.set("history", JSON.stringify(selectedRecord.responsable.history));
     if (await submit(dataJson)) {
       // var link = await waLink(selectedPub["Nombre"],contacto);
       window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
