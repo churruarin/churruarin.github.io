@@ -421,7 +421,7 @@ async function selectRecord(tipo, nombre, refresh) {
         refresh
       );
       selectedRecord.responsable.revisitasPendientes = jsonata('[$[Days>='+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
-      selectedRecord.responsable.revisitasOk = jsonata('[$[Days<'+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
+      selectedRecord.responsable.revisitasOk = jsonata('[$map($[Days<'+settings.tiempoInformeRevisitas+'], function($v, $i, $a) {$merge([$v,($p:=$v.Observaciones="Verificada continuidad de revisita"?$v.PublicadorFecha&" ✔️":$v.PublicadorFecha;{"PublicadorFecha":$p})])})]').evaluate(selectedRecord.responsable.revisitas);
       if ( selectedRecord.responsable.revisitas.length > 0) {
       $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);}
       else { $("#spResponsableRevisitas").text(0)};
