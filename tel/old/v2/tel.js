@@ -28,7 +28,8 @@ const settings = {
   tiempoMaxReservas: 60, //dias desde la reserva mas antigua para bloquear un pub
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
   limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
-  tiempoMaxReservasResp: 60, //dias desde la reserva mas antigua para bloquear un resp
+  tiempoMaxReservasResp: 35, //dias desde la reserva mas antigua para bloquear un resp
+  tiempoInformeRevisitas: 120 //días para informar revisitas
 };
 const urls = {
   revisitas:
@@ -96,9 +97,16 @@ async function publicadores(tipo, nombre, refresh) {
     var jsonPubs = jsonata('$[Nombre="' + nombre + '"]').evaluate(
       allRecords.publicadores
     );
-
-    return jsonPubs;
+        return jsonPubs;
+  };
+  if (tipo == "reservas") {
+    //$[Respuesta="Reservado"]{Publicador:$count(Publicador)}
+    //$map($[1], function ($v){$merge([$v,{"Reservas":$lookup($$[0],$v.Nombre)}])})
+    //$map($[2], function ($v){$merge([$v,{"Reservas":$lookup($$[0],$v.Nombre),"Revisitas":$lookup($$[1],$v.Nombre)}])})
+    //$map($[2], function ($v){($res:=$lookup($$[0],$v.Nombre);$rev:=$lookup($$[1],$v.Nombre);$merge([$v,{"Reservas":$res>0?$res:0,"Revisitas":$rev>0?$rev:0}]))})
+    //$[Respuesta="Revisita"]{Publicador:$count(Publicador)}
   }
+
   return allRecords.publicadores;
 }
 
@@ -106,23 +114,34 @@ async function revisitas(tipo, nombre, refresh) {
   if (refresh === true || jQuery.isEmptyObject(allRecords.revisitas) === true)
     await $.getJSON(urls.revisitas).done(function (jsonurl) {
       allRecords.revisitas = jsonata(
-        '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"), "Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7)})'
+        '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8], "Timestamp":$[9]})'
       ).evaluate(jsonurl);
     });
   revi = allRecords.revisitas;
-  switch (tipo) {
+  switch (tipo) { 
     case "responsable":
-      revi = jsonata('[$[Responsable="' + nombre + '"]]').evaluate(
+      revi = jsonata(
+        '[$map($[Responsable="'+nombre+'"].$merge('+
+          '[$,{"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"), "Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7)}])'+
+      ',function ($v){($d:=$v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"}]))})]'
+        
+        ).evaluate(
         allRecords.revisitas
       );
       break;
     case "publicador":
-      revi = jsonata('[$[Publicador="' + nombre + '"]]').evaluate(
+      revi = jsonata(  '[$map($[Publicador="'+nombre+'"].$merge('+
+      '[$,{"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"), "Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7)}])'+
+  ',function ($v){($d:=$v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"}]))})]'
+).evaluate(
         allRecords.revisitas
       );
       break;
     case "revisita":
-      revi = jsonata('[$[Telefono="' + nombre + '"]]').evaluate(
+      revi = jsonata(  '[$map($[Telefono="'+nombre+'"].$merge('+
+      '[$,{"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"), "Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7)}])'+
+  ',function ($v){($d:=$v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"}]))})]'
+).evaluate(
         allRecords.revisitas
       );
 
@@ -136,13 +155,16 @@ async function contactos(tipo, nombre, refresh) {
   if (refresh == true || jQuery.isEmptyObject(allRecords.contactos) === true)
     await $.getJSON(urls.contactos).done(function (jsonurl) {
       allRecords.contactos = jsonata(
-        '$map($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],' +
+        '$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],"Timestamp":$[9]})'
+      ).evaluate(jsonurl);
+    });
+
+    /*        '$map($.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7], "Responsable":$[8],' +
         '"Timestamp":$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),"TimestampIso":$fromMillis($toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),' +
         '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis($[9],"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
         '"DireccionP":($[2]="Campaña celulares 2021"? $eval($[1]) : $[1] & ", " & $[2]),"PublicadorFecha":$[5] &" ("& $[3] &")" , "FechaP": ($[3] & ($boolean($[6]) ?(" por la "& $[6]) : ""))}), function($v){' +
         '$v.Localidad="Campaña celulares 2021"?$merge([$v,{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}]):$v})'
-      ).evaluate(jsonurl);
-    });
+*/
   var contactos;
   switch (tipo) {
     case "asignar":
@@ -152,13 +174,32 @@ async function contactos(tipo, nombre, refresh) {
         localidad = '[Localidad="' + nombre + '"]';
       }
       contactos = jsonata(
-        '[$shuffle($[Respuesta!="Reservado"]' + localidad + ")[0]]"
+        '[$map($shuffle($[Respuesta!="Reservado"]' + localidad + ')[0].$merge([$,{'+
+        '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
+         '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
+        '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
+         '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),'+ 
+         '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){('+
+         '$loc:= $v.Localidad="Campaña celulares 2021"?{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}:{};'+
+         '$d := $v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");'+
+         '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
+          ')})]'
+       
       ).evaluate(allRecords.contactos);
-
+ //'[$shuffle($[Respuesta!="Reservado"]' + localidad + ")[0]]"
       break;
     case "reservasPublicador":
       contactos = jsonata(
-        '[$[Respuesta="Reservado"][Publicador="' + nombre + '"]]'
+        '[$map($[Respuesta="Reservado"][Publicador="'+nombre+'"].$merge([$,{'+
+        '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
+         '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
+        '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
+         '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),'+ 
+         '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){('+
+         '$loc:= $v.Localidad="Campaña celulares 2021"?{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}:{};'+
+         '$d := $v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");'+
+         '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
+          ')})]'
       ).evaluate(allRecords.contactos);
       selectedRecord.publicador.reservas = contactos;
       selectedRecord.publicador.reservasStats = jsonata('{"LastMillis":$max(Timestamp),"LastIso":$fromMillis($max(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"FirstMillis":$min(Timestamp),"FirstIso":$fromMillis($min(Timestamp), "[D01]/[M01]/[Y0001] [H01]:[m01]"),"Count":$count($),"FirstDays":$floor(($toMillis($now(undefined,"-0300"))-$min(Timestamp))/8.64e+7),"LastMins":$round(($toMillis($now(undefined,"-0300"))-$max(Timestamp))/60000,1)}').evaluate(contactos);
@@ -166,15 +207,34 @@ async function contactos(tipo, nombre, refresh) {
 
     case "reservasResponsable":
       contactos = jsonata(
-        '[$[Respuesta="Reservado"][Responsable="' + nombre + '"]]'
+        '[$map($[Respuesta="Reservado"][Responsable="'+nombre+'"].$merge([$,{'+
+         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
+          '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
+         '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
+          '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),'+ 
+          '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){('+
+          '$loc:= $v.Localidad="Campaña celulares 2021"?{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}:{};'+
+          '$d := $v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");'+
+          '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
+           ')})]'
       ).evaluate(allRecords.contactos);
       //selectedRecord.responsable.reservas = contactos;
       break;
     case "reserva":
       contactos = jsonata(
-        '[$[Respuesta="Reservado"][Telefono="' + nombre + '"]]'
+        '[$map($[Respuesta="Reservado"][Telefono="'+nombre+'"].$merge([$,{'+
+        '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
+         '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
+        '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
+         '"DireccionP":(Localidad="Campaña celulares 2021"? $eval(Direccion) : Direccion & ", " & Localidad),'+ 
+         '"FechaP": (Fecha & ($boolean(Turno) ?(" por la "& Turno) : ""))}]), function($v){('+
+         '$loc:= $v.Localidad="Campaña celulares 2021"?{"DireccionP":$map($v.DireccionP.[$number($.numdesde)..$number($.numhasta)], function($val){$v.DireccionP.area & "-" & $v.DireccionP.pre & "-" & $pad($string($val),-4,"0") })}:{};'+
+         '$d := $v.Days>1?$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]")&", hace "&$v.Days &" días":$fromMillis($v.Timestamp,"[D1]/[M1]/[Y0001]");'+
+         '$merge([$v,{"PublicadorFecha":$v.Publicador&" ("&$d&")"},$loc])'+
+          ')})]'
       ).evaluate(allRecords.contactos);
-
+/*
+contactos = jsonata('[$[Respuesta="Reservado"][Telefono="'+nombre+'"]]').evaluate(selectedRecord.responsable.reservas);*/
       break;
     default:
       contactos = allRecords.contactos;
@@ -295,11 +355,11 @@ async function selectRecord(tipo, nombre, refresh) {
       var reservasCount = selectedRecord.responsable.reservas.length
       $("#tablereservas").removeClass("hidden");
       if (reservasCount == 1) {
-        $("#hReservas").text("Hay una reserva hecha bajo tu responsabilidad");
+        $("#hReservas").html("Hay <strong>una reserva</strong> hecha bajo tu responsabilidad");
         $("#spResponsableReservas").text(selectedRecord.responsable.reservas.length);
       } else if (reservasCount > 1) {
-        $("#hReservas").text(
-          "Hay " + reservasCount + " reservas hechas bajo tu responsabilidad"
+        $("#hReservas").html(
+          "Hay <strong>" + reservasCount + " reservas</strong> hechas bajo tu responsabilidad"
         );
         $("#spResponsableReservas").text(selectedRecord.responsable.reservas.length);
       } else {
@@ -340,6 +400,7 @@ async function selectRecord(tipo, nombre, refresh) {
         nombre,
         refresh
       );
+
       await selectRecord("publicador", nombre);
 
       break;
@@ -357,28 +418,60 @@ async function selectRecord(tipo, nombre, refresh) {
         selectedRecord.responsable.responsable,
         refresh
       );
+      selectedRecord.responsable.revisitasPendientes = jsonata('[$[Days>='+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
+      selectedRecord.responsable.revisitasOk = jsonata('[$[Days<'+settings.tiempoInformeRevisitas+']]').evaluate(selectedRecord.responsable.revisitas);
+      if ( selectedRecord.responsable.revisitas.length > 0) {
+      $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);}
+      else { $("#spResponsableRevisitas").text(0)};
+
+      $("#tableRevisitasPendientes").bootstrapTable({
+        data: selectedRecord.responsable.revisitasPendientes,
+      });
+      $("#tableRevisitasPendientes").bootstrapTable(
+        "load",
+        selectedRecord.responsable.revisitasPendientes
+      );
+      $("#divRevisitasPendientes").addClass("hidden");
+      if ( selectedRecord.responsable.revisitasPendientes.length == 1) {
+        $("#hRevisitasPendientes").html("Hay <strong>una revisita a verificar</strong> asignada bajo tu responsabilidad");
+        $("#divRevisitasPendientes").removeClass("hidden");
+        $("#trRevisitasPendientes").removeClass("hidden");
+        $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
+      } else if (selectedRecord.responsable.revisitasPendientes.length > 1) {
+        $("#hRevisitasPendientes").html(
+          "Hay <strong>" + selectedRecord.responsable.revisitasPendientes.length + " revisitas a verificar</strong> asignadas bajo tu responsabilidad"
+        );
+        $("#divRevisitasPendientes").removeClass("hidden");
+        $("#trRevisitasPendientes").removeClass("hidden");
+        $("#spResponsableRevisitasPendientes").text(selectedRecord.responsable.revisitasPendientes.length);
+      } else {
+        $("#divRevisitasPendientes").addClass("hidden");
+        $("#trRevisitasPendientes").addClass("hidden");
+        $("#spResponsableRevisitasPendientes").text("0");
+      };
+
       $("#tableRevisitas").bootstrapTable({
-        data: selectedRecord.responsable.revisitas,
+        data: selectedRecord.responsable.revisitasOk,
       });
       $("#tableRevisitas").bootstrapTable(
         "load",
-        selectedRecord.responsable.revisitas
+        selectedRecord.responsable.revisitasOk
       );
 
       $("#divRevisitas").addClass("hidden");
-      if ( selectedRecord.responsable.revisitas.length == 1) {
-        $("#hRevisitas").text("Hay una revisita asignada bajo tu responsabilidad");
+      if ( selectedRecord.responsable.revisitasOk.length == 1) {
+        $("#hRevisitas").html("Hay <strong>una revisita</strong> asignada bajo tu responsabilidad");
         $("#divRevisitas").removeClass("hidden");
-        $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);
-      } else if (selectedRecord.responsable.revisitas.length > 1) {
-        $("#hRevisitas").text(
-          "Hay " + selectedRecord.responsable.revisitas.length + " revisitas asignadas bajo tu responsabilidad"
+       // $("#spResponsableRevisitas").html(selectedRecord.responsable.revisitas.length);
+      } else if (selectedRecord.responsable.revisitasOk.length > 1) {
+        $("#hRevisitas").html(
+          "Hay <strong>" + selectedRecord.responsable.revisitasOk.length + " revisitas</strong> asignadas bajo tu responsabilidad"
         );
         $("#divRevisitas").removeClass("hidden");
-        $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);
+       // $("#spResponsableRevisitas").text(selectedRecord.responsable.revisitas.length);
       } else {
         $("#divRevisitas").addClass("hidden");
-        $("#spResponsableRevisitas").text("0");
+       // $("#spResponsableRevisitas").text("0");
       };
 
 
@@ -798,8 +891,10 @@ $(document).ready(function () {
 
   //-----INFORMAR RESERVA-----
   $(document).on("click", "button[data-informar]", async function () {
-    $("#modInformar").modal("show");
+    $('#cargando').modal('show');
     await selectRecord("reserva", $(this).attr("data-informar"), true);
+    $('#cargando').modal('hide');
+    $("#modInformar").modal("show");
     //$('#cargando').modal('show');
     var reserva = selectedRecord.publicador.reserva[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
@@ -909,9 +1004,11 @@ $(document).ready(function () {
 
   //-----INFORMAR REVISITA-----
   $(document).on("click", "button[data-revisita]", async function () {
-    $("#modRevisita").modal("show");
+    $('#cargando').modal('show');
     await selectRecord("revisita", $(this).attr("data-revisita"));
-    //$('#cargando').modal('show');
+    $('#cargando').modal('hide');
+    $("#modRevisita").modal("show");
+    
     var revisita = selectedRecord.publicador.revisita[0];
     //var data = jsonata('$.values.({"Telefono":$[0], "Direccion":$[1], "Localidad":$[2], "Fecha":$[3], "Respuesta":$[4], "Publicador":$[5], "Turno":$[6], "Observaciones":$[7]})').evaluate(jsonurl);
 

@@ -278,9 +278,7 @@ async function waLink(texto) {
     "?text=" +
     encodeURIComponent(texto
        );
-       console.log(texto);
-       console.log(selpubtel);
-       console.log(link);
+       
   return link;
 }
 
@@ -865,7 +863,7 @@ $(document).ready(function () {
       Observaciones: "",
     };
     var history = (typeof selectedRecord.responsable.history === "undefined")?[]:selectedRecord.responsable.history;
-    selectedRecord.responsable.history=jsonata('[$map($append(["'+selectedRecord.publicador.publicador.Nombre+'"],$[$!="'+selectedRecord.publicador.publicador.Nombre+'"]), function($v, $i) {$i<5?$v})]').evaluate(history);
+    selectedRecord.responsable.history=jsonata('[$map($append(["'+selectedRecord.publicador.publicador.Nombre+'"],$[$!="'+selectedRecord.publicador.publicador.Nombre+'"]), function($v, $i) {$i<10?$v})]').evaluate(history);
     Cookies.set("history", JSON.stringify(selectedRecord.responsable.history));
     if (await submit(dataJson)) {
       // var link = await waLink(selectedPub["Nombre"],contacto);
