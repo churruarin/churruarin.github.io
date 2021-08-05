@@ -390,7 +390,7 @@ async function selectRecord(tipo, nombre, refresh) {
       };
       selectedRecord.responsable.reservasStats.maxDays = jsonata("$max(Days)").evaluate(selectedRecord.responsable.reservas);
       
-      if (selectedRecord.responsable.reservasStats.maxDays < settings.tiempoMinReservasResp) {
+      if (selectedRecord.responsable.reservasStats.maxDays < settings.tiempoMinReservasResp || typeof selectedRecord.responsable.reservasStats.maxDays === 'undefined') {
        // $("#pnlContactos").addClass("hidden");
         $("#pnlWarningDiasResp").addClass("hidden");
         $("#pnlInvalidDiasResp").addClass("hidden");
