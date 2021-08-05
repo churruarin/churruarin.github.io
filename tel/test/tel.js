@@ -60,7 +60,7 @@ var selectedRecord = {
     reservas: {},
     revisitas: {},
     reservasStats:{},
-    history: JSON.parse(Cookies.get("history"))
+    history: (typeof Cookies.get("history") === 'undefined')?[]:JSON.parse(Cookies.get("history"))
   },
   territorio: Cookies.get("zona"),
 };
