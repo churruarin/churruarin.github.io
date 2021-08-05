@@ -512,15 +512,15 @@ async function selectRecord(tipo, nombre, refresh) {
 
       if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
         listpubs +=
-        "<option value=''>🕘&nbsp;𝗥𝗲𝗰𝗶𝗲𝗻𝘁𝗲𝘀 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</option>";
+        "<option value=''>🕘　𝗥𝗲𝗰𝗶𝗲𝗻𝘁𝗲𝘀 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</option>";
         $.each(selectedRecord.responsable.history, function( index, value ) {
           var p = jsonata('$[Nombre="'+value+'"].Reservas').evaluate(pubs);
           p= p>0? value + " (" + p + " reservados)":value;
           listpubs +=
-            "<option value='"+ value +"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + p + "</option>";
+            "<option value='"+ value +"'>⁣　　" + p + "</option>";
         });
         listpubs +=
-        "<option value=''>🗂️&nbsp;𝗧𝗼𝗱𝗼𝘀 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</option>";
+        "<option value=''>🗂️　𝗧𝗼𝗱𝗼𝘀 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</option>";
       };
 
       $.each(pubs, function (key, value) {
@@ -530,7 +530,7 @@ async function selectRecord(tipo, nombre, refresh) {
           item = value["Nombre"];
         }
         listpubs +=
-          "<option value='" + value["Nombre"] + "'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + item + "</option>";
+          "<option value='" + value["Nombre"] + "'>　　" + item + "</option>";
       });
       $("#Publicador").empty();
       $("#Publicador").append(listpubs);
