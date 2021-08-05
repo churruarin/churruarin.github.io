@@ -60,7 +60,7 @@ var selectedRecord = {
     reservas: {},
     revisitas: {},
     reservasStats:{},
-    history: (typeof Cookies.get("history") === 'undefined')?[]:JSON.parse(Cookies.get("history"))
+    history: []
   },
   territorio: Cookies.get("zona"),
 };
@@ -482,6 +482,10 @@ async function selectRecord(tipo, nombre, refresh) {
       var pubs = await publicadores(undefined, undefined, refresh);
       var listpubs = "<option></option>";
       var item;
+      if (typeof Cookies.get("history") != 'undefined') {
+        selectedRecord.responsable.history = JSON.parse(Cookies.get("history"))
+      };
+      
 
       if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
         listpubs +=
