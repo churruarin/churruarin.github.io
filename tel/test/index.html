@@ -78,11 +78,17 @@
     </div>
   </div>
 
-        <div class="col-md-6">  <div class="alert alert-warning hidden" role="alert" id="pnlWarningResp"><h4>Hay muchas reservas bajo tu responsabilidad</h4>
-          <p>Por favor, ingresá los informes de las reservas hechas cuanto antes. Pasadas las <span id="spWarningRespReservas"></span> reservas o <span id="spWarningRespDías"></span> días ya no podrás reservar más números hasta que ingreses los informes.</p>
+        <div class="col-md-6">  
+          <div class="alert alert-warning hidden" role="alert" id="pnlWarningResp"><h4>Hay <strong>muchas reservas</strong> bajo tu responsabilidad</h4>
+          <p>Por favor, ingresá los informes de las reservas hechas cuanto antes. Pasadas las <span id="spWarningRespReservas"></span> reservas ya no podrás reservar más números hasta que ingreses los informes.</p>
           </div>
-      <div class="alert alert-danger hidden" role="alert" id="pnlInvalidResp"><h4>Hay demasiadas reservas bajo tu responsabilidad</h4>
+          <div class="alert alert-warning hidden" role="alert" id="pnlWarningDiasResp"><h4>Hay <strong>reservas con mucha antiguedad</strong> bajo tu responsabilidad</h4>
+            <p>Por favor, ingresá los informes de las reservas hechas cuanto antes. Pasados los <span id="spWarningRespDías"></span> días de una reserva ya no podrás reservar más números hasta que ingreses los informes.</p>
+            </div>
+      <div class="alert alert-danger hidden" role="alert" id="pnlInvalidResp"><h4>Hay <strong>demasiadas reservas</strong> bajo tu responsabilidad</h4>
       <p>No podrás hacer más reservas hasta que cargues los informes correspondientes.</p></div>
+      <div class="alert alert-danger hidden" role="alert" id="pnlInvalidDiasResp"><h4>Hay <strong>reservas demasiado antigüas</strong> bajo tu responsabilidad</h4>
+        <p>No podrás hacer más reservas hasta que cargues los informes correspondientes.</p></div>
       <div id="pnlContactos" class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Reservar un contacto telefónico</h3>
