@@ -78,7 +78,7 @@ async function responsables(tipo, nombre, refresh) {
     jQuery.isEmptyObject(allRecords.responsables) === true
   )
     await $.getJSON(urls.responsables).done(function (jsonurl) {
-      allRecords.responsables = jsonata('$.values.({"Nombre":$[0]})').evaluate(
+      allRecords.responsables = jsonata('$.values.({"Nombre":$[0], "Responsabilidades":$[1]})').evaluate(
         jsonurl
       );
     });
