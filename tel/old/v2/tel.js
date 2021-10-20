@@ -28,8 +28,9 @@ const settings = {
   tiempoMaxReservas: 60, //dias desde la reserva mas antigua para bloquear un pub
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
   limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
-  tiempoMaxReservasResp: 30, //dias desde la reserva mas antigua para bloquear un resp
-  tiempoInformeRevisitas: 120 //días para informar revisitas
+  tiempoMinReservasResp: 8, //dias desde la reserva mas antigua para advertir un resp
+  tiempoMaxReservasResp: 45, //dias desde la reserva mas antigua para bloquear un resp
+  tiempoInformeRevisitas: 45 //días para informar revisitas
 };
 const urls = {
   revisitas:
@@ -370,29 +371,51 @@ async function selectRecord(tipo, nombre, refresh) {
       };
 
       if (reservasCount < settings.limiteReservasRespMin) {
-        $("#pnlContactos").removeClass("hidden");
+        //$("#pnlContactos").removeClass("hidden");
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").addClass("hidden");
       } else if (
         reservasCount >= settings.limiteReservasRespMin &&
         reservasCount < settings.limiteReservasRespMax
       ) {
-        $("#pnlContactos").removeClass("hidden");
+        //$("#pnlContactos").removeClass("hidden");
         $("#pnlWarningResp").removeClass("hidden");
         $("#pnlInvalidResp").addClass("hidden");
         $("#spWarningRespReservas").text(settings.limiteReservasRespMax);
         $("#spWarningRespDías").text(settings.tiempoMaxReservasResp);
       } else if (reservasCount >= settings.limiteReservasRespMax) {
-        $("#pnlContactos").addClass("hidden");
+        //$("#pnlContactos").addClass("hidden");
         $("#pnlWarningResp").addClass("hidden");
         $("#pnlInvalidResp").removeClass("hidden");
       };
       selectedRecord.responsable.reservasStats.maxDays = jsonata("$max(Days)").evaluate(selectedRecord.responsable.reservas);
-      if (selectedRecord.responsable.reservasStats.maxDays >= settings.tiempoMaxReservasResp) {
-        $("#pnlContactos").addClass("hidden");
-        $("#pnlWarningResp").addClass("hidden");
-        $("#pnlInvalidResp").removeClass("hidden");
+      
+      if (selectedRecord.responsable.reservasStats.maxDays < settings.tiempoMinReservasResp || typeof selectedRecord.responsable.reservasStats.maxDays === 'undefined') {
+       // $("#pnlContactos").addClass("hidden");
+        $("#pnlWarningDiasResp").addClass("hidden");
+        $("#pnlInvalidDiasResp").addClass("hidden");
+      } else if (
+        selectedRecord.responsable.reservasStats.maxDays >= settings.tiempoMinReservasResp &&
+        selectedRecord.responsable.reservasStats.maxDays < settings.tiempoMaxReservasResp
+      ) {
+        //$("#pnlContactos").removeClass("hidden");
+        $("#pnlWarningDiasResp").removeClass("hidden");
+        $("#pnlInvalidDiasResp").addClass("hidden");
+        $("#spWarningRespReservas").text(settings.limiteReservasRespMax);
+        $("#spWarningRespDías").text(settings.tiempoMaxReservasResp);
+      } else if (selectedRecord.responsable.reservasStats.maxDays >= settings.tiempoMaxReservasResp) {
+        //$("#pnlContactos").addClass("hidden");
+        $("#pnlWarningDiasResp").addClass("hidden");
+        $("#pnlInvalidDiasResp").removeClass("hidden");
       };
+      if ($('#pnlInvalidResp.hidden').length && $('#pnlInvalidDiasResp.hidden').length) {
+        $("#pnlContactos").removeClass("hidden");
+      } else {
+        
+        $("#pnlContactos").addClass("hidden");
+      };
+
+
  await selectRecord("publicadores",undefined,refresh);
 
       break;
@@ -489,15 +512,15 @@ async function selectRecord(tipo, nombre, refresh) {
 
       if (typeof selectedRecord.responsable.history != undefined && selectedRecord.responsable.history.length > 0) {
         listpubs +=
-        "<option value=''> ====== Recientes ======</option>";
+        "<option value=''>🕘&nbsp;&nbsp;𝗥𝗲𝗰𝗶𝗲𝗻𝘁𝗲𝘀</option>";
         $.each(selectedRecord.responsable.history, function( index, value ) {
           var p = jsonata('$[Nombre="'+value+'"].Reservas').evaluate(pubs);
           p= p>0? value + " (" + p + " reservados)":value;
           listpubs +=
-            "<option value='"+ value +"'>" + p + "</option>";
+            "<option value='"+ value +"'>⁣　　" + p + "</option>";
         });
         listpubs +=
-        "<option value=''> ======== Todos ========</option>";
+        "<option value=''>🗂️&nbsp;&nbsp;𝗧𝗼𝗱𝗼𝘀</option>";
       };
 
       $.each(pubs, function (key, value) {
@@ -507,7 +530,7 @@ async function selectRecord(tipo, nombre, refresh) {
           item = value["Nombre"];
         }
         listpubs +=
-          "<option value='" + value["Nombre"] + "'>" + item + "</option>";
+          "<option value='" + value["Nombre"] + "'>　　" + item + "</option>";
       });
       $("#Publicador").empty();
       $("#Publicador").append(listpubs);
