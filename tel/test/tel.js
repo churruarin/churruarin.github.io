@@ -176,7 +176,7 @@ async function contactos(tipo, nombre, refresh) {
         localidad = '[Localidad="' + nombre + '"]';
       }
       contactos = jsonata(
-        '[$map($shuffle($[Respuesta!="Reservado"]' + localidad + ')[0].$merge([$,{'+
+        '[$map($shuffle($[Respuesta!="Reservado"]' + localidad + ')[$round($random()*10)].$merge([$,{'+
         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
          '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
         '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
@@ -536,6 +536,8 @@ async function selectRecord(tipo, nombre, refresh) {
       $("#Publicador").append(listpubs);
       break;
     case "territorios":
+      var territoriosQuery = "$distinct($.Localidad)"
+      //if allRecords.Responsables
       var territorios = jsonata("$distinct($.Localidad)").evaluate(
         await contactos(undefined, undefined, refresh)
       );
@@ -894,6 +896,8 @@ $(document).ready(function () {
     Cookies.set("history", JSON.stringify(selectedRecord.responsable.history));
     if (await submit(dataJson)) {
       // var link = await waLink(selectedPub["Nombre"],contacto);
+
+      // esperar a que se cargue
       window.open(await waLink(await generarMensaje(selectedRecord.publicador.dataReservas.tipoReserva)));
       //window.opener.postMessage('close', 'https://churruar.in');
       $("#spSuccessPublicador").text(selectedRecord.publicador.publicador.Nombre);
