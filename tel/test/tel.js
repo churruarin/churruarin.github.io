@@ -176,7 +176,7 @@ async function contactos(tipo, nombre, refresh) {
         localidad = '[Localidad="' + nombre + '"]';
       }
       contactos = jsonata(
-        '[$map($shuffle($[Respuesta!="Reservado"]' + localidad + ')[$round($random()*10)].$merge([$,{'+
+        '[$map($shuffle($[Respuesta!="Reservado"]' + localidad + ')[$round($random() * ($count($[Respuesta!="Reservado"]' + localidad + ') - 1) + 1)].$merge([$,{'+
         '"Timestamp":$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"),'+
          '"TimestampIso":$fromMillis($toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"), "[D01]/[M01]/[Y0001] [H01]:[m01]"),'+
         '"Days":$floor(($toMillis($now(undefined,"-0300"))-$toMillis(Timestamp,"[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]"))/8.64e+7),'+
