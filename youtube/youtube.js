@@ -22,7 +22,7 @@ function isOnline() {
       
    } else {
     console.log("offline");
-  window.setTimeout(isOnline, 50000); 
+  window.setTimeout(isOnline, 30000); 
    }
 
    yt = x;
@@ -49,7 +49,7 @@ window.setTimeout(check, 50000);
 $(document).ready(function () {
   
 
-check();
+isOnline();
 
 
 
