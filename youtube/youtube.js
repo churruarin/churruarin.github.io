@@ -1,4 +1,7 @@
-var yt;
+var yt = {
+  online : false,
+  link : undefined
+}
 const settings = {
 
 };
@@ -22,6 +25,7 @@ function isOnline() {
 
 function check() {
   isOnline();
+  
   if(yt.online == true) {
   location.href = yt.link; 
     
