@@ -16,13 +16,22 @@ function isOnline() {
       x = jsonata('{"online":$.values[0][0],"link":$.values[1][0]}').evaluate(
         jsonurl
     );
+    if(x.online == true) {
+      console.log("online");
+    location.href = x.link; 
+      
+   } else {
+    console.log("offline");
+  window.setTimeout(isOnline, 50000); 
+   }
+
    yt = x;
    return x;
     });
 
 };
 
-
+/*
 function check() {
   isOnline();
   
@@ -36,7 +45,7 @@ window.setTimeout(check, 50000);
  }
 };
 
-
+*/
 $(document).ready(function () {
   
 
