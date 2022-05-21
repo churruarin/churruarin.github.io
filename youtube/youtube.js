@@ -9,11 +9,10 @@ const urls = {
 
 function isOnline() {
   var x;
-     $.getJSON(urls.urlonline).done(function (jsonurl) {
+   $.getJSON(urls.urlonline).done(function (jsonurl) {
       x = jsonata('{"online":$.values[0][0],"link":$.values[1][0]}').evaluate(
         jsonurl
-        
-      );
+    );
    yt = x;
    return x;
     });
@@ -21,7 +20,7 @@ function isOnline() {
 };
 
 
- function check() {
+function check() {
   var y = isOnline();
   if(y.online != true) {
     window.setTimeout(check, 30000); 
