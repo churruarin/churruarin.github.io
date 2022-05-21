@@ -10,8 +10,9 @@ const urls = {
 };
 
 async function isOnline() {
+  var x;
     await $.getJSON(urls.urlonline).done(function (jsonurl) {
-      var x = jsonata('{"online":$.values[0][0],"link":$.values[1][0]}').evaluate(
+      x = jsonata('{"online":$.values[0][0],"link":$.values[1][0]}').evaluate(
         jsonurl
       );
     });
