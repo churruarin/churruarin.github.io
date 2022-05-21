@@ -14,7 +14,7 @@ function isOnline() {
         jsonurl
         
       );
-   yt=x;
+   yt = x;
    return x;
     });
 
@@ -22,9 +22,9 @@ function isOnline() {
 
 
  function check() {
-  var y = isOnline()
+  var y = isOnline();
   if(y.online != true) {
-    window.setTimeout(check, 30000); /* this checks the flag every 100 milliseconds*/
+    window.setTimeout(check, 30000); 
  } else {
 location.href = y.link;
  }
