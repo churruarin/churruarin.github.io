@@ -17,6 +17,7 @@ async function isOnline() {
         jsonurl
       );
     });
+    link()
   return online;
 }
 
@@ -33,7 +34,7 @@ async function check() {
   if(isOnline() === false) {
     window.setTimeout(checkFlag, 30000); /* this checks the flag every 100 milliseconds*/
  } else {
- /* location.href = link();*/
+location.href = link();
  }
 }
 
@@ -41,7 +42,7 @@ async function check() {
 $(document).ready(function () {
   
 
-check()
+//check()
 
 
 
