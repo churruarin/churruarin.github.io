@@ -16,15 +16,13 @@ async function isOnline() {
       );
     });
     
-    online = x.online
-    LinkYT = x.link
-  return x;
+   return x;
 }
 
 
 async function check() {
-  var y = isOnline()
-  if(y.online === false) {
+  var y = await isOnline()
+  if(y.online != true) {
     window.setTimeout(checkFlag, 30000); /* this checks the flag every 100 milliseconds*/
  } else {
 location.href = x.link;
