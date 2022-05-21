@@ -27,10 +27,12 @@ function check() {
   isOnline();
   
   if(yt.online == true) {
+    console.log("online")
   location.href = yt.link; 
     
  } else {
-window.setTimeout(check, 30000); 
+  console.log("online")
+window.setTimeout(check(), 5000); 
  }
 };
 
