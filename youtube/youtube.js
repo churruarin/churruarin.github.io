@@ -15,7 +15,7 @@ function isOnline() {
    $.getJSON(urls.urlonline).done(function (jsonurl) {
       x = jsonata('{"online":$.values[0][0],"link":$.values[1][0]}').evaluate(jsonurl);
       console.log(x)
-    if(x.online == true) {
+    if(x.online == 'TRUE') {
       console.log("online");
     location.href = x.link; 
       
