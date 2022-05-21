@@ -1,6 +1,4 @@
-var LinkYT;
-var online = false;
-
+var yt;
 const settings = {
 
 };
@@ -16,7 +14,7 @@ async function isOnline() {
         jsonurl
       );
     });
-    
+    yt=x;
    return x;
 }
 
