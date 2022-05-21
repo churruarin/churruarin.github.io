@@ -21,11 +21,12 @@ function isOnline() {
 
 
 function check() {
-  var y = isOnline();
-  if(y.online != true) {
-    window.setTimeout(check, 30000); 
+  isOnline();
+  if(yt.online == true) {
+  location.href = yt.link; 
+    
  } else {
-location.href = y.link;
+window.setTimeout(check, 30000); 
  }
 };
 
