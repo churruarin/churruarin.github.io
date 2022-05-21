@@ -24,7 +24,7 @@ async function check() {
   if(y.online != true) {
     window.setTimeout(check, 30000); /* this checks the flag every 100 milliseconds*/
  } else {
-location.href = x.link;
+location.href = y.link;
  }
 }
 
@@ -32,7 +32,7 @@ location.href = x.link;
 $(document).ready(function () {
   
 
-check()
+await check()
 
 
 
