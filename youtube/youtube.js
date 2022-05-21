@@ -18,7 +18,7 @@ function isOnline() {
    return x;
     });
 
-}
+};
 
 
  function check() {
@@ -28,13 +28,13 @@ function isOnline() {
  } else {
 location.href = y.link;
  }
-}
+};
 
 
 $(document).ready(function () {
   
 
-check()
+check();
 
 
 
