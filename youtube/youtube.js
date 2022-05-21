@@ -31,8 +31,8 @@ function check() {
   location.href = yt.link; 
     
  } else {
-  console.log("online")
-window.setTimeout(check(), 5000); 
+  console.log("offline")
+window.setTimeout(check(), 50000); 
  }
 };
 
