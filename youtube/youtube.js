@@ -24,7 +24,7 @@ async function isOnline() {
 async function check() {
   var y = await isOnline()
   if(y.online != true) {
-    window.setTimeout(checkFlag, 30000); /* this checks the flag every 100 milliseconds*/
+    window.setTimeout(check, 30000); /* this checks the flag every 100 milliseconds*/
  } else {
 location.href = x.link;
  }
