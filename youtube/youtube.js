@@ -32,7 +32,7 @@ location.href = x.link;
 $(document).ready(function () {
   
 
-//check()
+check()
 
 
 
