@@ -20,8 +20,8 @@ async function isOnline() {
   return online;
 }
 
-async function link() {
-  await $.getJSON(urls.urllinkYT).done(function (jsonurl) {
+function link() {
+  $.getJSON(urls.urllinkYT).done(function (jsonurl) {
     linkYT = jsonata('$.values.($)').evaluate(
       jsonurl
     );
