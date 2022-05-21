@@ -32,7 +32,7 @@ function check() {
     
  } else {
   console.log("offline");
-window.setTimeout(check(), 50000); 
+window.setTimeout(check, 50000); 
  }
 };
 
