@@ -52,7 +52,7 @@ window.setTimeout(check, 50000);
 $(document).ready(function () {
   
 
-//isOnline();
+isOnline();
 
 
 
