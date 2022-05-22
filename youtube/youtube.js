@@ -13,9 +13,9 @@ const urls = {
 function isOnline() {
   var x;
    $.getJSON(urls.urlonline).done(function (jsonurl) {
-      x = jsonata('{"online":$.values[0][0],"link":$.values[1][0]}').evaluate(jsonurl);
+      x = jsonata('{"online":($toMillis($now(undefined,"-0300"))-$toMillis($.values[0][0]))>0 and ($toMillis($now(undefined,"-0300"))-$toMillis($.values[0][0]))<14400000,"now":$toMillis($now(undefined,"-0300")),"LinkYT":$.values[1][0]}').evaluate(jsonurl);
       console.log(x)
-    if(x.online == 'TRUE') {
+    if(x.online == true) {
       console.log("online");
     location.href = x.link; 
       
@@ -48,7 +48,7 @@ window.setTimeout(check, 50000);
 $(document).ready(function () {
   
 
-isOnline();
+//isOnline();
 
 
 
