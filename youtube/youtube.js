@@ -17,8 +17,12 @@ function isOnline() {
       console.log(x)
     if(x.online == true) {
       console.log(x.link);
+
     location.href = x.link; 
-      
+           $("#pnlEspera").addClass("hidden");
+      $("#pnlLinkYoutube").removeClass("hidden");
+      $("#spLink").text(x.link);
+      $("#aLink").attr("href", x.link); 
    } else {
     console.log("offline");
   window.setTimeout(isOnline, 30000); 
