@@ -51,7 +51,7 @@ window.setTimeout(check, 50000);
 */
 $(document).ready(function () {
   
-
+  $.ajaxSetup({ cache: false });
 isOnline();
 
 
