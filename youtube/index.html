@@ -58,8 +58,9 @@
         <div class="col-md-6">  
             <div class="panel panel-primary"  role="alert" id="pnlEspera">   
     
-                <div class="panel-heading"><svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                    viewBox="0 0 10 10" enable-background="new 0 0 0 0" xml:space="preserve">
+                <div class="panel-heading">
+                    <svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 1000 1000" enable-background="new 0 0 0 0" xml:space="preserve">
                       <path fill="#fff" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
                         <animateTransform 
                            attributeName="transform" 
@@ -87,17 +88,14 @@
 <div class="col-md-6">  
     
 <div class="panel panel-primary hidden"  id="pnlLinkYoutube">   
-    <div class="panel-heading"><svg class="svg-area" width="250px" height="250px"  viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-        <g transform="translate(200,200)"> 
-    
-            <circle id="core" cx="0" cy="0" r="6"></circle>
-    
-            <circle id="radar" cx="0" cy="0" r="6"></circle>
-    
-        </g>
-        
-    </svg>  EN VIVO</div>
+    <div class="panel-heading">
+        <svg class = "button" expanded = "true" height = "100px" width = "100px">
+            <circle class = "innerCircle" cx = "50%" cy = "50%" r = "25%" fill = "none" stroke = "#000000" stroke-width = "5%">
+              <animate attributeType="SVG" attributeName="r" begin="0s" dur="1.5s" repeatCount="indefinite" from="5%" to="25%"/>
+              <animate attributeType="CSS" attributeName="stroke-width" begin="0s"  dur="1.5s" repeatCount="indefinite" from="3%" to="0%" />
+              <animate attributeType="CSS" attributeName="opacity" begin="0s"  dur="1.5s" repeatCount="indefinite" from="1" to="0"/>
+            </circle>
+        </svg>  EN VIVO</div>
     <div class="panel-body">
         
         <p>El video ya se está transmitiendo en esta dirección: <a href="#" id="aLink"><span id="spLink"></span></a></p>
