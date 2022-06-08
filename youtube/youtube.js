@@ -20,6 +20,7 @@ function isOnline() {
 
     //location.href = x.link; 
     $("#btnPlay").attr("href", x.link);
+    $("#btnShare").attr("href", "https://wa.me/?text=" + encodeURIComponent(x.link));
            $("#pnlEspera").addClass("hidden");
       $("#pnlLinkYoutube").removeClass("hidden");
       $("#spLink").text(x.link);
