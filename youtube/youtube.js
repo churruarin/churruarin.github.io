@@ -18,7 +18,8 @@ function isOnline() {
     if(x.online == true) {
       console.log(x.link);
 
-    location.href = x.link; 
+    //location.href = x.link; 
+    $("#btnPlay").attr("href", x.link);
            $("#pnlEspera").addClass("hidden");
       $("#pnlLinkYoutube").removeClass("hidden");
       $("#spLink").text(x.link);

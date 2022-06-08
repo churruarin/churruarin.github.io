@@ -58,14 +58,26 @@
         <div class="col-md-6">  
             <div class="panel panel-primary"  role="alert" id="pnlEspera">   
     
-                <div class="panel-heading">La transmisión en vivo no ha comenzado</div>
+                <div class="panel-heading"><svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+                      <path fill="#fff" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+                        <animateTransform 
+                           attributeName="transform" 
+                           attributeType="XML" 
+                           type="rotate"
+                           dur="1s" 
+                           from="0 50 50"
+                           to="360 50 50" 
+                           repeatCount="indefinite" />
+                    </path>
+                  </svg>  La transmisión en vivo no ha comenzado</div>
      
                 <div class="panel-body" >
 <p>Por favor, espere. Cuando comience la transmisión se abrirá autamáticamente el video.</p>
                     
       </div>
     <div class="modal-footer">              
-        <button class="btn btn-success" id="btnRecargar" type="submit"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Volver a cargar</button></div>
+        <button class="btn btn-success" id="btnRecargar" type="submit"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>&nbsp;&nbsp; Volver a cargar</button></div>
 </div>
 
 </div>
@@ -75,7 +87,17 @@
 <div class="col-md-6">  
     
 <div class="panel panel-primary hidden"  id="pnlLinkYoutube">   
-    <div class="panel-heading">EN VIVO</div>
+    <div class="panel-heading"><svg class="svg-area" width="250px" height="250px"  viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        <g transform="translate(200,200)"> 
+    
+            <circle id="core" cx="0" cy="0" r="6"></circle>
+    
+            <circle id="radar" cx="0" cy="0" r="6"></circle>
+    
+        </g>
+        
+    </svg>  EN VIVO</div>
     <div class="panel-body">
         
         <p>El video ya se está transmitiendo en esta dirección: <a href="#" id="aLink"><span id="spLink"></span></a></p>
@@ -83,8 +105,8 @@
         
     </div>
     <div class="modal-footer">
-<button class="btn btn-success" id="btnIngresar" type="submit"><button class="btn btn-success" id="btnRecargar" type="submit"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Reproducir el video</button>
 
+<a class="btn btn-success" href="#" role="button" id="btnPlay"><span class="glyphicon glyphicon-play" aria-hidden="true"></span>&nbsp;&nbsp; Reproducir el video</a>
     </div>
 </div></div>
  </div>
