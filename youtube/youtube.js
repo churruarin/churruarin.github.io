@@ -13,7 +13,7 @@ var urls = {
 function isOnline() {
   var x;
    $.getJSON(urls.urlonline).done(function (jsonurl) {
-      x = jsonata('{"online":($toMillis($now(undefined,"-0300"))-$toMillis($.values[0][0]))>0 and ($toMillis($now(undefined,"-0300"))-$toMillis($.values[0][0]))<14400000,"now":$toMillis($now(undefined,"-0300")),"link":$.values[1][0]}').evaluate(jsonurl);
+      x = jsonata('{"online":($toMillis($now(undefined,"-0300"))-$toMillis($.values[0][0]))>0 and ($toMillis($now(undefined,"-0300"))-$toMillis($.values[0][0]))<20000000,"now":$toMillis($now(undefined,"-0300")),"link":$.values[1][0]}').evaluate(jsonurl);
       console.log(x)
     if(x.online == true) {
       console.log(x.link);
@@ -24,6 +24,7 @@ function isOnline() {
            $("#pnlEspera").addClass("hidden");
       $("#pnlLinkYoutube").removeClass("hidden");
       $("#spLink").text(x.link);
+      $("#ifYT").attr("src", youtubelink(x.link)); 
       $("#aLink").attr("href", x.link); 
    } else {
     console.log("offline");
@@ -35,6 +36,13 @@ function isOnline() {
     });
 
 };
+functiion youtubelink(link) {
+  var pattern2 = /(?:http?s?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g;
+  var replacement = 'http://www.youtube.com/embed/$1';
+  var html = link.replace(pattern2, replacement);
+  return link;
+};
+
 
 /*
 function check() {
