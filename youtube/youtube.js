@@ -36,7 +36,7 @@ function isOnline() {
     });
 
 };
-functiion youtubelink(link) {
+function youtubelink(link) {
   var pattern2 = /(?:http?s?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g;
   var replacement = 'http://www.youtube.com/embed/$1';
   var html = link.replace(pattern2, replacement);
