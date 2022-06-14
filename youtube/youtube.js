@@ -38,7 +38,7 @@ function isOnline() {
 };
 function youtubelink(link) {
   var pattern2 = /(?:http?s?:\/\/)?(?:www\.|m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g;
-  var replacement = 'https://www.youtube.com/embed/$1';
+  var replacement = 'https://www.youtube.com/embed/$1?autoplay=1';
   var html = link.replace(pattern2, replacement);
   return html;
 };
@@ -67,5 +67,3 @@ isOnline();
 
 
 });
-
-
