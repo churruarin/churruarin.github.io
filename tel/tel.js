@@ -22,12 +22,12 @@ var pubs, territorios;
 
 const settings = {
   limiteReservasMin: 1, //minimo de reservas sin restricciones
-  limiteReservasMax: 60, //máximo de reservas antes de bloquear
+  limiteReservasMax: 10, //máximo de reservas antes de bloquear
   timeoutReservas: 5, //segundos de espera para hacer una reserva adicional
-  tiempoMinReservas: 0.5, //minutos minimos entre reservas
+  tiempoMinReservas: 2.5, //minutos minimos entre reservas
   tiempoMaxReservas: 60, //dias desde la reserva mas antigua para bloquear un pub
   limiteReservasRespMin: 10, //minimo de reservas sin restricciones
-  limiteReservasRespMax: 30, //máximo de reservas antes de bloquear
+  limiteReservasRespMax: 20, //máximo de reservas antes de bloquear
   tiempoMinReservasResp: 8, //dias desde la reserva mas antigua para advertir un resp
   tiempoMaxReservasResp: 45, //dias desde la reserva mas antigua para bloquear un resp
   tiempoInformeRevisitas: 45 //días para informar revisitas
