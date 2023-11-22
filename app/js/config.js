@@ -33,8 +33,8 @@
     window.__env.mantenimientoUrlDescargaPdf = '/export?format=pdf';
 
     //switches para activar los menus
-    window.__env.mnuSalon = true;
-    window.__env.mnuMantenimiento = true;
+    window.__env.mnuSalon = false;
+    window.__env.mnuMantenimiento = false;
     window.__env.mnuPredicacion = true;
     window.__env.mnuSalidas = true;
     window.__env.mnuTelefonica = false;
@@ -45,8 +45,8 @@
     window.__env.mnuInforme = false;
     window.__env.mnuReuniones = true;
     window.__env.mnuPrograma = true;
-    window.__env.mnuEmision = true;
-    window.__env.emisionAsistencia = true;
+    window.__env.mnuEmision = false;
+    window.__env.emisionAsistencia = false;
     window.__env.paginaInicio = 'app/inicio.html';
     // API url
     window.__env.apiUrl = 'http://dev.your-api.com';
