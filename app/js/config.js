@@ -30,10 +30,14 @@
     window.__env.mantenimientoIdSheets = '1rMxXJKHyj7FDe73FwGpZrEaSsPHWgcuG1OlKviB4Qx0';
     window.__env.mantenimientoUrl1 = '//docs.google.com/spreadsheets/d/';
     window.__env.mantenimientoUrl2 = '/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false'; //?widget=true&headers=false&chrome=false';
+    window.__env.agendaIdSheets = '14oqhqUxtq_8U7c3RMhtIZE8mX8oO0Zbz0ibfOfNHjnw';
+    window.__env.agendaUrl1 = '//docs.google.com/spreadsheets/d/';
+    window.__env.agendaUrl2 = '/pubhtml?gid=0&single=true&widget=false&headers=false&chrome=false'; //?widget=true&headers=false&chrome=false';
     window.__env.mantenimientoUrlDescargaPdf = '/export?format=pdf';
 
     //switches para activar los menus
-    window.__env.mnuSalon = false;
+    window.__env.mnuMas = true;
+    window.__env.mnuAgenda = true;
     window.__env.mnuMantenimiento = false;
     window.__env.mnuPredicacion = true;
     window.__env.mnuSalidas = true;
