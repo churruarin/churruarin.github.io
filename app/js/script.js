@@ -97,7 +97,13 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', function($ht
         .when('/informar', {
             templateUrl: 'app/predicacion/informar.html',
             title: 'Informar territorios predicados'
+        })
+        
+        .when('/agenda', {
+            templateUrl: 'app/mas/agenda.html',
+            title: 'Agenda de eventos futuros'
         });
+        ;
 
 
 
@@ -126,7 +132,8 @@ app.controller('cfgController', function($scope, __env) {
     $scope.mnuReuniones = __env.mnuReuniones;
     $scope.mnuPrograma = __env.mnuPrograma;
     $scope.mnuEmision = __env.mnuEmision;
-    $scope.mnuSalon = __env.mnuSalon;
+    $scope.mnuMas = __env.mnuMas;
+    $scope.mnuAgenda = __env.mnuAgenda;
     $scope.mnuMantenimiento = __env.mnuMantenimiento;
     $scope.pageTitle = __env.nombreCongregacion;
 });
@@ -417,6 +424,10 @@ app.controller('programa', ['$scope', '$sce', '__env', function($scope, $sce, __
 app.controller('mantenimiento', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlMantenimiento = $sce.trustAsResourceUrl(__env.mantenimientoUrl1 + __env.mantenimientoIdSheets + __env.mantenimientoUrl2);
     $scope.urlMantenimientoDescargaPdf = $sce.trustAsResourceUrl(__env.mantenimientoUrl1 + __env.mantenimientoIdSheets + __env.mantenimientoUrlDescargaPdf);
+
+}]);
+app.controller('agenda', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
+    $scope.urlAgenda = $sce.trustAsResourceUrl(__env.agendaUrl1 + __env.agendaIdSheets + __env.agendaUrl2);
 
 }]);
 
