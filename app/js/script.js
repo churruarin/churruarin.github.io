@@ -439,6 +439,7 @@ app.controller('agenda', ['$scope', '$sce', '__env', function($scope, $sce, __en
 app.controller('salidas', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlSalidas = $sce.trustAsResourceUrl(__env.salidasUrl1 + __env.salidasIdSheets + __env.salidasUrl2);
     $scope.urlSalidas2 = $sce.trustAsResourceUrl(__env.salidas2Url1 + __env.salidasIdSheets + __env.salidas2Url2);
+}]);
 
 app.controller('relevamiento', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlRelevamiento = $sce.trustAsResourceUrl("https://forms.gle/AE2MhEYuYBK4kaHa7");
