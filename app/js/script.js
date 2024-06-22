@@ -62,6 +62,10 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', function($ht
             templateUrl: 'app/predicacion/informe.html',
             title: 'Informe de predicación'
         })
+        .when('/relevamiento', {
+            templateUrl: 'app/predicacion/relevamiento.html',
+            title: 'Relevamiento de salidas'
+        })
         .when('/reuniones', {
             templateUrl: 'app/reuniones/reuniones.html',
             title: 'Reuniones'
@@ -128,6 +132,7 @@ app.controller('cfgController', function($scope, __env) {
     $scope.mnuTerritorios = __env.mnuTerritorios;
     $scope.mnuCampana = __env.mnuCampana;
     $scope.mnuGrupos = __env.mnuGrupos;
+    $scope.mnuRelevamiento = __env.mnuRelevamiento;
     $scope.mnuInforme = __env.mnuInforme;
     $scope.mnuReuniones = __env.mnuReuniones;
     $scope.mnuPrograma = __env.mnuPrograma;
@@ -434,6 +439,10 @@ app.controller('agenda', ['$scope', '$sce', '__env', function($scope, $sce, __en
 app.controller('salidas', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
     $scope.urlSalidas = $sce.trustAsResourceUrl(__env.salidasUrl1 + __env.salidasIdSheets + __env.salidasUrl2);
     $scope.urlSalidas2 = $sce.trustAsResourceUrl(__env.salidas2Url1 + __env.salidasIdSheets + __env.salidas2Url2);
+
+app.controller('relevamiento', ['$scope', '$sce', '__env', function($scope, $sce, __env) {
+    $scope.urlRelevamiento = $sce.trustAsResourceUrl("https://forms.gle/AE2MhEYuYBK4kaHa7");
+    $scope.urlRelevamientoResultados = $sce.trustAsResourceUrl("https://docs.google.com/spreadsheets/d/e/2PACX-1vQD6S64JH1d0DfyCU_MnP3WruUGJfwGGjMvz9b1PFaZUsqhbtTARdUUw3H2wWdC9HeyHKXbpbO2daw0/pubhtml?gid=1738635402&single=true");
 
 
 }]);
