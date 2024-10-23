@@ -12,7 +12,7 @@
     window.__env.programaUrl1 = '//docs.google.com/spreadsheets/d/';
     window.__env.programaUrl2 = '/pubhtml'; //?widget=true&headers=false&chrome=false';
     window.__env.programaUrlDescargaPdf = '/export?format=pdf';
-    window.__env.salidasIdSheets = '1JuiB_XVz-jO_0Yrzu82pF2d3cbWkDhBwhcp5wF2lOrA';
+    window.__env.salidasIdSheets = '1YnR87axb-ybOrjK4mgvBuzLY5pbiSeCjN-zVfwFW-LA';
     window.__env.salidasUrl1 = '//docs.google.com/spreadsheets/d/';
     window.__env.salidasUrl2 = '/pubhtml?gid=0&single=false&widget=false&headers=false&chrome=false';
     window.__env.salidas2Url1 = '//docs.google.com/spreadsheets/d/';
