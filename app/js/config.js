@@ -8,7 +8,7 @@
     window.__env.videoUrlStream = '//www.dailymotion.com/embed/video/';
     window.__env.nombreCongregacion = 'Co. Churruarín';
     window.__env.congregacion = 'Churruarín';
-    window.__env.programaIdSheets = '1BzuB98iqVhP6h2hr6RJELaRFOc9O2A5bj74mvQyapSQ';
+    window.__env.programaIdSheets = '1UPx3w2Ygkuebz837mOQaaHD381RSzpNGnIhM1B9ilX4';
     window.__env.programaUrl1 = '//docs.google.com/spreadsheets/d/';
     window.__env.programaUrl2 = '/pubhtml'; //?widget=true&headers=false&chrome=false';
     window.__env.programaUrlDescargaPdf = '/export?format=pdf';
