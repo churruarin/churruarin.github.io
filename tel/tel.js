@@ -34,13 +34,13 @@ const settings = {
 };
 const urls = {
   revisitas:
-    "https://sheets.googleapis.com/v4/spreadsheets/1peVlTnWI4I1abW35dnny_el1k_JU3Pud1RXEchqfB9k/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
+    "https://sheets.googleapis.com/v4/spreadsheets/173GhQtCv1JcrMyV5TGAm_JceNv-uUPNh6LU0Yz9e1wA/values/revisitas?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
   contactos:
-    "https://sheets.googleapis.com/v4/spreadsheets/1peVlTnWI4I1abW35dnny_el1k_JU3Pud1RXEchqfB9k/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
+    "https://sheets.googleapis.com/v4/spreadsheets/173GhQtCv1JcrMyV5TGAm_JceNv-uUPNh6LU0Yz9e1wA/values/telefonos2?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
   publicadores:
-    "https://sheets.googleapis.com/v4/spreadsheets/1peVlTnWI4I1abW35dnny_el1k_JU3Pud1RXEchqfB9k/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
+    "https://sheets.googleapis.com/v4/spreadsheets/173GhQtCv1JcrMyV5TGAm_JceNv-uUPNh6LU0Yz9e1wA/values/pubs?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
   responsables:
-    "https://sheets.googleapis.com/v4/spreadsheets/1peVlTnWI4I1abW35dnny_el1k_JU3Pud1RXEchqfB9k/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
+    "https://sheets.googleapis.com/v4/spreadsheets/173GhQtCv1JcrMyV5TGAm_JceNv-uUPNh6LU0Yz9e1wA/values/responsables?alt=json&key=AIzaSyCz4sutc6Z6Hh5FtBTB53I8-ljkj6XWpPc",
   script:
     "https://script.google.com/macros/s/AKfycbzivt4eVHnlJKOwMIHFq6n200v8eMOkx8qNJOgFf08R-ncjqa_r/exec",
 };
