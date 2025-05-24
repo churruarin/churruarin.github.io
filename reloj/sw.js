@@ -2,7 +2,6 @@ const CACHE_NAME = "reloj-cache-v1";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
-  "./reloj.html",
   "./style.css",
   "./script.js",
   "./manifest.webmanifest",
