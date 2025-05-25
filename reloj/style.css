@@ -1,10 +1,19 @@
+/* ------------------------------------------
+  Base Layout
+------------------------------------------- */
 .btn-group > label {
   flex: 1 1 0;
   text-align: center;
 }
+
+/* ------------------------------------------
+  Font Imports
+------------------------------------------- */
 @import url('https://fonts.cdnfonts.com/css/led-calculator');
 
-
+/* ------------------------------------------
+  Display Panel Styling
+------------------------------------------- */
 .pantalla-box {
   width: 100%;
   max-width: 80%;
@@ -14,41 +23,64 @@
   font-family: 'LED Calculator', monospace;
   font-size: clamp(1.2rem, 5vw, 65px);
   text-align: center;
-  margin-left: auto;
-        margin-right: auto;
-        margin-top: 5px;   
-        margin-bottom: 10px;
-        text-shadow: 0 0 4px red, 0 0 15px red;
+  margin: 5px auto 10px auto;
   padding: 0.5rem 1rem;
   border: 3px solid gray;
   border-radius: 0.5rem;
+  text-shadow: 0 0 4px red, 0 0 15px red;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: hidden;
 }
-    .pantalla-sign {
+
+/* Special mode: Cartel/sign mode */
+.pantalla-sign {
   background-color: red;
   color: black;
   text-shadow: 0 0 4px black, 0 0 15px black;
 }
 
-    .pantalla-blink  {
-    animation: blinker 1s linear infinite;
-    }
-    
-    @keyframes blinker {
-    10% {opacity: 1;text-shadow: 0 0 4px red}
-    50% {opacity: 1;text-shadow: 0 0 4px red, 0 0 20px red;}
-    60% {opacity: 0.5; text-shadow: none}
-    100% {opacity: 0.5; text-shadow: none}
-    }
-.cronometro{
-      font-variant-numeric: tabular-nums lining-nums;
+/* Special mode: Blinking display */
+.pantalla-blink {
+  animation: blinker 1s linear infinite;
+}
+
+/* Blinking animation for pantalla */
+@keyframes blinker {
+  10%   { opacity: 1; text-shadow: 0 0 4px red; }
+  50%   { opacity: 1; text-shadow: 0 0 4px red, 0 0 20px red; }
+  60%   { opacity: 0.5; text-shadow: none; }
+  100%  { opacity: 0.5; text-shadow: none; }
+}
+
+/* ------------------------------------------
+  Stopwatch Display
+------------------------------------------- */
+.cronometro {
+  font-variant-numeric: tabular-nums lining-nums;
   font-family: 'LED Calculator', monospace;
   font-size: clamp(1.2rem, 5vw, 65px);
   text-align: center;
 }
 
+/* Colon blink effect while stopwatch is running */
+.stopwatch-running span.colon {
+  animation: colon-blink 1s steps(1, start) infinite;
+}
+
+/* Whole stopwatch blinks when paused */
+.stopwatch-blink {
+  animation: colon-blink 1s steps(1, start) infinite;
+}
+
+@keyframes colon-blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0.5; }
+}
+
+/* ------------------------------------------
+  Icon Label Buttons
+------------------------------------------- */
 .icon-label-btn {
   display: flex;
   flex-direction: column;
@@ -57,17 +89,28 @@
   font-size: 0.75rem;
   padding: 0.75rem;
   height: 5em;
-  
   font-weight: bold;
 }
 
 .icon-label-btn i {
   font-size: 1.5rem;
   margin-bottom: 0.2rem;
-  font-weight:800;
+  font-weight: 800;
 }
 
-/* .btn-check:checked + .btn-display {
+/* ------------------------------------------
+  Blur State Styling (used when disconnected)
+------------------------------------------- */
+.blurred {
+  filter: blur(2px);
+  opacity: 0.5;
+}
+
+/* ------------------------------------------
+  Optional Custom Display Button States (commented)
+------------------------------------------- */
+/*
+.btn-check:checked + .btn-display {
   background-color: #dc3545;
   color: white;
   border-color: #dc3545;
@@ -77,17 +120,5 @@
   background-color: #0dcaf0;
   color: white;
   border-color: #0dcaf0;
-} */
-
-.stopwatch-blink {
-  animation: colon-blink 1s steps(1, start) infinite;
 }
-
-.stopwatch-running span.colon {
-  animation: colon-blink 1s steps(1, start) infinite;
-}
-
-@keyframes colon-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0.5; }
-}
+*/
