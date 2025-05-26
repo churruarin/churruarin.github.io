@@ -28,39 +28,49 @@
   <div class="container">
 
     <!-- 🕒 Top bar: Clock, connection status, share/settings -->
-    <div class="d-flex justify-content-end gap-3 mb-3">
-      <div class="text-muted">
-        <i class="bi bi-clock me-2"></i><span id="clockTime">...</span>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="fw-semibold text-white fs-5">Reloj</div>
+
+      <div class="btn-group gap-2 d-flex align-items-center" role="group">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-clock"></i>
+          <span id="clockTime">...</span>
+        </div>
+        <span id="connectionStatus" class="badge rounded-pill bg-success" role="button" data-bs-toggle="modal" data-bs-target="#connectionModal">
+          <i class="bi bi-check-circle-fill me-1"></i> Conectado
+        </span>
+        <button class="btn btn-sm" id="shareBtn" title="Compartir">
+          <i class="bi bi-share"></i>
+        </button>
+        <button class="btn btn-sm" id="settingsBtn" title="Configuración" data-bs-toggle="modal" data-bs-target="#settingsModal">
+          <i class="bi bi-gear"></i>
+        </button>
       </div>
-
-      <span id="connectionStatus" class="badge rounded-pill bg-success" role="button" data-bs-toggle="modal" data-bs-target="#connectionModal">
-        <i class="bi bi-check-circle-fill me-1"></i> Conectado
-      </span>
-
-      <button class="btn btn-sm btn-outline-secondary" id="shareBtn" title="Compartir">
-        <i class="bi bi-share"></i>
-      </button>
-      <button class="btn btn-sm btn-outline-secondary" id="settingsBtn" title="Configuración" data-bs-toggle="modal" data-bs-target="#settingsModal">
-        <i class="bi bi-gear"></i>
-      </button>
     </div>
+
+
 
     <!-- 📐 Two-column responsive layout -->
     <div class="row g-4">
 
       <!-- 📺 Left Panel: Display screen + mode selector -->
       <div class="col-12 col-md-6">
-        <div class="border rounded-3 p-4 shadow-sm">
+        <div class="border rounded-3 p-4 shadow-sm bg-secondary-subtle position-relative">
+          <h6 class="text-uppercase text-white fw-bold panel-title">Pantalla</h6>
+
+
+
 
           <!-- Display box with blink toggle -->
           <div class="position-relative mb-3">
             <div class="pantalla-box"><span id="displayText" style="padding: .25em 1em;">&nbsp;</span></div>
-            <div class="position-absolute top-0 end-0 m-2">
+            <div class="position-absolute top-50 end-0 translate-middle-y me-1">
               <input type="checkbox" class="btn-check" id="blinkSwitch" autocomplete="off">
-              <label class="btn btn-outline-warning btn-sm icon-label-btn" for="blinkSwitch" title="Parpadear">
+              <label class="btn btn-outline-warning btn-sm" for="blinkSwitch" title="Parpadear">
                 <i class="bi bi-brightness-high"></i>
               </label>
             </div>
+
           </div>
 
           <!-- Mode selection buttons: clock / stopwatch / sign -->
@@ -86,7 +96,12 @@
 
       <!-- ⏱️ Right Panel: Stopwatch + controls -->
       <div class="col-12 col-md-6">
-        <div class="border rounded-3 p-4 shadow-sm">
+        <div class="border rounded-3 p-4 shadow-sm bg-secondary-subtle position-relative">
+
+          <h6 class="text-uppercase text-white fw-bold panel-title">Cronómetro</h6>
+
+
+
 
           <!-- Stopwatch display with +1 / -1 buttons -->
           <div class="mb-3 position-relative text-center">
@@ -103,8 +118,10 @@
           <!-- Start / Reset controls -->
           <div class="btn-group btn-group-lg w-100 mb-3 text-uppercase" role="group">
             <button id="startPauseBtn" class="btn btn-outline-success w-100 text-uppercase icon-label-btn">
-              <i class="bi bi-play-fill"></i> Inicio
+              <i class="bi" id="startPauseIcon"></i>
+              <span id="startPauseLabel"></span>
             </button>
+
             <button id="resetBtn" class="btn btn-outline-info w-100 text-uppercase icon-label-btn">
               <i class="bi bi-arrow-counterclockwise"></i> Reset
             </button>
@@ -112,24 +129,32 @@
 
           <!-- Countdown range and preset selector -->
           <div class="mb-3">
-            <label for="countdownInput" class="form-label d-block text-start">Duración de la parte</label>
-            <output id="countdownOutput" class="form-text d-block text-end">0 min</output>
+            <label for="countdownInput" class="form-label">Duración de la parte</label>
+
+            <!-- Slider -->
             <input type="range" class="form-range" id="countdownInput" min="0" max="60" step="1">
-            <select id="presetDuration" class="form-select form-select-sm">
-              <option value="">Presets</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="10">10 (Discurso, perlas)</option>
-              <option value="15">15</option>
-              <option value="30">30 (Estudio bíblico)</option>
-              <option value="60">60 (La Atalaya)</option>
-            </select>
+
+            <!-- Presets left, minutes right -->
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <select id="presetDuration" class="form-select form-select-sm w-auto">
+                <option value="">Presets</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="10">10 (Discurso, perlas)</option>
+                <option value="15">15</option>
+                <option value="30">30 (Estudio bíblico)</option>
+                <option value="60">60 (La Atalaya)</option>
+              </select>
+              <output id="countdownOutput" class="form-text text-end">0 min</output>
+            </div>
           </div>
+
+
 
         </div>
       </div>
@@ -174,10 +199,6 @@
             </select>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button id="saveSettingsBtn" class="btn btn-primary">Guardar</button>
-        </div>
       </div>
     </div>
   </div>
@@ -186,7 +207,10 @@
   <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content text-center p-3">
-        <h5 class="modal-title mb-3" id="shareModalLabel">Compartir Reloj</h5>
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsModalLabel">Compartir</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
         <canvas id="qrCanvas" class="mx-auto mb-3"></canvas>
         <a id="whatsappShare" href="#" target="_blank" class="btn btn-success w-100 mb-2">
           <i class="bi bi-whatsapp me-1"></i> Compartir por WhatsApp
@@ -194,7 +218,7 @@
         <button id="installBtn" class="btn btn-outline-primary w-100 mb-2 d-none">
           <i class="bi bi-download me-1"></i> Instalar como app
         </button>
-        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Cerrar</button>
+        
       </div>
     </div>
   </div>
@@ -204,7 +228,7 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="connectionModalLabel">Estado de Conexión</h5>
+          <h5 class="modal-title" id="connectionModalLabel">Estado de conexión</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body text-start small">

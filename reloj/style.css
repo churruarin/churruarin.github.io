@@ -122,3 +122,82 @@
   border-color: #0dcaf0;
 }
 */
+
+#clockTime {
+  font-weight: 500;
+}
+
+#blinkSwitch + label {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+#stopwatchTime.cronometro {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  line-height: 1.2;
+}
+
+/* Custom button for toggle mode buttons */
+.btn-display {
+  background-color: var(--bs-info-bg-subtle);
+  color: white;
+  border: 1px solid var(--bs-info);
+  transition: background-color 0.2s ease;
+}
+
+.btn-display:hover,
+.btn-display:focus,
+.btn-check:checked + .btn-display {
+  background-color: var(--bs-danger);
+  border-color: var(--bs-danger);
+  color: white;
+}
+
+
+/* === UNIVERSAL BUTTON STYLE OVERRIDE === */
+
+/* Base: info subtle background, white text */
+.btn {
+  background-color: var(--bs-info-bg-subtle);
+  color: white;
+  border: 1px solid var(--bs-info);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Hover, focus, checked: danger highlight */
+.btn:hover,
+.btn:focus,
+.btn-check:checked + .btn {
+  background-color: var(--bs-danger);
+  border-color: var(--bs-danger);
+  color: white;
+}
+
+/* Preserve text/icon contrast */
+.btn i {
+  color: inherit;
+}
+
+/* Rounded pill buttons like connection status */
+.badge.rounded-pill {
+  font-weight: 500;
+}
+
+/* Optional: slight size normalization */
+.btn-sm, .btn {
+  font-size: 0.9rem;
+}
+.panel-title {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  text-align: center;
+}
+
