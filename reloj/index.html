@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="auto">
+<html lang="es" data-bs-theme="dark">
 <head>
   <!-- Web app manifest and theme color for PWA -->
   <link rel="manifest" href="manifest.webmanifest">
@@ -186,10 +186,10 @@
             <input class="form-check-input" type="checkbox" id="blinkBeforeOvertimeSwitch">
             <label class="form-check-label" for="blinkBeforeOvertimeSwitch">Parpadear antes de tiempo excedido</label>
           </div>
-          <div class="form-check mb-3">
+          <!-- <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" id="darkModeSwitch">
             <label class="form-check-label" for="darkModeSwitch">Modo oscuro</label>
-          </div>
+          </div> -->
           <div class="mb-3">
             <label for="overtimeModeSelect" class="form-label">Tiempo excedido</label>
             <select id="overtimeModeSelect" class="form-select">
@@ -252,6 +252,7 @@
         </div>
         <div class="modal-body">
           <p>La aplicación no puede conectarse con el reloj.</p>
+          <p>Es posible que no esté configurada la dirección del reloj.</p>
           <p>Asegúrate de permitir contenido mixto en tu navegador para estas URLs:</p>
           <ul>
             <li><code>http://reloj.local</code></li>
@@ -261,7 +262,9 @@
           <ul id="mixedContentInstructions"></ul>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-dismiss="modal">Reintentar</button>
+          <button id="reconnectNowBtn" class="btn btn-primary">Reintentar</button>
+          <button id="openSettingsBtn" class="btn btn-outline-light">Configurar</button>
+
         </div>
       </div>
     </div>
