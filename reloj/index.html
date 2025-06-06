@@ -24,38 +24,35 @@
     }
   </style>
 </head>
-<body class="p-4">
-  <div class="container">
-
-    <!-- 🕒 Top bar: Clock, connection status, share/settings -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
+<body>
+      <!-- 🕒 Top bar: Clock, connection status, share/settings -->
+    <div class="topbar d-flex justify-content-between align-items-center mb-3 sticky-top px-4 py-1">
       <div class="fw-semibold text-white fs-5">Reloj</div>
-
-      <div class="btn-group gap-2 d-flex align-items-center" role="group">
-        <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2 panel-blurable">
           <i class="bi bi-clock"></i>
-          <span id="clockTime">...</span>
+          <span id="clockTime"></span>
         </div>
         <span id="connectionStatus" class="badge rounded-pill bg-success" role="button" data-bs-toggle="modal" data-bs-target="#connectionModal">
           <i class="bi bi-check-circle-fill me-1"></i> Conectado
         </span>
-        <button class="btn btn-sm" id="shareBtn" title="Compartir">
-          <i class="bi bi-share"></i>
-        </button>
-        <button class="btn btn-sm" id="settingsBtn" title="Configuración" data-bs-toggle="modal" data-bs-target="#settingsModal">
-          <i class="bi bi-gear"></i>
-        </button>
+        <div class="btn-group" role="group">
+          <button class="btn btn-sm" id="shareBtn" title="Compartir">
+            <i class="bi bi-share"></i>
+          </button>
+          <button class="btn btn-sm" id="settingsBtn" title="Configuración" data-bs-toggle="modal" data-bs-target="#settingsModal">
+            <i class="bi bi-gear"></i>
+          </button>
+        </div>
       </div>
     </div>
-
-
-
+  <div class="container-fluid">
     <!-- 📐 Two-column responsive layout -->
-    <div class="row g-4">
+    <div class="row g-2">
 
       <!-- 📺 Left Panel: Display screen + mode selector -->
       <div class="col-12 col-md-6">
-        <div class="border rounded-3 p-4 shadow-sm bg-secondary-subtle position-relative">
+        <div class="border rounded-3 p-4 shadow-sm bg-secondary-subtle position-relative panel-blurable">
           <h6 class="text-uppercase text-white fw-bold panel-title">Pantalla</h6>
 
 
@@ -66,7 +63,7 @@
             <div class="pantalla-box"><span id="displayText" style="padding: .25em 1em;">&nbsp;</span></div>
             <div class="position-absolute top-50 end-0 translate-middle-y me-1">
               <input type="checkbox" class="btn-check" id="blinkSwitch" autocomplete="off">
-              <label class="btn btn-outline-warning btn-sm" for="blinkSwitch" title="Parpadear">
+              <label class="btn btn-outline-danger btn-sm" for="blinkSwitch" title="Parpadear">
                 <i class="bi bi-brightness-high"></i>
               </label>
             </div>
@@ -85,10 +82,22 @@
               <i class="bi bi-stopwatch me-1"></i> Crono
             </label>
 
-            <input type="radio" class="btn-check" name="displayMode" id="displaySign" value="sign" autocomplete="off">
-            <label class="btn btn-outline-danger btn-display w-100 icon-label-btn" for="displaySign">
-              <i class="bi bi-exclamation-octagon me-1"></i> Cartel
-            </label>
+            <div class="btn-group w-100" role="group">
+              <!-- Main Cartel Toggle -->
+              <input type="radio" class="btn-check" name="displayMode" id="displaySign" value="sign" autocomplete="off">
+              <label class="btn btn-outline-danger btn-display w-100 icon-label-btn" for="displaySign">
+                <i class="bi bi-exclamation-octagon me-1"></i> Cartel
+              </label>
+
+              <!-- Dropdown Toggle -->
+              <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                      data-bs-toggle="dropdown" aria-expanded="false" aria-label="Más opciones de Cartel">
+                <span class="visually-hidden">Más opciones</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item text-capitalize" href="#" id="customSignOption">Personalizar</a></li>
+              </ul>
+            </div>
           </div>
 
         </div>
@@ -96,7 +105,7 @@
 
       <!-- ⏱️ Right Panel: Stopwatch + controls -->
       <div class="col-12 col-md-6">
-        <div class="border rounded-3 p-4 shadow-sm bg-secondary-subtle position-relative">
+        <div class="border rounded-3 p-4 shadow-sm bg-secondary-subtle position-relative panel-blurable">
 
           <h6 class="text-uppercase text-white fw-bold panel-title">Cronómetro</h6>
 
@@ -211,7 +220,8 @@
           <h5 class="modal-title" id="settingsModalLabel">Compartir</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <canvas id="qrCanvas" class="mx-auto mb-3"></canvas>
+        <canvas id="qrCanvas" class="mx-auto mb-3"></canvas>      
+        <p id="shareUrl" class="text-muted small text-break text-center mb-3"></p>
         <a id="whatsappShare" href="#" target="_blank" class="btn btn-success w-100 mb-2">
           <i class="bi bi-whatsapp me-1"></i> Compartir por WhatsApp
         </a>
@@ -248,27 +258,50 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="reconnectModalLabel">No se puede conectar</h5>
+          <h5 class="modal-title" id="reconnectModalLabel">No es posible conectarse con el reloj</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
-          <p>La aplicación no puede conectarse con el reloj.</p>
-          <p>Es posible que no esté configurada la dirección del reloj.</p>
-          <p>Asegúrate de permitir contenido mixto en tu navegador para estas URLs:</p>
           <ul>
-            <li><code>http://reloj.local</code></li>
-            <li><code>http://[IP del reloj]</code></li>
+          <li>Puede ser que no esté bien configurada la dirección del reloj.</li></ul>
+          <div class="d-flex justify-content-end">
+            <button id="openSettingsBtn" class="btn btn-outline-light">Configuración</button>
+          </div>
+          
+          <ul>
+          <li>Asegurate de permitir contenido mixto en tu navegador para las URLs del reloj:</li>
+          <ul id="clockAddresses"></ul>
           </ul>
+
           <p><strong>Cómo permitir contenido mixto:</strong></p>
           <ul id="mixedContentInstructions"></ul>
-        </div>
-        <div class="modal-footer">
-          <button id="reconnectNowBtn" class="btn btn-primary">Reintentar</button>
-          <button id="openSettingsBtn" class="btn btn-outline-light">Configurar</button>
+          <p>El sistema continuará intentando reconectarse.</p>
 
         </div>
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="customSignModal" tabindex="-1" aria-labelledby="customSignModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="customSignForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="customSignModalLabel">Cartel personalizado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Este mensaje se mostrará durante un minuto.</p>
+          <input type="text" id="customSignInput" class="form-control" placeholder="Mensaje" maxlength="123">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Mostrar en pantalla</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
   <!-- 📦 Bootstrap & app logic -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

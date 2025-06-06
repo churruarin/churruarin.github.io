@@ -31,6 +31,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: hidden;
+  position: relative;
 }
 
 /* Special mode: Cartel/sign mode */
@@ -201,3 +202,36 @@
   text-align: center;
 }
 
+.small-seconds {
+  font-size: 0.6em;
+  margin-left: 0.2em;
+  opacity: 0.8;
+}
+
+.panel-blur {
+  filter: blur(3px);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Blink animation */
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+
+.blinking {
+  animation: blink 1s linear infinite;
+}
+
+/* Darker text for warning pill */
+.connection-warning {
+  color: #212529 !important; /* Bootstrap's text-dark */
+}
+
+.topbar {
+  background-color: rgba(25, 67, 75, 0.5); /* dark with translucency */
+  backdrop-filter: blur(8px);              /* blur behind */
+  -webkit-backdrop-filter: blur(8px);      /* Safari support */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 1020;                            /* above content */
+}

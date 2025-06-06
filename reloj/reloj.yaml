@@ -41,7 +41,15 @@ esphome:
       #     effect: "strobe"
       - text_sensor.template.publish:
           id: stopwatch
-          state: "0:00"     
+          state: "0:00"
+      - if:
+          condition:
+            lambda: 'return id(one_minute_from_boot) == false;'
+          then:
+            - delay: 60s     
+            - globals.set:
+                id: one_minute_from_boot
+                value: 'true'
       
 
 esp8266:
@@ -63,14 +71,16 @@ wifi:
   #    password: "25201914"
   -  ssid: "BWLAN"
      password: "Mateo 28:19, 20"
+  use_address: 192.168.1.187
   # -  ssid: "JW"
   #    password: "19141914"
-  manual_ip:
-     static_ip: 192.168.1.187
-     gateway: 192.168.1.1
-     subnet: 255.255.255.0
-     dns1: 192.168.1.1
-  #   dns2: 1.1.1.1
+  # manual_ip:
+  #    static_ip: 192.168.1.187
+  #    gateway: 192.168.1.1
+  #    subnet: 255.255.255.0
+  #    dns1: 192.168.1.1
+  # #   dns2: 1.1.1.1
+
   
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -134,7 +144,7 @@ wifi:
 
 web_server:
   port: 80
-  version: 1
+  version: 3
 
 
 captive_portal:
@@ -279,6 +289,12 @@ globals:
    - id: blink_mode
      type: std::string
      initial_value: '"intensity"' 
+   - id: one_minute_from_boot
+     type: bool
+     initial_value: 'false'
+   - id: last_display_mode
+     type: std::string
+     initial_value: '"clock"' 
 
 number:
   - platform: template
@@ -342,7 +358,15 @@ number:
     step: 1
     initial_value: 60
     restore_value: true  
-  
+  # - platform: template
+  #   id: custom_sign_timeout
+  #   name: custom_sign_timeout
+  #   optimistic: true
+  #   min_value: 15
+  #   max_value: 300
+  #   step: 1
+  #   initial_value: 60
+  #   restore_value: false    
  
 
 text_sensor:
@@ -394,6 +418,31 @@ text_sensor:
   - platform: version
     name: ESPHome_Version
 
+text:
+  - platform: template
+    id: custom_sign
+    name: custom_sign
+    optimistic: true
+    min_length: 0
+    max_length: 128
+    mode: text
+    # filters:
+    #   # - to_upper:
+    #   # - to_lower:
+    #   - append: "       "
+      # - prepend: "prefix_"
+    # on_value: 
+    #   then: 
+    #     lambda: |-
+    #       id(custom_sign_text).publish_state(x);
+    # #     text.set:
+    #       id: custom_sign
+    #       value: !lambda 'return x;'   
+    #     - delay: 600s
+    #     - text.set: 
+    #         id: custom_sign
+    #         value: ""
+            
 
 button:
   - platform: template
@@ -504,7 +553,32 @@ select:
       - clock
       - stopwatch
       - sign
+      - custom_sign
     initial_option: clock
+    on_value:
+      if:
+        condition: 
+          lambda: 'return x != "custom_sign";'
+        then:
+          - globals.set:
+              id: last_display_mode
+              value: !lambda 'return x;'
+          - text.set: 
+              id: custom_sign
+              value: ""
+        else:
+          - delay:
+              seconds: 60 #!lambda 'return (float) id(custom_sign_timeout).state;'
+          - if:
+              condition: 
+                lambda: 'return x == "custom_sign";'
+              then:
+                - select.set:
+                    id: sel_display_mode
+                    option: !lambda "return id(last_display_mode);"
+                - text.set: 
+                    id: custom_sign
+                    value: ""
     # on_value:
     #   then:
     #     lambda: |-
@@ -541,9 +615,9 @@ select:
     name: sel_blink_mode
     optimistic: true
     options:
-      - onoff
       - intensity
-    initial_option: onoff
+      - onoff
+    initial_option: intensity
     restore_value: true
     on_value:
       then:
@@ -667,7 +741,10 @@ interval:
           id(display_text).publish_state(id(stopwatch).state);
         } else if (id(display_mode) == "sign") {
           id(display_text).publish_state("TIEMPO");
+        } else if (id(display_mode) == "custom_sign") {
+          id(display_text).publish_state(id(custom_sign).state.c_str());
         };
+
 
 
         //id(txttest).publish_state(to_string(id(stopwatch_time)) + "c");
@@ -702,14 +779,26 @@ display:
         //CLOCK
         if (id(time_synched)) { //check if smtp synched
           //show time
+            it.scroll(false);
             it.printf(1, 0, id(alpha_font), "%s",  id(clock_hour_minute).c_str());
             it.printf(24, -2, id(number_font), "%s", id(clock_second).c_str());
           } else {
             //show wait animation
-            it.printf(6+(id(sntp_time).now().second%5)*4, -3, id(number_font), "%s", "0");
+            if (id(connection).is_connected()) {
+              it.printf(6+(id(sntp_time).now().second%5)*4, -3, id(number_font), "%s", "1");
+            } else {
+              if (id(one_minute_from_boot)) {
+                it.scroll(true, max7219digit::CONTINUOUS, 50, 0, 3000);
+                it.printf(0, 0, id(alpha_font), "%s", "  Conectar Wi-Fi  >  Red: Reloj  >  Direccion: http://192.168.4.1  ****");
+              } else {
+                it.printf(6+(id(sntp_time).now().second%5)*4, -3, id(number_font), "%s", "0");
+              }
+
+            }
           }
 
       } else if (id(display_mode) == "stopwatch") {
+        it.scroll(false);
 
         //STOPWATCH
         if (id(stopwatch_mode) == "countdown") {
@@ -758,7 +847,12 @@ display:
        
       } else if (id(display_mode) == "sign") {
         //SIGN
+        it.scroll(false);
         it.printf(0, 0, id(alpha_font), "%-s", "%");
+      } else if (id(display_mode) == "custom_sign") {
+        //CUSTOM SIGN
+          it.scroll(true, max7219digit::CONTINUOUS, 50, 0, 3000);
+          it.printf(0, 0, id(alpha_font), "     %s", id(custom_sign).state.c_str());
       };
 
       //BLINK 

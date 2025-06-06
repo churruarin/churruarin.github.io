@@ -7,8 +7,12 @@ if ("serviceWorker" in navigator) {
 const RECONNECT_DELAY_MS = 5000;        // Retry every 2s
 const CONNECTING_THRESHOLD_MS = 2500;   // Show "Conectando" after 2.5s
 const FAILURE_THRESHOLD_MS = 5000;      // Show modal after 5s
+let currentDisplayMode = "clock";
+let connectionStatus = "connecting"; // global tracker
 
 document.addEventListener("DOMContentLoaded", () => {
+  updateConnectionStatus("connecting"); // ✅ force initial connecting status
+  setPanelBlur(true); // ✅ blur panels initially
   // === State Variables ===
   let suppressChange = false;
   let eventSource;
@@ -28,11 +32,18 @@ function getUrl() {
   return isValidClockUrl(normalized) ? normalized : "http://reloj.local";
 }
 
-
-  document.getElementById("reconnectNowBtn").addEventListener("click", () => {
-    reconnecting = false;
-    tryReconnect();
+function setPanelBlur(active) {
+  const panels = document.querySelectorAll(".panel-blurable");
+  panels.forEach(panel => {
+    panel.classList.toggle("panel-blur", active);
   });
+}
+
+
+  // document.getElementById("reconnectNowBtn").addEventListener("click", () => {
+  //   reconnecting = false;
+  //   tryReconnect();
+  // });
 
 const ip = getClockIpFromCookie();
 if (ip) {
@@ -66,16 +77,27 @@ function isValidClockUrl(url) {
 
   // === Update Connection Status Pill ===
   function updateConnectionStatus(state) {
+    connectionStatus = state;
+
     const el = document.getElementById("connectionStatus");
     const iconMap = {
       connected: ["bg-success", "bi-check-circle-fill", "Conectado"],
       connecting: ["bg-warning", "bi-exclamation-circle-fill", "Conectando"],
       disconnected: ["bg-danger", "bi-x-circle-fill", "Desconectado"],
     };
+
     const [color, icon, label] = iconMap[state] || iconMap.disconnected;
     el.className = `badge rounded-pill ${color}`;
     el.innerHTML = `<i class="bi ${icon} me-1"></i> ${label}`;
+
+    // Apply blinking and dark text for connecting
+    el.classList.toggle("blinking", state === "connecting");
+    el.classList.toggle("connection-warning", state === "connecting");
+
+    // Blur panels unless fully connected
+    setPanelBlur(state !== "connected");
   }
+
 
   // === Update Stopwatch Styling Based on State ===
   function updateStopwatchClass() {
@@ -92,9 +114,8 @@ function isValidClockUrl(url) {
 
   // === Sync Mode Radios ===
   const syncDisplayModeRadio = (value) => {
-    currentDisplayMode = value;
-    updatePantallaClass();
-    const radio = document.querySelector(`input[name='displayMode'][value='${value}']`);
+    let resolved = value === "custom_sign" ? "sign" : value;
+    const radio = document.querySelector(`input[name='displayMode'][value='${resolved}']`);
     if (radio) {
       suppressChange = true;
       radio.checked = true;
@@ -128,44 +149,52 @@ function isValidClockUrl(url) {
   });
 
   // === Show Help Modal When Connection Fails ===
-    function showReconnectHelp() {
-      const modalEl = document.getElementById("reconnectModal");
-      const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+  function showReconnectHelp() {
+    const settingsModal = bootstrap.Modal.getInstance(document.getElementById("settingsModal"));
+    if (settingsModal && document.getElementById("settingsModal").classList.contains("show")) return;
 
-      // If already shown, do nothing
-      if (modalEl.classList.contains("show")) return;
-      const ip = getClockIpFromCookie();
-      const urlList = [
-        "<code>http://reloj.local</code>",
-        ip ? `<code>http://${ip}</code>` : null
-      ].filter(Boolean);
+    const ua = navigator.userAgent;
 
-      //helpText.innerHTML = `Permite contenido mixto para estas URLs:<br><ul>${urlList.map(u => `<li>${u}</li>`).join("")}</ul>`;
+    const clockIp = getClockIpFromCookie();
+    const urls = [
+      "http://reloj.local",
+      ...(clockIp ? [`http://${clockIp}`] : [])
+    ];
 
-      const ua = navigator.userAgent;
-      const instructions = document.getElementById("mixedContentInstructions");
-      instructions.innerHTML = "";
+    // === Fill clockAddresses list ===
+    const addrList = document.getElementById("clockAddresses");
+    addrList.innerHTML = "";
+    urls.forEach(url => {
+      const li = document.createElement("li");
+      li.innerHTML = `<code>${url}</code>`;
+      addrList.appendChild(li);
+    });
 
-      const help = [];
+    // === Fill mixedContentInstructions list ===
+    const instList = document.getElementById("mixedContentInstructions");
+    instList.innerHTML = "";
 
-      if (/Chrome/.test(ua)) {
-        help.push("Haz clic en el candado en la barra de direcciones → 'Configuración del sitio' → permite contenido no seguro.");
-      } else if (/Firefox/.test(ua)) {
-        help.push("Haz clic en el escudo y desactiva la protección para esta página.");
-      } else if (/Safari/.test(ua)) {
-        help.push("Activa el menú 'Desarrollo' y desactiva la protección contra contenido inseguro.");
-      } else {
-        help.push("Permite contenido mixto (HTTP) en la configuración del navegador.");
-      }
-
-      help.forEach(text => {
-        const li = document.createElement("li");
-        li.textContent = text;
-        instructions.appendChild(li);
-      });
-
-      modal.show();
+    let browserHelp = "";
+    if (/Chrome/.test(ua)) {
+      browserHelp = "Hacé clic en el candado en la barra de direcciones → 'Configuración del sitio' → permite contenido no seguro.";
+    } else if (/Firefox/.test(ua)) {
+      browserHelp = "Hacé clic en el escudo a la izquierda de la barra de direcciones y desactivá la protección para esta página.";
+    } else if (/Safari/.test(ua)) {
+      browserHelp = "Activá el menú 'Desarrollo' y desactivá la protección contra contenido inseguro.";
+    } else {
+      browserHelp = "Permití contenido mixto (HTTP) en la configuración del navegador.";
     }
+
+    const li = document.createElement("li");
+    li.textContent = browserHelp;
+    instList.appendChild(li);
+
+    const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("reconnectModal"));
+    modal.show();
+  }
+
+
+
 
 
   // === Share Button (QR + WhatsApp + Install) ===
@@ -176,6 +205,8 @@ function isValidClockUrl(url) {
 
     // Generate QR code
     QRCode.toCanvas(document.getElementById("qrCanvas"), shareUrl, { width: 160 });
+    document.getElementById("shareUrl").textContent = shareUrl;
+
 
     // WhatsApp link
     document.getElementById("whatsappShare").href =
@@ -216,18 +247,24 @@ function isValidClockUrl(url) {
     eventSource = new EventSource(`${getUrl()}/events`);
     lastEventTime = Date.now();
     reconnectStartTime = null;
-    updateConnectionStatus("connected");
+    // updateConnectionStatus("connected");
     setBlur(false);
     const reconnectModal = bootstrap.Modal.getInstance(document.getElementById("reconnectModal"));
     if (reconnectModal) reconnectModal.hide?.();
 
     eventSource.addEventListener("state", (e) => {
       lastEventTime = Date.now();
+      if (connectionStatus !== "connected") {
+        updateConnectionStatus("connected");
+      }
       const data = JSON.parse(e.data);
 
       switch (data.id) {
         case "text_sensor-timeclock":
-          document.getElementById("clockTime").textContent = data.value;
+          const clockElem = document.getElementById("clockTime");
+          
+            clockElem.textContent = data.value;
+
           break;
 
         case "text_sensor-stopwatch":
@@ -278,6 +315,7 @@ function isValidClockUrl(url) {
 
 
         case "select-sel_display_mode":
+          currentDisplayMode = data.value;
           syncDisplayModeRadio(data.value);
           break;
 
@@ -433,17 +471,20 @@ function setupEventSourceHandlers(source) {
           el.innerHTML = formatted;
           break;
 
-        case "text_sensor-display_text":
-          const displayEl = document.getElementById("displayText");
-          if (currentDisplayMode === 'clock' && data.value.length >= 3) {
-            const trimmed = data.value;
-            const thirdLastHidden = trimmed.slice(0, -3) + '<span style="display:none;">' + trimmed[trimmed.length - 3] + '</span>';
-            const smallerLastTwo = thirdLastHidden + '<span style="font-size: 70%; margin-left:.3em">' + trimmed.slice(-2) + '</span>';
-            displayEl.innerHTML = smallerLastTwo;
-          } else {
-            displayEl.textContent = data.value;
-          }
-          break;
+case "text_sensor-display_text": {
+  const displayElem = document.getElementById("displayText");
+
+  // Remove old scroll span if it exists
+  displayElem.classList.remove("pantalla-scroll");
+
+  if (data.value.length > 8) {
+    displayElem.innerHTML = `<span class="pantalla-scroll">${data.value}</span>`;
+  } else {
+    displayElem.textContent = data.value;
+  }
+
+  break;
+}
 
         case "text_sensor-txt_stopwatch_state":
           stopwatchState = data.value;
@@ -509,6 +550,11 @@ function setupEventSourceHandlers(source) {
           suppressChange = true;
           document.getElementById("overtimeModeSelect").value = data.value;
           suppressChange = false;
+          break;
+
+        case "text-custom_sign":
+          document.getElementById("customSignInput").value = data.value;
+
           break;
 
         // Connection info
@@ -595,4 +641,40 @@ function setupEventSourceHandlers(source) {
     const value = e.target.value;
     sendCustomCommand(`/select/sel_overtime_mode/set?option=${value}`);
   };
+
+  document.getElementById("customSignOption").addEventListener("click", () => {
+    const modal = new bootstrap.Modal(document.getElementById("customSignModal"));
+    modal.show();
+  });
+
+  document.getElementById("customSignForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const input = document.getElementById("customSignInput");
+    let text = input.value.trim();
+
+    // Enforce character limit (including appended "  -  ")
+    const maxTextLength = 128 - 5; // reserve 5 chars for "  -  "
+
+    if (text.length > maxTextLength) {
+      text = text.substring(0, maxTextLength);
+    }
+    text = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+
+    const fullText = `${text}        `;
+
+
+
+    fetch(`${getUrl()}/text/custom_sign/set?value=${encodeURIComponent(fullText)}`, {
+      method: "POST"
+    }).then(() => {
+      fetch(`${getUrl()}/select/sel_display_mode/set?option=custom_sign`, {
+        method: "POST"
+      });
+    });
+
+    bootstrap.Modal.getInstance(document.getElementById("customSignModal")).hide();
+  });
+
+
 });
