@@ -176,7 +176,7 @@ function isValidClockUrl(url) {
 
     let browserHelp = "";
     if (/Chrome/.test(ua)) {
-      browserHelp = "Hacé clic en el candado en la barra de direcciones → 'Configuración del sitio' → permite contenido no seguro.";
+      browserHelp = "Hacé clic en el candado en la barra de direcciones → 'Configuración del sitio' → permitir contenido no seguro.";
     } else if (/Firefox/.test(ua)) {
       browserHelp = "Hacé clic en el escudo a la izquierda de la barra de direcciones y desactivá la protección para esta página.";
     } else if (/Safari/.test(ua)) {

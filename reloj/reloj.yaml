@@ -442,6 +442,13 @@ text:
     #     - text.set: 
     #         id: custom_sign
     #         value: ""
+  - platform: template
+    name: "Controller URL"
+    optimistic: true
+    min_length: 0
+    max_length: 100
+    mode: text
+    initial_value: "https://churruarin.github.io/reloj"
             
 
 button:
