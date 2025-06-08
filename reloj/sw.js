@@ -1,11 +1,11 @@
 const CACHE_NAME = 'reloj-v4'; // increment to force update
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/script.js',
-  '/style.css',
-  '/manifest.webmanifest',
-  '/programs.json',
+  './',
+  './index.html',
+  './script.js',
+  './style.css',
+  './manifest.webmanifest',
+  './programs.json',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
   'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css'
 ];
