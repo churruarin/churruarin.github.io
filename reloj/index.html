@@ -169,7 +169,39 @@
               </select>
               <output id="countdownOutput" class="form-text text-end">0 min</output>
             </div>
-          </div>
+
+<!-- Switch + Dropdown in one line -->
+<div id="programHeader" class="d-flex justify-content-between align-items-center mt-4 mb-2">
+
+  <div class="form-check form-switch mb-0">
+    <input class="form-check-input" type="checkbox" id="enableProgramSwitch">
+    <label class="form-check-label" for="enableProgramSwitch">Programa</label>
+  </div>
+  <select id="programSelector" class="form-select form-select-sm w-auto"></select>
+</div>
+
+<!-- Hidden program controls -->
+<div id="programUI" style="display: none;">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+<div class="btn-group btn-group-sm me-2" role="group">
+  <button id="prevItemBtn" class="btn btn-outline-light">
+    <i class="bi bi-chevron-left"></i>
+  </button>
+  <button id="nextItemBtn" class="btn btn-outline-light">
+    <i class="bi bi-chevron-right"></i>
+  </button>
+</div>
+
+    <button id="resetProgramBtn" class="btn btn-outline-danger btn-sm" title="Resetear">
+      <i class="bi bi-arrow-counterclockwise"></i>
+    </button>
+  </div>
+
+  <div class="list-group small" id="programItems"></div>
+</div>
+
+
+
 
 
 

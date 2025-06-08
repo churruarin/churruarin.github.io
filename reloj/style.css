@@ -235,3 +235,34 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   z-index: 1020;                            /* above content */
 }
+
+.program-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+.program-item:nth-child(odd) {
+  background-color: var(--bs-body-bg);
+}
+.program-item:nth-child(even) {
+  background-color: var(--bs-secondary-bg-subtle);
+}
+.program-item.active {
+  background-color: var(--bs-info-bg-subtle);
+  border: 1px solid white;
+  color: white;
+  font-weight: bold;
+}
+.program-item span {
+  flex: 1;
+}
+.program-item .order {
+  flex: 0 0 1.5em;
+}
+.program-item .assigned,
+.program-item .measured {
+  flex: 0 0 4em;
+  text-align: end;
+}

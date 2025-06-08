@@ -9,6 +9,20 @@ const CONNECTING_THRESHOLD_MS = 2500;   // Show "Conectando" after 2.5s
 const FAILURE_THRESHOLD_MS = 5000;      // Show modal after 5s
 let currentDisplayMode = "clock";
 let connectionStatus = "connecting"; // global tracker
+let programs = {};
+let currentProgram = null;
+let currentItemIndex = 0;
+let measuredTimes = {};
+let suppressNextStopwatchUpdate = false;
+let stopwatchTime = 0;
+
+
+
+
+
+const day = new Date().getDay(); // 0 (Sun) to 6 (Sat)
+const defaultType = (day === 0 || day === 6) ? "fin_de_semana" : "entre_semana";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   updateConnectionStatus("connecting"); // ✅ force initial connecting status
@@ -21,6 +35,192 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentDisplayMode = "";
   let blinkEnabled = false;
   let stopwatchState = "reset";
+
+  document.getElementById("enableProgramSwitch").checked = true;
+  document.getElementById("programSelector").style.display = "";
+  document.getElementById("programUI").style.display = "";
+
+
+  fetch("programs.json")
+    .then(res => res.json())
+    .then(data => {
+      programs = data;
+      const selector = document.getElementById("programSelector");
+      Object.entries(programs).forEach(([key, prog]) => {
+        selector.append(new Option(prog.title, key));
+      });
+
+      const today = new Date().getDay();
+      const defaultType = (today === 0 || today === 6) ? "fin_de_semana" : "entre_semana";
+      const autoProgram = Object.entries(programs).find(([_, p]) => p.type === defaultType);
+      if (autoProgram) {
+        selector.value = autoProgram[0];
+        loadProgram(autoProgram[0]);
+      }
+    });
+
+
+let currentProgramKey = "";
+
+function formatRecordedTime(seconds) {
+  if (typeof seconds !== "number" || isNaN(seconds)) return "";
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
+
+
+
+function loadProgram(key) {
+  currentProgramKey = key;
+  currentProgram = programs[key];
+  currentItemIndex = 0;
+  loadMeasuredTimes(currentProgramKey);
+  renderProgramItems();
+  highlightCurrentItem();
+}
+
+
+function getTodayKey() {
+  const today = new Date();
+  return today.toISOString().slice(0, 10); // YYYY-MM-DD
+}
+
+function loadMeasuredTimes(programKey) {
+  const key = `measured_${programKey}_${getTodayKey()}`;
+  const json = localStorage.getItem(key);
+  measuredTimes = json ? JSON.parse(json) : {};
+}
+
+function saveMeasuredTimes(programKey) {
+  const key = `measured_${programKey}_${getTodayKey()}`;
+  localStorage.setItem(key, JSON.stringify(measuredTimes));
+}
+
+
+function renderProgramItems() {
+  const container = document.getElementById("programItems");
+  container.innerHTML = "";
+
+  currentProgram.items.forEach((item, i) => {
+    const row = document.createElement("div");
+    row.className = `program-item list-group-item border-0${i === currentItemIndex ? " active" : ""}`;
+    row.dataset.index = i;
+
+    const measuredSeconds = measuredTimes[item.order];
+    const measuredText = formatRecordedTime(measuredSeconds);
+
+    let measuredClass = "measured";
+    if (item.duration && typeof measuredSeconds === "number") {
+      const allotted = item.duration * 60;
+      if (measuredSeconds > allotted) {
+        measuredClass += " text-danger";
+      }
+    }
+
+    row.innerHTML = `
+      <span class="order">${item.order}</span>
+      <span>${item.title}</span>
+      <span class="assigned">${item.duration ? item.duration + ' min' : ''}</span>
+      <span class="${measuredClass}">${measuredText}</span>
+    `;
+
+    container.appendChild(row);
+  });
+}
+
+
+
+
+
+function highlightCurrentItem() {
+  renderProgramItems(); // re-render with updated active row
+  const item = currentProgram.items[currentItemIndex];
+  if (item.duration) {
+    sendCustomCommand(`/number/countdown_minutes/set?value=${item.duration}`);
+  }
+}
+
+function updateLiveMeasuredTime(seconds) {
+    if (suppressNextStopwatchUpdate) {
+    suppressNextStopwatchUpdate = false;
+    return; // 🔕 Ignore the 0:00 event just after reset
+  }
+  if (!currentProgram) return;
+  const item = currentProgram.items[currentItemIndex];
+  measuredTimes[item.order] = seconds;
+
+  const measuredEl = document.querySelectorAll("#programItems .measured")[currentItemIndex];
+  if (!measuredEl) return;
+
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  const formatted = `${mins}:${secs.toString().padStart(2, '0')}`;
+  measuredEl.textContent = formatted;
+
+  // Color logic
+  if (item.duration) {
+    const allottedSeconds = item.duration * 60;
+measuredEl.classList.remove("text-success");
+measuredEl.classList.toggle("text-danger", seconds > allottedSeconds);
+
+  }
+
+  saveMeasuredTimes(currentProgramKey);
+}
+
+
+document.getElementById("resetProgramBtn").addEventListener("click", () => {
+  measuredTimes = {};
+  saveMeasuredTimes(currentProgramKey);
+  renderProgramItems();
+});
+
+
+document.getElementById("programSelector").addEventListener("change", (e) => {
+  const key = e.target.value;
+  loadProgram(key);
+});
+;
+
+document.getElementById("prevItemBtn").addEventListener("click", () => {
+  if (currentProgram && currentItemIndex > 0) {
+const shouldReset = stopwatchState === "running";
+const shouldStart = stopwatchState === "reset";
+
+if (shouldReset) sendCustomCommand("/button/stopwatch_reset/press");
+
+currentItemIndex--;
+highlightCurrentItem();
+
+if (shouldStart) sendCustomCommand("/button/stopwatch_start_pause/press");
+
+  }
+});
+
+document.getElementById("nextItemBtn").addEventListener("click", () => {
+  if (currentProgram && currentItemIndex < currentProgram.items.length - 1) {
+const shouldReset = stopwatchState === "running";
+const shouldStart = stopwatchState === "reset";
+
+if (shouldReset) sendCustomCommand("/button/stopwatch_reset/press");
+
+currentItemIndex++;
+highlightCurrentItem();
+
+if (shouldStart) sendCustomCommand("/button/stopwatch_start_pause/press");
+
+  }
+});
+
+document.getElementById("enableProgramSwitch").addEventListener("change", e => {
+  const show = e.target.checked;
+  document.getElementById("programUI").style.display = show ? "" : "none";
+  document.getElementById("programSelector").style.display = show ? "" : "none";
+});
+
+
+
 
   // === Utility: Get Clock URL from input or query string ===
 function getUrl() {
@@ -218,8 +418,33 @@ function isValidClockUrl(url) {
   // === Stopwatch Buttons ===
   document.getElementById("startPauseBtn").onclick = () =>
     sendCustomCommand("/button/stopwatch_start_pause/press");
-  document.getElementById("resetBtn").onclick = () =>
+
+  document.getElementById("resetBtn").onclick = () => {
+    if (stopwatchState === "running" && currentProgram) {
+      const currentItem = currentProgram.items[currentItemIndex];
+      if (currentItem) {
+measuredTimes[currentItem.order] = stopwatchTime;
+saveMeasuredTimes(currentProgramKey);
+suppressNextStopwatchUpdate = true;
+
+// force immediate display of saved value
+const row = document.querySelectorAll("#programItems .measured")[currentItemIndex];
+if (row) {
+  row.textContent = formatRecordedTime(stopwatchTime);
+
+  const allotted = currentItem.duration * 60;
+  row.classList.remove("text-success", "text-danger");
+  if (stopwatchTime > allotted) row.classList.add("text-danger");
+}
+
+      }
+    }
+
     sendCustomCommand("/button/stopwatch_reset/press");
+  };
+
+
+
 
   // === +/- Time Buttons ===
   document.getElementById("decreaseBtn").onclick = () => {
@@ -276,6 +501,15 @@ function isValidClockUrl(url) {
           } else {
             el.classList.remove("stopwatch-running");
           }
+
+          // Parse stopwatch time in seconds
+          const match = data.value.match(/(\d+):(\d+)/);
+          if (match) {
+            stopwatchTime = parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
+            updateLiveMeasuredTime(stopwatchTime);
+          }
+
+
           el.innerHTML = formatted;
           break;
 
@@ -468,6 +702,15 @@ function setupEventSourceHandlers(source) {
           } else {
             el.classList.remove("stopwatch-running");
           }
+
+          // Parse stopwatch time in seconds
+          const match = data.value.match(/(\d+):(\d+)/);
+          if (match) {
+            stopwatchTime = parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
+            updateLiveMeasuredTime(stopwatchTime);
+          }
+
+
           el.innerHTML = formatted;
           break;
 
