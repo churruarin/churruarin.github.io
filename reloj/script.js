@@ -40,6 +40,19 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("programSelector").style.display = "";
   document.getElementById("programUI").style.display = "";
 
+  const todayKey = new Date().toISOString().slice(0, 10);
+const storedDay = localStorage.getItem("lastUsedDate");
+
+if (storedDay !== todayKey) {
+  // New day detected — clear all saved measurements
+  for (const key in localStorage) {
+    if (key.startsWith("measured_")) {
+      localStorage.removeItem(key);
+    }
+  }
+  localStorage.setItem("lastUsedDate", todayKey);
+}
+
 
   fetch("programs.json")
     .then(res => res.json())
