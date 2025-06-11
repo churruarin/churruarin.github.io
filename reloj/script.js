@@ -43,6 +43,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const todayKey = new Date().toISOString().slice(0, 10);
 const storedDay = localStorage.getItem("lastUsedDate");
 
+const clockUrlInput = document.getElementById("clockUrl");
+const savedIp = getClockIpFromCookie();
+
+if (clockUrlInput && !clockUrlInput.value && savedIp) {
+  clockUrlInput.value = `http://${savedIp}`;
+}
+clockUrlInput?.addEventListener("input", () => {
+  let url = clockUrlInput.value.trim();
+  if (!url.startsWith("http://")) {
+    url = "http://" + url;
+    clockUrlInput.value = url; // normalize in input
+  }
+
+  // Save valid IPs to cookie
+  const ipMatch = url.match(/^http:\/\/(\d{1,3}(?:\.\d{1,3}){3})$/);
+  if (ipMatch) {
+    document.cookie = `clock_ip=${ipMatch[1]}; path=/; max-age=31536000`;
+  }
+
+  // Try reconnecting immediately
+  tryReconnect();
+});
+
+
 if (storedDay !== todayKey) {
   // New day detected — clear all saved measurements
   for (const key in localStorage) {
@@ -259,8 +283,8 @@ function setPanelBlur(active) {
   // });
 
 const ip = getClockIpFromCookie();
-if (ip) {
-  document.getElementById("urlInput").value = `http://${ip}`;
+if (ip && clockUrlInput && !clockUrlInput.value) {
+  clockUrlInput.value = `http://${ip}`;
 }
 
 function normalizeUrlInput(raw) {
@@ -646,10 +670,20 @@ if (row) {
 
 function tryReconnect() {
   const knownIp = getClockIpFromCookie();
+  const clockUrlInput = document.getElementById("clockUrl");
+  const userInput = clockUrlInput?.value?.trim();
   const urlsToTry = [];
-
-  if (knownIp) urlsToTry.push(`http://${knownIp}`);
   urlsToTry.push("http://reloj.local");
+  // If user entered a valid IP or reloj.local, prioritize it
+  if (settingsInput?.startsWith("http://")) {
+    urlsToTry.push(userInput);
+  }
+
+  if (knownIp && `http://${knownIp}` !== userInput) {
+    urlsToTry.push(`http://${knownIp}`);
+  }
+
+  
 
   tryNextUrl(urlsToTry, 0);
 }
