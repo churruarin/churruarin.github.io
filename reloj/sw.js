@@ -1,4 +1,4 @@
-const CACHE_NAME = 'reloj-v4'; // increment to force update
+const CACHE_NAME = 'reloj-v4.1'; // increment to force update
 const ASSETS = [
   './',
   './index.html',
