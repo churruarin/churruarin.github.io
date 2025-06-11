@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const todayKey = new Date().toISOString().slice(0, 10);
 const storedDay = localStorage.getItem("lastUsedDate");
 
-const clockUrlInput = document.getElementById("clockUrl");
+const clockUrlInput = document.getElementById("urlInput");
 const savedIp = getClockIpFromCookie();
 
 if (clockUrlInput && !clockUrlInput.value && savedIp) {
@@ -670,7 +670,7 @@ if (row) {
 
 function tryReconnect() {
   const knownIp = getClockIpFromCookie();
-  const clockUrlInput = document.getElementById("clockUrl");
+  const clockUrlInput = document.getElementById("urlInput");
   const userInput = clockUrlInput?.value?.trim();
   const urlsToTry = [];
   urlsToTry.push("http://reloj.local");
