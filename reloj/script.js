@@ -675,13 +675,13 @@ function tryReconnect() {
   const urlsToTry = [];
   urlsToTry.push("http://reloj.local");
   // If user entered a valid IP or reloj.local, prioritize it
-  if (settingsInput?.startsWith("http://")) {
-    urlsToTry.push(userInput);
-  }
+  //if (settingsInput?.startsWith("http://")) {
+  //  urlsToTry.push(userInput);
+  //}
 
-  if (knownIp && `http://${knownIp}` !== userInput) {
-    urlsToTry.push(`http://${knownIp}`);
-  }
+  //if (knownIp && `http://${knownIp}` !== userInput) {
+  //  urlsToTry.push(`http://${knownIp}`);
+  //}
 
   
 
