@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Asamblea en el CPC</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+<style>
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+    vertical-align: middle;
+  }
+</style>
+
+
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    section {
-      padding: 4rem 0;
-    }
-    body {
-      padding-top: 70px;
+    html { scroll-behavior: smooth; }
+    body { padding-top: 70px; }
+    section { padding: 4rem 0; }
+    h2 i { margin-right: 0.5rem; }
+    .navbar-nav .nav-link {
+      font-size: 1.2rem;
+      padding: 0.5rem 0.8rem;
     }
   </style>
 </head>
 <body>
 
-<!-- 🔝 Navigation -->
+<!-- 🔝 Fixed Top Navbar with Icon Links -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
     <a class="navbar-brand" href="#">Asamblea en el CPC</a>
@@ -28,93 +39,149 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="#introduccion">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="#como-llego">Cómo llego</a></li>
-        <li class="nav-item"><a class="nav-link" href="#ubicacion">Dónde me ubico</a></li>
-        <li class="nav-item"><a class="nav-link" href="#comida">Dónde puedo comer</a></li>
-        <li class="nav-item"><a class="nav-link" href="#alojamiento">Dónde puedo alojarme</a></li>
-        <li class="nav-item"><a class="nav-link" href="#otros">Qué más debo tener en cuenta</a></li>
-        <li class="nav-item"><a class="nav-link" href="#conclusion">Conclusión</a></li>
-      </ul>
+<ul class="navbar-nav text-center">
+  <li class="nav-item">
+    <a class="nav-link" href="#inicio" title="Inicio" data-bs-toggle="tooltip">
+      <i class="material-symbols-outlined">home</i>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#transporte" title="¿Cómo llego?" data-bs-toggle="tooltip">
+      <i class="material-symbols-outlined">pin_drop</i>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#auditorios" title="¿Dónde me ubico?" data-bs-toggle="tooltip">
+      <i class="material-symbols-outlined">airline_seat_recline_normal</i>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#alimentos" title="¿Dónde puedo comer?" data-bs-toggle="tooltip">
+      <i class="material-symbols-outlined">fastfood</i>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#alojamiento" title="¿Dónde puedo alojarme?" data-bs-toggle="tooltip">
+      <i class="material-symbols-outlined">hotel</i>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#otros" title="¿Qué más debo tener en cuenta?" data-bs-toggle="tooltip">
+      <i class="material-symbols-outlined">info</i>
+    </a>
+  </li>
+</ul>
     </div>
   </div>
 </nav>
 
-<!-- Sections -->
-<section id="introduccion" class="container">
+
+<!-- 🔻 Sections (same as before) -->
+<section id="inicio" class="container">
   <h2>Asamblea en el CPC</h2>
-  <p>[Palabras de introducción]</p>
-  <ul>
-    <li>Presentación del CPC (solo SF)</li>
-    <li>Horario de apertura de puertas</li>
-    <li>Enlaces a videos</li>
-  </ul>
+  <p>Palabras de introducción.</p>
+  
+    <p>Presentación del CPC</p>
+    <h3>Horarios</h3>
+    <ul>
+      <li>Apertura de puertas</li>
+      <li>Comienzo del programa</li>
+      <li>Fin del programa</li>
+      <li>Cierre de puertas</li>
+    </ul>
+    <h3>Más información</h3>
+    <ul>
+      <li>Video: Anuncios para asambleas en el CPC</li>
+      <li>Video: Instrucciones de emergencia en el CPC</li>
+      <li>JW.ORG: Recordatorios para la asamblea regional</li>
+      <li>JW.ORG: Está invitado: Adoración pura</li>
+    </ul>
+  
 </section>
 
-<section id="como-llego" class="bg-light">
+<section id="transporte" class="bg-light">
   <div class="container">
-    <h2>¿Cómo llego?</h2>
-    <h5>Auto particular</h5>
+    <h2><i class="material-symbols-outlined">pin_drop</i>¿Cómo llego?</h2>
+    <h5><i class="material-symbols-outlined">directions_car</i> Auto particular</h5>
     <ul>
       <li>Estacionamiento</li>
       <li>Recomendaciones</li>
     </ul>
-    <h5>Ómnibus interurbano</h5>
-    <h5>Colectivo urbano</h5>
-    <h5>Taxi</h5>
-    <h5>Transportes contratados</h5>
+    <h5><i class="material-symbols-outlined">directions_bus</i> Ómnibus interurbano</h5>
+    <ul>
+      <li>Terminal de ómnibus</li>
+      <li>Transporte al CPC</li>
+    </ul>
+    <h5><i class="material-symbols-outlined">directions_bus</i> Colectivo urbano</h5>
+    <ul>
+      <li>Líneas que llegan al CPC</li>
+    </ul>
+    <h5><i class="material-symbols-outlined">local_taxi</i> Taxis, remises y apps</h5>
+    <h5><i class="material-symbols-outlined">airport_shuttle</i> Transportes contratados</h5>
+    <ul>
+      <li>Parada</li>
+    </ul>
   </div>
 </section>
 
-<section id="ubicacion" class="container">
-  <h2>¿Dónde me ubico?</h2>
-  <p>Información sobre auditorios.</p>
+<section id="auditorios" class="container">
+  <h2><i class="material-symbols-outlined">airline_seat_recline_normal</i>¿Dónde me ubico?</h2>
+  <p>Dos auditorios</p>
+    <ul>
+    <li>Principal: Público general</li>
+    <li>Auxiliar: Personas mayores, con dificultades y padres con niños pequeños</li>
+  </ul>
+  <p>Plano del predio</p>
 </section>
 
-<section id="comida" class="bg-light">
+<section id="alimentos" class="bg-light">
   <div class="container">
-    <h2>¿Dónde puedo comer?</h2>
+    <h2><i class="material-symbols-outlined">fastfood</i>¿Dónde puedo comer?</h2>
     <ul>
-      <li>Lugares disponibles</li>
-      <li>Restricción de comer en auditorios</li>
-      <li>Dónde guardar alimentos: autos, servicio de guarda</li>
+      <li>Lugares disponibles para comer</li>
+      <li>No se puede comer en auditorios</li>
+      <li>Dónde guardar alimentos:
+        <ul>
+          <li>En los autos</li>
+          <li>Servicio de guarda</li>
+        </ul>
+      </li>
     </ul>
   </div>
 </section>
 
 <section id="alojamiento" class="container">
-  <h2>¿Dónde puedo alojarme?</h2>
+  <h2><i class="material-symbols-outlined">hotel</i>¿Dónde puedo alojarme?</h2>
   <ul>
     <li>Hoteles</li>
-    <li>Solicitud de alojamiento</li>
+    <li>Solicitar alojamiento</li>
     <li>Ofrecer alojamiento</li>
   </ul>
 </section>
 
 <section id="otros" class="bg-light">
   <div class="container">
-    <h2>¿Qué más debo tener en cuenta?</h2>
+    <h2><i class="material-symbols-outlined">info</i>¿Qué más debo tener en cuenta?</h2>
     <ul>
       <li>Bautismo</li>
       <li>Climatización</li>
       <li>Cuidado de niños</li>
-      <li>Seguridad al circular</li>
+      <li>Precauciones al circular</li>
       <li>Recomendaciones al regresar</li>
     </ul>
   </div>
 </section>
 
-<section id="conclusion" class="container">
-  <h2>Conclusión</h2>
-  <p>[Palabras de conclusión]</p>
-</section>
-
-<!-- Optional Footer -->
 <footer class="bg-dark text-white text-center py-3">
-  <small>© 2025 Nombre del Evento</small>
+
 </footer>
 
+<!-- 🧠 Bootstrap + tooltip init -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el))
+</script>
+
 </body>
 </html>
