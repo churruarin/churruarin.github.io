@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Asamblea en el CPC</title>
+  <title>Asambleas en el CPC</title>
 
   <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -15,9 +15,9 @@
 <body>
 
 <!-- 🔝 Fixed Top Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top small-navbar">
+<nav class="navbar navbar-expand-lg fixed-top small-navbar">
   <div class="container">
-    <a class="navbar-brand" href="#">Asamblea en el CPC</a>
+    <a class="navbar-brand" href="#">Asambleas en el CPC</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,9 +30,9 @@
         <li class="nav-item"><a class="nav-link" href="#alojamiento"><i class="material-symbols-outlined">hotel</i><span>Alojamiento</span></a></li>
         <li class="nav-item"><a class="nav-link" href="#otros"><i class="material-symbols-outlined">info</i><span>Otros</span></a></li>
         <li class="nav-item">
-          <button id="modeToggle" class="btn btn-sm btn-link nav-link p-0">
+          <!-- <button id="darkModeToggle" class="btn btn-sm btn-link nav-link p-0">
             <i class="material-symbols-outlined">dark_mode</i>
-          </button>
+          </button> -->
         </li>
       </ul>
     </div>
@@ -50,12 +50,12 @@
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
     <div class="col">
-      <a href="#transporte" class="text-decoration-none text-dark">
-        <div class="card h-80 d-flex flex-row align-items-stretch">
-  <div class="d-flex align-items-center px-3 bg-light border-end">
+      <a href="#transporte" class="text-decoration-none">
+        <div class="card h-80 d-flex flex-row align-items-stretch card-transporte">
+  <div class="d-flex px-3 border-end card-icon">
     <i class="material-symbols-outlined fs-1">pin_drop</i>
   </div>
-  <div class="card-body flex-grow-1">
+  <div class="card-content flex-grow-1">
     <h5 class="card-title mb-2">¿Cómo llego?</h5>
     <p class="card-text">Recomendaciones para transporte y estacionamiento.</p>
   </div>
@@ -63,13 +63,12 @@
       </a>
     </div>
     <div class="col">
-      <a href="#auditorios" class="text-decoration-none text-dark">
-        <div class="card h-80 d-flex flex-row align-items-stretch">
-
-          <div class="d-flex align-items-center px-3 bg-light border-end">
+      <a href="#auditorios" class="text-decoration-none">
+        <div class="card h-80 d-flex flex-row align-items-stretch card-auditorios">
+          <div class="d-flex px-3 border-end card-icon">
             <i class="material-symbols-outlined fs-1">airline_seat_recline_normal</i>
           </div>
-          <div class="card-body flex-grow-1">
+          <div class="card-content flex-grow-1">
             <h5 class="card-title mb-2">¿Dónde me ubico?</h5>
             <p class="card-text">Auditorios y plano del predio.</p>
           </div>
@@ -78,11 +77,11 @@
     </div>
     <div class="col">
       <a href="#alimentos" class="text-decoration-none text-dark">
-        <div class="card h-80 d-flex flex-row align-items-stretch">
-           <div class="d-flex align-items-center px-3 bg-light border-end">
+        <div class="card h-80 d-flex flex-row align-items-stretch card-alimentos">
+          <div class="d-flex px-3 border-end card-icon">
             <i class="material-symbols-outlined fs-1">fastfood</i>
           </div>
-          <div class="card-body flex-grow-1">
+          <div class="card-content flex-grow-1">
             <h5 class="card-title mb-2">¿Dónde puedo comer?</h5>
             <p class="card-text">Opciones para comer en los intermedios.</p>
           </div>
@@ -92,11 +91,11 @@
     </div>
     <div class="col">
       <a href="#alojamiento" class="text-decoration-none text-dark">
-        <div class="card h-80 d-flex flex-row align-items-stretch">
-          <div class="d-flex align-items-center px-3 bg-light border-end">
+        <div class="card h-80 d-flex flex-row align-items-stretch card-alojamiento">
+          <div class="d-flex px-3 border-end card-icon">
             <i class="material-symbols-outlined fs-1">hotel</i>
           </div>
-          <div class="card-body flex-grow-1">
+          <div class="card-content flex-grow-1">
             <h5 class="card-title mb-2">¿Dónde puedo alojarme?</h5>
             <p class="card-text">Alojamientos disponibles y cómo ofrecer alojamiento.</p>
           </div>
@@ -106,11 +105,11 @@
     </div>
     <div class="col">
       <a href="#otros" class="text-decoration-none text-dark">
-        <div class="card h-80 d-flex flex-row align-items-stretch">
-          <div class="d-flex align-items-center px-3 bg-light border-end">
+        <div class="card h-80 d-flex flex-row align-items-stretch card-otros">
+          <div class="d-flex px-3 border-end card-icon">
             <i class="material-symbols-outlined fs-1">info</i>
           </div>
-          <div class="card-body flex-grow-1">
+          <div class="card-content flex-grow-1">
             <h5 class="card-title mb-2">¿Qué más debo tener en cuenta?</h5>
             <p class="card-text">Otra información importante para los asistentes.</p>
           </div>
@@ -123,7 +122,7 @@
   <!-- 🧾 Inicio Subsections -->
   <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
     <div class="col">
-      <div class="card h-100">
+      <div class="card card-static h-100">
         <div class="card-body">
           <h5 class="card-title"><i class="material-symbols-outlined me-2">location_city</i>Centro Provincial de Convenciones</h5>
           <p class="card-text">Descripción del lugar y fotografías del predio.</p>
@@ -132,7 +131,7 @@
     </div>
 
     <div class="col">
-      <div class="card h-100">
+      <div class="card card-static h-100">
         <div class="card-body">
           <h5 class="card-title"><i class="material-symbols-outlined me-2">schedule</i>Horarios</h5>
           <ul class="mb-0">
@@ -146,7 +145,7 @@
     </div>
 
     <div class="col">
-      <div class="card h-100">
+      <div class="card card-static h-100">
         <div class="card-body">
           <h5 class="card-title"><i class="material-symbols-outlined me-2">video_library</i>Más información</h5>
           <ul class="mb-0">
@@ -163,35 +162,100 @@
 
 
   <section id="transporte" class="section-transporte snap-section">
+    <i class="section-icon material-symbols-outlined">pin_drop</i>
     <div class="container pt-5">
-      <header class="section-header"><h2><i class="material-symbols-outlined">pin_drop</i> ¿Cómo llego?</h2></header>
+       
+      <header class="section-header"><h2>¿Cómo llego?</h2></header>
 
     
-    <h5><i class="material-symbols-outlined">directions_car</i> Auto particular</h5>
-    <ul>
-      <li>Estacionamiento</li>
-      <li>Recomendaciones</li>
-    </ul>
-    <h5><i class="material-symbols-outlined">directions_bus</i> Ómnibus interurbano</h5>
-    <ul>
-      <li>Terminal de ómnibus</li>
-      <li>Transporte al CPC</li>
-    </ul>
-    <h5><i class="material-symbols-outlined">directions_bus</i> Colectivo urbano</h5>
-    <ul>
-      <li>Líneas que llegan al CPC</li>
-    </ul>
-    <h5><i class="material-symbols-outlined">local_taxi</i> Taxis, remises y apps</h5>
-    <h5><i class="material-symbols-outlined">airport_shuttle</i> Transportes contratados</h5>
-    <ul>
-      <li>Parada</li>
-    </ul>
+<div class="accordion" id="transporteAccordion">
+  <!-- Auto Particular -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingAuto">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAuto" aria-expanded="false" aria-controls="collapseAuto">
+        <i class="material-symbols-outlined me-2">directions_car</i> Auto particular
+      </button>
+    </h2>
+    <div id="collapseAuto" class="accordion-collapse collapse" aria-labelledby="headingAuto" data-bs-parent="#transporteAccordion">
+      <div class="accordion-body">
+        <ul>
+          <li>Estacionamiento</li>
+          <li>Recomendaciones</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ómnibus interurbano -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingInterurbano">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInterurbano" aria-expanded="false" aria-controls="collapseInterurbano">
+        <i class="material-symbols-outlined me-2">directions_bus</i> Ómnibus interurbano
+      </button>
+    </h2>
+    <div id="collapseInterurbano" class="accordion-collapse collapse" aria-labelledby="headingInterurbano" data-bs-parent="#transporteAccordion">
+      <div class="accordion-body">
+        <ul>
+          <li>Terminal de ómnibus</li>
+          <li>Transporte al CPC</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colectivo urbano -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingUrbano">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUrbano" aria-expanded="false" aria-controls="collapseUrbano">
+        <i class="material-symbols-outlined me-2">directions_bus</i> Colectivo urbano
+      </button>
+    </h2>
+    <div id="collapseUrbano" class="accordion-collapse collapse" aria-labelledby="headingUrbano" data-bs-parent="#transporteAccordion">
+      <div class="accordion-body">
+        <ul>
+          <li>Líneas que llegan al CPC</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taxis y Apps -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTaxi">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTaxi" aria-expanded="false" aria-controls="collapseTaxi">
+        <i class="material-symbols-outlined me-2">local_taxi</i> Taxis, remises y apps
+      </button>
+    </h2>
+    <div id="collapseTaxi" class="accordion-collapse collapse" aria-labelledby="headingTaxi" data-bs-parent="#transporteAccordion">
+      <div class="accordion-body">
+        <p>Información sobre servicios disponibles.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transportes contratados -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingShuttle">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseShuttle" aria-expanded="false" aria-controls="collapseShuttle">
+        <i class="material-symbols-outlined me-2">airport_shuttle</i> Transportes contratados
+      </button>
+    </h2>
+    <div id="collapseShuttle" class="accordion-collapse collapse" aria-labelledby="headingShuttle" data-bs-parent="#transporteAccordion">
+      <div class="accordion-body">
+        <ul>
+          <li>Parada</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
   </div>
 </section>
 
-  <section id="auditorios" class="section-auditorios snap-section">
+  <section id="auditorios" class="section-auditorios snap-section"><i class="section-icon material-symbols-outlined">airline_seat_recline_normal</i>
     <div class="container pt-5">
-      <h2><i class="material-symbols-outlined">airline_seat_recline_normal</i> ¿Dónde me ubico?</h2>
+      <h2> ¿Dónde me ubico?</h2>
 
   <p>Dos auditorios</p>
     <ul>
@@ -202,9 +266,9 @@
   </div>
 </section>
 
- <section id="alimentos" class="section-alimentos snap-section">
+ <section id="alimentos" class="section-alimentos snap-section"><i class="section-icon material-symbols-outlined">fastfood</i>
     <div class="container pt-5">
-      <h2><i class="material-symbols-outlined">fastfood</i> ¿Dónde puedo comer?</h2>
+      <h2> ¿Dónde puedo comer?</h2>
 
     <ul>
       <li>Lugares disponibles para comer</li>
@@ -219,9 +283,9 @@
   </div>
 </section>
 
-  <section id="alojamiento" class="section-alojamiento snap-section">
+  <section id="alojamiento" class="section-alojamiento snap-section"><i class="section-icon material-symbols-outlined">hotel</i>
     <div class="container pt-5">
-      <h2><i class="material-symbols-outlined">hotel</i> ¿Dónde puedo alojarme?</h2>
+      <h2> ¿Dónde puedo alojarme?</h2>
       
   <ul>
     <li>Hoteles</li>
@@ -232,9 +296,9 @@
 </section>
 
 
-  <section id="otros" class="section-otros snap-section">
+  <section id="otros" class="section-otros snap-section"><i class="section-icon material-symbols-outlined">info</i>
     <div class="container pt-5">
-      <h2><i class="material-symbols-outlined">info</i> ¿Qué más debo tener en cuenta?</h2>
+      <h2> ¿Qué más debo tener en cuenta?</h2>
 
     <ul>
       <li>Bautismo</li>
@@ -245,6 +309,7 @@
     </ul>
   </div>
 </section>
+</main>
 
 <footer class="bg-dark text-white text-center py-3">
 

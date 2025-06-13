@@ -2,21 +2,47 @@ document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
   new bootstrap.Tooltip(el);
 });
 
-const toggleButton = document.getElementById('modeToggle');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const storedMode = localStorage.getItem('dark-mode');
-const shouldEnableDark = storedMode === 'true' || (storedMode === null && prefersDark);
+// const toggleBtn = document.getElementById('darkModeToggle');
+// const rootElement = document.documentElement; // or document.body
 
-if (shouldEnableDark) {
-  document.body.classList.add('dark-mode');
-  toggleButton.innerHTML = '<i class="material-symbols-outlined">light_mode</i>';
-}
+// // On page load, read saved theme
+// const savedTheme = localStorage.getItem('theme');
+// if (savedTheme === 'dark') {
+//   rootElement.classList.add('dark-mode');
+// } else if (savedTheme === 'light') {
+//   rootElement.classList.remove('dark-mode');
+// }
 
-toggleButton.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  toggleButton.innerHTML = isDark
-    ? '<i class="material-symbols-outlined">light_mode</i>'
-    : '<i class="material-symbols-outlined">dark_mode</i>';
-  localStorage.setItem('dark-mode', isDark);
+// // Toggle function
+// toggleBtn.addEventListener('click', () => {
+//   if (rootElement.classList.contains('dark-mode')) {
+//     rootElement.classList.remove('dark-mode');
+//     localStorage.setItem('theme', 'light');
+//   } else {
+//     rootElement.classList.add('dark-mode');
+//     localStorage.setItem('theme', 'dark');
+//   }
+// });
+
+const getSectionBg = (id) =>
+  getComputedStyle(document.documentElement).getPropertyValue(`--${id}-bg`).trim();
+
+const container = document.querySelector('.snap-container');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      container.style.backgroundColor = getComputedStyle(entry.target).backgroundColor;
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.snap-section').forEach(section => {
+  observer.observe(section);
 });
+
+
+document.body.classList.add('js-enabled');
