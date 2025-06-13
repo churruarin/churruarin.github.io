@@ -1,0 +1,84 @@
+
+
+.material-symbols-outlined {
+  color: var(--icon-color);
+  vertical-align: middle;
+  font-size: 1.2em;
+}
+
+:root {
+  --inicio-color: #007bff;
+  --transporte-color: #28a745;
+  --auditorios-color: #17a2b8;
+  --alimentos-color: #ffc107;
+  --alojamiento-color: #fd7e14;
+  --otros-color: #6f42c1;
+
+  --bg-light: #f8f9fa;
+  --bg-dark: #121212;
+  --text-light: #f8f9fa;
+  --text-dark: #212529;
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-inicio        { background: var(--inicio-color);        color: white; padding: 2rem; transition: background 0.4s; }
+.section-transporte    { background: var(--transporte-color);    color: white; padding: 2rem; transition: background 0.4s; }
+.section-auditorios    { background: var(--auditorios-color);    color: white; padding: 2rem; transition: background 0.4s; }
+.section-alimentos     { background: var(--alimentos-color);     color: black; padding: 2rem; transition: background 0.4s; }
+.section-alojamiento   { background: var(--alojamiento-color);   color: white; padding: 2rem; transition: background 0.4s; }
+.section-otros         { background: var(--otros-color);         color: white; padding: 2rem; transition: background 0.4s; }
+
+.card {
+  transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.navbar .nav-link i {
+  margin-right: 0.25rem;
+}
+
+#modeToggle i {
+  font-size: 1.2rem;
+}
+
+html, body {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+.snap-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  padding-top: 4rem; /* avoid navbar overlap */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
