@@ -327,3 +327,58 @@ body:not(.js-enabled) .snap-section > * {
   opacity: 1;
   transform: none;
 }
+
+.scrolling-cards-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.scrolling-cards-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+
+  scrollbar-width: none;
+}
+
+.scrolling-cards-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scrolling-cards-row {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0;
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.scroll-left {
+  left: 0.5rem;
+}
+
+.scroll-right {
+  right: 0.5rem;
+}
+
+.scroll-btn i {
+  font-size: 1.8rem;
+  pointer-events: none;
+}

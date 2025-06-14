@@ -60,3 +60,17 @@ document.querySelectorAll('.snap-section').forEach(section => {
 
 
 document.body.classList.add('js-enabled');
+
+document.querySelectorAll('.scrolling-cards-wrapper').forEach(wrapper => {
+  const container = wrapper.querySelector('.scrolling-cards-container');
+  const leftBtn = wrapper.querySelector('.scroll-left');
+  const rightBtn = wrapper.querySelector('.scroll-right');
+
+  leftBtn.addEventListener('click', () => {
+    container.scrollBy({ left: -250, behavior: 'smooth' });
+  });
+
+  rightBtn.addEventListener('click', () => {
+    container.scrollBy({ left: 250, behavior: 'smooth' });
+  });
+});
