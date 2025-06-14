@@ -2,6 +2,8 @@ document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
   new bootstrap.Tooltip(el);
 });
 
+document.body.classList.add('js-enabled');
+
 // const toggleBtn = document.getElementById('darkModeToggle');
 // const rootElement = document.documentElement; // or document.body
 
@@ -38,11 +40,23 @@ const observer = new IntersectionObserver((entries) => {
       entry.target.classList.remove('visible');
     }
   });
-}, { threshold: 0.5 });
+}, {
+  threshold: 0.2, // lower threshold makes triggering easier on mobile
+  rootMargin: '0px 0px -20% 0px' // trigger a bit earlier when scrolling up
+});
+
+
 
 document.querySelectorAll('.snap-section').forEach(section => {
   observer.observe(section);
 });
+
+// const myCarouselElement = document.querySelector('#carouselGuardaAlimentos')
+
+// const carousel = new bootstrap.Carousel(myCarouselElement, {
+//   interval: 2000,
+//   touch: false
+// })
 
 
 document.body.classList.add('js-enabled');
