@@ -178,8 +178,8 @@
 
 .navbar {
   background-color: rgba(8, 8, 8, 0.4); /* semi-transparent white */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* Safari support */
   border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* subtle separation */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);  /* soft shadow */
   position: fixed;
@@ -187,6 +187,13 @@
   width: 100%;
   z-index: 999;
   transition: background-color 0.6s ease, backdrop-filter 0.6s ease;
+}
+
+.navbar-logo {
+  height: 32px;
+  width: auto;
+  display: inline-block;
+  fill: white !important;
 }
 
 .navbar .navbar-brand,
