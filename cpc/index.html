@@ -162,7 +162,7 @@
        
       <header class="section-header"><h2>¿Cómo llego?</h2></header>
 <p>El predio se encuentra en el Parque Urquiza, a pocas cuadras del centro cívico y es accesible por todos los medios de transporte.</p>
-<p><a class="btn btn-primary transporte-color" href="geo:0,0?q=-31.721610,-60.52522(Centro+Provincial+de+Convenciones)" role="button" target="_blank">Ver en el mapa</a></p>
+<p><button class="btn btn-sm btn-primary" onclick="abrirMapa('-31.721610,-60.52522,Centro+Provincial+de+Convenciones')" role="button" target="_blank"><i class="material-symbols-outlined">pin_drop</i> Ver en el mapa</button></p>
     
 <div class="accordion" id="transporteAccordion">
   <!-- Auto Particular -->
@@ -174,13 +174,18 @@
     </h2>
     <div id="collapseAuto" class="accordion-collapse collapse" aria-labelledby="headingAuto" data-bs-parent="#transporteAccordion">
       <div class="accordion-body">
-        <ul>
-          <li>Estacionamiento</li>
-          <button class="btn btn-outline-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#estacionamientoModal">
-  Ver estacionamientos pagos en la zona
-</button>
-          <li>Recomendaciones</li>
+        
+          <h5>Estacionamiento</h5>
+          <ul>
+            <li>En los alrededores del CPC hay abundantes lugares para estacionar en la calle. Sin embargo, generalmente hay cuidacoches.</li>
+            <li>Tambien hay disponibles cocheras pagas.<br> <button class="btn btn-outline-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#estacionamientoModal">
+  Ver cocheras en la zona del CPC
+</button></li>
         </ul>
+          
+          <h5>Recomendaciones</h5>
+          <p>El parque es muy concurrido los fines de semana.</p>
+        
       </div>
     </div>
   </div>
@@ -256,7 +261,24 @@
     <div class="container pt-5">
       <h2> ¿Dónde me ubico?</h2>
 
-  <p>Dos auditorios</p>
+  <h3>Auditorios</h3>
+  <div class="card-group mb-3" style="max-width: 40rem;"">
+  <div class="card">
+    <img src="placeholder.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Auditorio principal</h5>
+      <p class="card-text">Para el público en general. Se accede mediante las escaleras a la izquierda de la entrada.</p>
+          </div>
+  </div>
+  <div class="card">
+    <img src="placeholder.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Auditorio auxiliar</h5>
+      <p class="card-text">Para personas mayores, con dificultades y padres con niños pequeños. Se accede por el pasillo de la derecha de la entrada.  </p>
+      
+    </div>
+  </div>
+</div>
     <ul>
     <li>Principal: Público general</li>
     <li>Auxiliar: Personas mayores, con dificultades y padres con niños pequeños</li>

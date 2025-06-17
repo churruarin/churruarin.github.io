@@ -128,7 +128,7 @@ function abrirMapa(rawCoords, nombre = '') {
   const label = encodeURIComponent(nombre.trim());
 
   const geoUri = `geo:${lat},${lng}?q=${lat},${lng}(${label})`; // for Android
-  const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}(${label})`;
+  const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
