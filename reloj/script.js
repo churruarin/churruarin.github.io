@@ -15,6 +15,7 @@ let currentItemIndex = 0;
 let measuredTimes = {};
 let suppressNextStopwatchUpdate = false;
 let stopwatchTime = 0;
+let currentBaseUrl = "http://reloj.local";  // default fallback
 
 
 
@@ -261,13 +262,9 @@ document.getElementById("enableProgramSwitch").addEventListener("change", e => {
 
   // === Utility: Get Clock URL from input or query string ===
 function getUrl() {
-  const input = document.getElementById("urlInput")?.value;
-  const params = new URLSearchParams(window.location.search);
-  const paramUrl = params.get("clock");
-  const url = input || paramUrl || "http://reloj.local";
-  const normalized = normalizeUrlInput(url);
-  return isValidClockUrl(normalized) ? normalized : "http://reloj.local";
+  return currentBaseUrl;
 }
+
 
 function setPanelBlur(active) {
   const panels = document.querySelectorAll(".panel-blurable");
@@ -669,24 +666,28 @@ if (row) {
   }, 500);
 
 function tryReconnect() {
-  const knownIp = getClockIpFromCookie();
-  const clockUrlInput = document.getElementById("urlInput");
-  const userInput = clockUrlInput?.value?.trim();
   const urlsToTry = [];
-  urlsToTry.push("http://reloj.local");
-  // If user entered a valid IP or reloj.local, prioritize it
-  //if (settingsInput?.startsWith("http://")) {
-  //  urlsToTry.push(userInput);
-  //}
 
-  //if (knownIp && `http://${knownIp}` !== userInput) {
-  //  urlsToTry.push(`http://${knownIp}`);
-  //}
+  if (!urlsToTry.includes("http://reloj.local")) {
+    urlsToTry.push("http://reloj.local");
+  }
 
-  
+  const inputUrl = document.getElementById("clockUrl")?.value?.trim();
+  if (inputUrl?.startsWith("http://")) {
+    urlsToTry.push(normalizeUrlInput(inputUrl));
+  }
+
+  const cookieIp = getClockIpFromCookie();
+  if (cookieIp) {
+    const cookieUrl = `http://${cookieIp}`;
+    if (!urlsToTry.includes(cookieUrl)) urlsToTry.push(cookieUrl);
+  }
+
+
 
   tryNextUrl(urlsToTry, 0);
 }
+
 
 function tryNextUrl(urls, index) {
   if (index >= urls.length) {
@@ -696,32 +697,34 @@ function tryNextUrl(urls, index) {
     return;
   }
 
-  const tempSource = new EventSource(`${urls[index]}/events`);
-  let reconnected = false;
+  const url = urls[index];
+  reconnecting = true;
 
-  const timeout = setTimeout(() => {
-    if (!reconnected) {
-      tempSource.close();
-      tryNextUrl(urls, index + 1);
-    }
-  }, RECONNECT_DELAY_MS);
+  if (eventSource) {
+    eventSource.close();
+    eventSource = null;
+  }
 
-  tempSource.addEventListener("state", (e) => {
-    if (reconnected) return;
-    reconnected = true;
-    clearTimeout(timeout);
-    eventSource?.close?.();
-    eventSource = tempSource;
-    setupEventSourceHandlers(eventSource);
-    lastEventTime = Date.now();
-    updateConnectionStatus("connected");
-    setBlur(false);
-    bootstrap.Modal.getInstance(document.getElementById("reconnectModal"))?.hide();
+  const es = new EventSource(`${url}/events`);
+
+  let opened = false;
+
+  es.onopen = () => {
+    opened = true;
+    currentBaseUrl = url; // ✅ update the active URL
+    eventSource = es;
     reconnecting = false;
-  });
+    setupEventSourceHandlers();
+  };
 
-  tempSource.onerror = () => {};
+  es.onerror = () => {
+    es.close();
+    if (!opened) {
+      setTimeout(() => tryNextUrl(urls, index + 1), 1000);
+    }
+  };
 }
+
 
 
 function getClockIpFromCookie() {
